@@ -1,2 +1,0 @@
-# odin-admin
-ODIN admin
