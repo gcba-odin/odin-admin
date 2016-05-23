@@ -1,4 +1,4 @@
-var app=angular.module('odin.controllers', ["odin.userControllers"]);
+var app=angular.module('odin.controllers', ["odin.userControllers","odin.organizationControllers","odin.statusControllers","odin.filetypeControllers","odin.fileControllers","odin.categoryControllers"]);
 
   app.controller("mainController", function($scope, AuthenticationService, $location,$rootScope) {
 
@@ -6,14 +6,19 @@ var app=angular.module('odin.controllers', ["odin.userControllers"]);
             AuthenticationService.ClearCredentials();
             $location.url('/login');
         };
-    });
 
+        $scope.$back = function() { 
+            window.history.back();
+        };
 
-
-
-
-
-
+         $scope.activeClass= function(actualClass,itemclass){
+            console.log(actualClass,itemclass);
+         if(actualClass==itemclass)
+             {
+                return "active";
+             }
+        }
+    }); 
 
 function controllerHome($scope, $rootScope) {
     console.log($rootScope.globals)

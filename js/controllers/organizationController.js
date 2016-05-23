@@ -1,14 +1,16 @@
-var app = angular.module('odin.userControllers', []);
+var app = angular.module('odin.organizationControllers', []);
 
 app.factory('model', function($resource) {
     return $resource();
 });
 
 
-function UserListController($scope, $location, rest, $rootScope, Flash) {
-    Flash.clear();
-    $scope.modelName = "User";
-    $scope.type = "users";
+
+function OrganizationListController($scope, $location, rest, $rootScope, Flash) {
+Flash.clear();
+$scope.modelName = "Organization";
+$scope.type = "organizations"; 
+
     var model = rest().get({
         type: $scope.type ,params:"sort=createdAt DESC"
     });
@@ -37,10 +39,11 @@ function UserListController($scope, $location, rest, $rootScope, Flash) {
     }
 }
 
-function UserViewController($scope, Flash, rest, $routeParams, $location) {
-    Flash.clear();
-    $scope.modelName = "User";
-    $scope.type = "users";
+function OrganizationViewController($scope, Flash, rest, $routeParams, $location) {
+Flash.clear();
+$scope.modelName = "Organization";
+$scope.type = "organizations"; 
+
     $scope.model = rest().findOne({
         id: $routeParams.id,
         type: $scope.type 
@@ -52,10 +55,11 @@ function UserViewController($scope, Flash, rest, $routeParams, $location) {
     }
 }
 
-function UserCreateController($scope, rest, model, Flash,$location) {
-    Flash.clear();
-    $scope.modelName = "User";
-    $scope.type = "users";
+function OrganizationCreateController($scope, rest, model, Flash,$location) {
+Flash.clear();
+$scope.modelName = "Organization";
+$scope.type = "organizations"; 
+
     $scope.model = new model();
     $scope.add = function(isValid) {
         if (isValid) {
@@ -69,10 +73,11 @@ function UserCreateController($scope, rest, model, Flash,$location) {
     };
 }
 
-function UserEditController($scope, Flash, rest, $routeParams, model) {
-    Flash.clear();
-    $scope.modelName = "User";
-    $scope.type = "users";
+function OrganizationEditController($scope, Flash, rest, $routeParams, model) {
+Flash.clear();
+$scope.modelName = "Organization";
+$scope.type = "organizations";  
+
     $scope.model = new model();
     $scope.update = function(isValid) {
         if (isValid) {

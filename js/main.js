@@ -137,6 +137,9 @@ $.AdminLTE.options = {
  * functions and plugins as specified by the
  * options above.
  */
+
+
+
 $(function () {
   "use strict";
 
@@ -157,7 +160,9 @@ $(function () {
   _init();
 
   //Activate the layout maker
-  $.AdminLTE.layout.activate();
+  //
+
+
 
   //Enable sidebar tree view controls
   $.AdminLTE.tree('.sidebar');
@@ -388,7 +393,10 @@ function _init() {
   $.AdminLTE.tree = function (menu) {
     var _this = this;
     var animationSpeed = $.AdminLTE.options.animationSpeed;
+    var clickmenu=false;
     $(document).on('click', menu + ' li a', function (e) {
+      e.stopPropagation();
+      console.log("aqui") 
       //Get the clicked link and the next element
       var $this = $(this);
       var checkElement = $this.next();
@@ -428,6 +436,7 @@ function _init() {
       if (checkElement.is('.treeview-menu')) {
         e.preventDefault();
       }
+
     });
   };
 

@@ -1,5 +1,5 @@
 (function() {
-    var app = angular.module('odin', ["ngRoute", "ngCookies","ngResource","ngProgress","odin.controllers","store-directives", "store-factories"]);
+    var app = angular.module('odin', ["ngRoute",'ngFlash','ngMessages', "ngCookies","ngResource","ngProgress","odin.controllers","store-directives", "store-factories"]);
 
     app.config(function($routeProvider,$httpProvider) {
 
@@ -12,25 +12,130 @@
                 templateUrl: "login.html",
                 controller: LoginController
             })
-            .when("/prueba", {
-                templateUrl: "prueba.html"
-            }).when("/users", {
-                templateUrl: "views/user/users.html",
+            //// user Routes
+            .when("/users", {
+                templateUrl: "views/user/list.html",
                 controller:UserListController
             }).when("/users/:id/view", {
-                templateUrl: "views/user/user-view.html",
+                templateUrl: "views/user/view.html",
                 controller:UserViewController
             }).when("/users/new", {
-                templateUrl: "views/user/user-add.html",
+                templateUrl: "views/user/add.html",
                 controller:UserCreateController
-            }).when("/users/edit", {
-                templateUrl: "views/user/user-edit.html",
+            }).when("/users/:id/edit", {
+                templateUrl: "views/user/edit.html",
                 controller:UserEditController
-            }).otherwise({
+            })
+            //// end user Routes
+            //// user Organizations
+            .when("/organizations", {
+                templateUrl: "views/organization/list.html",
+                controller:OrganizationListController
+            }).when("/organizations/:id/view", {
+                templateUrl: "views/organization/view.html",
+                controller:OrganizationViewController
+            }).when("/organizations/new", {
+                templateUrl: "views/organization/add.html",
+                controller:OrganizationCreateController
+            }).when("/organizations/:id/edit", {
+                templateUrl: "views/organization/edit.html",
+                controller:OrganizationEditController
+            })
+            //// end user Organizations
+            ////  Status
+            .when("/statuses", {
+                templateUrl: "views/status/list.html",
+                controller:StatusListController
+            }).when("/statuses/:id/view", {
+                templateUrl: "views/status/view.html",
+                controller:StatusViewController
+            }).when("/statuses/new", {
+                templateUrl: "views/status/add.html",
+                controller:StatusCreateController
+            }).when("/statuses/:id/edit", {
+                templateUrl: "views/status/edit.html",
+                controller:StatusEditController
+            })
+            //// end  Status
+            ////  File type
+            .when("/filetypes", {
+                templateUrl: "views/filetype/list.html",
+                controller:FileTypeListController
+            }).when("/filetypes/:id/view", {
+                templateUrl: "views/filetype/view.html",
+                controller:FileTypeViewController
+            }).when("/filetypes/new", {
+                templateUrl: "views/filetype/add.html",
+                controller:FileTypeCreateController
+            }).when("/filetypes/:id/edit", {
+                templateUrl: "views/filetype/edit.html",
+                controller:FileTypeEditController
+            })
+            //// file type
+            ////  File type
+            .when("/files", {
+                templateUrl: "views/file/list.html",
+                controller:FileListController
+            }).when("/files/:id/view", {
+                templateUrl: "views/file/view.html",
+                controller:FileViewController
+            }).when("/files/new", {
+                templateUrl: "views/file/add.html",
+                controller:FileCreateController
+            }).when("/files/:id/edit", {
+                templateUrl: "views/file/edit.html",
+                controller:FileEditController
+            })
+            //// file type
+
+            ////  Databases
+            .when("/databases", {
+                templateUrl: "views/database/list.html",
+                controller:DatabaseListController
+            }).when("/databases/:id/view", {
+                templateUrl: "views/database/view.html",
+                controller:DatabaseViewController
+            }).when("/databases/new", {
+                templateUrl: "views/database/add.html",
+                controller:DatabaseCreateController
+            }).when("/databases/:id/edit", {
+                templateUrl: "views/database/edit.html",
+                controller:DatabaseEditController
+            })
+            //// Databases
+            ////  Categories
+            .when("/categories", {
+                templateUrl: "views/category/list.html",
+                controller:CategoryListController
+            }).when("/categories/:id/view", {
+                templateUrl: "views/category/view.html",
+                controller:CategoryViewController
+            }).when("/categories/new", {
+                templateUrl: "views/category/add.html",
+                controller:CategoryCreateController
+            }).when("/categories/:id/edit", {
+                templateUrl: "views/category/edit.html",
+                controller:CategoryEditController
+            })
+            //// Categories
+            ////  Datasets
+            .when("/datasets", {
+                templateUrl: "views/dataset/list.html",
+                controller:DatasetListController
+            }).when("/datasets/:id/view", {
+                templateUrl: "views/dataset/view.html",
+                controller:DatasetViewController
+            }).when("/datasets/new", {
+                templateUrl: "views/dataset/add.html",
+                controller:DatasetCreateController
+            }).when("/datasets/:id/edit", {
+                templateUrl: "views/dataset/edit.html",
+                controller:DatasetEditController
+            })
+            //// Datasets
+            .otherwise({
                 redirectTo: '/'
             });
-    delete $httpProvider.defaults.headers.common['X-Requested-With'];
-
     });
     app.run(run);
 
@@ -49,6 +154,12 @@
             if (restrictedPage && !loggedIn) {
                 $location.path('/login');
             }
+        });
+
+
+
+        $rootScope.$on('$routeChangeSuccess', function (e, current, pre) {
+            $rootScope.actualUrl=current.$$route.originalPath;
         });
     }
 })();

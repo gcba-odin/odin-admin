@@ -1,0 +1,49 @@
+<header-home></header-home>
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="row">
+            <div class="col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="#/"><i class="fa fa-dashboard"></i> Home</a></li>
+                    <li><a href="#/{{type}}"><i class="fa fa-user"></i> {{modelName}}</a></li>
+                    <li class="active">View</li>
+                </ol>        
+            </div>
+        </div>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">Details for <b>{{model.username}}</b></h3>
+                    </div>
+                      <table class="table usertable">
+                        <tr ng-if="model.firstName">
+                            <td>First Name</td>
+                            <td>{{model.firstName}}</td>
+                        </tr>
+                        <tr ng-if="model.lastName">
+                            <td>Last Name</td>
+                            <td>{{model.lastName}}</td>
+                        </tr>
+                        <tr ng-if="model.email">
+                            <td>Email</td>
+                            <td>{{model.email}}</td>
+                        </tr>
+                    </table>
+                    <div class="box-footer"> 
+                        <a ng-href="#" back-button class="btn btn-default pull-left">
+                            Back
+                        </a>
+                        <button type="submit" class="btn btn-primary pull-right" ng-click="edit(model)">Edit</button>
+                    </div>
+                </div>  
+              
+            </div>
+        </div>    
+    </section>
+    <!--  Main content-->
+</div>
+<footer-home></footer-home>

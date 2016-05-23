@@ -1,14 +1,15 @@
-var app = angular.module('odin.userControllers', []);
+var app = angular.module('odin.statusControllers', []);
 
 app.factory('model', function($resource) {
     return $resource();
 });
 
+function StatusListController($scope, $location, rest, $rootScope, Flash) {
+Flash.clear();
+$scope.modelName = "Status";
+$scope.type = "statuses"; 
 
-function UserListController($scope, $location, rest, $rootScope, Flash) {
-    Flash.clear();
-    $scope.modelName = "User";
-    $scope.type = "users";
+
     var model = rest().get({
         type: $scope.type ,params:"sort=createdAt DESC"
     });
@@ -37,10 +38,11 @@ function UserListController($scope, $location, rest, $rootScope, Flash) {
     }
 }
 
-function UserViewController($scope, Flash, rest, $routeParams, $location) {
-    Flash.clear();
-    $scope.modelName = "User";
-    $scope.type = "users";
+function StatusViewController($scope, Flash, rest, $routeParams, $location) {
+Flash.clear();
+$scope.modelName = "Status";
+$scope.type = "statuses"; 
+
     $scope.model = rest().findOne({
         id: $routeParams.id,
         type: $scope.type 
@@ -52,10 +54,12 @@ function UserViewController($scope, Flash, rest, $routeParams, $location) {
     }
 }
 
-function UserCreateController($scope, rest, model, Flash,$location) {
-    Flash.clear();
-    $scope.modelName = "User";
-    $scope.type = "users";
+function StatusCreateController($scope, rest, model, Flash,$location) {
+
+Flash.clear();
+$scope.modelName = "Status";
+$scope.type = "statuses"; 
+
     $scope.model = new model();
     $scope.add = function(isValid) {
         if (isValid) {
@@ -69,10 +73,11 @@ function UserCreateController($scope, rest, model, Flash,$location) {
     };
 }
 
-function UserEditController($scope, Flash, rest, $routeParams, model) {
-    Flash.clear();
-    $scope.modelName = "User";
-    $scope.type = "users";
+function StatusEditController($scope, Flash, rest, $routeParams, model) {
+Flash.clear();
+$scope.modelName = "Status";
+$scope.type = "statuses"; 
+
     $scope.model = new model();
     $scope.update = function(isValid) {
         if (isValid) {

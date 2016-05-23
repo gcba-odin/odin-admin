@@ -1,14 +1,15 @@
-var app = angular.module('odin.userControllers', []);
+var app = angular.module('odin.filetypeControllers', []);
 
 app.factory('model', function($resource) {
     return $resource();
 });
 
+function FileTypeListController($scope, $location, rest, $rootScope, Flash) {
 
-function UserListController($scope, $location, rest, $rootScope, Flash) {
-    Flash.clear();
-    $scope.modelName = "User";
-    $scope.type = "users";
+Flash.clear();
+$scope.modelName = "File Type";
+$scope.type = "filetypes"; 
+
     var model = rest().get({
         type: $scope.type ,params:"sort=createdAt DESC"
     });
@@ -37,10 +38,10 @@ function UserListController($scope, $location, rest, $rootScope, Flash) {
     }
 }
 
-function UserViewController($scope, Flash, rest, $routeParams, $location) {
-    Flash.clear();
-    $scope.modelName = "User";
-    $scope.type = "users";
+function FileTypeViewController($scope, Flash, rest, $routeParams, $location) {
+Flash.clear();
+$scope.modelName = "File Type";
+$scope.type = "filetypes"; 
     $scope.model = rest().findOne({
         id: $routeParams.id,
         type: $scope.type 
@@ -52,10 +53,11 @@ function UserViewController($scope, Flash, rest, $routeParams, $location) {
     }
 }
 
-function UserCreateController($scope, rest, model, Flash,$location) {
-    Flash.clear();
-    $scope.modelName = "User";
-    $scope.type = "users";
+function FileTypeCreateController($scope, rest, model, Flash,$location) {
+Flash.clear();
+$scope.modelName = "File Type";
+$scope.type = "filetypes"; 
+
     $scope.model = new model();
     $scope.add = function(isValid) {
         if (isValid) {
@@ -69,10 +71,11 @@ function UserCreateController($scope, rest, model, Flash,$location) {
     };
 }
 
-function UserEditController($scope, Flash, rest, $routeParams, model) {
-    Flash.clear();
-    $scope.modelName = "User";
-    $scope.type = "users";
+function FileTypeEditController($scope, Flash, rest, $routeParams, model) {
+Flash.clear();
+$scope.modelName = "File Type";
+$scope.type = "filetypes"; 
+
     $scope.model = new model();
     $scope.update = function(isValid) {
         if (isValid) {

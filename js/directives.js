@@ -19,19 +19,41 @@
            return (typeof str === 'string' && str.length > max ? str.substring(0,max)+add : str);
         }
     });
-    app.directive('body', [function(){
-      return {
-        restrict: 'E',
-        link: function(scope, element, attrs) {
-          scope.$on('body:class:add', function(e, name){
-            element.addClass(name);
-          });
-          scope.$on('body:class:remove', function(e, name){
-            element.removeClass(name);
-          });
-          return;
-        }
-      };
+    app.directive("backButton", ["$window", function ($window) {
+        return {
+            restrict: "A",
+            link: function (scope, elem, attrs) {
+                elem.bind("click", function () {
+                    $window.history.back();
+                    scope.$apply();
+                });
+            }
+        };
     }]);
+
+app.directive('confirmClick', function ($window) {
+  var i = 0;
+  return {
+    restrict: 'A',
+    priority:  1,
+    compile: function (tElem, tAttrs) {
+      var fn = '$$confirmClick' + i++,
+          _ngClick = tAttrs.ngClick;
+      tAttrs.ngClick = fn + '($event)';
+
+      return function (scope, elem, attrs) {
+        var confirmMsg = attrs.confirmClick || 'Are you sure?';
+
+        scope[fn] = function (event) {
+          if($window.confirm(confirmMsg)) {
+            scope.$eval(_ngClick, {$event: event});
+          }
+        };
+      };
+    }
+  };
+});
+
+
 
 })();

@@ -1,31 +1,46 @@
+<!-- Input username -->
 <div class="form-group">
-    <label for="title" class="col-sm-2 control-label">Title</label>
-    <div class="col-sm-10">
-        <input type="text" ng-model="user.title" class="form-control" id="title" placeholder="user Title Here"/>
+    <label for="title" class="col-sm-2 control-label">Username</label>
+    <div class="col-sm-10"  ng-class="{ 'has-error': form.username.$touched && form.username.$invalid }">
+        <input type="text" ng-model="model.username" name="username" class="form-control" id="title" placeholder="Place username Here" required />
+        <div class="help-block" ng-messages="form.username.$error" ng-if="form.username.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
     </div>
 </div>
-<div class="form-group">
-    <label for="year" class="col-sm-2 control-label">Release Year</label>
-    <div class="col-sm-10">
-        <input type="text" ng-model="user.releaseYear" class="form-control" id="year" placeholder="When was the user released?"/>
-    </div>
-</div>
-<div class="form-group">
-    <label for="director" class="col-sm-2 control-label">Director</label>
-    <div class="col-sm-10">
-        <input type="text" ng-model="user.director" class="form-control" id="director" placeholder="Who directed the user?"/>
-    </div>
-</div>
+<!-- end Input username -->
 
-<div class="form-group">
-    <label for="plot" class="col-sm-2 control-label">user Genre</label>
+<!-- Input email -->
+<div class="form-group" ng-class="{ 'has-error': form.email.$touched && form.email.$invalid }">
+    <label for="title" class="col-sm-2 control-label">Email</label>
     <div class="col-sm-10">
-        <input type="text" ng-model="user.genre" class="form-control" id="plot" placeholder="user genre here"/>
+        <input  type="email" readonly onfocus="this.removeAttribute('readonly');" name="email"  ng-model="model.email" autocomplete="false"   class="form-control" id="title" placeholder="Place email Here" required/>
+        <div class="help-block" ng-messages="form.email.$error" ng-if="form.email.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
     </div>
 </div>
+<!-- end Input email -->
 
-<div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-        <input type="submit" class="btn btn-primary" value="Save"/>
+<!-- Input Password -->
+<div class="form-group" if-ng="model.password" ng-class="{ 'has-error': form.password.$touched && form.password.$invalid }">
+    <label for="title" class="col-sm-2 control-label">Password</label>
+    <div class="col-sm-10">
+        <input type="password" readonly onfocus="this.removeAttribute('readonly');"   ng-model="model.password" autocomplete="false"  name="password" class="form-control" id="title" placeholder="Place password Here"/>
+        <div class="help-block" ng-messages="form.password.$error" ng-if="form.password.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
     </div>
 </div>
+<!-- end Input Password -->
+
+<!-- Button save  -->
+<div class="box-footer"> 
+    <div class="col-sm-12">
+        <a ng-href="#" back-button class="btn btn-default pull-left">
+            Back
+        </a>
+        <input type="submit"  class="btn btn-primary pull-right" value="Save" ng-disabled="form.$invalid"/>
+    </div>
+</div> 
+<!-- end Button save -->

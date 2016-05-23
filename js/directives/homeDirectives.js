@@ -5,8 +5,10 @@
         return {
             restrict: "E",
             templateUrl: "/directives/home/sidebar-home.html",
-            controller: function($scope) {
-
+            controller: function($scope,$rootScope) {
+                $rootScope.isActive = function(viewLocation) {
+                  return    viewLocation === $rootScope.actualUrl;
+                }; 
             },
             controllerAs: "sidebarHome"
         };

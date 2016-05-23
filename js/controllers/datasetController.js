@@ -1,14 +1,17 @@
-var app = angular.module('odin.userControllers', []);
+var app = angular.module('odin.DatasetControllers', []);
 
 app.factory('model', function($resource) {
     return $resource();
 });
+    var modelName = "Dataset";
+    var type = "datasets";
+ 
+function DatasetListController($scope, $location, rest, $rootScope, Flash) {
 
-
-function UserListController($scope, $location, rest, $rootScope, Flash) {
     Flash.clear();
-    $scope.modelName = "User";
-    $scope.type = "users";
+    $scope.modelName = modelName;
+    $scope.type = type;
+
     var model = rest().get({
         type: $scope.type ,params:"sort=createdAt DESC"
     });
@@ -37,10 +40,12 @@ function UserListController($scope, $location, rest, $rootScope, Flash) {
     }
 }
 
-function UserViewController($scope, Flash, rest, $routeParams, $location) {
+function DatasetViewController($scope, Flash, rest, $routeParams, $location) {
+
     Flash.clear();
-    $scope.modelName = "User";
-    $scope.type = "users";
+    $scope.modelName = modelName;
+    $scope.type = type;
+
     $scope.model = rest().findOne({
         id: $routeParams.id,
         type: $scope.type 
@@ -52,10 +57,12 @@ function UserViewController($scope, Flash, rest, $routeParams, $location) {
     }
 }
 
-function UserCreateController($scope, rest, model, Flash,$location) {
+function DatasetCreateController($scope, rest, model, Flash,$location) {
+
     Flash.clear();
-    $scope.modelName = "User";
-    $scope.type = "users";
+    $scope.modelName = modelName;
+    $scope.type = type;
+
     $scope.model = new model();
     $scope.add = function(isValid) {
         if (isValid) {
@@ -69,10 +76,12 @@ function UserCreateController($scope, rest, model, Flash,$location) {
     };
 }
 
-function UserEditController($scope, Flash, rest, $routeParams, model) {
+function DatasetEditController($scope, Flash, rest, $routeParams, model) {
+
     Flash.clear();
-    $scope.modelName = "User";
-    $scope.type = "users";
+    $scope.modelName = modelName;
+    $scope.type = type;
+
     $scope.model = new model();
     $scope.update = function(isValid) {
         if (isValid) {

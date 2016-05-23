@@ -20,7 +20,6 @@
                 .success(function (response) {
                     callback(response);
                });
-             //  console.log($scope.url)
  
         }
  

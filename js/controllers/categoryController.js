@@ -1,14 +1,16 @@
-var app = angular.module('odin.userControllers', []);
+var app = angular.module('odin.categoryControllers', []);
 
 app.factory('model', function($resource) {
     return $resource();
 });
 
+ 
+function CategoryListController($scope, $location, rest, $rootScope, Flash) {
 
-function UserListController($scope, $location, rest, $rootScope, Flash) {
     Flash.clear();
-    $scope.modelName = "User";
-    $scope.type = "users";
+    $scope.modelName = "Category";
+    $scope.type = "categories";
+
     var model = rest().get({
         type: $scope.type ,params:"sort=createdAt DESC"
     });
@@ -37,10 +39,10 @@ function UserListController($scope, $location, rest, $rootScope, Flash) {
     }
 }
 
-function UserViewController($scope, Flash, rest, $routeParams, $location) {
+function CategoryViewController($scope, Flash, rest, $routeParams, $location) {
     Flash.clear();
-    $scope.modelName = "User";
-    $scope.type = "users";
+    $scope.modelName = "Category";
+    $scope.type = "categories"
     $scope.model = rest().findOne({
         id: $routeParams.id,
         type: $scope.type 
@@ -52,10 +54,10 @@ function UserViewController($scope, Flash, rest, $routeParams, $location) {
     }
 }
 
-function UserCreateController($scope, rest, model, Flash,$location) {
+function CategoryCreateController($scope, rest, model, Flash,$location) {
     Flash.clear();
-    $scope.modelName = "User";
-    $scope.type = "users";
+    $scope.modelName = "Category";
+    $scope.type = "categories"
     $scope.model = new model();
     $scope.add = function(isValid) {
         if (isValid) {
@@ -69,10 +71,10 @@ function UserCreateController($scope, rest, model, Flash,$location) {
     };
 }
 
-function UserEditController($scope, Flash, rest, $routeParams, model) {
+function CategoryEditController($scope, Flash, rest, $routeParams, model) {
     Flash.clear();
-    $scope.modelName = "User";
-    $scope.type = "users";
+    $scope.modelName = "Category";
+    $scope.type = "categories"
     $scope.model = new model();
     $scope.update = function(isValid) {
         if (isValid) {
