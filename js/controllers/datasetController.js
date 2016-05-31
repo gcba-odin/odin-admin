@@ -15,6 +15,7 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash) {
     var model = rest().get({
         type: $scope.type ,params:"sort=createdAt DESC"
     });
+
     $scope.data = model;
     $scope.delete = function(model) {
         rest().delete({
@@ -110,7 +111,9 @@ function DatasetCreateController($scope, rest, model, Flash,$location) {
     $scope.itemName= function(a){
             return "optional"+(parseInt(a)+1);
         }
-
+    $scope.model.tags = rest().get({
+        type: "tags" ,params:"sort=name DESC"
+    });
 
 }
 
@@ -121,6 +124,7 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model,$locatio
     $scope.type = type;
 
     $scope.model = new model();
+
     $scope.update = function(isValid) {
         if (isValid) {
             rest().update({
@@ -132,15 +136,35 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model,$locatio
             });
         }
     };
+   $scope.selected=function (id){/*
+         $scope.selectedtags = rest().getArray({
+            type: "datasets",
+            id:id,
+            asociate:"tags"
+        },function (){
+            var tags=[];
+            for (var i = 0; i < $scope.selectedtags.length; i++) {
+                tags.push($scope.selectedtags[i].id)
+
+            }
+            console.log(tags);
+           // console.log($("#tags").select2("val",tags))
+        });*/
+    }
+
 
     $scope.load = function() {
       $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type
-        });
-            var itemsTemporal=[];
-        
+        },function (){
+              $scope.model.tags = rest().get({
+                type: "tags" ,params:"sort=name DESC"
+            },$scope.selected($routeParams.id));
+          });
     };
 
     $scope.load();
+    
+
 }

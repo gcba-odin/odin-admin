@@ -174,3 +174,32 @@ div.close {
     min-width: 200px
 
 }
+
+.select2-container--default .select2-selection--single, .select2-selection .select2-selection--single {
+    border: 1px solid #d2d6de;
+    border-radius: 0;
+    padding: 2px 3px;
+    height: 34px;
+}
+.selectize-width-tags{
+  width: 90%
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #00C0EF !important;
+    border: 1px solid #00C0EF  !important;
+    border-radius: 4px;
+    cursor: default;
+    float: left;
+    margin-right: 5px;
+    margin-top: 5px;
+    padding: 0 5px;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    color: white  !important;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: bold;
+    margin-right: 2px;
+}

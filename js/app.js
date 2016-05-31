@@ -1,5 +1,5 @@
 (function() {
-    var app = angular.module('odin', ["ngRoute",'ngFlash','ui.bootstrap','localize','ckeditor','ngMessages', "ngCookies","ngResource","ngProgress","odin.controllers","store-directives", "store-factories"]);
+    var app = angular.module('odin', ["config-odin","ngRoute",'ngFlash','ui.bootstrap','localize','ckeditor','ngMessages', "ngCookies","ngResource","ngProgress","odin.controllers","store-directives", "store-factories"]);
 
 
 
@@ -188,12 +188,5 @@
             }
         });
 
-
-
-        $rootScope.$on('$routeChangeSuccess', function (e, current, pre) {
-            $rootScope.actualUrl=current.$$route.originalPath;
-                    $rootScope.url='http://137.135.84.77:3000';
-
-        });
     }
 })();

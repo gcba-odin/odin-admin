@@ -45,6 +45,18 @@
 	                },
 	                interceptor: {responseError: handError}
 	            },
+	            getArray : {
+	            	url: $url+"/:id/:asociate",
+	                method: 'GET',
+	                headers: { 'Authorization': 'JWT '+token},
+	                transformResponse:function (data){
+					 	$rootScope.progressbar.complete();
+						var json= JSON.parse(data);
+						return json.data;
+	                },
+	                isArray: true,
+	                interceptor: {responseError: handError}
+	            },
 	            findOne : {
 	            	url: $url+"/:id",
 	                method: 'GET',

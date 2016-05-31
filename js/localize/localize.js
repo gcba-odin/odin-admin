@@ -34,7 +34,7 @@ app.config(['$translateProvider', function ($translateProvider,$rootScope) {
     'STATUS':'Status',
     'FILE_TYPES': 'Tipos de archivos',
     'FILES': 'Archivos',
-    'FILES': 'Archivo',
+    'FILE': 'Archivo',
     'DATABASES': 'Bases de datos',
     'DATABASE': 'Base de datos',
 
@@ -91,8 +91,8 @@ app.config(['$translateProvider', function ($translateProvider,$rootScope) {
     'COMPLETE':'Completado',
 	'HOME':'Inicio',
     'OPTIONAL':'Opcional',
-    'ADD_OPTION':'Agregar Opción'
-
+    'ADD_OPTION':'Agregar Opción',
+    'SELECT_ONE':'Seleccione una opción'
   });
  console.log($rootScope);
   $translateProvider.preferredLanguage('es');

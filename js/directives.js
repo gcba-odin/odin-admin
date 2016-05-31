@@ -17,16 +17,16 @@
                }
             };
          }]);
-           app.directive('selectTwo', ['$parse', function ($parse,$filter) {
+           app.directive('selectTwo', ['$parse', function ($parse) {
             return {
                restrict: 'A',
                    scope: {
                 'model': '='
              },
                link: function(scope, element, attrs) {
-                  var model = attrs;
+                console.log(attrs)
                   $(element).select2({
-                      placeholder: $filter('translate')('SELECTE_ONE'),
+                      placeholder: attrs.placeholder,
                       allowClear: true
                   });
                }
