@@ -1,6 +1,69 @@
 (function() {
     var app = angular.module('store-directives', ["store-directives-home"]);
 
+
+     app.directive('fileModel', ['$parse', function ($parse) {
+            return {
+               restrict: 'A',
+               link: function(scope, element, attrs) {
+                  var model = $parse(attrs.fileModel);
+                  var modelSetter = model.assign;
+                  
+                  element.bind('change', function(){
+                     scope.$apply(function(){
+                        modelSetter(scope, element[0].files[0]);
+                     });
+                  });
+               }
+            };
+         }]);
+           app.directive('selectTwo', ['$parse', function ($parse,$filter) {
+            return {
+               restrict: 'A',
+                   scope: {
+                'model': '='
+             },
+               link: function(scope, element, attrs) {
+                  var model = attrs;
+                  $(element).select2({
+                      placeholder: $filter('translate')('SELECTE_ONE'),
+                      allowClear: true
+                  });
+               }
+            };
+         }]);
+
+
+
+         app.directive('fileUpload', function () {
+            return {
+                scope: true,        //create a new scope
+                link: function (scope, el, attrs) {
+                    el.bind('change', function (event) {
+                        var files = event.target.files;
+                        //iterate files since 'multiple' may be specified on the element
+                        for (var i = 0;i<files.length;i++) {
+                            //emit event upward
+                            scope.$emit("fileSelected", { file: files[i] });
+                        }                                       
+                    });
+                }
+            };
+          });
+      
+         app.controller('ctrlUpload', ['$scope', 'fileUpload', function($scope, fileUpload,$rootScope){
+            $scope.uploadFile = function(){
+               var file = $scope.file;
+               
+               console.log('file is ' );
+               console.dir($scope);
+               
+               var uploadUrl = $scope.url+"/files";
+
+               fileUpload.uploadFileToUrl(file, uploadUrl);
+            };
+         }]);
+
     app.filter('urlEncode', [function() {
         return window.encodeURIComponent;
     }]);
@@ -19,6 +82,17 @@
            return (typeof str === 'string' && str.length > max ? str.substring(0,max)+add : str);
         }
     });
+
+
+    app.filter('md5', function() {
+        return function(input) {
+         var  add =  '...';
+         var  max=26;
+         var str=input;
+           return md5(str);
+        }
+    });
+
     app.directive("backButton", ["$window", function ($window) {
         return {
             restrict: "A",
@@ -26,6 +100,25 @@
                 elem.bind("click", function () {
                     $window.history.back();
                     scope.$apply();
+                });
+            }
+        };
+    }]);
+
+
+    app.directive("addOptionButton", ["$window", function ($window) {
+        return {
+            restrict: "A",
+            link: function (scope, elem, attrs) {
+                elem.bind("click", function () {
+                 
+
+                  var option=$("#option1").html();
+
+                  $(".extraoptionals").append('<div class="form-group" id="option1">'+option+'</div>');
+                  console.log(option);
+                    scope.$apply();
+
                 });
             }
         };
@@ -57,3 +150,5 @@ app.directive('confirmClick', function ($window) {
 
 
 })();
+
+

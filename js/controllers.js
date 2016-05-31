@@ -1,6 +1,20 @@
-var app=angular.module('odin.controllers', ["odin.userControllers","odin.organizationControllers","odin.statusControllers","odin.filetypeControllers","odin.fileControllers","odin.categoryControllers"]);
+var app=angular.module('odin.controllers', ["odin.userControllers","odin.frequencyControllers","odin.organizationControllers","odin.statusControllers","odin.filetypeControllers","odin.fileControllers","odin.tagControllers","odin.categoryControllers"]);
 
-  app.controller("mainController", function($scope, AuthenticationService, $location,$rootScope) {
+  app.controller("mainController", function($scope, AuthenticationService, $location,$rootScope,$translate) {
+
+                $scope.language="español";
+
+        this.changeLanguage=function (element){
+                console.log(element);
+            if($scope.language=="english"){
+                $scope.language="español";
+                $translate.use("es");
+
+            }else{
+                $scope.language="english";
+                $translate.use("en");
+            }
+        }
 
         this.logout = function() {
             AuthenticationService.ClearCredentials();
@@ -12,12 +26,13 @@ var app=angular.module('odin.controllers', ["odin.userControllers","odin.organiz
         };
 
          $scope.activeClass= function(actualClass,itemclass){
-            console.log(actualClass,itemclass);
          if(actualClass==itemclass)
              {
                 return "active";
              }
         }
+
+
     }); 
 
 function controllerHome($scope, $rootScope) {
@@ -40,11 +55,11 @@ function LoginController($location, AuthenticationService, $scope) {
         vm.dataLoading = true;
         AuthenticationService.Login(vm.username, vm.password, function(response) {
 
-            if (response.code=="OK") {
+            if (!response.code) {
                 AuthenticationService.SetCredentials(vm.username, vm.password,response.data.token);
                 $location.path('/');
             } else {
-                FlashService.Error(response.message);
+                alert(response.message);
                 vm.dataLoading = false;
             }
         });

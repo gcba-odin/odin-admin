@@ -168,3 +168,9 @@ div.close {
 .help-block{
   margin: 0px !important; 
 }
+
+.selectize-width{
+  max-width: 300px;
+    min-width: 200px
+
+}

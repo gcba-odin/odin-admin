@@ -1,8 +1,8 @@
 <!-- Input name -->
 <div class="form-group">
-    <label for="title" class="col-sm-2 control-label">Name</label>
+    <label for="name" class="col-sm-2 control-label"> {{ 'NAME' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.name.$touched && form.name.$invalid }">
-        <input type="text" ng-model="model.name" name="name" class="form-control" id="title" placeholder="Place name Here" required />
+        <input type="text" id="name" ng-model="model.name" name="name" class="form-control" id="title" placeholder="Place name Here" required />
         <div class="help-block" ng-messages="form.name.$error" ng-if="form.name.$touched">
             <div ng-messages-include="views/messages.html"></div>
         </div>
@@ -10,12 +10,74 @@
 </div>
 <!-- end Input name -->
 
+<!-- Input type -->
+<div class="form-group">
+    <label for="type" class="col-sm-2 control-label"> {{ 'TYPE' | translate }}</label>
+    <div class="col-sm-10"  ng-class="{ 'has-error': form.type.$touched && form.type.$invalid }">
+        <select select-two name="type" id="type"
+      ng-options="option.name for option in model.filetypes.data track by option.id"
+      ng-model="data.type" required class="selectize-width"></select>
+
+        <div class="help-block" ng-messages="form.type.$error" ng-if="form.type.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input type -->
+<!-- Input status -->
+<div class="form-group">
+    <label for="status" class="col-sm-2 control-label"> {{ 'STATUS' | translate }}</label>
+    <div class="col-sm-10"  ng-class="{ 'has-error': form.status.$touched && form.status.$invalid }">
+
+         <select select-two name="status" id="status"
+      ng-options="option.name for option in model.statuses.data track by option.id"
+      ng-model="data.status" required class="selectize-width"></select>
+
+        <div class="help-block" ng-messages="form.status.$error" ng-if="form.status.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input status -->
+
+<!-- Input organization -->
+<div class="form-group">
+    <label for="organization" class="col-sm-2 control-label"> {{ 'ORGANIZATION' | translate }}</label>
+    <div class="col-sm-10"  ng-class="{ 'has-error': form.organization.$touched && form.organization.$invalid }">
+
+           <select select-two name="organization" id="organization"
+      ng-options="option.name for option in model.organizations.data track by option.id"
+      ng-model="data.organization" required  class="selectize-width"></select>
+
+        <div class="help-block" ng-messages="form.organization.$error" ng-if="form.organization.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input organization -->
+
+<!-- Input dataset -->
+<div class="form-group">
+    <label for="dataset" class="col-sm-2 control-label"> {{ 'DATASET' | translate }}</label>
+    <div class="col-sm-10"  ng-class="{ 'has-error': form.dataset.$touched && form.dataset.$invalid }">
+        <input type="text" id="dataset" ng-model="model.dataset" name="dataset" class="form-control" id="title" placeholder="Place dataset Here" required />
+        <div class="help-block" ng-messages="form.dataset.$error" ng-if="form.dataset.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input dataset -->
+
+
+
 <!-- Input Description -->
 <div class="form-group">
-    <label for="title" class="col-sm-2 control-label">Description</label>
-    <div class="col-sm-10"  ng-class="{ 'has-error': form.name.$touched && form.name.$invalid }">
-        <textarea  class="form-control" ></textarea>
-        <div class="help-block" ng-messages="form.name.$error" ng-if="form.name.$touched">
+    <label for="description" class="col-sm-2 control-label"> {{ 'DESCRIPTION' | translate }}</label>
+    <div class="col-sm-10"  ng-class="{ 'has-error': form.description.$touched && form.description.$invalid }">
+      
+        <textarea id="description" class="form-control"  ckeditor="options" ng-model="model.description" name="description"></textarea>
+
+        <div class="help-block" ng-messages="form.description.$error" ng-if="form.description.$touched">
             <div ng-messages-include="views/messages.html"></div>
         </div>
     </div>
@@ -24,23 +86,24 @@
 
 <!-- Input Notes -->
 <div class="form-group">
-    <label for="title" class="col-sm-2 control-label">Notes</label>
-    <div class="col-sm-10"  ng-class="{ 'has-error': form.name.$touched && form.name.$invalid }">
-         <textarea  class="form-control" ></textarea>
+    <label for="notes" class="col-sm-2 control-label"> {{ 'NOTES' | translate }}</label>
+    <div class="col-sm-10"  ng-class="{ 'has-error': form.notes.$touched && form.notes.$invalid }">
+        <textarea class="form-control" id="notes"  ckeditor="options" ng-model="model.notes" name="notes"></textarea>
 
-        <div class="help-block" ng-messages="form.name.$error" ng-if="form.name.$touched">
+        <div class="help-block" ng-messages="form.notes.$error" ng-if="form.notes.$touched">
             <div ng-messages-include="views/messages.html"></div>
         </div>
     </div>
 </div>
 <!-- end Input Notes -->
 
+
 <!-- Input Url -->
 <div class="form-group">
-    <label for="title" class="col-sm-2 control-label">Url</label>
-    <div class="col-sm-10"  ng-class="{ 'has-error': form.name.$touched && form.name.$invalid }">
-        <input type="url" ng-model="model.name" name="name" class="form-control" id="title" placeholder="Place name Here" required />
-        <div class="help-block" ng-messages="form.name.$error" ng-if="form.name.$touched">
+    <label for="url" class="col-sm-2 control-label"> {{ 'URL' | translate }}</label>
+    <div class="col-sm-10"  ng-class="{ 'has-error': form.url.$touched && form.url.$invalid }">
+        <input type="url" id="url" ng-model="model.url" name="url" class="form-control" id="title" placeholder="Place url Here" required />
+        <div class="help-block" ng-messages="form.url.$error" ng-if="form.url.$touched">
             <div ng-messages-include="views/messages.html"></div>
         </div>
     </div>
@@ -49,23 +112,80 @@
 
 <!-- Input visibility -->
 <div class="form-group">
-    <label for="title" class="col-sm-2 control-label">Visibility</label>
-    <div class="col-sm-10"  ng-class="{ 'has-error': form.name.$touched && form.name.$invalid }">
-        <input type="checkbox" ng-model="model.name" name="name"  id="title" placeholder="Place name Here" required />
-        <div class="help-block" ng-messages="form.name.$error" ng-if="form.name.$touched">
+    <label for="visibility" class="col-sm-2 control-label"> {{ 'VISIBILITY' | translate }}</label>
+    <div class="col-sm-10"  ng-class="{ 'has-error': form.visibility.$touched && form.visibility.$invalid }">
+        <input type="checkbox" id="visibility" ng-model="model.visibility" name="visibility"    placeholder="Place visibility Here" required />
+        <div class="help-block" ng-messages="form.visibility.$error" ng-if="form.visibility.$touched">
             <div ng-messages-include="views/messages.html"></div>
         </div>
     </div>
 </div>
 <!-- end Input visibility -->
 
+<!-- Input updateFrequency -->
+<div class="form-group">
+    <label for="updateFrequency" class="col-sm-2 control-label"> {{ 'FREQUENCY' | translate }}</label>
+    <div class="col-sm-10"  ng-class="{ 'has-error': form.updateFrequency.$touched && form.updateFrequency.$invalid }">
+
+        <select  select-two name="frecuency" id="frecuency"
+      ng-options="option.name for option in model.frequencies.data track by option.id"
+      ng-model="data.updateFrequency" required class="selectize-width"></select>
+        <div class="help-block" ng-messages="form.updateFrequency.$error" ng-if="form.updateFrequency.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input updateFrequency -->
+
+<!-- Input owner -->
+<div class="form-group">
+    <label for="owner" class="col-sm-2 control-label"> {{ 'OWNER' | translate }}</label>
+    <div class="col-sm-10"  ng-class="{ 'has-error': form.owner.$touched && form.owner.$invalid }">
+
+        <input type="text" id="owner" ng-model="model.owner" name="owner" class="form-control" id="owner" placeholder="Place owner Here" required />
+
+        <div class="help-block" ng-messages="form.owner.$error" ng-if="form.owner.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input owner -->
+
+<!-- Input uploadFile -->
+<div class="form-group">
+    <label for="uploadFile" class="col-sm-2 control-label"> {{ 'UPLOAD_FILE' | translate }}</label>
+    <div class="col-sm-5"  ng-class="{ 'has-error': form.uploadFile.$touched && form.uploadFile.$invalid }">
+          <div class="btn btn-info" ngf-select ng-model="model.uploadFile" name="uploadFile" ngf-pattern="'image/*'"
+    ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100" 
+    ngf-resize="{width: 100, height: 100}">{{ 'SELECT' | translate }}</div>
+
+        <div class="help-block" ng-messages="form.uploadFile.$error" ng-if="form.uploadFile.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+    <div class="col-sm-5">
+
+<div class="progress">
+  <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="{{uploadImageProgress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{uploadImageProgress}}%">
+   {{uploadImageProgress}}% {{ 'COMPLETE' | translate }}
+  </div>
+</div>
+
+    </div>
+</div>
+<!-- end Input visibility -->
+
+
 <!-- Button save  -->
 <div class="box-footer"> 
     <div class="col-sm-12">
         <a ng-href="#" back-button class="btn btn-default pull-left">
-            Back
+             {{ 'BACK' | translate }}
         </a>
-        <input type="submit"  class="btn btn-primary pull-right" value="Save" ng-disabled="form.$invalid"/>
+        <input type="submit"  class="btn btn-primary pull-right" value=" {{ 'SAVE' | translate }}" ng-disabled="form.$invalid"/>
     </div>
 </div> 
 <!-- end Button save -->
+
+<script src="plugins/select2/select2.min.js"></script>
+  <link rel="stylesheet" href="plugins/select2/select2.min.css">

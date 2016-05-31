@@ -4,9 +4,9 @@
         <div class="row">
             <div class="col-xs-12">
                 <ol class="breadcrumb">
-                    <li><a href="#/"><i class="fa fa-dashboard"></i> Home</a>
+                    <li><a href="#/"><i class="fa fa-dashboard"></i> {{ 'HOME' | translate }}</a>
                     </li>
-                    <li class="active">{{modelName}}</li>
+                    <li class="active">{{ 'DATASETS' | translate }}</li>
                 </ol>        
             </div>
         </div>
@@ -17,11 +17,11 @@
             <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">All {{type}}</h3>
+              <h3 class="box-title">{{ 'DATASETS' | translate }}</h3>
               <div class="box-tools">
                 <div class="input-group input-group-sm" style="width: 150px;">
                   <div class="input-group-btn">
-                        <a ng-href="#/datasets/new" class="btn-primary btn nodecoration pull-right">Add New {{modelName}}</a>
+                        <a ng-href="#/datasets/new" class="btn-primary btn nodecoration pull-right">{{ 'ADD_NEW' | translate }} </a>
                   </div>
                 </div>
               </div>
@@ -30,17 +30,17 @@
             <div class="box-body table-responsive no-padding">
               <table class="table table-hover">
                 <tbody><tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Actions</th>
+                <!-- <th>ID</th>-->
+                  <th>{{ 'NAME' | translate }}</th>
+                  <th>{{ 'ACTIONS' | translate }}</th>
                 </tr>
                 <tr ng-repeat="model in data.data">
-                  <td>{{model.id}}</td>
+                 <!-- <td>{{model.id}}</td>-->
                   <td>{{model.name}}</td>
                   <td>
-                    <a class="btn btn-primary" ng-click="view({id:model.id})">View</a>
-                    <a class="btn btn-info" ng-click="edit({id:model.id})">Edit</a>
-                    <a class="btn btn-danger" ng-click="delete({id:model.id})" confirm-click="Are you sure to do this action?">Delete</a>
+                    <a class="btn btn-primary" ng-click="view({id:model.id})">{{ 'VIEW' | translate }}</a>
+                    <a class="btn btn-info" ng-click="edit({id:model.id})">{{ 'EDIT' | translate }}</a>
+                    <a class="btn btn-danger" ng-click="delete({id:model.id})" confirm-click="{{ 'DO_THIS_ACTION' | translate }}">{{ 'DELETE' | translate }}</a>
                   </td>
                 </tr>
               

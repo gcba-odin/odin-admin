@@ -1,6 +1,6 @@
 <!-- Input name -->
 <div class="form-group">
-    <label for="title" class="col-sm-2 control-label">Name</label>
+    <label for="title" class="col-sm-2 control-label">{{ 'NAME' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.name.$touched && form.name.$invalid }">
         <input type="text" ng-model="model.name" name="name" class="form-control" id="title" placeholder="Place name Here" required />
         <div class="help-block" ng-messages="form.name.$error" ng-if="form.name.$touched">
@@ -15,9 +15,9 @@
 <div class="box-footer"> 
     <div class="col-sm-12">
         <a ng-href="#" back-button class="btn btn-default pull-left">
-            Back
+            {{ 'BACK' | translate }}
         </a>
-        <input type="submit"  class="btn btn-primary pull-right" value="Save" ng-disabled="form.$invalid"/>
+        <input type="submit"  class="btn btn-primary pull-right" value="{{ 'SAVE' | translate }}" ng-disabled="form.$invalid"/>
     </div>
 </div> 
 <!-- end Button save -->

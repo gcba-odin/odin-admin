@@ -25,76 +25,85 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
-        <li ng-class="{active: isActive('/users/new') || isActive('/users')}" class="treeview">
+        <li ng-class="{active: isActive('/users/new') || isActive('/users') || isActiveEdit('users')}" class="treeview">
           <a ng-href="javascript:void(0)">
-            <i class="fa fa-user"></i> <span>Users</span> <i class="fa fa-angle-left pull-right"></i>
+            <i class="fa fa-user"></i> <span>{{ 'USERS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu">
-            <li ng-class="{active: isActive('/users/new')}"><a ng-href="#/users/new"><i class="fa fa-circle-o"></i> Add User</a></li>
-            <li ng-class="{active: isActive('/users')}"><a ng-href="#/users"><i class="fa fa-circle-o"></i> View Users  </a></li>
+            <li ng-class="{active: isActive('/users/new')}"><a ng-href="#/users/new"><i class="fa fa-circle-o"></i> {{ 'ADD_USER' | translate }}</a></li>
+            <li ng-class="{active: isActive('/users')}"><a ng-href="#/users"><i class="fa fa-circle-o"></i> {{ 'VIEW_USERS' | translate }}  </a></li>
           </ul> 
         </li>
-        <li ng-class="{active: isActive('/organizations/new') || isActive('/organizations')}" class="treeview">
+        <li ng-class="{active: isActive('/organizations/new') || isActive('/organizations') || isActiveEdit('organizations')}" class="treeview">
           <a ng-href="javascript:void(0)">
-            <i class="fa fa-group"></i> <span>Organizations</span> <i class="fa fa-angle-left pull-right"></i>
+            <i class="fa fa-group"></i> <span>{{ 'ORGANIZATIONS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu">
-            <li   ng-class="{active: isActive('/organizations/new')}"><a ng-href="#/organizations/new"><i class="fa fa-circle-o"></i> Add Organization</a></li>
-            <li ng-class="{active: isActive('/organizations')}"><a ng-href="#/organizations"><i class="fa fa-circle-o"></i> View Organizations  </a></li>
+            <li   ng-class="{active: isActive('/organizations/new')}"><a ng-href="#/organizations/new"><i class="fa fa-circle-o"></i> {{ 'ADD_ORGANIZATIONS' | translate }}</a></li>
+            <li ng-class="{active: isActive('/organizations')}"><a ng-href="#/organizations"><i class="fa fa-circle-o"></i> {{ 'VIEW_ORGANIZATIONS' | translate }} </a></li>
           </ul>
         </li>
-        <li ng-class="{active: isActive('/categories/new') || isActive('/categories')}" class="treeview">
+        <li ng-class="{active: isActive('/categories/new') || isActive('/categories') || isActiveEdit('categories')}" class="treeview">
           <a ng-href="javascript:void(0)">
-            <i class="fa fa-list-alt"></i> <span>Categories</span> <i class="fa fa-angle-left pull-right"></i>
+            <i class="fa fa-list-alt"></i> <span>{{ 'CATEGORIES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu">
-            <li ng-class="{active: isActive('/categories/new')}"><a ng-href="#/categories/new"><i class="fa fa-circle-o"></i> Add Category</a></li>
-            <li ng-class="{active: isActive('/categories')}"><a ng-href="#/categories"><i class="fa fa-circle-o"></i> View Categories  </a></li>
+            <li ng-class="{active: isActive('/categories/new')}"><a ng-href="#/categories/new"><i class="fa fa-circle-o"></i>  {{ 'ADD_CATEGORIES' | translate }}</a></li>
+            <li ng-class="{active: isActive('/categories')}"><a ng-href="#/categories"><i class="fa fa-circle-o"></i> {{ 'VIEW_CATEGORIES' | translate }}</a></li>
           </ul>
         </li>
-        <li ng-class="{active: isActive('/statuses/new') || isActive('/statuses')}" class="treeview">
+        <li ng-class="{active: isActive('/statuses/new') || isActive('/statuses') || isActiveEdit('statuses')}" class="treeview">
           <a ng-href="javascript:void(0)">
-            <i class="fa fa-info-circle"></i> <span>Statuses</span> <i class="fa fa-angle-left pull-right"></i>
+            <i class="fa fa-info-circle"></i> <span>{{ 'STATUSES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu">
-            <li ng-class="{active: isActive('/statuses/new')}"><a ng-href="#/statuses/new"><i class="fa fa-circle-o"></i> Add Status</a></li>
-            <li ng-class="{active: isActive('/statuses')}"><a ng-href="#/statuses"><i class="fa fa-circle-o"></i> View Statuses  </a></li>
+            <li ng-class="{active: isActive('/statuses/new')}"><a ng-href="#/statuses/new"><i class="fa fa-circle-o"></i> Add  {{ 'ADD_STATUSES' | translate }}</a></li>
+            <li ng-class="{active: isActive('/statuses')}"><a ng-href="#/statuses"><i class="fa fa-circle-o"></i>  {{ 'VIEW_STATUSES' | translate }} </a></li>
           </ul>
         </li>
-        <li ng-class="{active: isActive('/filetypes/new') || isActive('/filetypes')}" class="treeview">
+        <li ng-class="{active: isActive('/filetypes/new') || isActive('/filetypes') || isActiveEdit('filetypes')}" class="treeview">
           <a ng-href="javascript:void(0)">
-            <i class="fa fa-file-o"></i> <span>File types</span> <i class="fa fa-angle-left pull-right"></i>
+            <i class="fa fa-file-o"></i> <span>{{ 'FILE_TYPES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu">
-            <li ng-class="{active: isActive('/filetypes/new')}"><a ng-href="#/filetypes/new"><i class="fa fa-circle-o"></i> Add File type</a></li>
-            <li ng-class="{active: isActive('/filetypes')}"><a ng-href="#/filetypes"><i class="fa fa-circle-o"></i> View File types  </a></li>
+            <li ng-class="{active: isActive('/filetypes/new')}"><a ng-href="#/filetypes/new"><i class="fa fa-circle-o"></i>  {{ 'ADD_FILETYPES' | translate }}</a></li>
+            <li ng-class="{active: isActive('/filetypes')}"><a ng-href="#/filetypes"><i class="fa fa-circle-o"></i>  {{ 'VIEW_FILETYPES' | translate }} </a></li>
           </ul>
         </li>
-        <li ng-class="{active: isActive('/files/new') || isActive('/files')}" class="treeview">
+        <li ng-class="{active: isActive('/files/new') || isActive('/files') || isActiveEdit('files')}" class="treeview">
           <a ng-href="javascript:void(0)">
-            <i class="fa fa-file-text-o"></i> <span>Files</span> <i class="fa fa-angle-left pull-right"></i>
+            <i class="fa fa-file-text-o"></i> <span>{{ 'FILES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu">
-            <li ng-class="{active: isActive('/files/new')}"><a ng-href="#/files/new"><i class="fa fa-circle-o"></i> Add File</a></li>
-            <li ng-class="{active: isActive('/files')}"><a ng-href="#/files"><i class="fa fa-circle-o"></i> View Files  </a></li>
+            <li ng-class="{active: isActive('/files/new')}"><a ng-href="#/files/new"><i class="fa fa-circle-o"></i>{{ 'ADD_FILES' | translate }} </a></li>
+            <li ng-class="{active: isActive('/files')}"><a ng-href="#/files"><i class="fa fa-circle-o"></i>{{ 'VIEW_FILES' | translate }} </a></li>
           </ul>
         </li>
-        <li ng-class="{active: isActive('/databases/new') || isActive('/databases')}" class="treeview">
+        <li ng-class="{active: isActive('/databases/new') || isActive('/databases') || isActiveEdit('databases')}" class="treeview">
           <a ng-href="javascript:void(0)">
-            <i class="fa fa-database"></i> <span>Databases</span> <i class="fa fa-angle-left pull-right"></i>
+            <i class="fa fa-database"></i> <span>{{ 'DATABASES' | translate }} </span> <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu">
-            <li ng-class="{active: isActive('/databases/new')}"><a ng-href="#/databases/new"><i class="fa fa-circle-o"></i> Add Database</a></li>
-            <li ng-class="{active: isActive('/databases')}"><a ng-href="#/databases"><i class="fa fa-circle-o"></i> View Databases  </a></li>
+            <li ng-class="{active: isActive('/databases/new')}"><a ng-href="#/databases/new"><i class="fa fa-circle-o"></i>  {{ 'ADD_DATABASE' | translate }}</a></li>
+            <li ng-class="{active: isActive('/databases')}"><a ng-href="#/databases"><i class="fa fa-circle-o"></i> {{ 'VIEW_DATABASES' | translate }}</a></li>
           </ul>
         </li>
-        <li ng-class="{active: isActive('/datasets/new') || isActive('/datasets')}" class="treeview">
+        <li ng-class="{active: isActive('/datasets/new') || isActive('/datasets')  || isActiveEdit('datasets')}" class="treeview">
           <a ng-href="javascript:void(0)">
-            <i class="fa fa-bar-chart-o"></i> <span>Datasets</span> <i class="fa fa-angle-left pull-right"></i>
+            <i class="fa fa-bar-chart-o"></i> <span>{{ 'DATASETS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu">
-            <li ng-class="{active: isActive('/datasets/new')}"><a ng-href="#/datasets/new"><i class="fa fa-circle-o"></i> Add Dataset</a></li>
-            <li ng-class="{active: isActive('/datasets')}"><a ng-href="#/datasets"><i class="fa fa-circle-o"></i> View Datasets  </a></li>
+            <li ng-class="{active: isActive('/datasets/new')}"><a ng-href="#/datasets/new"><i class="fa fa-circle-o"></i> {{ 'ADD_DATASET' | translate }}</a></li>
+            <li ng-class="{active: isActive('/datasets')}"><a ng-href="#/datasets"><i class="fa fa-circle-o"></i> {{ 'VIEW_DATASET' | translate }}</a></li>
+          </ul>
+        </li>
+        <li ng-class="{active: isActive('/tags/new') || isActive('/tags') || isActiveEdit('tags')}" class="treeview">
+          <a ng-href="javascript:void(0)">
+            <i class="fa fa-bar-chart-o"></i> <span>{{ 'TAGS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            <li ng-class="{active: isActive('/tags/new')}"><a ng-href="#/tag/new"><i class="fa fa-circle-o"></i> {{ 'ADD_TAG' | translate }}</a></li>
+            <li ng-class="{active: isActive('/tags')}"><a ng-href="#/tags"><i class="fa fa-circle-o"></i> {{ 'VIEW_TAGS' | translate }}</a></li>
           </ul>
         </li>
       </ul>

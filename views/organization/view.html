@@ -4,9 +4,9 @@
         <div class="row">
             <div class="col-xs-12">
                 <ol class="breadcrumb">
-                    <li><a href="#/"><i class="fa fa-dashboard"></i> Home</a></li>
-                    <li><a href="#/{{type}}"><i class="fa fa-user"></i> {{modelName}}</a></li>
-                    <li class="active">View</li>
+                    <li><a href="#/"><i class="fa fa-dashboard"></i> {{ 'HOME' | translate }}</a></li>
+                    <li><a href="#/{{type}}"><i class="fa fa-user"></i> {{ 'ORGANIZATION' | translate }}</a></li>
+                    <li class="active">{{ 'VIEW' | translate }}</li>
                 </ol>        
             </div>
         </div>
@@ -17,19 +17,31 @@
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                      <h3 class="box-title">Details for <b>{{model.name}}</b></h3>
+                      <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} <b>{{model.name}}</b></h3>
                     </div>
                       <table class="table usertable">
                         <tr ng-if="model.name">
-                            <td>Name</td>
+                            <td>{{ 'NAME' | translate }}</td>
                             <td>{{model.name}}</td>
+                        </tr>
+                        <tr ng-if="model.description">
+                            <td>{{ 'DESCRIPTION' | translate }}</td>
+                            <td>{{model.description}}</td>
+                        </tr>
+                        <tr ng-if="model.createdBy">
+                            <td>{{ 'CREATED_BY' | translate }}</td>
+                            <td>{{model.createdBy}}</td>
+                        </tr>
+                        <tr ng-if="model.active">
+                            <td>{{ 'ACTIVE' | translate }}</td>
+                            <td>{{model.active}}</td>
                         </tr>
                     </table>
                     <div class="box-footer"> 
                         <a ng-href="#" back-button class="btn btn-default pull-left">
-                            Back
+                            {{ 'BACK' | translate }}
                         </a>
-                        <button type="submit" class="btn btn-primary pull-right" ng-click="edit(model)">Edit</button>
+                        <button type="submit" class="btn btn-primary pull-right" ng-click="edit(model)">{{ 'EDIT' | translate }}</button>
                     </div>
                 </div>  
               

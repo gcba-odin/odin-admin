@@ -1,7 +1,10 @@
 (function() {
-    var app = angular.module('odin', ["ngRoute",'ngFlash','ngMessages', "ngCookies","ngResource","ngProgress","odin.controllers","store-directives", "store-factories"]);
+    var app = angular.module('odin', ["ngRoute",'ngFlash','ui.bootstrap','localize','ckeditor','ngMessages', "ngCookies","ngResource","ngProgress","odin.controllers","store-directives", "store-factories"]);
 
-    app.config(function($routeProvider,$httpProvider) {
+
+
+
+    app.config(function($routeProvider,$httpProvider,$translateProvider) {
 
         $routeProvider
             .when("/", {
@@ -72,7 +75,37 @@
                 controller:FileTypeEditController
             })
             //// file type
-            ////  File type
+            ////  Tags 
+            .when("/tags", {
+                templateUrl: "views/tag/list.html",
+                controller:TagListController
+            }).when("/tags/:id/view", {
+                templateUrl: "views/tag/view.html",
+                controller:TagViewController
+            }).when("/tags/new", {
+                templateUrl: "views/tag/add.html",
+                controller:TagCreateController
+            }).when("/tags/:id/edit", {
+                templateUrl: "views/tag/edit.html",
+                controller:TagEditController
+            })
+            //// file type
+            ////  Frequency 
+            .when("/frequencies", {
+                templateUrl: "views/frequency/list.html",
+                controller:FrequencyListController
+            }).when("/frequencies/:id/view", {
+                templateUrl: "views/frequency/view.html",
+                controller:FrequencyViewController
+            }).when("/frequencies/new", {
+                templateUrl: "views/frequency/add.html",
+                controller:FrequencyCreateController
+            }).when("/frequencies/:id/edit", {
+                templateUrl: "views/frequency/edit.html",
+                controller:FrequencyEditController
+            })
+            //// Frequency
+            ////  File 
             .when("/files", {
                 templateUrl: "views/file/list.html",
                 controller:FileListController
@@ -86,7 +119,7 @@
                 templateUrl: "views/file/edit.html",
                 controller:FileEditController
             })
-            //// file type
+            //// file 
 
             ////  Databases
             .when("/databases", {
@@ -141,7 +174,6 @@
 
     function run($rootScope, $location, $cookieStore, $http) {
         // keep user logged in after page refresh
-        $rootScope.url='http://137.135.84.77';
         $rootScope.globals = $cookieStore.get('globals') || {};
         if ($rootScope.globals.currentUser) {
             $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
@@ -160,6 +192,8 @@
 
         $rootScope.$on('$routeChangeSuccess', function (e, current, pre) {
             $rootScope.actualUrl=current.$$route.originalPath;
+                    $rootScope.url='http://137.135.84.77:3000';
+
         });
     }
 })();

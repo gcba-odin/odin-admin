@@ -71,7 +71,7 @@ $scope.type = "filetypes";
     };
 }
 
-function FileTypeEditController($scope, Flash, rest, $routeParams, model) {
+function FileTypeEditController($scope, Flash, rest, $routeParams, model,$location) {
 Flash.clear();
 $scope.modelName = "File Type";
 $scope.type = "filetypes"; 
@@ -82,7 +82,10 @@ $scope.type = "filetypes";
             rest().update({
                 type: $scope.type,
                 id: $scope.model.id
-            }, $scope.model);
+            }, $scope.model,function (resp){
+                var url = '/'+$scope.type+'/' + resp.data.id + "/edit";
+                $location.path(url);
+            });
         }
     };
 

@@ -1,4 +1,4 @@
-var app = angular.module('odin.fileControllers', []);
+var app = angular.module('odin.fileControllers', ['ngFileUpload']);
 
 app.factory('model', function($resource) {
     return $resource();
@@ -55,7 +55,7 @@ function FileViewController($scope, Flash, rest, $routeParams, $location) {
     }
 }
 
-function FileCreateController($scope, rest, model, Flash,$location) {
+function FileCreateController($scope, rest, model, Flash,$location,Upload,$rootScope) {
 
     Flash.clear();
     $scope.modelName = "File";
@@ -63,18 +63,52 @@ function FileCreateController($scope, rest, model, Flash,$location) {
 
     $scope.model = new model();
     $scope.add = function(isValid) {
-        if (isValid) {
-            rest().save({
-                type: $scope.type
-            }, $scope.model,function (resp){
-                var url = '/'+$scope.type+'/' + resp.data.id + "/edit";
-                $location.path(url);
-            });
+    $scope.uploadImageProgress=10;
+        var data={
+            'name':$scope.model.name,
+            'type':$scope.model.type,
+            'status':$scope.model.status,
+            'organization':$scope.model.organization,
+            'dataset':$scope.model.dataset,
+            'description':$scope.model.description,
+            'notes':$scope.model.notes,
+            'url':$scope.model.url,
+            'visibility':$scope.model.visibility,
+
+            'uploadFile':$scope.model.uploadFile
         }
+
+        Upload.upload({
+            url: $rootScope.url+"/files",
+            data: data
+        }).then(function (resp) {
+          var url = '/'+$scope.type;
+            $location.path(url);
+        }, function (resp) {
+            alert(resp.status);
+        }, function (evt) {
+            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+            $scope.uploadImageProgress=progressPercentage;
+        });
     };
+
+
+    $scope.model.filetypes = rest().get({
+        type: "filetypes" ,params:"sort=name DESC"
+    });
+    $scope.model.statuses = rest().get({
+        type: "statuses" ,params:"sort=name DESC"
+    });
+    $scope.model.organizations = rest().get({
+        type: "organizations" ,params:"sort=name DESC"
+    });
+    $scope.model.frequencies = rest().get({
+        type: "updatefrequencies" ,params:"sort=name DESC"
+    });
+
 }
 
-function FileEditController($scope, Flash, rest, $routeParams, model) {
+function FileEditController($scope, Flash, rest, $routeParams, model,$location) {
     Flash.clear();
     $scope.modelName = "File";
     $scope.type = "files";
@@ -85,7 +119,10 @@ function FileEditController($scope, Flash, rest, $routeParams, model) {
             rest().update({
                 type: $scope.type,
                 id: $scope.model.id
-            }, $scope.model);
+            }, $scope.model,function (resp){
+                var url = '/'+$scope.type;
+                $location.path(url);
+            });
         }
     };
 

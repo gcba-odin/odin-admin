@@ -1,0 +1,31 @@
+<header-home></header-home>
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="row">
+            <div class="col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="#/"><i class="fa fa-dashboard"></i> {{ 'HOME' | translate }}</a></li>
+                    <li><a href="#/{{type}}"><i class="fa fa-user"></i> {{ 'FREQUENCIES' | translate }}</a></li>
+                    <li class="active">{{ 'ADD' | translate }}</li>
+                </ol>        
+            </div>
+        </div>
+    </section> 
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">{{ 'ADD' | translate }} {{ 'FREQUENCIES' | translate }}</h3>
+                    </div>
+                    <form class="form-horizontal" name="form"  autocomplete="false"  role="form" ng-submit="add(form.$valid)" novalidate>
+                        <div class="box-body" ng-include="'views/frequency/_form.html'"></div>
+                    </form>
+                </div> 
+            </div>
+        </div>    
+    </section>
+    <!--  Main content-->
+</div>
+<footer-home></footer-home>

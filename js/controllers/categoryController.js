@@ -37,6 +37,14 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash) {
         var url = '/'+$scope.type+'/' + model.id + "/view";
         $location.path(url);
     }
+   $scope.activeClass = function(activeClass) {
+            if(activeClass){
+                return "label-success";
+            }else{
+                return "label-warning";
+            }
+    };  
+
 }
 
 function CategoryViewController($scope, Flash, rest, $routeParams, $location) {
@@ -69,19 +77,38 @@ function CategoryCreateController($scope, rest, model, Flash,$location) {
             });
         }
     };
+    $scope.activeClass = function(activeClass,type) {
+            if(activeClass && (type==1)){
+                $scope.active="true";
+                return "active";
+            }else if(!activeClass && (type==2)){
+                                $scope.active="false";
+
+                return "active";
+            }
+    };   
 }
 
-function CategoryEditController($scope, Flash, rest, $routeParams, model) {
+function valorCheckbox(valor){
+    console.log(valor);
+}
+
+function CategoryEditController($scope, Flash, rest, $routeParams, model,$location) {
     Flash.clear();
     $scope.modelName = "Category";
     $scope.type = "categories"
     $scope.model = new model();
     $scope.update = function(isValid) {
+
+
         if (isValid) {
             rest().update({
                 type: $scope.type,
                 id: $scope.model.id
-            }, $scope.model);
+            }, $scope.model,function (){
+                var url = '/'+$scope.type;
+                $location.path(url);
+            });
         }
     };
 
@@ -91,6 +118,13 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model) {
             type: $scope.type
         });
     };
+    $scope.activeClass = function(activeClass,type) {
+            if(activeClass && (type==1)){
+                return "active";
+            }else if(!activeClass && (type==2)){
+                return "active";
+            }
+    };  
 
     $scope.load();
 }

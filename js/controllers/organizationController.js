@@ -6,6 +6,25 @@ app.factory('model', function($resource) {
 
 
 
+app.directive('wysihtml5', function() {
+    return {
+        // Restrict it to be an attribute in this case
+        restrict: 'A',
+        // responsible for registering DOM listeners as well as updating the DOM
+        link: function($scope, element, $attrs) {
+                       
+ CKEDITOR.replace('textarea');
+
+      /*  $scope.$parent.$watch( $attrs.content, function( newValue, oldValue ) {
+                                
+                                $scope.editor.innerHTML = newValue;
+                                $scope.editor.composer.setValue( newValue );
+                     });*/
+                        
+                  
+        }
+    };
+});
 function OrganizationListController($scope, $location, rest, $rootScope, Flash) {
 Flash.clear();
 $scope.modelName = "Organization";
@@ -36,7 +55,14 @@ $scope.type = "organizations";
     $scope.view = function(model) {
         var url = '/'+$scope.type+'/' + model.id + "/view";
         $location.path(url);
-    }
+    };
+    $scope.activeClass = function(activeClass) {
+            if(activeClass){
+                return "label-success";
+            }else{
+                return "label-warning";
+            }
+    }; 
 }
 
 function OrganizationViewController($scope, Flash, rest, $routeParams, $location) {
@@ -66,14 +92,27 @@ $scope.type = "organizations";
             rest().save({
                 type: $scope.type
             }, $scope.model,function (resp){
-                var url = '/'+$scope.type+'/' + resp.data.id + "/edit";
+                var url = '/'+$scope.type;
                 $location.path(url);
             });
         }
     };
+
+     $scope.activeClass = function(activeClass,type) {
+            if(activeClass && (type==1)){
+                return "active";
+            }else if(!activeClass && (type==2)){
+                return "active";
+            }
+    };  
 }
 
-function OrganizationEditController($scope, Flash, rest, $routeParams, model) {
+function OrganizationEditController($scope, Flash, rest, $routeParams, model,$location) {
+
+$scope.editorOptions = {
+    language: 'es',
+};
+
 Flash.clear();
 $scope.modelName = "Organization";
 $scope.type = "organizations";  
@@ -84,7 +123,10 @@ $scope.type = "organizations";
             rest().update({
                 type: $scope.type,
                 id: $scope.model.id
-            }, $scope.model);
+            }, $scope.model,function (resp){
+                var url = '/'+$scope.type;
+                $location.path(url);
+            });
         }
     };
 
@@ -94,6 +136,14 @@ $scope.type = "organizations";
             type: $scope.type
         });
     };
+
+ $scope.activeClass = function(activeClass,type) {
+            if(activeClass && (type==1)){
+                return "active";
+            }else if(!activeClass && (type==2)){
+                return "active";
+            }
+    };  
 
     $scope.load();
 }

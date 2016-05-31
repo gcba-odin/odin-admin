@@ -64,19 +64,57 @@ function DatasetCreateController($scope, rest, model, Flash,$location) {
     $scope.type = type;
 
     $scope.model = new model();
+    $scope.model.items=[];
     $scope.add = function(isValid) {
+        for ( obj in $scope.model){
+            if(obj.indexOf("optional") != -1){
+                delete $scope.model[obj]
+            }
+        }
+
+        var cont=1;
+        for (var i = 0; i < $scope.model.items.length; i++) {
+            $scope.model["optional"+cont]="";
+            $scope.model["optional"+cont]=$scope.model.items[i].field;
+            cont++;
+        }
+
+    
         if (isValid) {
             rest().save({
                 type: $scope.type
             }, $scope.model,function (resp){
-                var url = '/'+$scope.type+'/' + resp.data.id + "/edit";
+                var url = '/'+$scope.type;
                 $location.path(url);
             });
-        }
+        }  
     };
+
+    $scope.inputs = [];
+    var i=0;
+    $scope.addInput=function (){
+        if($scope.model.items.length <10){
+            var newItemNo = $scope.model.items.length+1;
+            $scope.model.items.push({field:""})
+        }
+
+    }
+    $scope.deleteIndexInput=function (index,field){
+        $scope.model.items.splice(index, 1);
+    }
+
+    $scope.increment= function(a){
+            return a+1;
+        }
+
+    $scope.itemName= function(a){
+            return "optional"+(parseInt(a)+1);
+        }
+
+
 }
 
-function DatasetEditController($scope, Flash, rest, $routeParams, model) {
+function DatasetEditController($scope, Flash, rest, $routeParams, model,$location) {
 
     Flash.clear();
     $scope.modelName = modelName;
@@ -88,15 +126,20 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model) {
             rest().update({
                 type: $scope.type,
                 id: $scope.model.id
-            }, $scope.model);
+            }, $scope.model,function (resp){
+                var url = '/'+$scope.type;
+                $location.path(url);
+            });
         }
     };
 
     $scope.load = function() {
-        $scope.model = rest().findOne({
+      $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type
         });
+            var itemsTemporal=[];
+        
     };
 
     $scope.load();

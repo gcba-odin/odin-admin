@@ -65,14 +65,14 @@ function DatabaseCreateController($scope, rest, model, Flash,$location) {
             rest().save({
                 type: $scope.type
             }, $scope.model,function (resp){
-                var url = '/'+$scope.type+'/' + resp.data.id + "/edit";
+                var url = '/'+$scope.type;
                 $location.path(url);
             });
         }
     };
 }
 
-function DatabaseEditController($scope, Flash, rest, $routeParams, model) {
+function DatabaseEditController($scope, Flash, rest, $routeParams, model,$location) {
 
 
     Flash.clear();
@@ -85,7 +85,10 @@ function DatabaseEditController($scope, Flash, rest, $routeParams, model) {
             rest().update({
                 type: $scope.type,
                 id: $scope.model.id
-            }, $scope.model);
+            }, $scope.model,function (resp){
+                var url = '/'+$scope.type;
+                $location.path(url);
+            });
         }
     };
 

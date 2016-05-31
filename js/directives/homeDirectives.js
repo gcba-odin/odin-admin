@@ -7,7 +7,10 @@
             templateUrl: "/directives/home/sidebar-home.html",
             controller: function($scope,$rootScope) {
                 $rootScope.isActive = function(viewLocation) {
-                  return    viewLocation === $rootScope.actualUrl;
+                  return  viewLocation === $rootScope.actualUrl;
+                }; 
+                $rootScope.isActiveEdit = function(viewLocation) {
+                  return  "/"+viewLocation+"/:id/edit" === $rootScope.actualUrl;
                 }; 
             },
             controllerAs: "sidebarHome"

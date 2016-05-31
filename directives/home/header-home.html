@@ -221,30 +221,20 @@
                 </p>-->
               </li>
               <!-- Menu Body -->
-              <!---<li class="user-body">
-                <div class="row">
-                  <div class="col-xs-4 text-center">
-                    <a href="javascript:void(0)">Followers</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="javascript:void(0)">Sales</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="javascript:void(0)">Friends</a>
-                  </div>
-                </div>-->
-                <!-- /.row -->
-              </li>
+           
               <!-- Menu Footer-->
               <li class="user-footer">
-                <!--<div class="pull-left">
-                  <a href="javascript:void(0)" class="btn btn-default btn-flat">Profile</a>
-                </div>-->
+                <div class="pull-left">
+                  <a href="javascript:void(0)" ng-click="main.changeLanguage()" class="btn btn-default btn-flat">{{ 'LANGUAGE' | translate }}</a>
+                </div>
                 <div class="pull-right">
                   <a href="javascript:void(0)" ng-click="main.logout()" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>
+          </li>
+          <li>
+            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
           </li>
         </ul>
       </div>

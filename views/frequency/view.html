@@ -1,0 +1,45 @@
+<header-home></header-home>
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="row">
+            <div class="col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="#/"><i class="fa fa-dashboard"></i> {{ 'HOME' | translate }}</a></li>
+                    <li><a href="#/{{type}}"><i class="fa fa-user"></i> {{ 'FREQUENCIES' | translate }}</a></li>
+                    <li class="active">{{ 'VIEW' | translate }}</li>
+                </ol>        
+            </div>
+        </div>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} <b>{{model.name}}</b></h3>
+                    </div>
+                      <table class="table usertable">
+                        <tr ng-if="model.name">
+                            <td>{{ 'NAME' | translate }} </td>
+                            <td>{{model.name}}</td>
+                        </tr>
+                        <tr ng-if="model.owner">
+                            <td>{{ 'OWNER' | translate }} </td>
+                            <td>{{model.owner}}</td>
+                        </tr>
+                    </table>
+                    <div class="box-footer"> 
+                        <a ng-href="#" back-button class="btn btn-default pull-left">
+                            {{ 'BACK' | translate }} 
+                        </a>
+                        <button type="submit" class="btn btn-primary pull-right" ng-click="edit(model)">{{ 'EDIT' | translate }} </button>
+                    </div>
+                </div>  
+              
+            </div>
+        </div>    
+    </section>
+    <!--  Main content-->
+</div>
+<footer-home></footer-home>

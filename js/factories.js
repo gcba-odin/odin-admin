@@ -67,12 +67,76 @@
 				      interceptor: {responseError: handError},
 				      transformResponse:function (data){
 					      	if(data){
-							 	flashService.showSuccess(JSON.parse(data).message);
-								$rootScope.progressbar.complete();
-								return angular.fromJson(data);
+					      		if(!!JSON.parse(data).message){
+						      		flashService.showSuccess(JSON.parse(data).message);
+					      		}
+									$rootScope.progressbar.complete();
+									return angular.fromJson(data);
 					      	}else{
 					      		$rootScope.progressbar.complete();
 					      	}
+	                	}
+				    }, 
+        		'saveWithData': {  
+		              url: $url,
+				      method: 'POST',
+				      headers: { 'Authorization': 'JWT '+token ,'Content-Type':undefined},
+				      transformRequest: function(data, headersGetter) {
+				        // Here we set the Content-Type header to null.
+				        var headers = headersGetter();
+				        headers['Content-Type'] = undefined;
+
+				        // And here begins the logic which could be used somewhere else
+				        // as noted above.
+				        if (data == undefined) {
+				          return data;
+				        }
+
+				        var fd = new FormData();
+
+				        var createKey = function(_keys_, currentKey) {
+				          var keys = angular.copy(_keys_);
+				          keys.push(currentKey);
+				          formKey = keys.shift()
+
+				          if (keys.length) {
+				            formKey += "[" + keys.join("][") + "]"
+				          }
+
+				          return formKey;
+				        }
+
+				        var addToFd = function(object, keys) {
+				          angular.forEach(object, function(value, key) {
+				            var formKey = createKey(keys, key);
+
+				            if (value instanceof File) {
+				              fd.append(formKey, value);
+				            } else if (value instanceof FileList) {
+				              if (value.length == 1) {
+				                fd.append(formKey, value[0]);
+				              } else {
+				                angular.forEach(value, function(file, index) {
+				                  fd.append(formKey + '[' + index + ']', file);
+				                });
+				              }
+				            } else if (value && (typeof value == 'object' || typeof value == 'array')) {
+				              var _keys = angular.copy(keys);
+				              _keys.push(key)
+				              addToFd(value, _keys);
+				            } else {
+				              fd.append(formKey, value);
+				            }
+				          });
+				        }
+
+				        addToFd(data, []);
+
+				        return fd;
+				      },
+				      interceptor: {responseError: handError},
+				      transformResponse:function (data){
+					      console.log(data);
 	                	}
 				    }, 
         		'delete': {  
@@ -91,9 +155,15 @@
 				      headers: { 'Authorization': 'JWT '+token },
 				      interceptor: {responseError: handError},
 				      transformResponse:function (data){
-					 	$rootScope.progressbar.complete();
-					 	flashService.showSuccess(JSON.parse(data).message);
-						return angular.fromJson(data);
+							if(data){
+					      		if(!!JSON.parse(data).message){
+						      		flashService.showSuccess(JSON.parse(data).message);
+					      		}
+									$rootScope.progressbar.complete();
+									return angular.fromJson(data);
+					      	}else{
+					      		$rootScope.progressbar.complete();
+					      	}
 	                	}
 				    }
 	        });

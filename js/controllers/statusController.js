@@ -73,7 +73,7 @@ $scope.type = "statuses";
     };
 }
 
-function StatusEditController($scope, Flash, rest, $routeParams, model) {
+function StatusEditController($scope, Flash, rest, $routeParams, model,$location) {
 Flash.clear();
 $scope.modelName = "Status";
 $scope.type = "statuses"; 
@@ -84,7 +84,10 @@ $scope.type = "statuses";
             rest().update({
                 type: $scope.type,
                 id: $scope.model.id
-            }, $scope.model);
+            }, $scope.model,function (resp){
+                var url = '/'+$scope.type+'/' + resp.data.id + "/edit";
+                $location.path(url);
+            });
         }
     };
 

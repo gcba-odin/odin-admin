@@ -4,9 +4,9 @@
         <div class="row">
             <div class="col-xs-12">
                 <ol class="breadcrumb">
-                    <li><a href="#/"><i class="fa fa-dashboard"></i> Home</a></li>
-                    <li><a href="#/{{type}}"><i class="fa fa-user"></i> {{modelName}}</a></li>
-                    <li class="active">Edit</li>
+                    <li><a href="#/"><i class="fa fa-dashboard"></i> {{ 'HOME' | translate }}</a></li>
+                    <li><a href="#/{{type}}"><i class="fa fa-user"></i> {{ 'DATABASE' | translate }}</a></li>
+                    <li class="active">{{ 'EDIT' | translate }}</li>
                 </ol>        
             </div>
         </div>
@@ -17,7 +17,7 @@
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                      <h3 class="box-title">Edit {{modelName}}</h3>
+                      <h3 class="box-title">{{ 'EDIT' | translate }} {{ 'DATABASE' | translate }}</h3>
                     </div>
                     <form class="form-horizontal" name="form"  autocomplete="false"  role="form" ng-submit="update(form.$valid)" novalidate>
                         <div class="box-body" ng-include="'views/database/_form.html'"></div>

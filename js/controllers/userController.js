@@ -5,6 +5,7 @@ app.factory('model', function($resource) {
 });
 
 
+
 function UserListController($scope, $location, rest, $rootScope, Flash) {
     Flash.clear();
     $scope.modelName = "User";
@@ -62,14 +63,21 @@ function UserCreateController($scope, rest, model, Flash,$location) {
             rest().save({
                 type: $scope.type
             }, $scope.model,function (resp){
-                var url = '/'+$scope.type+'/' + resp.data.id + "/edit";
+
+                if(!!resp.data){
+                    var url = '/'+$scope.type+'/' + resp.data.id + "/edit";
+                    
+                }else{
+                    var url = '/'+$scope.type+'/';
+                }
                 $location.path(url);
+        
             });
         }
     };
 }
 
-function UserEditController($scope, Flash, rest, $routeParams, model) {
+function UserEditController($scope, Flash, rest, $routeParams, model,$location) {
     Flash.clear();
     $scope.modelName = "User";
     $scope.type = "users";
@@ -79,7 +87,10 @@ function UserEditController($scope, Flash, rest, $routeParams, model) {
             rest().update({
                 type: $scope.type,
                 id: $scope.model.id
-            }, $scope.model);
+            }, $scope.model,function (){
+                var url = '/'+$scope.type+'/';
+                $location.path(url);
+            });
         }
     };
 
