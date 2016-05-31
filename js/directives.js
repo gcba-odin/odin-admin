@@ -20,15 +20,21 @@
            app.directive('selectTwo', ['$parse', function ($parse) {
             return {
                restrict: 'A',
-                   scope: {
-                'model': '='
-             },
+
                link: function(scope, element, attrs) {
-                console.log(attrs)
-                  $(element).select2({
-                      placeholder: attrs.placeholder,
-                      allowClear: true
+              console.log(attrs.ngModel);
+
+                 scope.$watch(attrs.ngModel, function(newValue, oldValue) {
+                  /*
+                    $(element).select2({
+                        placeholder: attrs.placeholder,
+                        allowClear: true
+                    });*/
+
+                                    console.log(attrs.selecttags)
+
                   });
+                 
                }
             };
          }]);

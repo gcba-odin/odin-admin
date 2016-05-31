@@ -136,7 +136,7 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model,$locatio
             });
         }
     };
-   $scope.selected=function (id){/*
+   $scope.selected=function (id){
          $scope.selectedtags = rest().getArray({
             type: "datasets",
             id:id,
@@ -148,8 +148,11 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model,$locatio
 
             }
             console.log(tags);
+
            // console.log($("#tags").select2("val",tags))
-        });*/
+          // $("#tags").select2("val",tags).trigger('change'); 
+           //$("#tags").val(["bWRhpz2"]).trigger('change'); 
+        });
     }
 
 

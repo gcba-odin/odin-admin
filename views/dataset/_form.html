@@ -79,8 +79,8 @@
 <div class="form-group">
     <label for="tags" class="col-sm-2 control-label"> {{ 'TAGS' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.tags.$touched && form.tags.$invalid }">
-
-        <select  multiple placeholder="{{ 'SELECT_ONE' | translate }}"   select-two name="tags" id="tags"
+{{selectedtags}}
+        <select  multiple placeholder="{{ 'SELECT_ONE' | translate }}"   select-two data-selecttags="{{selectedtags}}" name="tags" id="tags"
       ng-options="option.name for option in model.tags.data track by option.id"
       ng-model="data.tags"  class="selectize-width-tags"></select>
         <div class="help-block" ng-messages="form.tags.$error" ng-if="form.tags.$touched">
