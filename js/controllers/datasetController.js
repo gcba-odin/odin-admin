@@ -51,19 +51,15 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location,$sce
 
     $scope.model = rest().findOne({
         id: $routeParams.id,
-        type: $scope.type 
+        type: $scope.type,
+        params:"include=tags"
+    },function (){
+        var tags=[];
+        for (var i = 0; i < $scope.model.tags.length; i++) {
+            tags.push('<span class="label label-primary">'+$scope.model.tags[i].name+'</span>')
+        }
+        $scope.model.tags=tags.join(" - ");
     });
-$scope.selectedtags = rest().getArray({
-            type: "datasets",
-            id:$routeParams.id,
-            asociate:"tags"
-        },function (){
-            var tags=[];
-            for (var i = 0; i < $scope.selectedtags.length; i++) {
-                tags.push('<span class="label label-primary">'+$scope.selectedtags[i].name+'</span>')
-            }
-           $scope.model.tags=tags.join(",");
-        });
 
     $scope.edit = function(model) {
         var url = '/'+$scope.type+'/' + model.id + "/edit";
@@ -73,15 +69,18 @@ $scope.selectedtags = rest().getArray({
         return $sce.trustAsHtml(html);
     };
 
-app.filter('html', function($sce) {
-    return function(val) {
-        return $sce.trustAsHtml(val);
-    };
-});
+    app.filter('html', function($sce) {
+        return function(val) {
+            return $sce.trustAsHtml(val);
+        };
+    });
 }
 
 function DatasetCreateController($scope, rest, model, Flash,$location) {
 
+$scope.tagsmodel = rest().get({
+        type: "tags" ,params:"sort=name DESC"
+    });
     Flash.clear();
     $scope.modelName = modelName;
     $scope.type = type;
@@ -134,9 +133,7 @@ function DatasetCreateController($scope, rest, model, Flash,$location) {
     $scope.itemName= function(a){
             return "optional"+(parseInt(a)+1);
         }
-    $scope.model.tagsmodel = rest().get({
-        type: "tags" ,params:"sort=name DESC"
-    });
+    
 
 }
 
@@ -162,15 +159,6 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model,$locatio
             });
         }
     };
-   $scope.selected=function (){
-             $scope.selectedtags=$scope.model.tags
-console.log($scope.model.tags);
-      /*  var tags=[];
-            for (var i = 0; i < $scope.model.tags.length; i++) {
-                tags.push($scope.selectedtags[i].id)
-            }
-           $scope.tags=tags;*/
-    }
 
     $scope.load = function() {
         $scope.tagsmodel = rest().get({
@@ -180,7 +168,14 @@ console.log($scope.model.tags);
                 id: $routeParams.id,
                 type: $scope.type,
                 params:"include=tags"
-            },$scope.selected()); 
+            },function (){
+                var tags=[];
+                for (var i = 0; i < $scope.model.tags.length; i++) {
+                    tags.push($scope.model.tags[i].id)
+                }
+                $scope.tags=tags;
+
+            }); 
         });
  }
     $scope.load();

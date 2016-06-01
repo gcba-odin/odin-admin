@@ -56,7 +56,7 @@ function LoginController($location, AuthenticationService, $scope) {
         AuthenticationService.Login(vm.username, vm.password, function(response) {
 
             if (!response.code) {
-                AuthenticationService.SetCredentials(vm.username, vm.password,response.data.token);
+                AuthenticationService.SetCredentials(vm.username, vm.password,response.data.token,response.data.user);
                 $location.path('/');
             } else {
                 alert(response.message);

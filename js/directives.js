@@ -17,7 +17,7 @@
                }
             };
          }]);
-           app.directive('selectTwo', ['$parse', function ($parse,$scope) {
+           app.directive('selectTwoTags', ['$parse', function ($parse,$scope) {
             return {
                restrict: 'A',
 
@@ -37,7 +37,8 @@
                   {
                     if(value){
                        var json=angular.fromJson(value);
-                        selectize.addOption(json);
+                    setTimeout(function(){ selectize.addOption(json); }, 300);
+
                     }
                   })
 
@@ -47,7 +48,7 @@
                   {
                     if(value){
                     var json=angular.fromJson(value);
-                    setTimeout(function(){ selectize.setValue(json); }, 1500);
+                    setTimeout(function(){ selectize.setValue(json); }, 700);
 
                     
                     }
@@ -57,6 +58,19 @@
                }
             };
          }]);
+          app.directive('selectTwo', ['$parse', function ($parse,$scope) {
+            return {
+               restrict: 'A',
+
+               link: function(scope, element, attrs) {
+                console.log("aqui");
+                   $(element).selectize();
+                
+               }
+            };
+         }]);
+
+
 
 
 

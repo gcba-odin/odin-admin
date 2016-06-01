@@ -62,13 +62,14 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location) {
     }
 }
 
-function CategoryCreateController($scope, rest, model, Flash,$location) {
+function CategoryCreateController($scope, rest, model, Flash,$location,$rootScope) {
     Flash.clear();
     $scope.modelName = "Category";
     $scope.type = "categories"
     $scope.model = new model();
     $scope.add = function(isValid) {
         if (isValid) {
+            $scope.model.createdBy=$rootScope.globals.currentUser.user
             rest().save({
                 type: $scope.type
             }, $scope.model,function (resp){

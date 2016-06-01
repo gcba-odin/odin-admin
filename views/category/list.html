@@ -39,10 +39,10 @@
                     <span class="label label-default" ng-class="activeClass(model.active)">{{model.active ? 'Activo' : 'Inactivo'}}</span>
                   </td>
                   <td>{{model.name}}</td>
-                  <td>
+                  <td> 
                     <a class="btn btn-primary" ng-click="view({id:model.id})">{{ 'VIEW' | translate }}</a>
                     <a class="btn btn-info" ng-click="edit({id:model.id})">{{ 'EDIT' | translate }}</a>
-                    <a class="btn btn-danger" ng-click="delete({id:model.id})" confirm-click="Are you sure to do this action?">{{ 'DELETE' | translate }}</a>
+                    <a class="btn btn-danger" ng-click="delete({id:model.id})" confirm-click="{{ 'DO_THIS_ACTION' | translate }}">{{ 'DELETE' | translate }}</a>
                   </td>
                 </tr>
               
