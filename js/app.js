@@ -91,18 +91,18 @@
             })
             //// file type
             ////  Frequency 
-            .when("/frequencies", {
-                templateUrl: "views/frequency/list.html",
-                controller:FrequencyListController
-            }).when("/frequencies/:id/view", {
-                templateUrl: "views/frequency/view.html",
-                controller:FrequencyViewController
-            }).when("/frequencies/new", {
-                templateUrl: "views/frequency/add.html",
-                controller:FrequencyCreateController
-            }).when("/frequencies/:id/edit", {
-                templateUrl: "views/frequency/edit.html",
-                controller:FrequencyEditController
+            .when("/updatefrequencies", {
+                templateUrl: "views/updatefrequency/list.html",
+                controller:updateFrequencyListController
+            }).when("/updatefrequencies/:id/view", {
+                templateUrl: "views/updatefrequency/view.html",
+                controller:updateFrequencyViewController
+            }).when("/updatefrequencies/new", {
+                templateUrl: "views/updatefrequency/add.html",
+                controller:updateFrequencyCreateController
+            }).when("/updatefrequencies/:id/edit", {
+                templateUrl: "views/updatefrequency/edit.html",
+                controller:updateFrequencyEditController
             })
             //// Frequency
             ////  File 

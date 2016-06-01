@@ -13,6 +13,8 @@ app.config(['$translateProvider', function ($translateProvider,$rootScope) {
     'USERS': 'Usuarios',
     'FREQUENCIES': 'Frecuencias',
     'FREQUENCY': 'Frecuencias',
+    'ADD_FREQUENCY': 'Agregar Frecuencias',
+    'VIEW_FREQUENCY': 'Ver Frecuencias',
     'UPLOAD_FILE':'Subir Archivo',
     'SELECTE_ONE':'Seleccione uno',
     'USER': 'Usuario',

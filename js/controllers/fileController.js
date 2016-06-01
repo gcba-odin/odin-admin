@@ -105,7 +105,7 @@ function FileCreateController($scope, rest, model, Flash,$location,Upload,$rootS
     $scope.model.frequencies = rest().get({
         type: "updatefrequencies" ,params:"sort=name DESC"
     });
-    $scope.model.tags = rest().get({
+    $scope.tagsmodel = rest().get({
         type: "tags" ,params:"sort=name DESC"
     });
 

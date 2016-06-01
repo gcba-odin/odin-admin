@@ -29,9 +29,11 @@
                       delimiter: ',',
                       create: false,
                       valueField: 'id',
+                      placeholder:attrs.placeholder,
                       labelField: 'name',
                   })[0].selectize;
 
+                                       
                 scope.$watch('tagsmodel', function(newValue, oldValue) {
                   attrs.$observe('tagsmodel', function(value)
                   {
@@ -63,10 +65,15 @@
                restrict: 'A',
 
                link: function(scope, element, attrs) {
-                console.log("aqui");
-                   $(element).selectize();
-                
-               }
+                  setTimeout(function(){
+                   var selectize = $(element).selectize({
+                      create: false,
+                      placeholder:attrs.placeholder
+                    })[0].selectize;
+                   }, 700);
+
+               }                   
+
             };
          }]);
 

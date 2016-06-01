@@ -102,8 +102,17 @@
             <i class="fa fa-bar-chart-o"></i> <span>{{ 'TAGS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu">
-            <li ng-class="{active: isActive('/tags/new')}"><a ng-href="#/tag/new"><i class="fa fa-circle-o"></i> {{ 'ADD_TAG' | translate }}</a></li>
+            <li ng-class="{active: isActive('/tags/new')}"><a ng-href="#/tags/new"><i class="fa fa-circle-o"></i> {{ 'ADD_TAG' | translate }}</a></li>
             <li ng-class="{active: isActive('/tags')}"><a ng-href="#/tags"><i class="fa fa-circle-o"></i> {{ 'VIEW_TAGS' | translate }}</a></li>
+          </ul>
+        </li>
+        <li ng-class="{active: isActive('/Updatefrequency/new') || isActive('/Updatefrequency') || isActiveEdit('tags')}" class="treeview">
+          <a ng-href="javascript:void(0)">
+            <i class="fa fa-bar-chart-o"></i> <span>{{ 'FREQUENCY' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            <li ng-class="{active: isActive('/tags/new')}"><a ng-href="#/tags/new"><i class="fa fa-circle-o"></i> {{ 'ADD_FREQUENCY' | translate }}</a></li>
+            <li ng-class="{active: isActive('/tags')}"><a ng-href="#/tags"><i class="fa fa-circle-o"></i> {{ 'VIEW_FREQUENCY' | translate }}</a></li>
           </ul>
         </li>
       </ul>

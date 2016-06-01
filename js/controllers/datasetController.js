@@ -78,7 +78,7 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location,$sce
 
 function DatasetCreateController($scope, rest, model, Flash,$location) {
 
-$scope.tagsmodel = rest().get({
+    $scope.tagsmodel = rest().get({
         type: "tags" ,params:"sort=name DESC"
     });
     Flash.clear();

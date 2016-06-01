@@ -1,13 +1,13 @@
-var app = angular.module('odin.frequencyControllers', []);
+var app = angular.module('odin.updateFrequencyControllers', []);
 
 app.factory('model', function($resource) {
     return $resource();
 });
 
-function FrequencyListController($scope, $location, rest, $rootScope, Flash) {
+function updateFrequencyListController($scope, $location, rest, $rootScope, Flash) {
 
 Flash.clear();
-$scope.modelName = "Frequency";
+$scope.modelName = "updateFrequency";
 $scope.type = "updatefrequencies"; 
 
     var model = rest().get({
@@ -27,20 +27,20 @@ $scope.type = "updatefrequencies";
     };
 
     $scope.edit = function(model) {
-        var url = '/frequencies/' + model.id + "/edit";
+        var url = '/updatefrequencies/' + model.id + "/edit";
         $location.path(url);
     }
 
 
     $scope.view = function(model) {
-        var url = '/frequencies/' + model.id + "/view";
+        var url = '/updatefrequencies/' + model.id + "/view";
         $location.path(url);
     }
 }
 
-function FrequencyViewController($scope, Flash, rest, $routeParams, $location) {
+function updateFrequencyViewController($scope, Flash, rest, $routeParams, $location) {
 Flash.clear();
-$scope.modelName = "Frequency";
+$scope.modelName = "updateFrequency";
 $scope.type = "updatefrequencies"; 
     $scope.model = rest().findOne({
         id: $routeParams.id,
@@ -53,9 +53,9 @@ $scope.type = "updatefrequencies";
     }
 }
 
-function FrequencyCreateController($scope, rest, model, Flash,$location) {
+function updateFrequencyCreateController($scope, rest, model, Flash,$location) {
 Flash.clear();
-$scope.modelName = "Frequency";
+$scope.modelName = "updateFrequency";
 $scope.type = "updatefrequencies"; 
 
     $scope.model = new model();
@@ -71,9 +71,9 @@ $scope.type = "updatefrequencies";
     };
 }
 
-function FrequencyEditController($scope, Flash, rest, $routeParams, model,$location) {
+function updateFrequencyEditController($scope, Flash, rest, $routeParams, model,$location) {
 Flash.clear();
-$scope.modelName = "Frequency";
+$scope.modelName = "updateFrequency";
 $scope.type = "updatefrequencies"; 
 
     $scope.model = new model();

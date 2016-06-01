@@ -14,7 +14,7 @@
 <div class="form-group">
     <label for="type" class="col-sm-2 control-label"> {{ 'TYPE' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.type.$touched && form.type.$invalid }">
-        <select placeholder="{{ 'SELECT_ONE' | translate }}" select-two name="type" id="type"
+        <select placeholder="{{ 'SELECT_ONE' | translate }}"   select-two name="type" id="type"
       ng-options="option.name for option in model.filetypes.data track by option.id"
       ng-model="data.type" required class="selectize-width"></select>
 
@@ -29,7 +29,7 @@
     <label for="status" class="col-sm-2 control-label"> {{ 'STATUS' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.status.$touched && form.status.$invalid }">
 
-         <select placeholder="{{ 'SELECT_ONE' | translate }}" select-two name="status" id="status"
+         <select placeholder="{{ 'SELECT_ONE' | translate }}"   select-two name="status" id="status"
       ng-options="option.name for option in model.statuses.data track by option.id"
       ng-model="data.status" required class="selectize-width"></select>
 
@@ -45,7 +45,7 @@
     <label for="organization" class="col-sm-2 control-label"> {{ 'ORGANIZATION' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.organization.$touched && form.organization.$invalid }">
 
-           <select placeholder="{{ 'SELECT_ONE' | translate }}" select-two name="organization" id="organization"
+           <select placeholder="{{ 'SELECT_ONE' | translate }}"   select-two name="organization" id="organization"
       ng-options="option.name for option in model.organizations.data track by option.id"
       ng-model="data.organization" required  class="selectize-width"></select>
 
@@ -127,7 +127,7 @@
     <label for="updateFrequency" class="col-sm-2 control-label"> {{ 'FREQUENCY' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.updateFrequency.$touched && form.updateFrequency.$invalid }">
 
-        <select placeholder="{{ 'SELECT_ONE' | translate }}"   select-two name="frecuency" id="frecuency"
+        <select placeholder="{{ 'SELECT_ONE' | translate }}"  select-two name="frecuency" id="frecuency"
       ng-options="option.name for option in model.frequencies.data track by option.id"
       ng-model="data.updateFrequency" required class="selectize-width"></select>
         <div class="help-block" ng-messages="form.updateFrequency.$error" ng-if="form.updateFrequency.$touched">
@@ -138,13 +138,11 @@
 <!-- end Input updateFrequency -->
 
 <!-- Input tags -->
+
 <div class="form-group">
     <label for="tags" class="col-sm-2 control-label"> {{ 'TAGS' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.tags.$touched && form.tags.$invalid }">
-
-        <select multiple placeholder="{{ 'SELECT_ONE' | translate }}"   select-two name="tags" id="tags"
-      ng-options="option.name for option in model.tags.data track by option.id"
-      ng-model="data.tags" required class="selectize-width-tags"></select>
+         <input type="text"  placeholder="{{ 'SELECT' | translate }} {{ 'TAGS' | translate }}"  ng-model="model.tags" data-tagsselected="{{tags}}" data-tagsmodel="{{tagsmodel.data}}" select-two-tags />
         <div class="help-block" ng-messages="form.tags.$error" ng-if="form.tags.$touched">
             <div ng-messages-include="views/messages.html"></div>
         </div>
@@ -170,8 +168,8 @@
 <div class="form-group">
     <label for="uploadFile" class="col-sm-2 control-label"> {{ 'UPLOAD_FILE' | translate }}</label>
     <div class="col-sm-5"  ng-class="{ 'has-error': form.uploadFile.$touched && form.uploadFile.$invalid }">
-          <div class="btn btn-info" ngf-select ng-model="model.uploadFile" name="uploadFile" ngf-pattern="'image/*'"
-    ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100" 
+          <div class="btn btn-info" ngf-select ng-model="model.uploadFile" name="uploadFile" ngf-pattern="'application/zip,text/html,text/calendar,application/pdf,application/x-rar-compressed,application/excel,application/xml,text/xml'"
+    ngf-accept="'application/zip,text/html,text/calendar,application/pdf,application/x-rar-compressed,application/excel,application/xml,text/xml'" ngf-max-size="20MB" ngf-min-height="100" 
     ngf-resize="{width: 100, height: 100}">{{ 'SELECT' | translate }}</div>
 
         <div class="help-block" ng-messages="form.uploadFile.$error" ng-if="form.uploadFile.$touched">
