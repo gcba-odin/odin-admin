@@ -1,3 +1,5 @@
+
+
 (function() {
     var app = angular.module('store-factories', ["authentication-service","user-service"]);
    
@@ -58,7 +60,7 @@
 	                interceptor: {responseError: handError}
 	            },
 	            findOne : {
-	            	url: $url+"/:id",
+	            	url: $url+"/:id?:params",
 	                method: 'GET',
 	                headers: { 'Authorization': 'JWT '+token},
 	                transformResponse:function (data){

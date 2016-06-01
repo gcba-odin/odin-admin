@@ -72,7 +72,7 @@ function CategoryCreateController($scope, rest, model, Flash,$location) {
             rest().save({
                 type: $scope.type
             }, $scope.model,function (resp){
-                var url = '/'+$scope.type+'/' + resp.data.id + "/edit";
+                var url = '/'+$scope.type;
                 $location.path(url);
             });
         }

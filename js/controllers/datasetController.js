@@ -1,11 +1,13 @@
-var app = angular.module('odin.DatasetControllers', []);
+var app = angular.module('odin.DatasetControllers', ["ngSanitize"]);
 
 app.factory('model', function($resource) {
     return $resource();
 });
-    var modelName = "Dataset";
+
+
+
+     var modelName = "Dataset";
     var type = "datasets";
- 
 function DatasetListController($scope, $location, rest, $rootScope, Flash) {
 
     Flash.clear();
@@ -41,7 +43,7 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash) {
     }
 }
 
-function DatasetViewController($scope, Flash, rest, $routeParams, $location) {
+function DatasetViewController($scope, Flash, rest, $routeParams, $location,$sce) {
 
     Flash.clear();
     $scope.modelName = modelName;
@@ -51,11 +53,31 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location) {
         id: $routeParams.id,
         type: $scope.type 
     });
+$scope.selectedtags = rest().getArray({
+            type: "datasets",
+            id:$routeParams.id,
+            asociate:"tags"
+        },function (){
+            var tags=[];
+            for (var i = 0; i < $scope.selectedtags.length; i++) {
+                tags.push('<span class="label label-primary">'+$scope.selectedtags[i].name+'</span>')
+            }
+           $scope.model.tags=tags.join(",");
+        });
 
     $scope.edit = function(model) {
         var url = '/'+$scope.type+'/' + model.id + "/edit";
         $location.path(url);
     }
+    $scope.getHtml = function(html){
+        return $sce.trustAsHtml(html);
+    };
+
+app.filter('html', function($sce) {
+    return function(val) {
+        return $sce.trustAsHtml(val);
+    };
+});
 }
 
 function DatasetCreateController($scope, rest, model, Flash,$location) {
@@ -80,7 +102,8 @@ function DatasetCreateController($scope, rest, model, Flash,$location) {
             cont++;
         }
 
-    
+            $scope.model.tags=$scope.model.tags.split(",");
+
         if (isValid) {
             rest().save({
                 type: $scope.type
@@ -111,7 +134,7 @@ function DatasetCreateController($scope, rest, model, Flash,$location) {
     $scope.itemName= function(a){
             return "optional"+(parseInt(a)+1);
         }
-    $scope.model.tags = rest().get({
+    $scope.model.tagsmodel = rest().get({
         type: "tags" ,params:"sort=name DESC"
     });
 
@@ -124,8 +147,11 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model,$locatio
     $scope.type = type;
 
     $scope.model = new model();
-
+    $scope.tags=[]; 
+    var tagstemporal=[];
     $scope.update = function(isValid) {
+        $scope.model.tagsmodel=$scope.model.tags.split(",");
+
         if (isValid) {
             rest().update({
                 type: $scope.type,
@@ -136,37 +162,27 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model,$locatio
             });
         }
     };
-   $scope.selected=function (id){
-         $scope.selectedtags = rest().getArray({
-            type: "datasets",
-            id:id,
-            asociate:"tags"
-        },function (){
-            var tags=[];
-            for (var i = 0; i < $scope.selectedtags.length; i++) {
+   $scope.selected=function (){
+             $scope.selectedtags=$scope.model.tags
+console.log($scope.model.tags);
+      /*  var tags=[];
+            for (var i = 0; i < $scope.model.tags.length; i++) {
                 tags.push($scope.selectedtags[i].id)
-
             }
-            console.log(tags);
-
-           // console.log($("#tags").select2("val",tags))
-          // $("#tags").select2("val",tags).trigger('change'); 
-           //$("#tags").val(["bWRhpz2"]).trigger('change'); 
-        });
+           $scope.tags=tags;*/
     }
 
-
     $scope.load = function() {
-      $scope.model = rest().findOne({
-            id: $routeParams.id,
-            type: $scope.type
+        $scope.tagsmodel = rest().get({
+            type: "tags" ,params:"sort=name DESC"
         },function (){
-              $scope.model.tags = rest().get({
-                type: "tags" ,params:"sort=name DESC"
-            },$scope.selected($routeParams.id));
-          });
-    };
-
+            $scope.model = rest().findOne({
+                id: $routeParams.id,
+                type: $scope.type,
+                params:"include=tags"
+            },$scope.selected()); 
+        });
+ }
     $scope.load();
     
 

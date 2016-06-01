@@ -30,11 +30,11 @@
                         </tr>
                         <tr ng-if="model.description">
                             <td>{{ 'DESCRIPTION' | translate }}</td>
-                            <td>{{model.description}}</td>
+                            <td ng-bind-html="getHtml(model.description)"></td>
                         </tr>
                         <tr ng-if="model.notes">
                             <td>{{ 'NOTES' | translate }}</td>
-                            <td>{{model.notes}}</td>
+                            <td ng-bind-html="getHtml(model.notes)"></td>
                         </tr>
                         <tr ng-if="model.visibility">
                             <td>{{ 'VISIBILITY' | translate }}</td>
@@ -47,6 +47,10 @@
                         <tr ng-if="model.owner">
                             <td>{{ 'OWNER' | translate }} </td>
                             <td>{{model.owner}}</td>
+                        </tr>
+                        <tr ng-if="model.tags">
+                            <td>{{ 'TAGS' | translate }} </td>
+                            <td ng-bind-html="getHtml(model.tags)"></td>
                         </tr>
                         <tr ng-if="model.optional1">
                             <td>{{ 'OPTIONAL' | translate }} 1</td>

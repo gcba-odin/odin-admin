@@ -17,24 +17,43 @@
                }
             };
          }]);
-           app.directive('selectTwo', ['$parse', function ($parse) {
+           app.directive('selectTwo', ['$parse', function ($parse,$scope) {
             return {
                restrict: 'A',
 
                link: function(scope, element, attrs) {
-              console.log(attrs.ngModel);
+                    $(element).selectize()[0].selectize.destroy();
 
-                 scope.$watch(attrs.ngModel, function(newValue, oldValue) {
-                  /*
-                    $(element).select2({
-                        placeholder: attrs.placeholder,
-                        allowClear: true
-                    });*/
+                  var selectize = $(element).selectize({
+                      plugins: ['remove_button'],
+                      delimiter: ',',
+                      create: false,
+                      valueField: 'id',
+                      labelField: 'name',
+                  })[0].selectize;
 
-                                    console.log(attrs.selecttags)
+                scope.$watch('tagsmodel', function(newValue, oldValue) {
+                  attrs.$observe('tagsmodel', function(value)
+                  {
+                    if(value){
+                       var json=angular.fromJson(value);
+                        selectize.addOption(json);
+                    }
+                  })
 
-                  });
-                 
+                })
+                scope.$watch('tagsmodel', function(newValue, oldValue) {
+                  attrs.$observe('tagsselected', function(value)
+                  {
+                    if(value){
+                    var json=angular.fromJson(value);
+                    setTimeout(function(){ selectize.setValue(json); }, 1500);
+
+                    
+                    }
+                  })                   
+                });
+                
                }
             };
          }]);
@@ -78,6 +97,14 @@
           return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
         }
     });
+
+        app.filter('selectedOption', function() {
+        return function(element, tag) {
+         // return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+         console.log(element);
+        }
+    });
+
 
 
     app.filter('truncString', function() {
