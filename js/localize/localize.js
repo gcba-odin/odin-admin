@@ -6,13 +6,18 @@ app.config(['$translateProvider', function ($translateProvider,$rootScope) {
     'USERS': 'USERS',
     'LANGUAGE':'Español'
 
-  });
+  }); 
  
   $translateProvider.translations('es', {
   	'DO_THIS_ACTION':'¿Estas seguro de hacer esta acción?',
     'USERS': 'Usuarios',
     'FREQUENCIES': 'Frecuencias',
+    'LICENCE_BY_DEFAULT':'Licecia',
+    'VISIBILITY_BY_DEFAULT':'Visibilidad',
+    'CODIFY_BY_DEFAULT':'Codificación',
+    'FREQUENCY_UPDATE':'Actualicación de frecuencia',
     'FREQUENCY': 'Frecuencias',
+    'CONFIG': 'Configuración por defecto',
     'ADD_FREQUENCY': 'Agregar Frecuencias',
     'VIEW_FREQUENCY': 'Ver Frecuencias',
     'UPLOAD_FILE':'Subir Archivo',

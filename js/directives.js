@@ -70,13 +70,27 @@
                       create: false,
                       placeholder:attrs.placeholder
                     })[0].selectize;
-                   }, 700);
+                   }, 1000);
 
                }                   
 
             };
          }]);
 
+          app.directive('selectTwoDefault', ['$parse', function ($parse,$scope) {
+            return {
+               restrict: 'A',
+
+               link: function(scope, element, attrs) {
+                   var selectize = $(element).selectize({
+                      create: false,
+                      placeholder:attrs.placeholder
+                    })[0].selectize;
+
+               }                   
+
+            };
+         }]);
 
 
 
@@ -154,9 +168,10 @@
                 elem.bind("click", function () {
                     $window.history.back();
                     scope.$apply();
+                    return false;
                 });
             }
-        };
+        }; 
     }]);
 
 

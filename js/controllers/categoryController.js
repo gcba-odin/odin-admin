@@ -88,6 +88,9 @@ function CategoryCreateController($scope, rest, model, Flash,$location,$rootScop
                 return "active";
             }
     };   
+    $scope.onReady = function () {
+
+    };
 }
 
 function valorCheckbox(valor){
@@ -102,7 +105,7 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model,$locati
     $scope.update = function(isValid) {
 
 
-        if (isValid) {
+    if (isValid) {
             rest().update({
                 type: $scope.type,
                 id: $scope.model.id
@@ -127,5 +130,9 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model,$locati
             }
     };  
 
-    $scope.load();
+  
+    $scope.onReady = function () {
+        $scope.load();  
+    };
+
 }

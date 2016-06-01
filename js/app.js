@@ -15,8 +15,11 @@
                 templateUrl: "login.html",
                 controller: LoginController
             })
+            .when("/config", {
+                templateUrl: "config.html",
+            })
             //// user Routes
-            .when("/users", {
+            .when("/users", {  
                 templateUrl: "views/user/list.html",
                 controller:UserListController
             }).when("/users/:id/view", {

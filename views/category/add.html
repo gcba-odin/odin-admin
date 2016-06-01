@@ -19,7 +19,7 @@
                     <div class="box-header with-border">
                       <h3 class="box-title">{{ 'ADD' | translate }} {{ 'CATEGORY' | translate }}</h3>
                     </div>
-                    <form class="form-horizontal" name="form"  autocomplete="false"  role="form" ng-submit="add(form.$valid)" novalidate>
+                    <form autocomplete="off" class="form-horizontal" name="form"  autocomplete="false"  role="form" ng-submit="add(form.$valid)" novalidate>
                         <div class="box-body" ng-include="'views/category/_form.html'"></div>
                     </form>
                 </div> 
