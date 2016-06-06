@@ -1,20 +1,44 @@
-<!-- Input name -->
+
+<!-- Input uploadFile -->
+<div class="form-group">
+    <label for="uploadFile" class="col-sm-2 control-label"> {{ 'UPLOAD_FILE' | translate }}</label>
+    <div class="col-sm-5"  ng-class="{ 'has-error': form.uploadFile.$touched && form.uploadFile.$invalid }">
+          <div class="btn btn-info" ngf-select ng-model="model.uploadFile" name="uploadFile" ngf-pattern="'application/zip,text/html,text/calendar,application/pdf,application/x-rar-compressed,application/excel,application/xml,text/xml'"
+    ngf-accept="'application/zip,text/html,text/calendar,application/pdf,application/x-rar-compressed,application/excel,application/xml,text/xml'" ngf-max-size="20MB" ngf-min-height="100" 
+    ngf-resize="{width: 100, height: 100}"   ngf-before-model-change="beforeChange($files)">{{ 'SELECT' | translate }}</div>
+
+        <div class="help-block" ng-messages="form.uploadFile.$error" ng-if="form.uploadFile.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+    <div class="col-sm-5">
+
+        <div class="progress">
+          <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="{{uploadImageProgress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{uploadImageProgress}}%">
+           {{uploadImageProgress}}% {{ 'COMPLETE' | translate }}
+          </div>
+        </div>
+
+    </div>
+</div>
+<!-- end Input uploadFile -->
+
+<!-- Input name 
 <div class="form-group">
     <label for="name" class="col-sm-2 control-label"> {{ 'NAME' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.name.$touched && form.name.$invalid }">
-        <input type="text" id="name" ng-model="model.name" name="name" class="form-control" id="title" placeholder="{{ 'PLACE' | translate }} {{ 'NAME' | translate }} {{ 'HERE' | translate }}" required />
+        <input type="text" id="name" ng-model="model.name" name="name" class="form-control" id="title" placeholder="{{ 'PLACE' | translate }} {{ 'NAME' | translate }} {{ 'HERE' | translate }}" readonly="true"  />
         <div class="help-block" ng-messages="form.name.$error" ng-if="form.name.$touched">
             <div ng-messages-include="views/messages.html"></div>
         </div>
     </div>
 </div>
-<!-- end Input name -->
-
-<!-- Input type -->
+-->
+<!-- Input type 
 <div class="form-group">
     <label for="type" class="col-sm-2 control-label"> {{ 'TYPE' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.type.$touched && form.type.$invalid }">
-        <select placeholder="{{ 'SELECT_ONE' | translate }}"   select-two name="type" id="type"
+        <select placeholder="{{ 'SELECT_ONE' | translate }}"   name="type" id="type"
       ng-options="option.name for option in model.filetypes.data track by option.id"
       ng-model="data.type" required class="selectize-width"></select>
 
@@ -22,7 +46,7 @@
             <div ng-messages-include="views/messages.html"></div>
         </div>
     </div>
-</div>
+</div>-->
 <!-- end Input type -->
 <!-- Input status -->
 <div class="form-group">
@@ -110,11 +134,11 @@
 </div>
 <!-- end Input Url -->
 
-<!-- Input visibility -->
+<!-- Input visibility --> 
 <div class="form-group">
     <label for="visibility" class="col-sm-2 control-label"> {{ 'VISIBILITY' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.visibility.$touched && form.visibility.$invalid }">
-        <input type="checkbox" id="visibility" ng-model="model.visibility" name="visibility"    placeholder="{{ 'PLACE' | translate }} {{ 'VISIBILITY' | translate }} {{ 'HERE' | translate }}" required />
+        <input  type="checkbox" id="visibility" ng-model="model.visibility" name="visibility"    placeholder="{{ 'PLACE' | translate }} {{ 'VISIBILITY' | translate }} {{ 'HERE' | translate }}" required />
         <div class="help-block" ng-messages="form.visibility.$error" ng-if="form.visibility.$touched">
             <div ng-messages-include="views/messages.html"></div>
         </div>
@@ -164,29 +188,6 @@
 </div>
 <!-- end Input owner -->
 
-<!-- Input uploadFile -->
-<div class="form-group">
-    <label for="uploadFile" class="col-sm-2 control-label"> {{ 'UPLOAD_FILE' | translate }}</label>
-    <div class="col-sm-5"  ng-class="{ 'has-error': form.uploadFile.$touched && form.uploadFile.$invalid }">
-          <div class="btn btn-info" ngf-select ng-model="model.uploadFile" name="uploadFile" ngf-pattern="'application/zip,text/html,text/calendar,application/pdf,application/x-rar-compressed,application/excel,application/xml,text/xml'"
-    ngf-accept="'application/zip,text/html,text/calendar,application/pdf,application/x-rar-compressed,application/excel,application/xml,text/xml'" ngf-max-size="20MB" ngf-min-height="100" 
-    ngf-resize="{width: 100, height: 100}">{{ 'SELECT' | translate }}</div>
-
-        <div class="help-block" ng-messages="form.uploadFile.$error" ng-if="form.uploadFile.$touched">
-            <div ng-messages-include="views/messages.html"></div>
-        </div>
-    </div>
-    <div class="col-sm-5">
-
-<div class="progress">
-  <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="{{uploadImageProgress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{uploadImageProgress}}%">
-   {{uploadImageProgress}}% {{ 'COMPLETE' | translate }}
-  </div>
-</div>
-
-    </div>
-</div>
-<!-- end Input visibility -->
 
 
 <!-- Button save  -->

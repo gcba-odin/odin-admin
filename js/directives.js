@@ -165,14 +165,33 @@
         return {
             restrict: "A",
             link: function (scope, elem, attrs) {
-                elem.bind("click", function () {
+                elem.bind("click", function (e) {
+                    if (attrs.ngClick || attrs.href === '' || attrs.href == '#'){
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
                     $window.history.back();
                     scope.$apply();
-                    return false;
+                   
                 });
             }
         }; 
     }]);
+
+        app.directive("checkbox", ["$window", function ($window) {
+        return {
+            restrict: "A",
+            link: function (scope, elem, attrs) {
+                 $(elem).iCheck({
+                  checkboxClass: 'icheckbox_square-blue',
+                  radioClass: 'iradio_square-blue',
+                  increaseArea: '20%' // optional
+                });
+            }
+        }; 
+    }]);
+
+   
 
 
     app.directive("addOptionButton", ["$window", function ($window) {

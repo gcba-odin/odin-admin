@@ -6,13 +6,11 @@ app.factory('model', function($resource) {
 
 
 
-     var modelName = "Dataset";
-    var type = "datasets";
 function DatasetListController($scope, $location, rest, $rootScope, Flash) {
 
     Flash.clear();
-    $scope.modelName = modelName;
-    $scope.type = type;
+    $scope.modelName = "Dataset";
+    $scope.type = "datasets";
 
     var model = rest().get({
         type: $scope.type ,params:"sort=createdAt DESC"

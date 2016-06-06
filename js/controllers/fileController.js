@@ -61,6 +61,20 @@ function FileCreateController($scope, rest, model, Flash,$location,Upload,$rootS
     $scope.modelName = "File";
     $scope.type = "files";
 
+$scope.beforeChange=function($files){
+    $scope.model.name=$files[0].name;
+
+    var filestypes=$scope.model.filetypes.data;
+    console.log(filestypes);
+    for (var i = 0; i < filestypes.length; i++) {
+        if(filestypes[i].name==type){
+            $scope.model.type=filestypes[i].id;
+        }
+    }
+
+ 
+ 
+}
     $scope.model = new model();
     $scope.add = function(isValid) {
     $scope.uploadImageProgress=10;
@@ -87,6 +101,7 @@ function FileCreateController($scope, rest, model, Flash,$location,Upload,$rootS
         }, function (resp) {
             alert(resp.status);
         }, function (evt) {
+            console.log(evt.config._file.name);
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
             $scope.uploadImageProgress=progressPercentage;
         });

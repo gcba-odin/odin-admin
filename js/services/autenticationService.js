@@ -16,7 +16,7 @@
         function Login(username, password, callback) {
             /* Use this for real authenticationa
              ----------------------------------------------*/
-            $http.post($rootScope.url+'/users/login', { email: username, password: password })
+            $http.post($rootScope.url+'/users/login', { username: username, password: password })
                 .success(function (response) {
                     callback(response);
                });
