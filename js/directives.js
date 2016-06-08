@@ -91,7 +91,7 @@
                     labelField: attrs.key,
                     searchField: attrs.key,
                     placeholder:attrs.placeholder,
-                    create: false,
+                    create: true,
                     render: {
                         option: function(item, escape) {
                           var name=eval("item."+attrs.key);

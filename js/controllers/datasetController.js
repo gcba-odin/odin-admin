@@ -109,7 +109,6 @@ function DatasetCreateController($scope, rest, model, Flash,$location) {
             cont++;
         }
 
-        $scope.model.tags=$scope.model.tags.split(",");
 
         if (isValid) {
             rest().save({
@@ -154,7 +153,7 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model,$locatio
     $scope.model = new model();
     $scope.tags=[]; 
     var tagstemporal=[];
-
+$scope.tempData=[];
     $scope.update = function(isValid) {
 
         for ( obj in $scope.model){
@@ -165,6 +164,9 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model,$locatio
 
         var optionsTemp=[];
    
+
+          $scope.tempData= angular.copy($scope.model);
+
         for (var o = 0; o < 10; o++) {
             var verifify=verifyOptional($scope.model.items,o)
             if(verifify){
@@ -174,20 +176,21 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model,$locatio
             }
         }
 
-        $scope.model.items=optionsTemp;
+        $scope.tempData.items=optionsTemp;
 
         var cont=1;
-        for (var i = 0; i < $scope.model.items.length; i++) {
-            $scope.model["optional"+cont]="";
-            $scope.model["optional"+cont]=$scope.model.items[i].field;
+        for (var i = 0; i < $scope.tempData.items.length; i++) {
+            $scope.tempData["optional"+cont]="";
+            $scope.tempData["optional"+cont]=$scope.tempData.items[i].field;
             cont++;
         }
+
 
         if (isValid) {
             rest().update({
                 type: $scope.type,
-                id: $scope.model.id
-            }, $scope.model,function (resp){
+                id: $scope.tempData.id
+            }, $scope.tempData,function (resp){
                 var url = '/'+$scope.type;
                 $location.path(url);
             });
