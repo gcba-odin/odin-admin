@@ -192,17 +192,15 @@
 		    	}
 		    }
 		    
-			flashService.showError(" Route: <a target='_blank' href='"+e.config.url+"'>"+e.config.url+"</a> <br>"+params);
+			//flashService.showError(" Route: <a target='_blank' href='"+e.config.url+"'>"+e.config.url+"</a> <br>"+params);
 		}
 
 		function validationErrors(data){
 			var data=data.data;
 			var returntext="";
 			for (d in data){
-					console.log(data[d]);
-
 				for (r in data[d]){
-					returntext="<b>SERVER VALIDATIONS: </b> <br><p>Rule: "+data[d][r].rule+" <br>Message:"+data[d][r].message+" </p>";
+					returntext="<b>SERVER VALIDATIONS: </b> <br><p>Rule: "+data[d][r].rule+" <br>Message: "+data[d][r].message+" </p>";
 				}
 			}
 
