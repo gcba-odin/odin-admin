@@ -11,6 +11,10 @@
             </div>
         </div>
     </section>
+
+<div class="content-wrapper flash-message">  
+  <flash-message></flash-message>
+</div>
     <!-- Main content -->
     <section class="content">
         <div class="row">
@@ -40,7 +44,7 @@
                   <td>
                     <a class="btn btn-primary" ng-click="view({id:model.id})">{{ 'VIEW' | translate }}</a>
                     <a class="btn btn-info" ng-click="edit({id:model.id})">{{ 'EDIT' | translate }}</a>
-                    <a class="btn btn-danger" ng-click="delete({id:model.id})" confirm-click="Are you sure to do this action?">{{ 'DELETE' | translate }}</a>
+                    <a class="btn btn-danger" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)">{{ 'DELETE' | translate }}</a>
                   </td>
                 </tr>
               

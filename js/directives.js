@@ -76,7 +76,57 @@
 
             };
          }]);
+          app.directive('selectTwoAjax', ['$parse','$timeout', function ($timeout,$parse,$scope,$rootScope) {
+            return {
+               restrict: 'A',
+                    scope: {
+                    modelValue: '@ngModel'
+                  },
+               link: function(scope, element, attrs,rootScope) {
+                var selectizes = $(element).selectize({
+                    valueField: 'id',
+                    labelField: 'name',
+                    searchField: 'name',
+                    create: false,
+                    render: {
+                        option: function(item, escape) {
+                            return '<div>' +
+                                '<span class="title">' +
+                                    '<span class="name">' + escape(item.name) + '</span>' +
+                                '</span><br>' +
+                            '</div>';
+                        }
+                    },
+                    load: function(query, callback) {
+                        if (!query.length) return callback();
+                        $.ajax({
+                            url: scope.$root.url+'/organizations?where={"name":{"contains":"'+encodeURIComponent(query)+'"}}',
+                            type: 'GET',
+                            error: function() {
+                                callback();
+                            },
+                            success: function(res) {
+                              callback(res.data.slice(0, 10));
+                            }
+                        });
+                    }
+                });
+                attrs.$observe("model", function (newValue) {
+                    if(!!newValue){
+                      setTimeout(function(){
+                                                console.log("este es "+newValue);
 
+                        var  jsonValue=angular.fromJson(newValue);
+                         var selectize = selectizes[0].selectize;
+                          selectize.addOption({id: jsonValue.id, name: jsonValue.name});
+                          selectize.addItem(jsonValue.id);
+                      }, 500);
+                    }
+                  });
+               }                    
+
+            };
+         }]);
           app.directive('selectTwoDefault', ['$parse', function ($parse,$scope) {
             return {
                restrict: 'A',

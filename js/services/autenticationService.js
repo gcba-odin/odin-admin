@@ -5,7 +5,7 @@
     app.factory('AuthenticationService', AuthenticationService);
 
     AuthenticationService.$inject = ['$http', '$cookieStore', '$rootScope', '$timeout', 'UserService'];
-    function AuthenticationService($http, $cookieStore, $rootScope, $timeout, UserService,$scope) {
+    function AuthenticationService($http, $cookieStore, $rootScope, $timeout, UserService,$scope,Alertify) {
         var service = {};
  
         service.Login = Login;
@@ -19,7 +19,11 @@
             $http.post($rootScope.url+'/users/login', { username: username, password: password })
                 .success(function (response) {
                     callback(response);
-               });
+               })
+                .error(function (response){
+                              alert(response.data.message);
+
+                });
  
         }
  

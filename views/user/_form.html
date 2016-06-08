@@ -46,11 +46,26 @@
 </div>
 <!-- end Input email -->
 
-<!-- Input organization -->
+<!-- Input organization 
 <div class="form-group">
     <label for="organization" class="col-sm-2 control-label">{{ 'ORGANIZATION' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.organization.$touched && form.organization.$invalid }">
         <input value="" autocomplete="off" type="text" ng-model="model.organization" id="organization" name="organization" class="form-control" id="title" placeholder="{{ 'PLACE' | translate }}  {{ 'ORGANIZATION' | translate }} {{ 'HERE' | translate }} " required />
+        <div class="help-block" ng-messages="form.organization.$error" ng-if="form.organization.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>-->
+<!-- end Input organization -->
+
+<!-- Input organization -->
+<div class="form-group">
+    <label for="organization" class="col-sm-2 control-label"> {{ 'ORGANIZATION' | translate }}</label>
+    <div class="col-sm-10"  ng-class="{ 'has-error': form.organization.$touched && form.organization.$invalid }">
+    <select placeholder="{{ 'SELECT_ONE' | translate }}" data-model="{{model.organization}}" select-two-ajax  name="organization" id="organization"
+      ng-model="model.organization" required  class="selectize-width">
+      </select>
+
         <div class="help-block" ng-messages="form.organization.$error" ng-if="form.organization.$touched">
             <div ng-messages-include="views/messages.html"></div>
         </div>

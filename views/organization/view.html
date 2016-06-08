@@ -11,6 +11,9 @@
             </div>
         </div>
     </section>
+<div class="content-wrapper flash-message">  
+  <flash-message></flash-message>
+</div>
     <!-- Main content -->
     <section class="content">
         <div class="row">
@@ -30,7 +33,7 @@
                         </tr>
                         <tr ng-if="model.createdBy">
                             <td>{{ 'CREATED_BY' | translate }}</td>
-                            <td>{{model.createdBy}}</td>
+                            <td>{{model.createdBy.username}}</td>
                         </tr>
                         <tr ng-if="model.active">
                             <td>{{ 'ACTIVE' | translate }}</td>

@@ -11,6 +11,9 @@
             </div>
         </div>
     </section>
+<div class="content-wrapper flash-message">  
+  <flash-message></flash-message>
+</div>
     <!-- Main content -->
     <section class="content">
         <div class="row">
@@ -21,7 +24,7 @@
               <div class="box-tools">
                 <div class="input-group input-group-sm" style="width: 150px;">
                   <div class="input-group-btn">
-                        <a ng-href="#/categories/new" class="btn-primary btn nodecoration pull-right">{{ 'ADD_NEW' | translate }} </a>
+                        <a ng-href="#/categories/new" class="btn-primary btn nodecoration pull-right">{{ 'ADD' | translate }} </a>
                   </div>
                 </div>
               </div>
@@ -30,19 +33,19 @@
             <div class="box-body table-responsive no-padding">
               <table class="table table-hover">
                 <tbody><tr>
-                  <th>{{ 'STATE' | translate }}</th>
                   <th>{{ 'NAME' | translate }}</th>
+                  <th>{{ 'STATE' | translate }}</th>
                   <th>{{ 'ACTIONS' | translate }}</th>
                 </tr>
                 <tr ng-repeat="model in data.data">
+                  <td>{{model.name}}</td>
                   <td>
                     <span class="label label-default" ng-class="activeClass(model.active)">{{model.active ? 'Activo' : 'Inactivo'}}</span>
                   </td>
-                  <td>{{model.name}}</td>
                   <td> 
                     <a class="btn btn-primary" ng-click="view({id:model.id})">{{ 'VIEW' | translate }}</a>
                     <a class="btn btn-info" ng-click="edit({id:model.id})">{{ 'EDIT' | translate }}</a>
-                    <a class="btn btn-danger" ng-click="delete({id:model.id})" confirm-click="{{ 'DO_THIS_ACTION' | translate }}">{{ 'DELETE' | translate }}</a>
+                    <a class="btn btn-danger" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)">{{ 'DELETE' | translate }}</a>
                   </td>
                 </tr>
               

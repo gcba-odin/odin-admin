@@ -6,7 +6,7 @@ app.factory('model', function($resource) {
 
 
 
-function UserListController($scope, $location, rest, $rootScope, Flash) {
+function UserListController($scope, $location, rest, $rootScope, Flash,Alertify) {
     Flash.clear();
     $scope.modelName = "User";
     $scope.type = "users";
@@ -14,7 +14,19 @@ function UserListController($scope, $location, rest, $rootScope, Flash) {
         type: $scope.type ,params:"sort=createdAt DESC"
     });
     $scope.data = model;
-    $scope.delete = function(model) {
+
+
+    $scope.confirmDelete=function (item){
+        var item=item.target.dataset; 
+                Alertify.confirm(item.textdelete).then(
+            function onOk() {
+                deleteModel({id:item.id})
+            }, 
+            function onCancel() { return false }
+        );
+    }
+
+    var deleteModel = function(model) {
         rest().delete({
             type: $scope.type,
             id: model.id
@@ -98,6 +110,8 @@ function UserEditController($scope, Flash, rest, $routeParams, model,$location) 
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type
+        },function (){
+           // $scope.model.organization=$scope.model.organization.id
         });
     };
 

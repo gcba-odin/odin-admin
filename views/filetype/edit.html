@@ -11,6 +11,9 @@
             </div>
         </div>
     </section>
+<div class="content-wrapper flash-message">  
+  <flash-message></flash-message>
+</div>
     <!-- Main content -->
     <section class="content">
         <div class="row">
@@ -19,7 +22,7 @@
                     <div class="box-header with-border">
                       <h3 class="box-title">Edit {{modelName}}</h3>
                     </div>
-                    <form class="form-horizontal" name="form"  autocomplete="false"  role="form" ng-submit="update(form.$valid)" novalidate>
+                    <form  autocomplete="off"  class="form-horizontal" name="form"  autocomplete="false"  role="form" ng-submit="update(form.$valid)" novalidate>
                         <div class="box-body" ng-include="'views/filetype/_form.html'"></div>
                     </form>
                 </div> 

@@ -10,16 +10,19 @@
                 </ol>        
             </div>
         </div>
-    </section> 
+    </section>
+<div class="content-wrapper flash-message">  
+  <flash-message></flash-message>
+</div>
     <!-- Main content -->
     <section class="content">
         <div class="row">
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                      <h3 class="box-title">{{ 'EDIT' | translate }} {{ 'USER' | translate }}</h3>
+                      <h3 class="box-title">{{ 'ADD' | translate }} {{ 'USER' | translate }}</h3>
                     </div> 
-                    <form autocomplete="off" class="form-horizontal" name="form"  autocomplete="false"  role="form" ng-submit="add(form.$valid)" novalidate>
+                    <form autocomplete="off"  autocomplete="off" class="form-horizontal" name="form"  autocomplete="false"  role="form" ng-submit="add(form.$valid)" novalidate>
                         <div class="box-body" ng-include="'views/user/_form.html'"></div>
                     </form>
                 </div> 

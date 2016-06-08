@@ -11,6 +11,9 @@
             </div>
         </div>
     </section>
+<div class="content-wrapper flash-message">  
+  <flash-message></flash-message>
+</div>
     <!-- Main content -->
     <section class="content">
         <div class="row">
@@ -26,7 +29,7 @@
                         </tr>
                         <tr ng-if="model.description">
                             <td>{{ 'DESCRIPTION' | translate }}</td>
-                            <td>{{model.description}}</td>
+                            <td ng-bind-html="getHtml(model.description)"></td>
                         </tr> 
                         <tr>
                             <td>{{ 'ACTIVE' | translate }}</td>
@@ -34,8 +37,13 @@
                         </tr>
                         <tr ng-if="model.createdBy">
                             <td>{{ 'CREATED_BY' | translate }}</td>
-                            <td>{{model.createdBy}}</td>
+                            <td>{{model.createdBy.username}}</td>
                         </tr>
+                        <tr ng-if="model.createdBy">
+                            <td>{{ 'CREATED_AT' | translate }}</td>
+                            <td>{{model.createdAt | date}}</td>
+                        </tr>
+                        
                     </table>
                     <div class="box-footer"> 
                         <a ng-href="#" back-button class="btn btn-default pull-left">

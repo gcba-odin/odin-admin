@@ -11,6 +11,9 @@
             </div>
         </div>
     </section>
+  <div class="content-wrapper flash-message">  
+  <flash-message></flash-message>
+</div>
     <!-- Main content -->
     <section class="content">
         <div class="row">
@@ -21,7 +24,7 @@
               <div class="box-tools">
                 <div class="input-group input-group-sm" style="width: 150px;">
                   <div class="input-group-btn">
-                        <a ng-href="#/{{type}}/new" class="btn-primary btn nodecoration pull-right">{{ 'ADD_NEW' | translate }} {{ 'USER' | translate }}</a>
+                        <a ng-href="#/{{type}}/new" class="btn-primary btn nodecoration pull-right">{{ 'ADD' | translate }} {{ 'USER' | translate }}</a>
                   </div>
                 </div>
               </div>
@@ -32,19 +35,17 @@
                 <tbody><tr>
                  <!-- <th>{{ 'ID' | translate }}</th>-->
                   <th>{{ 'USER_NAME' | translate }}</th>
-                  <th>{{ 'FIRST_NAME' | translate }}</th>
                   <th>{{ 'EMAIL' | translate }}</th>
                   <th>{{ 'ACTIONS' | translate }}</th>
                 </tr>
                 <tr ng-repeat="model in data.data">
                   <!--<td>{{model.id}}</td>-->
                   <td>{{model.username}}</td>
-                  <td>{{model.firstName}}</td>
                   <td>{{model.email}}</td>
                   <td>
                     <a class="btn btn-primary" ng-click="view({id:model.id})">{{ 'VIEW' | translate }}</a>
                     <a class="btn btn-info" ng-click="edit({id:model.id})">{{ 'EDIT' | translate }}</a>
-                    <a class="btn btn-danger" ng-click="delete({id:model.id})" confirm-click="Are you sure to do this action?">{{ 'DELETE' | translate }}</a>
+                    <a class="btn btn-danger" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)">{{ 'DELETE' | translate }}</a>
                   </td>
                 </tr>
               

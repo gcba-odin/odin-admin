@@ -11,6 +11,9 @@
             </div>
         </div>
     </section>
+<div class="content-wrapper flash-message">  
+  <flash-message></flash-message>
+</div>
     <!-- Main content -->
     <section class="content">
         <div class="row">
@@ -27,24 +30,24 @@
 
                         <tr ng-if="model.type">
                             <td>{{ 'TYPE' | translate }}</td>
-                            <td>{{model.type}}</td>
+                            <td>{{model.type.name}}</td>
                         </tr>
                         <tr ng-if="model.status">
                             <td>{{ 'STATUS' | translate }}</td>
-                            <td>{{model.status}}</td>
+                            <td>{{model.status.name}}</td>
                         </tr>
                         <tr ng-if="model.organization">
                             <td>{{ 'ORGANIZATION' | translate }}</td>
-                            <td>{{model.organization}}</td>
+                            <td>{{model.organization.name}}</td>
                         </tr>
 
                         <tr ng-if="model.dataset">
                             <td>{{ 'DATASET' | translate }}</td>
-                            <td>{{model.dataset}}</td>
+                            <td>{{model.dataset.name}}</td>
                         </tr>
                         <tr ng-if="model.createdBy">
                             <td>{{ 'CREATED_BY' | translate }}</td>
-                            <td>{{model.createdBy}}</td>
+                            <td>{{model.createdBy.username}}</td>
                         </tr>
                         <tr ng-if="model.description">
                             <td>{{ 'DESCRIPTION' | translate }}</td>

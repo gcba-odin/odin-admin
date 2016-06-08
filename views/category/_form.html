@@ -13,7 +13,7 @@
 <div class="form-group">
     <label for="description" class="col-sm-2 control-label">{{ 'DESCRIPTION' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.description.$touched && form.description.$invalid }">
-        <textarea class="form-control" id="description" ready="onReady()" ckeditor="options" ng-model="model.description" name="description"></textarea>
+        <textarea class="form-control" id="description" ready="onReady()" ckeditor="options" ng-model="model.description" name="description" required></textarea>
         <div class="help-block" ng-messages="form.description.$error" ng-if="form.description.$touched">
             <div ng-messages-include="views/messages.html"></div>
         </div>
@@ -28,10 +28,10 @@
     <div class="col-sm-10"  ng-class="{ 'has-error': form.active.$touched && form.active.$invalid }">
         <div>
           <label  class="btn btn-default" ng-class="activeClass(model.active,1)">
-            <input   type="radio" ng-value="true" name="active"    ng-model="model.active" id="option1" autocomplete="off" ng-checked="model.active" required> Active
+            <input   type="radio" ng-value="true" name="active"    ng-model="model.active" id="option1" autocomplete="off" ng-checked="model.active" required> {{ 'ACTIVE' | translate }}
           </label>
           <label class="btn btn-warning" ng-class="activeClass(model.active,2)">
-            <input type="radio" ng-value="false" name="active"  ng-model="model.active" id="option2" autocomplete="off"> Inactive
+            <input type="radio" ng-value="false" name="active"  ng-model="model.active" id="option2" autocomplete="off"> {{ 'INACTIVE' | translate }}
           </label>
         </div>
         <div class="help-block" ng-messages="form.active.$error" ng-if="form.active.$touched">
