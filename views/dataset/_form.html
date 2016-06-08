@@ -47,12 +47,14 @@
 </div>
 <!-- end Input Visibility -->
 
+
 <!-- Input owner -->
 <div class="form-group">
     <label for="owner" class="col-sm-2 control-label"> {{ 'OWNER' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.owner.$touched && form.owner.$invalid }">
-
-        <input type="text" id="owner" ng-model="model.owner" name="owner" class="form-control" id="owner" placeholder="Place owner Here" required />
+    <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="username" data-modelname="users" data-model="{{model.owner}}" select-two-ajax  name="organization" id="organization"
+      ng-model="model.owner" required  class="selectize-width">
+      </select>
 
         <div class="help-block" ng-messages="form.owner.$error" ng-if="form.owner.$touched">
             <div ng-messages-include="views/messages.html"></div>
@@ -60,7 +62,6 @@
     </div>
 </div>
 <!-- end Input owner -->
-
 
 <!-- Input Starred -->
 <div class="form-group">
@@ -74,12 +75,14 @@
 </div>
 <!-- end Input Starred -->
   
- <!-- Input tags -->
-
+<!-- Input tags -->
 <div class="form-group">
     <label for="tags" class="col-sm-2 control-label"> {{ 'TAGS' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.tags.$touched && form.tags.$invalid }">
-         <input type="text"  ng-model="model.tags" data-tagsselected="{{tags}}" data-tagsmodel="{{tagsmodel.data}}" select-two-tags />
+    <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="tags" data-model="{{model.tags}}" select-two-ajax  name="tags" id="tags"
+      ng-model="model.tags" required  class="selectize-width" multiple>
+      </select>
+
         <div class="help-block" ng-messages="form.tags.$error" ng-if="form.tags.$touched">
             <div ng-messages-include="views/messages.html"></div>
         </div>

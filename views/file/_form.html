@@ -68,10 +68,9 @@
 <div class="form-group">
     <label for="organization" class="col-sm-2 control-label"> {{ 'ORGANIZATION' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.organization.$touched && form.organization.$invalid }">
-
-           <select placeholder="{{ 'SELECT_ONE' | translate }}"   select-two name="organization" id="organization"
-      ng-options="option.name for option in model.organizations.data track by option.id"
-      ng-model="data.organization" required  class="selectize-width"></select>
+    <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="organizations" data-model="{{model.organization}}" select-two-ajax  name="organization" id="organization"
+      ng-model="model.organization" required  class="selectize-width">
+      </select>
 
         <div class="help-block" ng-messages="form.organization.$error" ng-if="form.organization.$touched">
             <div ng-messages-include="views/messages.html"></div>
@@ -80,17 +79,23 @@
 </div>
 <!-- end Input organization -->
 
+
 <!-- Input dataset -->
 <div class="form-group">
     <label for="dataset" class="col-sm-2 control-label"> {{ 'DATASET' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.dataset.$touched && form.dataset.$invalid }">
-        <input type="text" id="dataset" ng-model="model.dataset" name="dataset" class="form-control" id="title" placeholder="{{ 'DATASET' | translate }} {{ 'NAME' | translate }} {{ 'HERE' | translate }}" required />
+    <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="datasets" data-model="{{model.dataset}}" select-two-ajax  name="dataset" id="dataset"
+      ng-model="model.dataset" required  class="selectize-width">
+      </select>
+
         <div class="help-block" ng-messages="form.dataset.$error" ng-if="form.dataset.$touched">
             <div ng-messages-include="views/messages.html"></div>
         </div>
     </div>
 </div>
 <!-- end Input dataset -->
+
+
 
 
 
@@ -174,12 +179,14 @@
 </div>
 <!-- end Input tags -->
 
+
 <!-- Input owner -->
 <div class="form-group">
     <label for="owner" class="col-sm-2 control-label"> {{ 'OWNER' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.owner.$touched && form.owner.$invalid }">
-
-        <input type="text" id="owner" ng-model="model.owner" name="owner" class="form-control" id="owner" placeholder="{{ 'OWNER' | translate }} {{ 'NAME' | translate }} {{ 'HERE' | translate }}" required />
+    <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="username" data-modelname="users" data-model="{{model.owner}}" select-two-ajax  name="owner" id="owner"
+      ng-model="model.owner" required  class="selectize-width">
+      </select>
 
         <div class="help-block" ng-messages="form.owner.$error" ng-if="form.owner.$touched">
             <div ng-messages-include="views/messages.html"></div>
@@ -187,7 +194,6 @@
     </div>
 </div>
 <!-- end Input owner -->
-
 
 
 <!-- Button save  -->

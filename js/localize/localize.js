@@ -103,7 +103,7 @@ app.config(['$translateProvider', function ($translateProvider,$rootScope) {
 	'HOME':'Inicio',
     'OPTIONAL':'Opcional',
     'ADD_OPTION':'Crear Opción',
-    'SELECT_ONE':'Seleccione una opción'
+    'SELECT_ONE':'Escribe una opción'
   });
  console.log($rootScope);
   $translateProvider.preferredLanguage('es');

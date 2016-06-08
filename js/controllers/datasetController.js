@@ -163,7 +163,6 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model,$locatio
             }
         }
 
-        $scope.model.tags=$scope.model.tags.split(",");
         var optionsTemp=[];
    
         for (var o = 0; o < 10; o++) {
@@ -204,14 +203,7 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model,$locatio
                 type: $scope.type,
                 params:"include=tags"
             },function (){
-                var tags=[];
-                for (var i = 0; i < $scope.model.tags.length; i++) {
-                    tags.push($scope.model.tags[i].id)
-                }
-                $scope.tags=tags;
-                if($scope.model.owner){
-                    $scope.model.owner=$scope.model.owner.id;
-                }
+
                 $scope.model.items=[];
                 var counter=0;
                 for ( obj in $scope.model){

@@ -62,7 +62,7 @@
 <div class="form-group">
     <label for="organization" class="col-sm-2 control-label"> {{ 'ORGANIZATION' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.organization.$touched && form.organization.$invalid }">
-    <select placeholder="{{ 'SELECT_ONE' | translate }}" data-model="{{model.organization}}" select-two-ajax  name="organization" id="organization"
+    <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="organizations" data-model="{{model.organization}}" select-two-ajax  name="organization" id="organization"
       ng-model="model.organization" required  class="selectize-width">
       </select>
 

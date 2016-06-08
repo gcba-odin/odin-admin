@@ -125,9 +125,9 @@ $scope.beforeChange=function($files){
     $scope.model.statuses = rest().get({
         type: "statuses" ,params:"sort=name DESC"
     });
-    $scope.model.organizations = rest().get({
+  /*  $scope.model.organizations = rest().get({
         type: "organizations" ,params:"sort=name DESC"
-    });
+    });*/
     $scope.model.frequencies = rest().get({
         type: "updatefrequencies" ,params:"sort=name DESC"
     });

@@ -76,6 +76,9 @@
 
             };
          }]);
+
+
+
           app.directive('selectTwoAjax', ['$parse','$timeout', function ($timeout,$parse,$scope,$rootScope) {
             return {
                restrict: 'A',
@@ -85,22 +88,25 @@
                link: function(scope, element, attrs,rootScope) {
                 var selectizes = $(element).selectize({
                     valueField: 'id',
-                    labelField: 'name',
-                    searchField: 'name',
+                    labelField: attrs.key,
+                    searchField: attrs.key,
+                    placeholder:attrs.placeholder,
                     create: false,
                     render: {
                         option: function(item, escape) {
+                          var name=eval("item."+attrs.key);
                             return '<div>' +
                                 '<span class="title">' +
-                                    '<span class="name">' + escape(item.name) + '</span>' +
+                                    '<span class="name">' + escape(name) + '</span>' +
                                 '</span><br>' +
                             '</div>';
                         }
                     },
                     load: function(query, callback) {
+                      this.settings.load = null;
                         if (!query.length) return callback();
                         $.ajax({
-                            url: scope.$root.url+'/organizations?where={"name":{"contains":"'+encodeURIComponent(query)+'"}}',
+                            url: scope.$root.url+'/'+attrs.modelname+'?where={"'+attrs.key+'":{"contains":"'+encodeURIComponent(query)+'"}}',
                             type: 'GET',
                             error: function() {
                                 callback();
@@ -114,12 +120,35 @@
                 attrs.$observe("model", function (newValue) {
                     if(!!newValue){
                       setTimeout(function(){
-                                                console.log("este es "+newValue);
+                        try {
+                          var  jsonValue=angular.fromJson(newValue);
+                          var selectize = selectizes[0].selectize;
 
-                        var  jsonValue=angular.fromJson(newValue);
-                         var selectize = selectizes[0].selectize;
-                          selectize.addOption({id: jsonValue.id, name: jsonValue.name});
-                          selectize.addItem(jsonValue.id);
+
+                          if(Object.prototype.toString.call(jsonValue) === '[object Array]'){
+                            var options=[];
+                            var idOptions=[];
+                            for (var i = 0; i < jsonValue.length; i++) {
+                              var option={id: jsonValue[i].id};
+                              var name=eval("jsonValue[i]."+attrs.key);
+                              option[attrs.key]=name;
+                              options.push(option);
+                              idOptions.push(jsonValue[i].id);
+                            }
+                            selectize.addOption(options);
+                            selectize.addItems(idOptions);
+                          }else{
+                            var options={id: jsonValue.id};
+                            var name=eval("jsonValue."+attrs.key);
+                            options[attrs.key]=name;
+                            selectize.addOption(options);
+                            selectize.addItem(jsonValue.id);
+                          }
+
+                        } catch (e) {
+                            console.log(e);
+                        }
+                      
                       }, 500);
                     }
                   });
@@ -127,6 +156,7 @@
 
             };
          }]);
+
           app.directive('selectTwoDefault', ['$parse', function ($parse,$scope) {
             return {
                restrict: 'A',
@@ -164,12 +194,7 @@
          app.controller('ctrlUpload', ['$scope', 'fileUpload', function($scope, fileUpload,$rootScope){
             $scope.uploadFile = function(){
                var file = $scope.file;
-               
-               console.log('file is ' );
-               console.dir($scope);
-               
                var uploadUrl = $scope.url+"/files";
-
                fileUpload.uploadFileToUrl(file, uploadUrl);
             };
          }]);
@@ -186,7 +211,6 @@
         app.filter('selectedOption', function() {
         return function(element, tag) {
          // return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
-         console.log(element);
         }
     });
 
@@ -254,7 +278,6 @@
                   var option=$("#option1").html();
 
                   $(".extraoptionals").append('<div class="form-group" id="option1">'+option+'</div>');
-                  console.log(option);
                     scope.$apply();
 
                 });
