@@ -29,7 +29,7 @@
                         </tr>
                         <tr ng-if="model.status">
                             <td>{{ 'STATUS' | translate }}</td>
-                            <td>{{model.status}}</td>
+                            <td>{{model.status.name}}</td>
                         </tr>
                         <tr ng-if="model.description">
                             <td>{{ 'DESCRIPTION' | translate }}</td>
@@ -39,7 +39,7 @@
                             <td>{{ 'NOTES' | translate }}</td>
                             <td ng-bind-html="getHtml(model.notes)"></td>
                         </tr>
-                        <tr ng-if="model.visibility">
+                        <tr ng-if="model.visibility">  
                             <td>{{ 'VISIBILITY' | translate }}</td>
                             <td>{{model.visibility}}</td>
                         </tr>
@@ -49,7 +49,7 @@
                         </tr>
                         <tr ng-if="model.owner">
                             <td>{{ 'OWNER' | translate }} </td>
-                            <td>{{model.owner}}</td>
+                            <td>{{model.owner.name}}</td>
                         </tr>
                         <tr ng-if="model.tags">
                             <td>{{ 'TAGS' | translate }} </td>
