@@ -49,7 +49,7 @@
                         </tr>
                         <tr ng-if="model.owner">
                             <td>{{ 'OWNER' | translate }} </td>
-                            <td>{{model.owner.username}}</td>
+                            <td><a ng-href="#/users/{{model.owner.id}}/view">{{model.owner.username}}</a></td>
                         </tr>
                         <tr ng-if="model.tags">
                             <td>{{ 'TAGS' | translate }} </td>
