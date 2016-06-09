@@ -1,0 +1,14 @@
+    <section class="content-header">
+        <div class="row">
+            <div class="col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="#/"><i class="fa fa-dashboard"></i> {{ 'HOME' | translate }}</a></li>
+                    <li><a href="#/{{modelUrl}}"><i class="fa fa-user"></i> {{modelName}}</a></li>
+                    <li class="active" ng-if="typeModel.length">  {{typeModel}}</li>
+                </ol>        
+            </div>
+        </div>
+    </section>
+<div class="flash-message">  
+  <flash-message></flash-message>
+</div>

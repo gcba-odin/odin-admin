@@ -17,7 +17,22 @@
         };
     });
 
-    app.directive("headerHome", function() {
+    app.directive("breadcrumbs", function() {
+        return {
+            restrict: "E",
+            templateUrl: "/directives/breadcrumbs.html",
+            controller: function($scope) {
+            }, link: function(scope, element, attrs) {
+                  scope.modelUrl=attrs.model;
+                  scope.typeModel=attrs.type;
+                  scope.modelName=attrs.modelName;
+
+               },
+            controllerAs: "breadcrumbs"
+        };
+    });
+
+       app.directive("headerHome", function() {
         return {
             restrict: "E",
             templateUrl: "/directives/home/header-home.html",

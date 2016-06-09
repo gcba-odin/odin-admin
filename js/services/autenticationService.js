@@ -21,7 +21,7 @@
                     callback(response);
                })
                 .error(function (response){
-                              alert(response.data.message);
+                              alert(response.message);
 
                 });
  

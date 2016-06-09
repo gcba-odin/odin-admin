@@ -1,19 +1,6 @@
 <header-home></header-home>
 <div class="content-wrapper">
-    <section class="content-header">
-        <div class="row">
-            <div class="col-xs-12">
-                <ol class="breadcrumb">
-                    <li><a href="#/"><i class="fa fa-dashboard"></i> {{ 'HOME' | translate }}</a>
-                    </li>
-                    <li class="active">{{ 'USERS' | translate }}</li>
-                </ol>        
-            </div>
-        </div>
-    </section>
-  <div class="content-wrapper flash-message">  
-  <flash-message></flash-message>
-</div>
+    <breadcrumbs   data-model-name="{{ 'USERS' | translate }}" data-model="{{type}}"></breadcrumbs>
     <!-- Main content -->
     <section class="content">
         <div class="row">

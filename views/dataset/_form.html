@@ -94,7 +94,7 @@
 <div class="form-group">
     <label for="tags" class="col-sm-2 control-label"> {{ 'TAGS' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.tags.$touched && form.tags.$invalid }">
-    <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="tags" data-model="{{model.tags}}" select-two-ajax  name="tags" id="tags"
+    <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="tags" data-model="{{model.tags}}" select-two-ajax data-create="true"  name="tags" id="tags"
       ng-model="model.tags" required  class="selectize-width" multiple>
       </select>
 
@@ -136,9 +136,9 @@
 <!-- Button save  -->
 <div class="box-footer"> 
     <div class="col-sm-12">
-        <a ng-href="#" back-button class="btn btn-default pull-left">
+        <button  back-button class="btn btn-default pull-left">
             {{ 'BACK' | translate }}
-        </a>
+        </button>
         <input type="submit"  class="btn btn-primary pull-right" value="{{ 'SAVE' | translate }}" ng-disabled="form.$invalid"/>
     </div>
 </div> 

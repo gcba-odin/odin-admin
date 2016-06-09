@@ -10,6 +10,10 @@ function UserListController($scope, $location, rest, $rootScope, Flash,Alertify)
     Flash.clear();
     $scope.modelName = "User";
     $scope.type = "users";
+    $scope.types = "users";
+
+
+    
     var model = rest().get({
         type: $scope.type ,params:"sort=createdAt DESC"
     });

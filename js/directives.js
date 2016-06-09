@@ -86,12 +86,17 @@
                     modelValue: '@ngModel'
                   },
                link: function(scope, element, attrs,rootScope) {
+
+                if(!!attrs.create){
+                }else{
+                  attrs.create=false;
+                }
                 var selectizes = $(element).selectize({
                     valueField: 'id',
                     labelField: attrs.key,
                     searchField: attrs.key,
                     placeholder:attrs.placeholder,
-                    create: true,
+                    create: attrs.create,
                     render: {
                         option: function(item, escape) {
                           var name=eval("item."+attrs.key);
