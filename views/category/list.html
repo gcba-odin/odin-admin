@@ -28,7 +28,7 @@
                 <tr ng-repeat="model in data.data">
                   <td>{{model.name}}</td>
                   <td>
-                    <span class="label label-default" ng-class="activeClass(model.active)">{{model.active ? 'Activo' : 'Inactivo'}}</span>
+                    <span class="label label-default" ng-class="activeClass(model.active)">{{model.deletedAt ? 'Inactivo' : 'Activo'}}</span>
                   </td>
                   <td> 
                     <a class="btn btn-primary" ng-click="view({id:model.id})">{{ 'VIEW' | translate }}</a>
