@@ -11,6 +11,7 @@ app.config(['$translateProvider', function ($translateProvider,$rootScope) {
   $translateProvider.translations('es', {
     'CREATED':'creó',
     'UPDATED':'actualizó',
+    'MORE_INFO':'Más información',
     'DELETED':'borró', 
     'AN':'un',
     'A':'una',

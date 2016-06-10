@@ -5,6 +5,68 @@
 
     <!-- Main content -->
     <section class="content">
+    <div class="row">
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3>{{datasetsCount.data.count}}</h3>
+
+              <p>{{'DATASETS' | translate}} </p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-bar-chart"></i>
+            </div>
+            <a href="#/datasets" class="small-box-footer">{{'MORE_INFO' | translate}} <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h3>{{filesCount.data.count}}<sup style="font-size: 20px"></sup></h3>
+
+              <p>{{'FILES' | translate}}</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-file"></i>
+            </div>
+            <a href="#/files" class="small-box-footer">{{'MORE_INFO' | translate}}  <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-yellow">
+            <div class="inner">
+              <h3>{{organizationsCount.data.count}}</h3>
+
+              <p>{{'ORGANIZATIONS' | translate}}</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-users"></i>
+            </div>
+            <a href="#/organizations" class="small-box-footer">{{'MORE_INFO' | translate}}  <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-red">
+            <div class="inner">
+              <h3>{{usersCount.data.count}}</h3>
+
+              <p>{{'USERS' | translate}}</p>
+            </div>
+            <div class="icon">
+                <i class="fa fa-user-plus"></i>
+            </div>
+            <a href="#/users" class="small-box-footer">{{'MORE_INFO' | translate}} <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+      </div>
         <div class="box box-success"  >
             <div class="box-header ui-sortable-handle"  >
               <i class="fa fa-eye"></i>

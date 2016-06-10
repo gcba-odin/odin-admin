@@ -8,14 +8,24 @@ app.factory('model', function($resource) {
 function controllerHome($scope,rest){
     $scope.modelName = "Log";
     $scope.type = "logs";
-    var logs = rest().get({
+   $scope.logs = rest().get({
         type: $scope.type ,params:"sort=createdAt DESC"
     });
-    $scope.logs = logs;
+
+    $scope.usersCount = rest().count({
+        type: "users"
+    });
+    $scope.filesCount = rest().count({
+        type: "files"
+    });
+    $scope.datasetsCount = rest().count({
+        type: "datasets"
+    });
+    $scope.organizationsCount = rest().count({
+        type: "organizations"
+    });
 
       $scope.setClassLog= function(value){
-        console.log(value);
-
         if(value=="create"){
             return "label-success";
         }else if(value=="update"){
