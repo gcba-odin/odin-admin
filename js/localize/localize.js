@@ -9,6 +9,11 @@ app.config(['$translateProvider', function ($translateProvider,$rootScope) {
   }); 
  
   $translateProvider.translations('es', {
+    'CREATED':'creó',
+    'UPDATED':'actualizó',
+    'DELETED':'borró', 
+    'AN':'un',
+    'A':'una',
   	'DO_THIS_ACTION':'¿Estas seguro de hacer esta acción?',
     'INACTIVE':'Inactivo',
     'CREATED_AT':'Creado en',

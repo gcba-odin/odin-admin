@@ -1,21 +1,41 @@
 <header-home></header-home>
 <div class="content-wrapper">
 
-    <section class="content-header">
-        <h1>
-        Dashboard
-        <small>Control panel</small>
-      </h1>
-        <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a>
-            </li>
-            <li class="active">Dashboard</li>
-        </ol>
-    </section>
+   
 
     <!-- Main content -->
     <section class="content">
-        home {{ 'USERS' | translate }}
+        <div class="box box-success"  >
+            <div class="box-header ui-sortable-handle"  >
+              <i class="fa fa-eye"></i>
+
+              <h3 class="box-title">Log</h3>
+ 
+              
+            </div>
+            <div class="box-body chat" id="chat-box"  >
+              <!-- chat item -->
+              <div class="item" ng-repeat="log in logs.data">
+                <img class="online" alt="user image"  ng-src="http://www.gravatar.com/avatar/{{log.user.email | md5}}fs=150"/>
+                    <p class="message">
+                      <a ng-href="#/users/{{log.user.id}}/view" class="name">
+                        <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> {{log.createdAt | date: "MMM d, y h:mm:ss a"}}</small>
+                        {{log.user.username}}
+                      </a>
+                      <span class="label label-default" ng-class="setClassLog(log.action)" >{{log.action+'D'  | uppercase | translate | capitalize}}</span>
+                       {{log.target | uppercase| translate | generalize | translate}}
+                      <a ng-href="#/{{log.target}}s/{{log.resource}}/view" ng-if="log.action == 'create'  ||  log.action == 'update'">
+                        {{log.target | uppercase | translate}} 
+                      </a>
+                      <span  ng-if="log.action == 'delete'">
+                        {{log.target | uppercase | translate}} 
+                      </span>
+                    </p>
+                </div>
+              <!-- /.item -->
+            </div>
+        
+          </div>
     </section>
     <!--  Main content-->
 

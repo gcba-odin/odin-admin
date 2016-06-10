@@ -1,8 +1,8 @@
-var app=angular.module('odin.controllers', ["odin.userControllers","odin.updateFrequencyControllers","odin.organizationControllers","odin.statusControllers","odin.filetypeControllers","odin.fileControllers","odin.tagControllers","odin.categoryControllers"]);
+var app=angular.module('odin.controllers', ["odin.homeControllers","odin.userControllers","odin.updateFrequencyControllers","odin.organizationControllers","odin.statusControllers","odin.filetypeControllers","odin.fileControllers","odin.tagControllers","odin.categoryControllers"]);
 
   app.controller("mainController", function($scope, AuthenticationService, $location,$rootScope,$translate) {
 
-                $scope.language="español";
+        $scope.language="español";
 
         this.changeLanguage=function (element){
                 console.log(element);
@@ -35,9 +35,6 @@ var app=angular.module('odin.controllers', ["odin.userControllers","odin.updateF
 
     }); 
 
-function controllerHome($scope, $rootScope) {
-    console.log($rootScope.globals)
-}
 
 function LoginController($location, AuthenticationService, $scope) {
     $scope.$emit('body:class:add', "login-page")

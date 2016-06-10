@@ -213,6 +213,12 @@
         }
     });
 
+    app.filter('generalize', function() {
+        return function(input) {
+          return (input.slice(-1)== "a"  || input.slice(-1)== "n" ) ? "A" : "AN";
+        }
+    });
+
         app.filter('selectedOption', function() {
         return function(element, tag) {
          // return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
