@@ -19,20 +19,20 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
+            <search-bar data-search="{required:true,name:'Nombre'}" data-filters="{{filtersView}}"></search-bar>
+
               <table class="table table-hover">
                 <tbody><tr>
                   <!--<th>ID</th>-->
                   <th>{{ 'NAME' | translate }}</th>
-                  <th>{{ 'TYPE' | translate }}</th>
-                  <th>{{ 'ORGANIZATION' | translate }}</th>
+                  <th>{{ 'STATUS' | translate }}</th>
 
                   <th>{{ 'ACTIONS' | translate }}</th>
                 </tr>
                 <tr ng-repeat="model in data.data">
                   <!--<td>{{model.id}}</td>-->
                   <td>{{model.name}}</td>
-                  <td>{{model.type.name}}</td>
-                  <td>{{model.organization.name}}</td>
+                  <td>{{model.status.name}}</td>
 
                   <td>
                     <a class="btn btn-primary" ng-click="view({id:model.id})">{{ 'VIEW' | translate }}</a>

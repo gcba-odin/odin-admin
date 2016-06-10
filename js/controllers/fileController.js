@@ -5,52 +5,35 @@ app.factory('model', function($resource) {
 });
 
 
-function FileListController($scope, $location, rest, $rootScope, Flash,Alertify) {
+function FileListController($scope, $location, rest, $rootScope, Flash,Alertify,$routeParams,modelService) {
 
-    Flash.clear();
-    $scope.modelName = "File";
-    $scope.type = "files";
 
-    var model = rest().get({
-        type: $scope.type ,params:"sort=createdAt DESC"
-    });
-    $scope.data = model;
-    
-      $scope.confirmDelete=function (item){
-        var item=item.target.dataset; 
-                Alertify.confirm(item.textdelete).then(
-            function onOk() {
-                deleteModel({id:item.id})
-            }, 
-            function onCancel() { return false }
-        );
+    modelService.initService("File","files",$scope);
+
+    $scope.filtersView=[
+                {name:'Estado',model:'statuses',key:'name',modelInput:'status',multiple:true},
+                {name:'Autor',model:'users',key:'username',modelInput:'owner',multiple:false}
+            ];
+    $scope.confirmDelete=function (item){
+        modelService.confirmDelete(item);
     }
 
     var deleteModel = function(model) {
-        rest().delete({
-            type: $scope.type,
-            id: model.id
-        }, function(resp) {
-            $scope.data = rest().get({
-                type: $scope.type ,params:"sort=createdAt DESC"
-            });
-        });
-
+        modelService.delete($scope,model);
     };
 
     $scope.edit = function(model) {
-        var url = '/'+$scope.type+'/' + model.id + "/edit";
-        $location.path(url);
+        modelService.edit($scope,model);
     }
-
 
     $scope.view = function(model) {
-        var url = '/'+$scope.type+'/' + model.id + "/view";
-        $location.path(url);
+        modelService.view($scope,model);
     }
+
+    modelService.loadAll($scope);
 }
 
-function FileViewController($scope, Flash, rest, $routeParams, $location) {
+function FileViewController($scope, Flash, rest, $routeParams, $location,modelService) {
     Flash.clear();
     $scope.modelName = "File";
     $scope.type = "files";
@@ -61,8 +44,7 @@ function FileViewController($scope, Flash, rest, $routeParams, $location) {
     });
 
     $scope.edit = function(model) {
-        var url = '/'+$scope.type+'/' + model.id + "/edit";
-        $location.path(url);
+        modelService.edit($scope,model);
     }
 }
 
@@ -76,15 +58,11 @@ $scope.beforeChange=function($files){
     $scope.model.name=$files[0].name;
 
     var filestypes=$scope.model.filetypes.data;
-    console.log(filestypes);
     for (var i = 0; i < filestypes.length; i++) {
         if(filestypes[i].name==type){
             $scope.model.type=filestypes[i].id;
         }
     }
-
- 
- 
 }
     $scope.model = new model();
     $scope.add = function(isValid) {

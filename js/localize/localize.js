@@ -14,6 +14,8 @@ app.config(['$translateProvider', function ($translateProvider,$rootScope) {
     'MORE_INFO':'Más información',
     'DELETED':'borró', 
     'AN':'un',
+    'SELECT_TO':'Seleccione un {{resource}}',
+    'SEARCH_BY':'Buscar por {{resource}}',
     'A':'una',
   	'DO_THIS_ACTION':'¿Estas seguro de hacer esta acción?',
     'INACTIVE':'Inactivo',

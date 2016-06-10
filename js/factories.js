@@ -3,8 +3,6 @@
 (function() {
     var app = angular.module('store-factories', ["authentication-service","user-service"]);
    
-
-
     app.factory('flashService', function ($compile,Flash){
     	var msgs={};
     	var myEl =$(".navbar");
@@ -23,11 +21,55 @@
     	return msgs
     });
 
-   
+    app.factory('modelService', function ($location,rest,Flash){
+    		return {
+    			initService:function(modelName,type,scope){
+  					Flash.clear();
+    				scope.modelName = modelName;
+    				scope.type = type;
+    				scope.searchModel=[];
+    				scope.q="&";
+    			},
+    			edit:function (scope,model){
+    				        var url = '/'+scope.type+'/' + model.id + "/edit";
+    				        $location.path(url);
+    			},
+    			delete:function (scope,model){
+    				 rest().delete({
+				            type: scope.type,
+				            id: model.id
+				        }, function(resp) {
+				            scope.data = rest().get({
+				                type: scope.type ,params:"sort=createdAt DESC"
+				            });
+				        });
+    			},
+    			view:function (scope,model){
+    				 var url = '/'+scope.type+'/' + model.id + "/view";
+        			$location.path(url);
+    			},
+    			search:function(scope){
 
 
-   
-
+    				//scope.q='&where={"name":{"contains":"'+scope.searchField+'"}}';
+        			this.loadAll(scope);
+    			},
+    			loadAll:function(scope){
+    				scope.data = rest().get({
+            			type: scope.type ,params:"sort=createdAt DESC"+scope.q
+        			});
+    			},
+    			confirmDelete:function (item){
+			        var item=item.target.dataset; 
+        				Alertify.confirm(item.textdelete).then(
+   						 function onOk() {
+        						deleteModel({id:item.id})
+    						}, 
+    				    function onCancel() { return false }
+						);
+    			}
+    		}
+    });
 
 	app.factory('rest', ['$resource', '$location','$rootScope','ngProgressFactory','flashService','Flash', function($resource, $location,$rootScope,ngProgressFactory,flashService,Flash) {
         $rootScope.progressbar = ngProgressFactory.createInstance();
@@ -170,7 +212,7 @@
 				      interceptor: {responseError: handError},
 				      transformResponse:function (data){
 					 	$rootScope.progressbar.complete();
-						return angular.fromJson(data);
+						
 	                	}
 				    }, 
         		'update': {  

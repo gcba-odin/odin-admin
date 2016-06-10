@@ -1,6 +1,36 @@
 (function() {
     var app = angular.module('store-directives', ["store-directives-home"]);
+   
+    app.directive("searchBar", function($parse) {
+            return {
+                restrict: "E",
+                templateUrl: "/directives/search-bar.html",
+                scope:"=",
+                controller:function($scope,modelService){
 
+                  $scope.search = function() {
+                    $scope.q="&";
+                    var filters=$scope.searchModel.filters;
+                      if($scope.searchModel.q){
+                          $scope.q+="name="+$scope.searchModel.q+"&";
+                      }
+                      for(f in filters){
+                          if(Object.prototype.toString.call(filters[f]) === '[object Array]'){
+                              $scope.q+=f+"="+filters[f].join(",")+"&";
+                          }else{
+                            $scope.q+=f+"="+filters[f]+"&";
+                          }
+                      }
+                      modelService.search($scope);
+                  }
+                },
+                link: function(scope, element, attrs) {
+                  scope.dropdowns = $parse(attrs.filters)();
+                  scope.searchInputForm = $parse(attrs.search)();
+                },
+                controllerAs: "searchBar"
+            };
+        });
 
      app.directive('fileModel', ['$parse', function ($parse) {
             return {
@@ -108,7 +138,6 @@
                         }
                     },
                     load: function(query, callback) {
-                      this.settings.load = null;
                         if (!query.length) return callback();
                         $.ajax({
                             url: scope.$root.url+'/'+attrs.modelname+'?where={"'+attrs.key+'":{"contains":"'+encodeURIComponent(query)+'"}}',
@@ -122,6 +151,8 @@
                         });
                     }
                 });
+
+                console.log(attrs.model);
                 attrs.$observe("model", function (newValue) {
                     if(!!newValue){
                       setTimeout(function(){

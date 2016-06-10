@@ -170,8 +170,7 @@ div.close {
 }
 
 .selectize-width{
-  max-width: 300px;
-    min-width: 200px
+
 
 }
 
@@ -353,4 +352,9 @@ div.close {
 }
 .icon .fa{
   font-size: 80px;
+}
+
+.searchList{
+  padding-bottom: 10px;
+  padding-top: 10px
 }
