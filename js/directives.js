@@ -140,7 +140,7 @@
                     load: function(query, callback) {
                         if (!query.length) return callback();
                         $.ajax({
-                            url: scope.$root.url+'/'+attrs.modelname+'?where={"'+attrs.key+'":{"contains":"'+encodeURIComponent(query)+'"}}',
+                            url: scope.$root.url+'/'+attrs.modelname+'?where={"'+attrs.key+'":{"contains":"'+encodeURIComponent(query)+'"}}&rand='+Math.random(),
                             type: 'GET',
                             error: function() {
                                 callback();
