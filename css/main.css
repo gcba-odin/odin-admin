@@ -150,6 +150,7 @@ div.close {
   background: transparent;
   border: 0;
     font-size: 1.7em;
+    text-align: center;
 }
 .sr-only {
   position: absolute;
@@ -452,7 +453,7 @@ div.panel-heading{
     height: 25px;
     text-align: center;
     line-height: 25px;
-    margin-top: 20px;
+    margin-top: 5px;
 }
 .add-image-button{
     background-color: #FF6E4C;
@@ -487,11 +488,10 @@ box-shadow:         1px 1px 5px 0px rgba(50, 50, 50, 0.28);
 
 }
 .docuemnts-upload{
-  margin-top: 20px
+  margin-top: 40px
 }
 
-.fa-folder{
-      margin-top: 15px;
+.typeImageUpload i{
     font-size: 24px;
     line-height: 42px;
     background: gray;
@@ -500,3 +500,10 @@ box-shadow:         1px 1px 5px 0px rgba(50, 50, 50, 0.28);
     border-radius: 110px;
     height: 40px;
     color: white;}
+    
+
+
+.progress {
+    height: 20px;
+     margin-bottom: 10px !important; 
+}

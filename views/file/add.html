@@ -15,6 +15,7 @@
                     </form>-->
                     <div class="row">
                         <div class="col-xs-12">
+
                             <ul class="steps">
                               <li ng-class="step(0)" ng-click="checkstep(0)" class=" col-xs-4">
                                 <p>{{ 'CHARGE_OF_FILE' | translate }}</p>
@@ -33,22 +34,22 @@
                         <div class="col-md-6 col-md-offset-3">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h1>{{ 'REVISION' | translate }}</h1>
-             
-                                    <i class="fa fa-plus add-image-button" aria-hidden="true"></i>
-
+                                    <h1>{{ 'FILES' | translate }}</h1>
+                                    
+                                        <div ngf-select ng-model="model.uploadFile" name="uploadFile" ngf-pattern="'application/zip,text/html,text/csv,text/calendar,application/pdf,application/x-rar-compressed,application/excel,application/xml,text/xml'"
+                                        ngf-accept="'application/zip,text/html,text/csv,text/calendar,application/pdf,application/x-rar-compressed,application/excel,application/xml,text/xml'" ngf-max-size="20MB" ngf-min-height="100" 
+                                        ngf-resize="{width: 100, height: 100}"   ngf-before-model-change="beforeChange($files)"><i class="fa fa-plus add-image-button" aria-hidden="true"></i></div>
                                 </div> 
                                 <div class="panel-body docuemnts-upload">
-                                    <div class="row" ng-repeat="f in filesAdd">
+                                    <div class="row" ng-if="fileModel.name" >
 
-                                        <div class="col-xs-2">
-                                            <i class="fa fa-folder" aria-hidden="true"></i>
+                                        <div class="col-xs-2 typeImageUpload">
+                                            <i class="fa {{fileModel.type}}" aria-hidden="true"></i>
                                         </div>
                                         <div class="col-xs-8">
-                                            <h4>Documentos</h4>
-                                            <p>este es un texto muy largo</p>
+                                            <h4>{{fileModel.name}}</h4>
                                         </div>
-                                        <div class="col-xs-2 close">
+                                        <div class="col-xs-2 close" ng-click="clearUpload()">
                                             <i class="fa fa-times" aria-hidden="true"></i>
                                         </div>
                                     </div>
@@ -70,6 +71,11 @@
                     <div class="box-header with-border">
                       <h3 class="box-title">{{ 'DETAILS_FOR' | translate }}</b></h3>
                     </div>
+	                <div class="progress" ng-if="stepactive == 2" >
+	                  <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="{{uploadImageProgress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{uploadImageProgress}}%">
+	                   {{uploadImageProgress}}% {{ 'COMPLETE' | translate }}
+	                  </div>
+	                </div>
                       <table class="table usertable">
                         <tr ng-if="model.name">
                             <td>{{ 'NAME' | translate }}</td>
@@ -128,10 +134,10 @@
                         </tr>
                       </table>
                     <div class="box-footer"> 
-                        <button   back-button class="btn btn-default pull-left">
+                        <button ng-if="stepactive == 2"  back-button class="btn btn-default pull-left">
                             {{ 'BACK' | translate }}
                         </button>
-                        <button ng-show="stepactive == 2" type="submit" class="btn btn-primary pull-right" ng-click="edit(model)">{{ 'SAVE' | translate }}</button>
+                        <button ng-if="stepactive == 2" type="submit" class="btn btn-primary pull-right" ng-click="add(model)">{{ 'SAVE' | translate }}</button>
                     </div>
                 </div>  
               
