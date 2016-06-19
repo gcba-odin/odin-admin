@@ -30,6 +30,13 @@
     				scope.searchModel=[];
     				scope.q="&";
     			},
+    			activeClass:function (activeClass){
+		            if(activeClass){
+		                return "label-success";
+		            }else{
+		                return "label-warning";
+		            }
+    			},
     			edit:function (scope,model){
     				        var url = '/'+scope.type+'/' + model.id + "/edit";
     				        $location.path(url);
@@ -58,6 +65,12 @@
     				scope.data = rest().get({
             			type: scope.type ,params:"sort=createdAt DESC"+scope.q
         			});
+    			},
+    			findOne:function(routeParams,scope){
+				 scope.model = rest().findOne({
+				        id: routeParams.id,
+				        type: scope.type 
+				    });
     			},
     			confirmDelete:function (item){
 			        var item=item.target.dataset; 

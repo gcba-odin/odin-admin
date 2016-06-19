@@ -1,8 +1,9 @@
 <!-- Input name -->
 <div class="form-group">
-    <label for="title" class="col-sm-2 control-label">{{ 'NAME' | translate }}</label>
+    <label for="title" class="col-sm-2 control-label">* {{ 'NAME' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.name.$touched && form.name.$invalid }">
-        <input type="text" ng-model="model.name" name="name" class="form-control" id="title" placeholder="Place name Here" required />
+        <input type="text" ng-model="model.name" name="name" class="form-control" id="title" placeholder="{{ 'PLACE' | translate }} {{ 'NAME' | translate }} {{ 'HERE' | translate }}" required />
+        <p class="help-block">{{ 'MANDATARY' | translate }}</p>
         <div class="help-block" ng-messages="form.name.$error" ng-if="form.name.$touched">
             <div ng-messages-include="views/messages.html"></div>
         </div>
@@ -12,10 +13,11 @@
 
 <!-- Input Description -->
 <div class="form-group">
-    <label for="description" class="col-sm-2 control-label">{{ 'DESCRIPTION' | translate }}</label>
+    <label for="description" class="col-sm-2 control-label">* {{ 'DESCRIPTION' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.name.$touched && form.name.$invalid }">
-        <textarea class="form-control"  ckeditor="options" id="description" ng-model="model.description" name="description"></textarea>
+        <textarea class="form-control"  ckeditor="options" id="description" ng-model="model.description" name="description" required></textarea>
         <div class="help-block" ng-messages="form.name.$error" ng-if="form.name.$touched">
+        <p class="help-block">{{ 'MANDATARY' | translate }}</p>
             <div ng-messages-include="views/messages.html"></div>
         </div>
     </div>
@@ -37,7 +39,7 @@
 
 <!-- Input Visibility -->
 <div class="form-group">
-    <label for="title" class="col-sm-2 control-label">{{ 'VISIBILITY' | translate }}</label>
+    <label for="title" class="col-sm-2 control-label">* {{ 'VISIBILITY' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.visible.$touched && form.visible.$invalid }">
         <div>
           <label  class="btn btn-default" ng-class="activeClass(model.visible,1)">
@@ -46,6 +48,7 @@
           <label class="btn btn-warning" ng-class="activeClass(model.visible,2)">
             <input type="radio" ng-value="false" name="visible"  ng-model="model.visible" id="option2" autocomplete="off"> {{ 'NO' | translate }}
           </label>
+            <p class="help-block">{{ 'MANDATARY' | translate }}</p>
         </div>
         <div class="help-block" ng-messages="form.visible.$error" ng-if="form.visible.$touched">
             <div ng-messages-include="views/messages.html"></div>
@@ -57,11 +60,12 @@
 
 <!-- Input owner -->
 <div class="form-group">
-    <label for="owner" class="col-sm-2 control-label"> {{ 'OWNER' | translate }}</label>
+    <label for="owner" class="col-sm-2 control-label">* {{ 'OWNER' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.owner.$touched && form.owner.$invalid }">
     <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="username" data-modelname="users" data-model="{{model.owner}}" select-two-ajax  name="organization" id="organization"
       ng-model="model.owner" required  class="selectize-width">
       </select>
+        <p class="help-block">{{ 'MANDATARY' | translate }}</p>
 
         <div class="help-block" ng-messages="form.owner.$error" ng-if="form.owner.$touched">
             <div ng-messages-include="views/messages.html"></div>
@@ -72,7 +76,7 @@
 
 <!-- Input Starred -->
 <div class="form-group">
-    <label   class="col-sm-2 control-label">{{ 'STARRED' | translate }}</label>
+    <label   class="col-sm-2 control-label">* {{ 'STARRED' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.starred.$touched && form.starred.$invalid }">
         <div>
           <label  class="btn btn-default" ng-class="activeClass(model.starred,1)">
@@ -81,6 +85,8 @@
           <label class="btn btn-warning" ng-class="activeClass(model.starred,2)">
             <input type="radio" ng-value="false" name="starred"  ng-model="model.starred" id="option2" autocomplete="off"> {{ 'NO' | translate }}
           </label>
+                  <p class="help-block">{{ 'MANDATARY' | translate }}</p>
+
         </div>
 
             <div class="help-block" ng-messages="form.starred.$error" ng-if="form.starred.$touched">
@@ -92,7 +98,7 @@
   
 <!-- Input tags -->
 <div class="form-group">
-    <label for="tags" class="col-sm-2 control-label"> {{ 'TAGS' | translate }}</label>
+    <label for="tags" class="col-sm-2 control-label">{{ 'TAGS' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.tags.$touched && form.tags.$invalid }">
     <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="tags" data-model="{{model.tags}}" select-two-ajax data-create="true"  name="tags" id="tags"
       ng-model="model.tags" required  class="selectize-width" multiple>
@@ -110,12 +116,18 @@
     <div class="form-group" id="option1">
         <label  class="col-sm-2 control-label">{{ 'OPTIONAL' | translate }} {{increment($index)}}</label>
         <div class="col-sm-10"  ng-class="{ 'has-error': form[item.name].$touched && form[item.name].$invalid }">
-         
-            <div class="input-group">
-                <input type="text" ng-model="model.items[$index].field" name="{{item.field}}" class="form-control" id="title" required />      
-                <span class="input-group-btn">
-                <button class="btn btn-danger" ng-click="deleteIndexInput($index)" type="button">X</button>
-              </span>
+
+             <div class="row">
+                <div class="col-xs-5">
+                    <input type="text" ng-model="model.items[$index].field1" name="{{item.field}}" class="form-control" id="title" required />   
+                </div>
+                   <div class="col-xs-5">
+                    <input type="text" ng-model="model.items[$index].field2" name="{{item.field}}" class="form-control" id="title" required />   
+                </div>
+                <div class="col-xs-2">
+                    <button class="btn btn-danger" ng-click="deleteIndexInput($index)" type="button">X</button>
+                </div>
+
             </div>
                 <div class="help-block" ng-messages="form[item.name].$error" ng-if="form[item.name].$touched">
                 <div ng-messages-include="views/messages.html"></div>

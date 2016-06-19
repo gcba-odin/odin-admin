@@ -6,61 +6,38 @@ app.factory('model', function($resource) {
 
 
 
-function DatasetListController($scope, $location, rest, $rootScope, Flash,Alertify) {
+function DatasetListController($scope, $location, rest, $rootScope, Flash,Alertify,modelService) {
 
-    Flash.clear();
-    $scope.modelName = "Dataset";
-    $scope.type = "datasets";
 
-    var model = rest().get({
-        type: $scope.type ,params:"sort=createdAt DESC"
-    });
+modelService.initService("Dataset","datasets",$scope);
 
-    $scope.data = model;
-      $scope.confirmDelete=function (item){
-        var item=item.target.dataset; 
-                Alertify.confirm(item.textdelete).then(
-            function onOk() {
-                deleteModel({id:item.id})
-            }, 
-            function onCancel() { return false }
-        );
+    $scope.confirmDelete=function (item){
+        modelService.confirmDelete(item);
     }
 
-    var deleteModel = function(model) {
-        rest().delete({
-            type: $scope.type,
-            id: model.id
-        }, function(resp) {
-            $scope.data = rest().get({
-                type: $scope.type ,params:"sort=createdAt DESC"
-            });
-        });
-
+    $scope.deleteModel = function(model) {
+        modelService.delete($scope,model);
     };
 
     $scope.edit = function(model) {
-        var url = '/'+$scope.type+'/' + model.id + "/edit";
-        $location.path(url);
+        modelService.edit($scope,model);
     }
-
 
     $scope.view = function(model) {
-        var url = '/'+$scope.type+'/' + model.id + "/view";
-        $location.path(url);
+        modelService.view($scope,model);
     }
+
+    modelService.loadAll($scope); 
 }
 
-function DatasetViewController($scope, Flash, rest, $routeParams, $location,$sce) {
+function DatasetViewController($scope, Flash, rest, $routeParams, $location,$sce,modelService) {
 
-    Flash.clear();
-    $scope.modelName = "Dataset";
-    $scope.type = "datasets";
+modelService.initService("Dataset","datasets",$scope);
 
     $scope.model = rest().findOne({
         id: $routeParams.id,
         type: $scope.type,
-        params:"include=tags"
+        params:"include=tags,files"
     },function (){
         var tags=[];
         for (var i = 0; i < $scope.model.tags.length; i++) {
@@ -70,8 +47,8 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location,$sce
     });
 
     $scope.edit = function(model) {
-        var url = '/'+$scope.type+'/' + model.id + "/edit";
-        $location.path(url);
+        modelService.edit($scope,model);
+
     }
     $scope.getHtml = function(html){
         return $sce.trustAsHtml(html);
@@ -84,14 +61,13 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location,$sce
     });
 }
 
-function DatasetCreateController($scope, rest, model, Flash,$location) {
+function DatasetCreateController($scope, rest, model, Flash,$location,modelService) {
+modelService.initService("Dataset","datasets",$scope);
 
     $scope.tagsmodel = rest().get({
         type: "tags" ,params:"sort=name DESC"
     });
-    Flash.clear();
-    $scope.modelName = "Dataset";
-    $scope.type = "datasets";
+
 
     $scope.model = new model();
     $scope.model.items=[];
@@ -104,8 +80,9 @@ function DatasetCreateController($scope, rest, model, Flash,$location) {
 
         var cont=1;
         for (var i = 0; i < $scope.model.items.length; i++) {
+            var values=[];
             $scope.model["optional"+cont]="";
-            $scope.model["optional"+cont]=$scope.model.items[i].field;
+            $scope.model["optional"+cont]=$scope.model.items[i].field1+"|"+$scope.model.items[i].field2;
             cont++;
         }
 
@@ -144,16 +121,23 @@ function DatasetCreateController($scope, rest, model, Flash,$location) {
 
 }
 
-function DatasetEditController($scope, Flash, rest, $routeParams, model,$location) {
+function DatasetEditController($scope, Flash, rest, $routeParams, model,$location,modelService) {
 
-    Flash.clear();
-    $scope.modelName = "Dataset";
-    $scope.type = "datasets";
+modelService.initService("Dataset","datasets",$scope);
+
 
     $scope.model = new model();
     $scope.tags=[]; 
     var tagstemporal=[];
-$scope.tempData=[];
+    $scope.tempData=[];
+    $scope.publishAt="";
+    $scope.publish= function (){
+        $scope.model.publishedAt= new Date().toISOString().slice(0, 19).replace('T', ' ');
+    }
+    $scope.unPublish= function (){
+        console.log("aqui");
+        $scope.model.publishedAt= "";
+    }
     $scope.update = function(isValid) {
 
         for ( obj in $scope.model){
@@ -165,26 +149,24 @@ $scope.tempData=[];
         var optionsTemp=[];
    
 
-          $scope.tempData= angular.copy($scope.model);
-
+        $scope.tempData= angular.copy($scope.model);
         for (var o = 0; o < 10; o++) {
             var verifify=verifyOptional($scope.model.items,o)
+
             if(verifify){
-                optionsTemp.push({field:verifify.field});
+                optionsTemp.push(verifify);
             }else{
-                optionsTemp.push({field:""});    
+                optionsTemp.push("");    
             }
         }
 
         $scope.tempData.items=optionsTemp;
-
         var cont=1;
         for (var i = 0; i < $scope.tempData.items.length; i++) {
             $scope.tempData["optional"+cont]="";
-            $scope.tempData["optional"+cont]=$scope.tempData.items[i].field;
+            $scope.tempData["optional"+cont]=$scope.tempData.items[i];
             cont++;
         }
-
 
         if (isValid) {
             rest().update({
@@ -192,7 +174,7 @@ $scope.tempData=[];
                 id: $scope.tempData.id
             }, $scope.tempData,function (resp){
                 var url = '/'+$scope.type;
-                $location.path(url);
+               // $location.path(url);
             });
         }
     };
@@ -204,16 +186,17 @@ $scope.tempData=[];
             $scope.model = rest().findOne({
                 id: $routeParams.id,
                 type: $scope.type,
-                params:"include=tags"
+                params:"include=tags,files"
             },function (){
 
                 $scope.model.items=[];
+                $scope.publishAt=$scope.model.publishAt;
                 var counter=0;
                 for ( obj in $scope.model){
                     if(obj.indexOf("optional") != -1){
                        if(!!$scope.model[obj]){
-
-                            $scope.model.items.push({field:$scope.model[obj],index:counter});
+                            var varores=$scope.model[obj].split("|");
+                            $scope.model.items.push({field1:varores[0],field2:varores[1],index:counter});
                             counter++;
                        }
                     }
@@ -225,9 +208,8 @@ $scope.tempData=[];
      function verifyOptional(arrayOptions,index){
         var returnOption=false;
         for (var j = 0; j < arrayOptions.length; j++) {
-
             if(j== index){
-                returnOption = arrayOptions[j];
+                returnOption = arrayOptions[j].field1+"|"+arrayOptions[j].field2;
                 break;
             }
         }

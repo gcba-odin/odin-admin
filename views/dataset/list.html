@@ -23,7 +23,7 @@
                 <tbody><tr>
                 <!-- <th>ID</th>-->
                   <th>{{ 'NAME' | translate }}</th>
-                  <th>{{ 'UPDATED_AT' | translate }}</th>
+                  <th>{{ 'STATUS' | translate }}</th>
 
                   <th>{{ 'ACTIONS' | translate }}</th>
                   
@@ -31,7 +31,11 @@
                 <tr ng-repeat="model in data.data">
                  <!-- <td>{{model.id}}</td>-->
                   <td>{{model.name}}</td>
-                  <td>{{model.updatedAt | date}}</td>
+                  <td> 
+                    <span ng-if="model.visible">{{ 'VISIBLE' | translate }} </span> 
+                    <span ng-if="!model.visible">{{ 'NO_VISIBLE' | translate }} </span>
+                  </td>
+
 
                   
                   <td>

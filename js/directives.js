@@ -4,7 +4,7 @@
     app.directive("searchBar", function($parse) {
             return {
                 restrict: "E",
-                templateUrl: "/directives/search-bar.html",
+                templateUrl: "directives/search-bar.html",
                 scope:"=",
                 controller:function($scope,modelService){
 
@@ -256,7 +256,22 @@
         }
     });
 
+    app.filter('selectFilterArray', function() {
+      return function(input,model) {
 
+        /*
+        var output;
+        var modelSearch=scope.model[models].data;
+        for (var i = 0; i < modelSearch.length; i++) {
+          if(modelSearch[i].id==scope.model[model]){
+              output=modelSearch[i].name
+          }
+        };
+        return output;*/
+          return $("#"+model+" option:selected").text();
+      }
+
+    });
 
     app.filter('truncString', function() {
         return function(input) {

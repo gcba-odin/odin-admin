@@ -4,7 +4,7 @@
     app.directive("sidebarHome", function() {
         return {
             restrict: "E",
-            templateUrl: "/directives/home/sidebar-home.html",
+            templateUrl: "directives/home/sidebar-home.html",
             controller: function($scope,$rootScope) {
                 $rootScope.isActive = function(viewLocation) {
                   return  viewLocation === $rootScope.actualUrl;
@@ -20,7 +20,7 @@
     app.directive("breadcrumbs", function() {
         return {
             restrict: "E",
-            templateUrl: "/directives/breadcrumbs.html",
+            templateUrl: "directives/breadcrumbs.html",
             controller: function($scope) {
             }, link: function(scope, element, attrs) {
                   scope.modelUrl=attrs.model;
@@ -35,7 +35,7 @@
        app.directive("headerHome", function() {
         return {
             restrict: "E",
-            templateUrl: "/directives/home/header-home.html",
+            templateUrl: "directives/home/header-home.html",
             controller: function($scope) {
 
             },
@@ -45,7 +45,7 @@
     app.directive("controlHome", function() {
         return {
             restrict: "E",
-            templateUrl: "/directives/home/control-home.html",
+            templateUrl: "directives/home/control-home.html",
             controller: function($scope) {
 
             },
@@ -55,7 +55,7 @@
         app.directive("footerHome", function() {
         return {
             restrict: "E",
-            templateUrl: "/directives/home/footer-home.html",
+            templateUrl: "directives/home/footer-home.html",
             controller: function($scope) {
 
             },

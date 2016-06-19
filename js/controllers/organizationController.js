@@ -25,76 +25,45 @@ app.directive('wysihtml5', function() {
         }
     };
 });
-function OrganizationListController($scope, $location, rest, $rootScope, Flash,Alertify) {
-Flash.clear();
-$scope.modelName = "Organization";
-$scope.type = "organizations"; 
+function OrganizationListController($scope, $location, rest, $rootScope, Flash,Alertify,modelService) {
 
-    var model = rest().get({
-        type: $scope.type ,params:"sort=createdAt DESC"
-    });
-    $scope.data = model;
+ modelService.initService("Organization","organizations",$scope);
 
-     $scope.confirmDelete=function (item){
-        var item=item.target.dataset; 
-                Alertify.confirm(item.textdelete).then(
-            function onOk() {
-                deleteModel({id:item.id})
-            }, 
-            function onCancel() { return false }
-        );
+    $scope.confirmDelete=function (item){
+        modelService.confirmDelete(item);
     }
-    var deleteModel = function(model) {
-        rest().delete({
-            type: $scope.type,
-            id: model.id
-        }, function(resp) {
-            $scope.data = rest().get({
-                type: $scope.type ,params:"sort=createdAt DESC"
-            });
-        });
 
+    $scope.deleteModel = function(model) {
+        modelService.delete($scope,model);
     };
 
     $scope.edit = function(model) {
-        var url = '/'+$scope.type+'/' + model.id + "/edit";
-        $location.path(url);
+        modelService.edit($scope,model);
     }
 
-
     $scope.view = function(model) {
-        var url = '/'+$scope.type+'/' + model.id + "/view";
-        $location.path(url);
-    };
+        modelService.view($scope,model);
+    }
+
+    modelService.loadAll($scope);    
+    
     $scope.activeClass = function(activeClass) {
-            if(activeClass){
-                return "label-success";
-            }else{
-                return "label-warning";
-            }
+        modelService.activeClass(activeClass);
     }; 
 }
 
-function OrganizationViewController($scope, Flash, rest, $routeParams, $location) {
-Flash.clear();
-$scope.modelName = "Organization";
-$scope.type = "organizations"; 
+function OrganizationViewController($scope, Flash, rest, $routeParams, $location,modelService) {
+ modelService.initService("Organization","organizations",$scope);
 
-    $scope.model = rest().findOne({
-        id: $routeParams.id,
-        type: $scope.type 
-    });
-
+    modelService.findOne($routeParams,$scope);
     $scope.edit = function(model) {
-        var url = '/'+$scope.type+'/' + model.id + "/edit";
-        $location.path(url);
+        modelService.edit($scope,model);
     }
 }
 
-function OrganizationCreateController($scope, rest, model, Flash,$location) {
-Flash.clear();
-$scope.modelName = "Organization";
-$scope.type = "organizations"; 
+function OrganizationCreateController($scope, rest, model, Flash,$location,modelService) {
+ modelService.initService("Organization","organizations",$scope);
+
 
     $scope.model = new model();
     $scope.add = function(isValid) {
@@ -117,15 +86,14 @@ $scope.type = "organizations";
     };  
 }
 
-function OrganizationEditController($scope, Flash, rest, $routeParams, model,$location) {
+function OrganizationEditController($scope, Flash, rest, $routeParams, model,$location,modelService) {
 
 $scope.editorOptions = {
     language: 'es',
 };
 
-Flash.clear();
-$scope.modelName = "Organization";
-$scope.type = "organizations";  
+ modelService.initService("Organization","organizations",$scope);
+
 
     $scope.model = new model();
     $scope.update = function(isValid) {

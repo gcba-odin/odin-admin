@@ -6,9 +6,22 @@ app.config(['$translateProvider', function ($translateProvider,$rootScope) {
     'USERS': 'USERS',
     'LANGUAGE':'Español'
 
-  }); 
+  });  
  
   $translateProvider.translations('es', {
+    'CHARGE_OF_FILE':'Carga de archivo',
+    'DATA_OF_FILE':'Datos del archivo',
+    'REVISION':'Revisión',
+    'VISIVILITY':'Visibilidad',
+    'VIEW_LINK_RESOURCES':'Ver recursos asociados',
+    'TITLE':'Título',
+    'UNPUBLISH':'Despublicar',
+    'NEW_RESOURCES':'Nuevo recurso',
+    'PUBLISH':'Publicar',
+    'PUBLISHED_AT':'Publicado en',
+    'NO_VISIBLE':'Visible',
+    'VISIBLE':'No visible',
+    'MANDATARY':'* Este campo es obligatorio',
     'CREATED':'creó',
     'UPDATED':'actualizó',
     'MORE_INFO':'Más información',
@@ -35,7 +48,7 @@ app.config(['$translateProvider', function ($translateProvider,$rootScope) {
     'UPLOAD_FILE':'Subir Archivo',
     'SELECTE_ONE':'Seleccione uno',
     'USER': 'Usuario',
-    'OWNER': 'Dueño',
+    'OWNER': 'Usuario responsable',
     'TAGS': 'Tags',
     'SELECT':'Seleccionar',
     'TAG': 'Tag',

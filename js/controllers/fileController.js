@@ -18,7 +18,7 @@ function FileListController($scope, $location, rest, $rootScope, Flash,Alertify,
         modelService.confirmDelete(item);
     }
 
-    var deleteModel = function(model) {
+    $scope.deleteModel = function(model) {
         modelService.delete($scope,model);
     };
 
@@ -34,25 +34,19 @@ function FileListController($scope, $location, rest, $rootScope, Flash,Alertify,
 }
 
 function FileViewController($scope, Flash, rest, $routeParams, $location,modelService) {
-    Flash.clear();
-    $scope.modelName = "File";
-    $scope.type = "files";
+    modelService.initService("File","files",$scope);
 
-    $scope.model = rest().findOne({
-        id: $routeParams.id,
-        type: $scope.type 
-    });
+
+    modelService.findOne($routeParams,$scope);
+
 
     $scope.edit = function(model) {
         modelService.edit($scope,model);
     }
 }
 
-function FileCreateController($scope, rest, model, Flash,$location,Upload,$rootScope) {
-
-    Flash.clear();
-    $scope.modelName = "File";
-    $scope.type = "files";
+function FileCreateController($scope, $sce,rest, model, Flash,$location,Upload,$rootScope,modelService) {
+    modelService.initService("File","files",$scope);
 
 $scope.beforeChange=function($files){
     $scope.model.name=$files[0].name;
@@ -65,6 +59,49 @@ $scope.beforeChange=function($files){
     }
 }
     $scope.model = new model();
+    $scope.steps=[];
+    $scope.steps[0]="active";
+    $scope.steps[1]="undone";
+    $scope.steps[2]="undone";
+    $scope.stepactive=0;
+
+    $scope.filesAdd=[
+                        {name:"file 1",description:"desciption"},
+                        {name:"file 2",description:"desciption"},
+                        {name:"file 3",description:"desciption"},
+
+                    ]
+    $scope.checkstep=function (step){
+        if(step==0){
+            $scope.steps[0]="active";
+            $scope.steps[1]="undone";
+            $scope.steps[2]="undone";     
+        }else if(step==1){
+            $scope.steps[0]="done";
+            $scope.steps[1]="active";
+            $scope.steps[2]="undone";     
+        }else{
+            $scope.steps[0]="done";
+            $scope.steps[1]="done";
+            $scope.steps[2]="active";             
+        }
+        $scope.stepactive=step;
+    }
+    $scope.step=function (step){
+        var step=$scope.steps[step];
+        if(step=="undone"){
+            return "undone";
+        }else if (step=="done"){
+            return "done";
+        }else{
+            return "active";
+
+        }
+    }
+    $scope.getHtml = function(html){
+        return $sce.trustAsHtml(html);
+    };
+
     $scope.add = function(isValid) {
     $scope.uploadImageProgress=10;
         var data={
@@ -97,7 +134,7 @@ $scope.beforeChange=function($files){
     };
 
 
-    $scope.model.filetypes = rest().get({
+    /*$scope.model.filetypes = rest().get({
         type: "filetypes" ,params:"sort=name DESC"
     });
     $scope.model.statuses = rest().get({
@@ -105,20 +142,19 @@ $scope.beforeChange=function($files){
     });
   /*  $scope.model.organizations = rest().get({
         type: "organizations" ,params:"sort=name DESC"
-    });*/
+    });
     $scope.model.frequencies = rest().get({
         type: "updatefrequencies" ,params:"sort=name DESC"
     });
     $scope.tagsmodel = rest().get({
         type: "tags" ,params:"sort=name DESC"
-    });
+    });*/
 
 }
 
-function FileEditController($scope, Flash, rest, $routeParams, model,$location) {
-    Flash.clear();
-    $scope.modelName = "File";
-    $scope.type = "files";
+function FileEditController($scope, Flash, rest, $routeParams, model,$location,modelService) {
+    modelService.initService("File","files",$scope);
+
 
     $scope.model = new model();
     $scope.update = function(isValid) {

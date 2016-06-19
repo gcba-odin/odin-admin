@@ -4,59 +4,33 @@ app.factory('model', function($resource) {
     return $resource();
 });
 
-function StatusListController($scope, $location, rest, $rootScope, Flash,Alertify) {
-Flash.clear();
-$scope.modelName = "Status";
-$scope.type = "statuses"; 
+function StatusListController($scope, $location, rest, $rootScope, Flash,Alertify,modelService) {
 
-
-    var model = rest().get({
-        type: $scope.type ,params:"sort=createdAt DESC"
-    });
-    $scope.data = model;
+ modelService.initService("Status","statuses",$scope);
 
     $scope.confirmDelete=function (item){
-        var item=item.target.dataset; 
-                Alertify.confirm(item.textdelete).then(
-            function onOk() {
-                deleteModel({id:item.id})
-            }, 
-            function onCancel() { return false }
-        );
+        modelService.confirmDelete(item);
     }
-    var deleteModel = function(model) {
-        rest().delete({
-            type: $scope.type,
-            id: model.id
-        }, function(resp) {
-            $scope.data = rest().get({
-                type: $scope.type ,params:"sort=createdAt DESC"
-            });
-        });
 
+    $scope.deleteModel = function(model) {
+        modelService.delete($scope,model);
     };
 
     $scope.edit = function(model) {
-        var url = '/'+$scope.type+'/' + model.id + "/edit";
-        $location.path(url);
+        modelService.edit($scope,model);
     }
-
 
     $scope.view = function(model) {
-        var url = '/'+$scope.type+'/' + model.id + "/view";
-        $location.path(url);
+        modelService.view($scope,model);
     }
+
+    modelService.loadAll($scope);
 }
 
-function StatusViewController($scope, Flash, rest, $routeParams, $location) {
-Flash.clear();
-$scope.modelName = "Status";
-$scope.type = "statuses"; 
+function StatusViewController($scope, Flash, rest, $routeParams, $location,modelService) {
+ modelService.initService("Status","statuses",$scope);
 
-    $scope.model = rest().findOne({
-        id: $routeParams.id,
-        type: $scope.type 
-    });
+    modelService.findOne($routeParams,$scope);
 
     $scope.edit = function(model) {
         var url = '/'+$scope.type+'/' + model.id + "/edit";
@@ -64,11 +38,10 @@ $scope.type = "statuses";
     }
 }
 
-function StatusCreateController($scope, rest, model, Flash,$location) {
+function StatusCreateController($scope, rest, model, Flash,$location,modelService) {
 
-Flash.clear();
-$scope.modelName = "Status";
-$scope.type = "statuses"; 
+ modelService.initService("Status","statuses",$scope);
+ 
 
     $scope.model = new model();
     $scope.add = function(isValid) {
@@ -83,10 +56,9 @@ $scope.type = "statuses";
     };
 }
 
-function StatusEditController($scope, Flash, rest, $routeParams, model,$location) {
-Flash.clear();
-$scope.modelName = "Status";
-$scope.type = "statuses"; 
+function StatusEditController($scope, Flash, rest, $routeParams, model,$location,modelService) {
+ modelService.initService("Status","statuses",$scope);
+
 
     $scope.model = new model();
     $scope.update = function(isValid) {
