@@ -53,7 +53,10 @@
                             <td>{{ 'VISIVILITY' | translate }}</td>
                             <td>{{model.visibility}}</td>
                         </tr>
-
+                       <tr ng-if="model.tags">
+                            <td>{{ 'TAGS' | translate }}</td>
+<td ng-bind-html="getHtml(model.tags)" >
+</td>                        </tr>
                       </table>
                     <div class="box-footer"> 
                         <button  back-button class="btn btn-default pull-left">

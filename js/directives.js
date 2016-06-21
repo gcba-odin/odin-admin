@@ -170,14 +170,12 @@
                     }
                 });
 
-                console.log(attrs.model);
                 attrs.$observe("model", function (newValue) {
                     if(!!newValue){
                       setTimeout(function(){
                         try {
                           var  jsonValue=angular.fromJson(newValue);
                           var selectize = selectizes[0].selectize;
-
 
                           if(Object.prototype.toString.call(jsonValue) === '[object Array]'){
                             var options=[];
@@ -200,7 +198,7 @@
                           }
 
                         } catch (e) {
-                            console.log(e);
+
                         }
                       
                       }, 500);

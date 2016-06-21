@@ -21,14 +21,16 @@
     	return msgs
     });
 
-    app.factory('modelService', function ($location,rest,Flash){
+    app.factory('modelService', function ($location,rest,Flash,Alertify){
     		return {
+    			insertalScope:{},
     			initService:function(modelName,type,scope){
   					Flash.clear();
     				scope.modelName = modelName;
     				scope.type = type;
     				scope.searchModel=[];
     				scope.q="&";
+    				this.insertalScope=scope;
     			},
     			activeClass:function (activeClass){
 		            if(activeClass){
@@ -72,11 +74,14 @@
 				        type: scope.type 
 				    });
     			},
-    			confirmDelete:function (item){
-			        var item=item.target.dataset; 
+    			confirmDelete:function (item,scope){
+    				var _this=this;
+    				console.log(item.target.dataset);
+			        var item=item.target.dataset;  
         				Alertify.confirm(item.textdelete).then(
    						 function onOk() {
-        						deleteModel({id:item.id})
+
+        						_this.delete(_this.insertalScope,{id:item.id})
     						}, 
     				    function onCancel() { return false }
 						);
