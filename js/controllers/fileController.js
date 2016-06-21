@@ -159,7 +159,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             'notes': $scope.model.notes,
             'url': $scope.model.url,
             'visibility': $scope.model.visibility,
-
+            ///'fileType':$scope.fileModel.type,
             'uploadFile': $scope.model.uploadFile
         }
 
@@ -172,9 +172,8 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
         }, function(resp) {
             alert(resp.status);
         }, function(evt) {
-            console.log(evt.config._file.name);
-            //var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-            //$scope.uploadImageProgress=progressPercentage;
+            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+            $scope.uploadImageProgress=progressPercentage;
         });
     };
 
