@@ -137,7 +137,7 @@
                         <button ng-if="stepactive == 2"  back-button class="btn btn-default pull-left">
                             {{ 'BACK' | translate }}
                         </button>
-                        <button ng-if="stepactive == 2" type="submit" class="btn btn-primary pull-right" ng-click="add(model)">{{ 'SAVE' | translate }}</button>
+                        <button ng-if="stepactive == 2" type="submit" class="btn btn-primary pull-right" ng-click="add(model)" ng-disabled="form.$invalid">{{ 'SAVE' | translate }}</button>
                     </div>
                 </div>  
               
