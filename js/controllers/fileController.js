@@ -225,6 +225,7 @@ function FileEditController($rootScope,$scope, Flash, rest, $routeParams, model,
 
    $scope.uploadImageProgress = 10;
         var data = {
+            'name': $scope.model.name,
             'status': $scope.model.status,
             'organization': $scope.model.organization,
             'dataset': $scope.model.dataset,
