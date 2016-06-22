@@ -147,7 +147,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             'visible': $scope.model.visible,
             'owner': $scope.model.owner,
             'updateFrequency':$scope.model.updateFrequency,
-            'tags': $scope.model.tags.join(","),
+            'tags': $scope.model.tags ? $scope.model.tags.join(",") : "",
             'uploadFile': $scope.model.uploadFile,
         }
 
@@ -235,7 +235,7 @@ function FileEditController($rootScope,$scope, Flash, rest, $routeParams, model,
             'visible': $scope.model.visible,
             'owner': $scope.model.owner,
             'updateFrequency':$scope.model.updateFrequency,
-            'tags': $scope.model.tags.join(","),
+            'tags': $scope.model.tags ? $scope.model.tags.join(",") : "",
         }
 
       if (isValid) {
