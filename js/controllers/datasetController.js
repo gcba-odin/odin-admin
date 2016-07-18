@@ -65,7 +65,7 @@ function DatasetCreateController($scope, rest, model, Flash,$location,modelServi
 modelService.initService("Dataset","datasets",$scope);
 
     $scope.tagsmodel = rest().get({
-        type: "tags" ,params:"sort=name DESC"
+        type: "tags" ,params:"orderBy=name&sort=DESC"
     });
 
 
@@ -181,7 +181,7 @@ modelService.initService("Dataset","datasets",$scope);
 
     $scope.load = function() {
         $scope.tagsmodel = rest().get({
-            type: "tags" ,params:"sort=name DESC"
+            type: "tags" ,params:"orderBy=name&sort=DESC"
         },function (){
             $scope.model = rest().findOne({
                 id: $routeParams.id,

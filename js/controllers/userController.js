@@ -63,7 +63,7 @@ function UserCreateController($scope, rest, model, Flash,$location,modelService)
     };
 }
 
-function UserEditController($scope, Flash, rest, $routeParams, model,$location) {
+function UserEditController($scope, Flash, rest, $routeParams, model,$location, modelService) {
   modelService.initService("User","users",$scope);
 
     $scope.model = new model();
