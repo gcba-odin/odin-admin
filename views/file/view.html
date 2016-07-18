@@ -65,7 +65,7 @@
                         </button>
                         <div class="pull-right">
                           <button type="submit" class="btn btn-primary" ng-click="edit(model)">{{ 'EDIT' | translate }}</button>
-                          <a class="btn btn-success" target="_blank" href="files/{{ model.id }}/download" download="{{model.name}}{{model.type.name}}">{{ 'DOWNLOAD' | translate }}</a>
+                          <a class="btn btn-success" target="_blank" href="{{ model.url }}" download="{{ model.name }}{{ model.type.name }}">{{ 'DOWNLOAD' | translate }}</a>
                       </div>
                     </div>
                 </div>
