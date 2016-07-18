@@ -6,8 +6,8 @@ app.config(['$translateProvider', function ($translateProvider,$rootScope) {
     'USERS': 'USERS',
     'LANGUAGE':'Español'
 
-  });  
- 
+  });
+
   $translateProvider.translations('es', {
     'CHARGE_OF_FILE':'Carga de archivo',
     'DATA_OF_FILE':'Datos del archivo',
@@ -25,7 +25,7 @@ app.config(['$translateProvider', function ($translateProvider,$rootScope) {
     'CREATED':'creó',
     'UPDATED':'actualizó',
     'MORE_INFO':'Más información',
-    'DELETED':'borró', 
+    'DELETED':'borró',
     'AN':'un',
     'SELECT_TO':'Seleccione un {{resource}}',
     'SEARCH_BY':'Buscar por {{resource}}',
@@ -49,7 +49,7 @@ app.config(['$translateProvider', function ($translateProvider,$rootScope) {
     'SELECTE_ONE':'Seleccione uno',
     'USER': 'Usuario',
     'OWNER': 'Usuario responsable',
-    'TAGS': 'Tags',
+    'TAGS': 'Etiquetas',
     'SELECT':'Seleccionar',
     'TAG': 'Tag',
     'ADD_TAG': 'Crear Tag',
@@ -62,8 +62,8 @@ app.config(['$translateProvider', function ($translateProvider,$rootScope) {
     'ORGANIZATION':'Organización',
     'CATEGORIES': 'Categorías',
     'CATEGORY':'Categoría',
-    'STATUSES': 'Status',
-    'STATUS':'Status',
+    'STATUSES': 'Estados',
+    'STATUS':'Estado',
     'FILE_TYPES': 'Tipos de archivos',
     'FILES': 'Archivos',
     'FILE': 'Archivo',
@@ -72,6 +72,7 @@ app.config(['$translateProvider', function ($translateProvider,$rootScope) {
 
     'DATASETS': 'Set de datos',
     'DATASET': 'Set de Datos',
+    'DOWNLOAD': 'Descargar',
     'ADD_USER': 'Crear Usuario',
     'VIEW_USERS': 'Ver Usuarios',
     'ADD_ORGANIZATIONS': 'Crear Organizaciones',
@@ -135,4 +136,4 @@ app.config(['$translateProvider', function ($translateProvider,$rootScope) {
   app.controller("localizeController", function($scope) {
   	console.log($scope)
 
-  }); 
+  });

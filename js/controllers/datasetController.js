@@ -27,7 +27,7 @@ modelService.initService("Dataset","datasets",$scope);
         modelService.view($scope,model);
     }
 
-    modelService.loadAll($scope); 
+    modelService.loadAll($scope);
 }
 
 function DatasetViewController($scope, Flash, rest, $routeParams, $location,$sce,modelService) {
@@ -94,7 +94,7 @@ modelService.initService("Dataset","datasets",$scope);
                 var url = '/'+$scope.type;
                 $location.path(url);
             });
-        }  
+        }
     };
 
     $scope.inputs = [];
@@ -117,7 +117,7 @@ modelService.initService("Dataset","datasets",$scope);
     $scope.itemName= function(a){
             return "optional"+(parseInt(a)+1);
         }
-    
+
 
 }
 
@@ -127,7 +127,7 @@ modelService.initService("Dataset","datasets",$scope);
 
 
     $scope.model = new model();
-    $scope.tags=[]; 
+    $scope.tags=[];
     var tagstemporal=[];
     $scope.tempData=[];
     $scope.publishAt="";
@@ -139,7 +139,6 @@ modelService.initService("Dataset","datasets",$scope);
         $scope.model.publishedAt= "";
     }
     $scope.update = function(isValid) {
-
         for ( obj in $scope.model){
             if(obj.indexOf("optional") != -1){
                 delete $scope.model[obj]
@@ -147,16 +146,16 @@ modelService.initService("Dataset","datasets",$scope);
         }
 
         var optionsTemp=[];
-   
+
 
         $scope.tempData= angular.copy($scope.model);
         for (var o = 0; o < 10; o++) {
-            var verifify=verifyOptional($scope.model.items,o)
+            var verified=verifyOptional($scope.model.items,o)
 
-            if(verifify){
-                optionsTemp.push(verifify);
+            if(verified){
+                optionsTemp.push(verified);
             }else{
-                optionsTemp.push("");    
+                optionsTemp.push("");
             }
         }
 
@@ -195,13 +194,13 @@ modelService.initService("Dataset","datasets",$scope);
                 for ( obj in $scope.model){
                     if(obj.indexOf("optional") != -1){
                        if(!!$scope.model[obj]){
-                            var varores=$scope.model[obj].split("|");
-                            $scope.model.items.push({field1:varores[0],field2:varores[1],index:counter});
+                            var valores=$scope.model[obj].split("|");
+                            $scope.model.items.push({field1:valores[0],field2:valores[1],index:counter});
                             counter++;
                        }
                     }
-                } 
-            }); 
+                }
+            });
         });
  }
 
@@ -209,6 +208,7 @@ modelService.initService("Dataset","datasets",$scope);
         var returnOption=false;
         for (var j = 0; j < arrayOptions.length; j++) {
             if(j== index){
+                console.dir(arrayOptions[j]);
                 returnOption = arrayOptions[j].field1+"|"+arrayOptions[j].field2;
                 break;
             }
@@ -237,6 +237,6 @@ modelService.initService("Dataset","datasets",$scope);
             return "optional"+(parseInt(a)+1);
         }
     $scope.load();
-    
+
 
 }
