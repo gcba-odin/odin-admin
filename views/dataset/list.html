@@ -32,8 +32,7 @@
                  <!-- <td>{{model.id}}</td>-->
                   <td>{{model.name}}</td>
                   <td> 
-                    <span ng-if="model.visible">{{ 'VISIBLE' | translate }} </span> 
-                    <span ng-if="!model.visible">{{ 'NO_VISIBLE' | translate }} </span>
+                    <span ng-if="model.status">{{ model.status.name }} </span> 
                   </td>
 
 
