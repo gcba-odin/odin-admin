@@ -63,8 +63,10 @@
                         <button back-button class="btn btn-default pull-left">
                             {{ 'BACK' | translate }}
                         </button>
-                        <a class="btn btn-success pull-right" target="_blank" href="files/{{ model.id }}/download" download="{{model.name}}{{model.type.name}}">Descargar</a> 
-                        <button type="submit" class="btn btn-primary pull-right" ng-click="edit(model)">{{ 'EDIT' | translate }}</button>
+                        <div class="pull-right">
+                          <button type="submit" class="btn btn-primary" ng-click="edit(model)">{{ 'EDIT' | translate }}</button>
+                          <a class="btn btn-success" target="_blank" href="files/{{ model.id }}/download" download="{{model.name}}{{model.type.name}}">{{ 'DOWNLOAD' | translate }}</a>
+                      </div>
                     </div>
                 </div>
 
