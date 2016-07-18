@@ -208,6 +208,7 @@ modelService.initService("Dataset","datasets",$scope);
         var returnOption=false;
         for (var j = 0; j < arrayOptions.length; j++) {
             if(j== index){
+                console.dir(arrayOptions[j]);
                 returnOption = arrayOptions[j].field1+"|"+arrayOptions[j].field2;
                 break;
             }
