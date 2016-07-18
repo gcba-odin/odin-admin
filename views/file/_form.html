@@ -54,7 +54,7 @@ end Input uploadFile -->
     <div class="col-sm-10"  ng-class="{ 'has-error': form.status.$touched && form.status.$invalid }">
 
 
-   <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="statuses" data-model="{{model.status}}" select-two-ajax  name="status" id="status"
+   <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="statuses" data-opt="{{ options.data }}" data-model="{{model.status}}" select-two-ajax name="status" id="status"
       ng-model="model.status"   class="selectize-width" required>
       </select>
 

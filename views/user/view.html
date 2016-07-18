@@ -30,6 +30,14 @@
                             <td>{{ 'ORGANIZATION' | translate }}</td>
                             <td>{{model.organization.name}}</td>
                         </tr>
+                        <tr ng-if="model.createdBy">
+                            <td>{{ 'CREATED_BY' | translate }}</td>
+                            <td>{{model.createdBy.username}}</td>
+                        </tr>
+                        <tr ng-if="model.createdAt">
+                            <td>{{ 'CREATED_AT' | translate }}</td>
+                            <td>{{model.createdAt | date}}</td>
+                        </tr>
 
                     </table>
                     <div class="box-footer"> 
