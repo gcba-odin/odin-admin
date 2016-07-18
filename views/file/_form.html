@@ -1,10 +1,10 @@
 
-<!-- Input uploadFile 
+<!-- Input uploadFile
 <div class="form-group">
     <label for="uploadFile" class="col-sm-2 control-label"> {{ 'UPLOAD_FILE' | translate }}</label>
     <div class="col-sm-5"  ng-class="{ 'has-error': form.uploadFile.$touched && form.uploadFile.$invalid }">
           <div class="btn btn-info" ngf-select ng-model="model.uploadFile" name="uploadFile" ngf-pattern="'application/zip,text/html,text/csv,text/calendar,application/pdf,application/x-rar-compressed,application/excel,application/xml,text/xml'"
-    ngf-accept="'application/zip,text/html,text/csv,text/calendar,application/pdf,application/x-rar-compressed,application/excel,application/xml,text/xml'" ngf-max-size="20MB" ngf-min-height="100" 
+    ngf-accept="'application/zip,text/html,text/csv,text/calendar,application/pdf,application/x-rar-compressed,application/excel,application/xml,text/xml'" ngf-max-size="20MB" ngf-min-height="100"
     ngf-resize="{width: 100, height: 100}"   ngf-before-model-change="beforeChange($files)">{{ 'SELECT' | translate }}</div>
 
         <div class="help-block" ng-messages="form.uploadFile.$error" ng-if="form.uploadFile.$touched">
@@ -23,7 +23,7 @@
 </div>
 end Input uploadFile -->
 
-<!-- Input name 
+<!-- Input name
 <div class="form-group">
     <label for="name" class="col-sm-2 control-label"> {{ 'NAME' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.name.$touched && form.name.$invalid }">
@@ -34,7 +34,7 @@ end Input uploadFile -->
     </div>
 </div>
 -->
-<!-- Input type 
+<!-- Input type
 <div class="form-group">
     <label for="type" class="col-sm-2 control-label"> {{ 'TYPE' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.type.$touched && form.type.$invalid }">
@@ -49,7 +49,7 @@ end Input uploadFile -->
 </div>-->
 <!-- end Input type -->
 <!-- Input status -->
-<div class="form-group">
+<!-- <div class="form-group">
     <label for="status" class="col-sm-2 control-label"> {{ 'STATUS' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.status.$touched && form.status.$invalid }">
 
@@ -62,7 +62,7 @@ end Input uploadFile -->
             <div ng-messages-include="views/messages.html"></div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- end Input status -->
 
 <!-- Input organization -->
@@ -104,7 +104,7 @@ end Input uploadFile -->
 <div class="form-group">
     <label for="description" class="col-sm-2 control-label"> {{ 'DESCRIPTION' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.description.$touched && form.description.$invalid }">
-      
+
         <textarea id="description" class="form-control"  ckeditor="options" ng-model="model.description" name="description" required></textarea>
 
         <div class="help-block" ng-messages="form.description.$error" ng-if="form.description.$touched">
@@ -128,7 +128,7 @@ end Input uploadFile -->
 <!-- end Input Notes -->
 
 
-<!-- Input Url 
+<!-- Input Url
 <div class="form-group">
     <label for="url" class="col-sm-2 control-label"> {{ 'URL' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.url.$touched && form.url.$invalid }">
@@ -141,7 +141,7 @@ end Input uploadFile -->
 <!-- end Input Url -->
 
 <!-- Input Visibility -->
-<div class="form-group">
+<!-- <div class="form-group">
     <label for="title" class="col-sm-2 control-label">* {{ 'VISIBILITY' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.visible.$touched && form.visible.$invalid }">
         <div>
@@ -157,7 +157,7 @@ end Input uploadFile -->
             <div ng-messages-include="views/messages.html"></div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- end Input Visibility -->
 <!-- Input updateFrequency -->
 <div class="form-group">

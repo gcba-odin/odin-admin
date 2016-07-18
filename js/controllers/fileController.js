@@ -55,7 +55,7 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
         },function (){
             var tags=[];
             for (var i = 0; i < $scope.model.tags.length; i++) {
-                tags.push('<span class="label label-primary">'+$scope.model.tags[i].name+'</span>'); 
+                tags.push('<span class="label label-primary">'+$scope.model.tags[i].name+'</span>');
             };
              $scope.model.tags=tags.join(" - ");
         });
@@ -158,7 +158,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             var url = '/' + $scope.type;
             $location.path(url);
         }, function(resp) {
-            alert(resp.status);
+            // alert(resp.status);
         }, function(evt) {
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
             $scope.uploadImageProgress=progressPercentage;
@@ -221,7 +221,7 @@ function FileEditController($rootScope,$scope, Flash, rest, $routeParams, model,
 
 
     $scope.update = function(isValid) {
-  
+
 
    $scope.uploadImageProgress = 10;
         var data = {

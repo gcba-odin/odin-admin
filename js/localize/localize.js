@@ -49,7 +49,7 @@ app.config(['$translateProvider', function ($translateProvider,$rootScope) {
     'SELECTE_ONE':'Seleccione uno',
     'USER': 'Usuario',
     'OWNER': 'Usuario responsable',
-    'TAGS': 'Tags',
+    'TAGS': 'Etiquetas',
     'SELECT':'Seleccionar',
     'TAG': 'Tag',
     'ADD_TAG': 'Crear Tag',
