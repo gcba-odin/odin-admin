@@ -14,7 +14,6 @@
                             <td>{{ 'NAME' | translate }}</td>
                             <td>{{model.name}}</td>
                         </tr>
-
                         <tr ng-if="model.type">
                             <td>{{ 'TYPE' | translate }}</td>
                             <td>{{model.type.name}}</td>
@@ -35,6 +34,10 @@
                         <tr ng-if="model.createdBy">
                             <td>{{ 'CREATED_BY' | translate }}</td>
                             <td>{{model.createdBy.username}}</td>
+                        </tr>
+                        <tr ng-if="model.createdAt">
+                            <td>{{ 'CREATED_AT' | translate }}</td>
+                            <td>{{model.createdAt | date:'d/M/yy H:mm'}}</td>
                         </tr>
                         <tr ng-if="model.description">
                             <td>{{ 'DESCRIPTION' | translate }}</td>
