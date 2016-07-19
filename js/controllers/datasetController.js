@@ -30,7 +30,7 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
     modelService.loadAll($scope);
 }
 
-function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sce, modelService) {
+function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sce, modelService, Alertify) {
 
     modelService.initService("Dataset", "datasets", $scope);
 
@@ -59,6 +59,39 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
             return $sce.trustAsHtml(val);
         };
     });
+
+    var update = function() {
+
+        $scope.tempData = {
+            id: $scope.model.id,
+            publishedAt: $scope.model.publishedAt
+        };
+
+        rest().update({
+            type: $scope.type,
+            id: $scope.tempData.id
+        }, $scope.tempData, function(resp) {
+            var url = '/' + $scope.type;
+            // $location.path(url);
+        });
+    };
+
+    $scope.publish = function() {
+        $scope.model.publishedAt = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        update();
+    };
+
+    $scope.unPublish = function() {
+        Alertify.confirm('¿Está seguro que quiere despublicar este dataset?').then(
+                function onOk() {
+                    $scope.model.publishedAt = null;
+                    update();
+                },
+                function onCancel() {
+                    return false;
+                }
+        );
+    };
 }
 
 function DatasetCreateController($scope, rest, model, Flash, $location, modelService) {
@@ -87,12 +120,14 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
             cont++;
         }
 
+        // transform the array of objects into a string of ids
+        $scope.model.tags = $scope.model.tags.toString();
 
         if (isValid) {
             rest().save({
                 type: $scope.type
             }, $scope.model, function(resp) {
-                var url = '/' + $scope.type;
+                var url = '/' + $scope.type + '/' + resp.data.id;
                 $location.path(url);
             });
         }
@@ -183,15 +218,16 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
                 // rObj[obj.id] = obj.value;
             });
             return reformattedArray;
-        };
+        }
+        ;
 
         if (isValid) {
             rest().update({
                 type: $scope.type,
                 id: $scope.tempData.id
             }, $scope.tempData, function(resp) {
-                var url = '/' + $scope.type;
-                // $location.path(url);
+                var url = '/' + $scope.type + '/' + $scope.tempData.id + '/view';
+                $location.path(url);
             });
         }
     };
@@ -206,7 +242,7 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
                 type: $scope.type,
                 params: "include=tags,files"
             }, function() {
-
+                console.log($scope.model);
                 $scope.model.items = [];
                 $scope.publishAt = $scope.model.publishAt;
                 var counter = 0;

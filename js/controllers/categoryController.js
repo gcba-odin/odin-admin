@@ -92,8 +92,8 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
     $scope.model = new model();
     $scope.update = function(isValid) {
 
-
-
+        $scope.model.createdBy = $scope.model.createdBy.id;
+        
         if (isValid) {
             rest().update({
                 type: $scope.type,
@@ -105,7 +105,7 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
                     Alertify.success('Se ha editado y DESACTIVADO la categoría con éxito');
                 }
 
-                var url = '/#/' + $scope.type;
+                var url = '/' + $scope.type;
                 $location.path(url);
             });
         }

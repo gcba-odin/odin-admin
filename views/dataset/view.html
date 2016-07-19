@@ -9,7 +9,11 @@
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} <b>{{model.name}}</b></h3>
-                        <button  data-toggle="modal" data-target="#myModal" class="btn btn-default pull-right">{{ 'VIEW_LINK_RESOURCES' | translate }}</button>
+                        <!--<button  data-toggle="modal" data-target="#myModal" class="btn btn-default pull-right">{{ 'VIEW_LINK_RESOURCES' | translate }}</button>-->
+                        <button ng-click="unPublish()" ng-if="model.publishedAt" class="pull-right btn btn-warning">{{ 'UNPUBLISH' | translate }}</button>
+                        <button ng-click="publish()" ng-if="!model.publishedAt" class="pull-right btn btn-success">{{ 'PUBLISH' | translate }}</button> 
+                        <button  data-toggle="modal" data-target="#newResources" class="btn btn-default pull-right magin-right-10"><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_RESOURCES' | translate }}</button>  
+                        <button  data-toggle="modal" data-target="#viewLinkResources" class="btn btn-default pull-right magin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_RESOURCES' | translate }}</button> 
                     </div>
                     <table class="table usertable">
                         <tr ng-if="model.name">
@@ -119,7 +123,7 @@
         </div>    
     </section>
     <!--  Main content-->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="viewLinkResources" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
