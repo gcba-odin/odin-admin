@@ -1,24 +1,45 @@
 <div class="searchList">
-	<div class="col-md-5 " ng-if="searchInputForm.required">
-		<label>{{searchInputForm.name}}</label>
-	    <input type="text" ng-model="searchModel['q']" name="q" class="form-control" placeholder="{{ 'SEARCH_BY' | translate:{resource:searchInputForm.name} }}">
-	</div>
-	<div class="col-md-6">
-	  <div class="row">
-	    <div class="col-md-4" ng-repeat="drop in dropdowns">
-	    <label for="{{drop.model}}">{{drop.name}}  {{drop.tags}}</label>
-	      <select ng-if="drop.multiple"  placeholder="{{ 'SELECT_TO' | translate:{resource:drop.name} }}" data-key="{{drop.key}}" data-modelname="{{drop.model}}"  select-two-ajax  name="{{drop.model}}" id="{{drop.model}}"
-	      ng-model="searchModel.filters[drop.modelInput]" required  class="selectize-width" multiple>
-	      </select>
-	     <select ng-if="!drop.multiple"  placeholder="{{ 'SELECT_TO' | translate:{resource:drop.name} }}" data-key="{{drop.key}}" data-modelname="{{drop.model}}"  select-two-ajax  name="{{drop.model}}" id="{{drop.model}}"
-	      ng-model="searchModel.filters[drop.modelInput]" required  class="selectize-width"  >
-	      </select>
-	    </div> 
+    <div class="row">
+        <div class="col-md-5 " ng-if="searchInputForm.required">
+            <label>{{searchInputForm.name}}</label>
+            <input type="text" ng-model="searchModel['q']" name="q" class="form-control" placeholder="{{ 'SEARCH_BY' | translate:{resource:searchInputForm.name} }}">
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-4" ng-repeat="drop in dropdowns">
+                    <label for="{{drop.model}}">{{drop.name}}
+                        {{drop.tags}}</label>
+                    <select
+                        ng-if="drop.multiple"
+                        placeholder="{{ 'SELECT_TO' | translate:{resource:drop.name} }}"
+                        data-key="{{drop.key}}"
+                        data-modelname="{{drop.model}}"
+                        select-two-ajax
+                        name="{{drop.model}}"
+                        id="{{drop.model}}"
+                        ng-model="searchModel.filters[drop.modelInput]"
+                        required
+                        class="selectize-width"
+                        multiple></select>
+                    <select
+                        ng-if="!drop.multiple"
+                        placeholder="{{ 'SELECT_TO' | translate:{resource:drop.name} }}"
+                        data-key="{{drop.key}}"
+                        data-modelname="{{drop.model}}"
+                        select-two-ajax
+                        name="{{drop.model}}"
+                        id="{{drop.model}}"
+                        ng-model="searchModel.filters[drop.modelInput]"
+                        required
+                        class="selectize-width"></select>
+                </div>
 
-	  </div>
+            </div>
 
-	</div>
-	<div class="col-md-1">
-	  <button class="btn btn-default" ng-click="search()" type="button">Buscar</button>
-	</div>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-default pull-right" ng-click="search()" type="button">Buscar</button>
+        </div>
+    </div>
+
 </div>
