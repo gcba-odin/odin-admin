@@ -115,7 +115,7 @@
             }).when("/files/:id/view", {
                 templateUrl: "views/file/view.html",
                 controller:FileViewController
-            }).when("/files/new", {
+            }).when("/files/new/:dataset?", {
                 templateUrl: "views/file/add.html",
                 controller:FileCreateController
             }).when("/files/:id/edit", {

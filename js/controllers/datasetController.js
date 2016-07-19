@@ -94,7 +94,7 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
     };
 }
 
-function DatasetCreateController($scope, rest, model, Flash, $location, modelService) {
+function DatasetCreateController($scope, rest, model, Flash, $location, modelService, flashService) {
     modelService.initService("Dataset", "datasets", $scope);
 
     $scope.tagsmodel = rest().get({
@@ -122,6 +122,15 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
 
         // transform the array of objects into a string of ids
         $scope.model.tags = $scope.model.tags.toString();
+
+        var exist_another = rest().get({
+            type: "datasets" ,params:"name="+$scope.model.name
+        }, function(data){
+            if(data.data.length > 0){
+                isValid = false;
+                flashService.showErrors('El nombre ya existe.');
+            }
+        });
 
         if (isValid) {
             rest().save({

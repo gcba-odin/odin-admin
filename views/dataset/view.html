@@ -12,7 +12,7 @@
                         <!--<button  data-toggle="modal" data-target="#myModal" class="btn btn-default pull-right">{{ 'VIEW_LINK_RESOURCES' | translate }}</button>-->
                         <button ng-click="unPublish()" ng-if="model.publishedAt" class="pull-right btn btn-warning">{{ 'UNPUBLISH' | translate }}</button>
                         <button ng-click="publish()" ng-if="!model.publishedAt" class="pull-right btn btn-success">{{ 'PUBLISH' | translate }}</button> 
-                        <button  data-toggle="modal" data-target="#newResources" class="btn btn-default pull-right magin-right-10"><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_RESOURCES' | translate }}</button>  
+                        <a ng-href="#/files/new/{{model.id}}" class="btn btn-default pull-right magin-right-10"><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_RESOURCES' | translate }}</a>  
                         <button  data-toggle="modal" data-target="#viewLinkResources" class="btn btn-default pull-right magin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_RESOURCES' | translate }}</button> 
                     </div>
                     <table class="table usertable">

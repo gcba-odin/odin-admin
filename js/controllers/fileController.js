@@ -11,18 +11,18 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
     modelService.initService("File", "files", $scope);
 
     $scope.filtersView = [{
-        name: 'Estado',
-        model: 'statuses',
-        key: 'name',
-        modelInput: 'status',
-        multiple: true
-    }, {
-        name: 'Autor',
-        model: 'users',
-        key: 'username',
-        modelInput: 'owner',
-        multiple: false
-    }];
+            name: 'Estado',
+            model: 'statuses',
+            key: 'name',
+            modelInput: 'status',
+            multiple: true
+        }, {
+            name: 'Autor',
+            model: 'users',
+            key: 'username',
+            modelInput: 'owner',
+            multiple: false
+        }];
     $scope.confirmDelete = function(item) {
         modelService.confirmDelete(item);
     }
@@ -42,30 +42,31 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
     modelService.loadAll($scope);
 }
 
-function FileViewController($scope, Flash, rest, $routeParams, $location, modelService,$sce) {
+function FileViewController($scope, Flash, rest, $routeParams, $location, modelService, $sce) {
     modelService.initService("File", "files", $scope);
-       $scope.getHtml = function(html) {
-            return $sce.trustAsHtml(html);
-        };
+    $scope.getHtml = function(html) {
+        return $sce.trustAsHtml(html);
+    };
 
-        $scope.model = rest().findOne({
-            id: $routeParams.id,
-            type: $scope.type,
-            params:"include=tags"
-        },function (){
-            var tags=[];
-            for (var i = 0; i < $scope.model.tags.length; i++) {
-                tags.push('<span class="label label-primary">'+$scope.model.tags[i].name+'</span>');
-            };
-             $scope.model.tags=tags.join(" - ");
-        });
+    $scope.model = rest().findOne({
+        id: $routeParams.id,
+        type: $scope.type,
+        params: "include=tags"
+    }, function() {
+        var tags = [];
+        for (var i = 0; i < $scope.model.tags.length; i++) {
+            tags.push('<span class="label label-primary">' + $scope.model.tags[i].name + '</span>');
+        }
+        ;
+        $scope.model.tags = tags.join(" - ");
+    });
 
     $scope.edit = function(model) {
         modelService.edit($scope, model);
     }
 }
 
-function FileCreateController($scope, $sce, rest, model, Flash, $location, Upload, $rootScope, modelService) {
+function FileCreateController($scope, $sce, rest, model, Flash, $location, Upload, $rootScope, modelService, $routeParams) {
     modelService.initService("File", "files", $scope);
 
     $scope.clearUpload = function() {
@@ -75,7 +76,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
 
     $scope.beforeChange = function($files) {
         $scope.fileModel.name = $files[0].name;
-        $scope.model.name=$scope.fileModel.name;
+        $scope.model.name = $scope.fileModel.name;
         var type = $files[0].name.split('.').pop();
         if (type == "doc" || type == "docx") {
             $scope.fileModel.type = 'fa-file-word-o';
@@ -95,6 +96,15 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
     $scope.steps[1] = "undone";
     $scope.steps[2] = "undone";
     $scope.stepactive = 0;
+
+    $scope.dataset_disabled = false;
+    if (!angular.isUndefined($routeParams.dataset)) {
+        $scope.model.dataset = rest().findOne({
+            id: $routeParams.dataset,
+            type: 'datasets'
+        });
+        $scope.dataset_disabled = true;
+    }
 
     $scope.fileModel = []
     $scope.checkstep = function(step) {
@@ -143,10 +153,10 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             'dataset': $scope.model.dataset,
             'description': $scope.model.description,
             'notes': $scope.model.notes,
-          //  'url': $scope.model.url,
+            //  'url': $scope.model.url,
             'visible': $scope.model.visible,
             'owner': $scope.model.owner,
-            'updateFrequency':$scope.model.updateFrequency,
+            'updateFrequency': $scope.model.updateFrequency,
             'tags': $scope.model.tags ? $scope.model.tags.join(",") : "",
             'uploadFile': $scope.model.uploadFile,
         }
@@ -161,7 +171,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             // alert(resp.status);
         }, function(evt) {
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-            $scope.uploadImageProgress=progressPercentage;
+            $scope.uploadImageProgress = progressPercentage;
         });
     };
 
@@ -169,11 +179,11 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
 
 }
 
-function FileEditController($rootScope,$scope, Flash, rest, $routeParams, model, $location, modelService,$sce,Upload) {
+function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model, $location, modelService, $sce, Upload) {
     modelService.initService("File", "files", $scope);
     $scope.model = new model();
 
- $scope.model = new model();
+    $scope.model = new model();
     $scope.steps = [];
     $scope.steps[0] = "active";
     $scope.steps[1] = "undone";
@@ -223,7 +233,7 @@ function FileEditController($rootScope,$scope, Flash, rest, $routeParams, model,
     $scope.update = function(isValid) {
 
 
-   $scope.uploadImageProgress = 10;
+        $scope.uploadImageProgress = 10;
         var data = {
             'name': $scope.model.name,
             'status': $scope.model.status,
@@ -231,14 +241,14 @@ function FileEditController($rootScope,$scope, Flash, rest, $routeParams, model,
             'dataset': $scope.model.dataset,
             'description': $scope.model.description,
             'notes': $scope.model.notes,
-           // 'url': $scope.model.url,
+            // 'url': $scope.model.url,
             'visible': $scope.model.visible,
             'owner': $scope.model.owner,
-            'updateFrequency':$scope.model.updateFrequency,
+            'updateFrequency': $scope.model.updateFrequency,
             'tags': $scope.model.tags ? $scope.model.tags.join(",") : "",
         }
 
-      if (isValid) {
+        if (isValid) {
             rest().update({
                 type: $scope.type,
                 id: $scope.model.id
@@ -255,10 +265,10 @@ function FileEditController($rootScope,$scope, Flash, rest, $routeParams, model,
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type,
-            params:"include=tags"
-        },function (){
+            params: "include=tags"
+        }, function() {
             $scope.model.status = $scope.model.status.id;
-            $scope.fileModel.name=$scope.model.name;
+            $scope.fileModel.name = $scope.model.name;
             var type = $scope.fileModel.name.split('.').pop();
             if (type == "doc" || type == "docx") {
                 $scope.fileModel.type = 'fa-file-word-o';
