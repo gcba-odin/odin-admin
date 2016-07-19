@@ -69,7 +69,7 @@ app.config(['$translateProvider', function ($translateProvider,$rootScope) {
     'FILE': 'Archivo',
     'DATABASES': 'Bases de datos',
     'DATABASE': 'Base de datos',
-
+    'NEXT':'Siguiente',
     'DATASETS': 'Set de datos',
     'DATASET': 'Set de Datos',
     'DOWNLOAD': 'Descargar',

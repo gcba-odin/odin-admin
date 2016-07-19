@@ -137,7 +137,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
     $scope.add = function(isValid) {
         $scope.uploadImageProgress = 10;
         var data = {
-            'name': $scope.model.name,
+            'name': $scope.model.name.replace(/\.[^/.]+$/, ""), //removes file extension from name
             'status': $scope.model.status,
             'organization': $scope.model.organization,
             'dataset': $scope.model.dataset,
