@@ -257,7 +257,8 @@ function FileEditController($rootScope,$scope, Flash, rest, $routeParams, model,
             type: $scope.type,
             params:"include=tags"
         },function (){
-            $scope.fileModel.name=$scope.model.name
+            $scope.model.status = $scope.model.status.id;
+            $scope.fileModel.name=$scope.model.name;
             var type = $scope.fileModel.name.split('.').pop();
             if (type == "doc" || type == "docx") {
                 $scope.fileModel.type = 'fa-file-word-o';

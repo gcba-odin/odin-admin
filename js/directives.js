@@ -161,7 +161,7 @@
                             if (!query.length)
                                 return callback();
                             $.ajax({
-                                url: scope.$root.url + '/' + attrs.modelname + '?' + attrs.key + '=' + encodeURIComponent(query),// + '"}}&rand=' + Math.random(),
+                                url: scope.$root.url + '/' + attrs.modelname + '?' + attrs.key + '=' + encodeURIComponent(query), // + '"}}&rand=' + Math.random(),
                                 type: 'GET',
                                 error: function() {
                                     callback('error');
@@ -213,7 +213,7 @@
         }]);
 
     app.directive('selectTwoDefault', ['$parse', function($parse, $scope) {
-            
+
             return {
                 restrict: 'A',
                 link: function(scope, element, attrs) {
@@ -227,6 +227,26 @@
             };
         }]);
 
+    app.directive('selectStaticAjax', ['$parse', function($parse, $scope) {
+            return {
+                restrict: 'A',
+                template: '<option value="{{ opt.id }}" ng-repeat="opt in options">{{ opt.name }}</option>',
+                link: function(scope, element, attrs) {
+
+                    scope.options = [{id: '', name: 'Seleccione una opción'}];
+
+                    $.ajax({
+                        url: scope.$root.url + '/' + attrs.modelname,
+                        type: 'GET',
+                        error: function() {
+                        },
+                        success: function(res) {
+                            scope.options = scope.options.concat(res.data.slice(0, 10));
+                        }
+                    });
+                }
+            };
+        }]);
 
 
 
