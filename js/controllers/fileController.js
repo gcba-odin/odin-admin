@@ -112,7 +112,6 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
                 $scope.steps[1] = "done";
                 $scope.steps[2] = "active";
             }
-            console.log(step);
             $scope.stepactive = step;
         }
     }
@@ -154,11 +153,8 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
         Upload.upload({
             url: $rootScope.url + "/files",
             data: data
-        }).catch(function(resp) {
-          console.dir(resp);
-          console.dir($scope);
-            // var url = '/files' + $scope.type;
-            // $location.path(url);
+        }).then(function(resp) {
+          $location.url('/files/' + resp.data.data.id + '/view');
         }, function(resp) {
             // alert(resp.status);
         }, function(evt) {
@@ -199,7 +195,6 @@ function FileEditController($rootScope,$scope, Flash, rest, $routeParams, model,
                 $scope.steps[1] = "done";
                 $scope.steps[2] = "active";
             }
-            console.log(step);
             $scope.stepactive = step;
         }
     }
