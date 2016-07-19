@@ -164,9 +164,11 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
         Upload.upload({
             url: $rootScope.url + "/files",
             data: data
-        }).then(function(resp) {
-            var url = '/' + $scope.type;
-            $location.path(url);
+        }).catch(function(resp) {
+          console.dir(resp);
+          console.dir($scope);
+            // var url = '/files' + $scope.type;
+            // $location.path(url);
         }, function(resp) {
             // alert(resp.status);
         }, function(evt) {
