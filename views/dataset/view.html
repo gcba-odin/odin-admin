@@ -28,9 +28,9 @@
                             <td>{{ 'NOTES' | translate }}</td>
                             <td ng-bind-html="getHtml(model.notes)"></td>
                         </tr>
-                        <tr ng-if="model.category">
-                            <td>{{ 'CATEGORY' | translate }}</td>
-                            <td ng-bind-html="getHtml(model.category.name)"></td>
+                        <tr ng-if="model.categories">
+                            <td>{{ 'CATEGORIES' | translate }}</td>
+                            <td ng-bind-html="getHtml(model.categories)"></td>
                         </tr>
                         <tr ng-if="model.createdBy">
                             <td>{{ 'CREATED_BY' | translate }} </td>

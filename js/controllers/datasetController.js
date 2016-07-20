@@ -37,13 +37,19 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
     $scope.model = rest().findOne({
         id: $routeParams.id,
         type: $scope.type,
-        params: "include=tags,files"
+        params: "include=tags,files,categories"
     }, function() {
         var tags = [];
         for (var i = 0; i < $scope.model.tags.length; i++) {
             tags.push('<span class="label label-primary">' + $scope.model.tags[i].name + '</span>')
         }
         $scope.model.tags = tags.join(" - ");
+        
+        var categories = [];
+        for (var i = 0; i < $scope.model.categories.length; i++) {
+            categories.push('<span class="label label-primary">' + $scope.model.categories[i].name + '</span>')
+        }
+        $scope.model.categories = categories.join(" - ");
     });
 
     $scope.edit = function(model) {
@@ -102,6 +108,10 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
         params: "orderBy=name&sort=DESC"
     });
 
+    $scope.categoriesmodel = rest().get({
+        type: "categories",
+        params: "orderBy=name&sort=DESC"
+    });
 
     $scope.model = new model();
     $scope.model.items = [];
@@ -122,6 +132,7 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
 
         // transform the array of objects into a string of ids
         $scope.model.tags = $scope.model.tags.toString();
+        $scope.model.categories = $scope.model.categories.toString();
         
         if (isValid) {
             rest().save({
@@ -207,6 +218,7 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
         // transform the array of objects into a string of ids
         $scope.tempData.files = reformatArray($scope.tempData.files).toString();
         $scope.tempData.tags = $scope.tempData.tags.toString();
+        $scope.tempData.categories = $scope.tempData.categories.toString();
 
         // TODO: chequear cual forma de mandar los items (opcionales) es la correcta
         // $scope.tempData.items
@@ -240,7 +252,7 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
             $scope.model = rest().findOne({
                 id: $routeParams.id,
                 type: $scope.type,
-                params: "include=tags,files"
+                params: "include=tags,files,categories"
             }, function() {
                 console.log($scope.model);
                 $scope.model.items = [];

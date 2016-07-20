@@ -349,6 +349,12 @@
             return md5(str);
         }
     });
+    
+    app.filter('inArray', function() {
+        return function(array, value) {
+            return array.indexOf(value) !== -1;
+        };
+    });
 
     app.directive("backButton", ["$window", function($window) {
         return {

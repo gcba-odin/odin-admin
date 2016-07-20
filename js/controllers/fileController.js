@@ -41,39 +41,87 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
 
     $scope.limit = 20;
 
-    $scope.q = "&skip=0&limit="+$scope.limit;
+    $scope.q = "&skip=0&limit=" + $scope.limit;
 
     modelService.loadAll($scope);
-    
+
     $scope.paging = function(event, page, pageSize, total) {
-        var skip = (page-1) * $scope.limit;
-        $scope.q = "&skip="+skip+"&limit="+$scope.limit;
+        var skip = (page - 1) * $scope.limit;
+        $scope.q = "&skip=" + skip + "&limit=" + $scope.limit;
         modelService.loadAll($scope);
     };
 }
 
-function FileViewController($scope, Flash, rest, $routeParams, $location, modelService, $sce) {
+function FileViewController($scope, Flash, rest, $routeParams, $location, modelService, $sce, Alertify) {
     modelService.initService("File", "files", $scope);
     $scope.getHtml = function(html) {
         return $sce.trustAsHtml(html);
     };
 
-    $scope.model = rest().findOne({
-        id: $routeParams.id,
-        type: $scope.type,
-        params: "include=tags"
-    }, function() {
-        var tags = [];
-        for (var i = 0; i < $scope.model.tags.length; i++) {
-            tags.push('<span class="label label-primary">' + $scope.model.tags[i].name + '</span>');
-        }
-        ;
-        $scope.model.tags = tags.join(" - ");
-    });
-
+    var loadModel = function() {
+        $scope.model = rest().findOne({
+            id: $routeParams.id,
+            type: $scope.type,
+            params: "include=tags"
+        }, function() {
+            var tags = [];
+            for (var i = 0; i < $scope.model.tags.length; i++) {
+                tags.push('<span class="label label-primary">' + $scope.model.tags[i].name + '</span>');
+            }
+            ;
+            $scope.model.tags = tags.join(" - ");
+        });
+    };
+    
     $scope.edit = function(model) {
         modelService.edit($scope, model);
-    }
+    };
+    
+    var update = function() {
+
+        $scope.tempData = {
+            id: $scope.model.id,
+            publishedAt: $scope.model.publishedAt,
+            status: $scope.model.status
+        };
+
+        rest().update({
+            type: $scope.type,
+            id: $scope.tempData.id
+        }, $scope.tempData, function(resp) {
+            loadModel();
+            //var url = '/' + $scope.type;
+            // $location.path(url);
+        });
+    };
+    
+    $scope.publish = function() {
+        $scope.model.publishedAt = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        $scope.model.status = 'qWRhpRV';
+        update();
+    };
+
+    $scope.unPublish = function() {
+        Alertify.confirm('¿Está seguro que quiere despublicar este archivo?').then(
+                function onOk() {
+                    $scope.model.publishedAt = null;
+                    $scope.model.status = 'rWRhpRV';
+                    update();
+                },
+                function onCancel() {
+                    return false;
+                }
+        );
+    };
+    
+    loadModel();
+
+//    $scope.confirmDelete = function(item) {
+//        modelService.confirmDelete(item).then(function(resp) {
+//            var url = "/" + $scope.type;
+//            $location.path(url);
+//        });
+//    };
 }
 
 function FileCreateController($scope, $sce, rest, model, Flash, $location, Upload, $rootScope, modelService, $routeParams) {
@@ -100,6 +148,9 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             $scope.fileModel.type = 'fa-file-text-o';
         }
     }
+
+    $scope.status_default = true;
+
     $scope.model = new model();
     $scope.steps = [];
     $scope.steps[0] = "active";
@@ -118,7 +169,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
 
     $scope.fileModel = []
     $scope.checkstep = function(step) {
-        if (($scope.fileModel.name && step == 1) || ($scope.fileModel.name && step == 2) || step == 0) {
+        if (($scope.fileModel.name && step == 1) || ($scope.fileModel.name && step == 2 && $scope.form.$valid) || step == 0) {
             if (step == 0) {
                 $scope.steps[0] = "active";
                 $scope.steps[1] = "undone";
@@ -174,7 +225,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             url: $rootScope.url + "/files",
             data: data
         }).then(function(resp) {
-          $location.url('/files/' + resp.data.data.id + '/view');
+            $location.url('/files/' + resp.data.data.id + '/view');
         }, function(resp) {
             // alert(resp.status);
         }, function(evt) {
@@ -190,6 +241,8 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
 function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model, $location, modelService, $sce, Upload) {
     modelService.initService("File", "files", $scope);
     $scope.model = new model();
+
+    $scope.status_default = false;
 
     $scope.model = new model();
     $scope.steps = [];
