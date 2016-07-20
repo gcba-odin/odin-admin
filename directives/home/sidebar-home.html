@@ -33,7 +33,7 @@
           <ul class="treeview-menu">
             <li ng-class="{active: isActive('/users/new')}"><a ng-href="#/users/new"><i class="fa fa-circle-o"></i> {{ 'ADD_USER' | translate }}</a></li>
             <li ng-class="{active: isActive('/users')}"><a ng-href="#/users"><i class="fa fa-circle-o"></i> {{ 'VIEW_USERS' | translate }}  </a></li>
-          </ul> 
+          </ul>
         </li>
         <li ng-class="{active: isActive('/organizations/new') || isActive('/organizations') || isActiveEdit('organizations')}" class="treeview">
           <a ng-href="javascript:void(0)">
@@ -78,6 +78,15 @@
           <ul class="treeview-menu">
             <li ng-class="{active: isActive('/files/new')}"><a ng-href="#/files/new"><i class="fa fa-circle-o"></i>{{ 'ADD_FILES' | translate }} </a></li>
             <li ng-class="{active: isActive('/files')}"><a ng-href="#/files"><i class="fa fa-circle-o"></i>{{ 'VIEW_FILES' | translate }} </a></li>
+          </ul>
+        </li>
+        <li ng-class="{active: isActive('/maps/new') || isActive('/maps') || isActiveEdit('maps')}" class="treeview">
+          <a ng-href="javascript:void(0)">
+            <i class="fa fa-map-o"></i> <span>{{ 'MAPS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            <li ng-class="{active: isActive('/maps/new')}"><a ng-href="#/maps/new"><i class="fa fa-map-o"></i>{{ 'ADD_MAPS' | translate }} </a></li>
+            <li ng-class="{active: isActive('/maps')}"><a ng-href="#/maps"><i class="fa fa-map-o"></i>{{ 'VIEW_MAPS' | translate }} </a></li>
           </ul>
         </li>
        <!-- <li ng-class="{active: isActive('/databases/new') || isActive('/databases') || isActiveEdit('databases')}" class="treeview">

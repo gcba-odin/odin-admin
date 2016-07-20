@@ -1,4 +1,4 @@
-var app=angular.module('odin.controllers', ["odin.homeControllers","odin.userControllers","odin.updateFrequencyControllers","odin.organizationControllers","odin.statusControllers","odin.filetypeControllers","odin.fileControllers","odin.tagControllers","odin.categoryControllers"]);
+var app=angular.module('odin.controllers', ["odin.homeControllers","odin.userControllers","odin.updateFrequencyControllers","odin.organizationControllers","odin.statusControllers","odin.filetypeControllers","odin.fileControllers","odin.tagControllers","odin.categoryControllers","odin.mapsControllers"]);
 
   app.controller("mainController", function($scope, AuthenticationService, $location,$rootScope,$translate) {
 
@@ -21,7 +21,7 @@ var app=angular.module('odin.controllers', ["odin.homeControllers","odin.userCon
             $location.url('/login');
         };
 
-        $scope.$back = function() { 
+        $scope.$back = function() {
             window.history.back();
         };
 
@@ -33,7 +33,7 @@ var app=angular.module('odin.controllers', ["odin.homeControllers","odin.userCon
         }
 
 
-    }); 
+    });
 
 
 function LoginController($location, AuthenticationService, $scope) {

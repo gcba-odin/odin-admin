@@ -19,7 +19,7 @@
                 templateUrl: "config.html",
             })
             //// user Routes
-            .when("/users", {  
+            .when("/users", {
                 templateUrl: "views/user/list.html",
                 controller:UserListController
             }).when("/users/:id/view", {
@@ -78,7 +78,7 @@
                 controller:FileTypeEditController
             })
             //// file type
-            ////  Tags 
+            ////  Tags
             .when("/tags", {
                 templateUrl: "views/tag/list.html",
                 controller:TagListController
@@ -93,7 +93,7 @@
                 controller:TagEditController
             })
             //// file type
-            ////  Frequency 
+            ////  Frequency
             .when("/updatefrequencies", {
                 templateUrl: "views/updatefrequency/list.html",
                 controller:updateFrequencyListController
@@ -108,7 +108,7 @@
                 controller:updateFrequencyEditController
             })
             //// Frequency
-            ////  File 
+            ////  File
             .when("/files", {
                 templateUrl: "views/file/list.html",
                 controller:FileListController
@@ -122,7 +122,7 @@
                 templateUrl: "views/file/edit.html",
                 controller:FileEditController
             })
-            //// file 
+            //// file
 
             ////  Databases
             .when("/databases", {
@@ -168,7 +168,24 @@
                 templateUrl: "views/dataset/edit.html",
                 controller:DatasetEditController
             })
-            //// Datasets
+            // Maps
+            .when("/maps", {
+                templateUrl: "views/map/list.html",
+                controller:MapListController
+            })
+            .when("/maps/:id/view", {
+                templateUrl: "views/map/view.html",
+                controller:MapViewController
+            })
+            .when("/maps/new", {
+                templateUrl: "views/map/add.html",
+                controller:MapAddController
+            })
+            .when("/maps/:id/edit", {
+                templateUrl: "views/map/edit.html",
+                controller:MapEditController
+            })
+
             .otherwise({
                 redirectTo: '/'
             });

@@ -127,7 +127,11 @@ app.config(['$translateProvider', function ($translateProvider,$rootScope) {
     'ADD_OPTION':'Crear Opción',
     'YES':'Si',
     'NO':'No',
-    'SELECT_ONE':'Escribe una opción'
+    'SELECT_ONE':'Escribe una opción',
+    'MAP': 'Mapa',
+    'MAPS': 'Mapas',
+    'VIEW_MAPS': 'Ver mapas',
+    'ADD_MAPS': 'Agregar mapas',
   });
  console.log($rootScope);
   $translateProvider.preferredLanguage('es');
