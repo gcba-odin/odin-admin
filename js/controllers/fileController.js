@@ -169,7 +169,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
 
     $scope.fileModel = []
     $scope.checkstep = function(step) {
-        if (($scope.fileModel.name && step == 1) || ($scope.fileModel.name && step == 2) || step == 0) {
+        if (($scope.fileModel.name && step == 1) || ($scope.fileModel.name && step == 2 && $scope.form.$valid) || step == 0) {
             if (step == 0) {
                 $scope.steps[0] = "active";
                 $scope.steps[1] = "undone";
