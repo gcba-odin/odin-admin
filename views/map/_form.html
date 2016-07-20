@@ -9,8 +9,21 @@
     </div>
 </div>
 <!-- end Input name -->
+
+
+<select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="latitude" data-modelname="latitude" data-opt="{{ options.data }}" data-model="{{model.latitude}}" select-static-ajax name="latitude" id="latitude"
+   ng-model="model.latitude"   class="selectize-width" required>
+   </select>
+
+     <div class="help-block" ng-messages="form.latitude.$error" ng-if="form.latitude.$touched">
+         <div ng-messages-include="views/messages.html"></div>
+     </div>
+ </div>
+</div>
+
+
 <!-- Input DESCRIPTION -->
-<div class="form-group">
+<!-- <div class="form-group">
     <label for="description" class="col-sm-2 control-label">{{ 'DESCRIPTION' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.description.$touched && form.description.$invalid }">
         <textarea class="form-control" id="description" ready="onReady()" ckeditor="options" ng-model="model.description" name="description" required></textarea>
@@ -18,24 +31,21 @@
             <div ng-messages-include="views/messages.html"></div>
         </div>
     </div>
-</div>
-
-
-
+</div> -->
 <!-- end Input DESCRIPTION -->
 
 
 
 
 <!-- Button save  -->
-<div class="box-footer"> 
+<div class="box-footer">
     <div class="col-sm-12">
         <button type="button" back-button class="btn btn-default pull-left">
             {{ 'BACK' | translate }}
         </button>
         <input type="submit"  class="btn btn-primary pull-right" value="{{ 'SAVE' | translate }}" ng-disabled="form.$invalid"/>
     </div>
-</div> 
+</div>
 <!-- end Button save -->
 
 <script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>

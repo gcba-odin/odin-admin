@@ -1,6 +1,6 @@
 var app = angular.module('odin.mapsControllers', []);
 
-function MapViewController($scope) {
+function MapViewController($scope, rest) {
   //
   // angular.extend($scope, {
   //       japan: {
@@ -31,7 +31,22 @@ function MapViewController($scope) {
     // });
 }
 
-function MapAddController($scope) {}
+function MapAddController($scope) {
+
+  // $scope.load = function() {
+  //     $scope.model = rest().findOne({
+  //         id: $routeParams.id,
+  //         type: $scope.type,
+  //         params: "include=tags"
+  //     }, function() {
+  //       $scope.mapFile.latitudeOptions = $scope.model.name; //TODO: asignar las opciones de lat y long en base a los datos del archivo
+  //       $scope.mapFile.longitudeOptions = $scope.model.name;
+  //     });
+  // };
+  //
+  // $scope.load();
+
+}
 
 
 function MapListController($scope) {}
