@@ -14,11 +14,13 @@
                     if ($scope.searchModel.q) {
                         $scope.q += "name=" + $scope.searchModel.q + "&";
                     }
-                    for (f in filters) {
+                    for (var f in filters) {
+                      if (filters[f] != undefined) {
                         if (Object.prototype.toString.call(filters[f]) === '[object Array]') {
                             $scope.q += f + "=" + filters[f].join(",") + "&";
                         } else {
                             $scope.q += f + "=" + filters[f] + "&";
+                          }
                         }
                     }
                     modelService.search($scope);
