@@ -84,9 +84,12 @@ end Input uploadFile -->
 <!-- Input dataset -->
 <div class="form-group">
     <label for="dataset" class="col-sm-2 control-label"> {{ 'DATASET' | translate }}</label>
+    <!--<div class="col-sm-10" ng-if="dataset_disabled">
+        <span>{{model.dataset.name}}</span>
+    </div>-->
     <div class="col-sm-10"  ng-class="{ 'has-error': form.dataset.$touched && form.dataset.$invalid }">
     <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="datasets" data-model="{{model.dataset}}" select-two-ajax  name="dataset" id="dataset"
-      ng-model="model.dataset"   class="selectize-width" required ng-disabled="dataset_disabled">
+      ng-model="model.dataset"   class="selectize-width" required data-dis='{{dataset_disabled}}'>
       </select>
 
         <div class="help-block" ng-messages="form.dataset.$error" ng-if="form.dataset.$touched">

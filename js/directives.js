@@ -128,6 +128,11 @@
                     searchField: attrs.key,
                     placeholder: attrs.placeholder,
                     create: attrs.create,
+                    onInitialize: function() {
+                        if(!angular.isUndefined(attrs.dis) && attrs.dis =='disabled') {
+                            this.disable();
+                        } 
+                    },
                     onOptionAdd: function(a, item, talvez) {
 
                         if (attrs.create) {

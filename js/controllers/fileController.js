@@ -116,12 +116,12 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
     
     loadModel();
 
-//    $scope.confirmDelete = function(item) {
-//        modelService.confirmDelete(item).then(function(resp) {
-//            var url = "/" + $scope.type;
-//            $location.path(url);
-//        });
-//    };
+    $scope.confirmDelete = function(item) {
+        modelService.confirmDelete(item).then(function(resp) {
+            var url = "/" + $scope.type;
+            $location.path(url);
+        });
+    };
 }
 
 function FileCreateController($scope, $sce, rest, model, Flash, $location, Upload, $rootScope, modelService, $routeParams) {
@@ -158,13 +158,13 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
     $scope.steps[2] = "undone";
     $scope.stepactive = 0;
 
-    $scope.dataset_disabled = false;
+    $scope.dataset_disabled = 'enabled';
     if (!angular.isUndefined($routeParams.dataset)) {
         $scope.model.dataset = rest().findOne({
             id: $routeParams.dataset,
             type: 'datasets'
         });
-        $scope.dataset_disabled = true;
+        $scope.dataset_disabled = 'disabled';
     }
 
     $scope.fileModel = []
