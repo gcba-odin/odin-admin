@@ -36,8 +36,8 @@
                                 <div class="panel-heading">
                                     <h1>{{ 'FILES' | translate }}</h1>
 
-                                    <div ngf-select ng-model="model.uploadFile" name="uploadFile" ngf-pattern="'application/zip,text/html,text/csv,text/calendar,application/pdf,application/x-rar-compressed,application/excel,application/xml,text/xml'" ngf-accept="'application/zip,text/html,text/csv,text/calendar,application/pdf,application/x-rar-compressed,application/excel,application/xml,text/xml'"
-                                        ngf-max-size="20MB" ngf-min-height="100" ngf-resize="{width: 100, height: 100}" ngf-before-model-change="beforeChange($files)"><i class="fa fa-plus add-image-button" aria-hidden="true"></i></div>
+                                    <div ngf-select ng-model="model.uploadFile" name="uploadFile" ngf-pattern="'application/zip,text/html,text/csv,text/calendar,application/pdf,application/x-rar-compressed,application/excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/xml,text/xml'" ngf-accept="'application/zip,text/html,text/csv,text/calendar,application/pdf,application/x-rar-compressed,application/excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/xml,text/xml'"
+                                        ngf-max-size="2000MB" ngf-min-height="100" ngf-resize="{width: 100, height: 100}" ngf-before-model-change="beforeChange($files)"><i class="fa fa-plus add-image-button" aria-hidden="true"></i></div>
                                 </div>
                                 <div class="panel-body documents-upload">
                                     <div class="row" ng-if="fileModel.name">
