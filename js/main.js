@@ -396,7 +396,6 @@ function _init() {
     var clickmenu=false;
     $(document).on('click', menu + ' li a', function (e) {
       e.stopPropagation();
-      console.log("aqui") 
       //Get the clicked link and the next element
       var $this = $(this);
       var checkElement = $this.next();

@@ -36,13 +36,12 @@
                                 <div class="panel-heading">
                                     <h1>{{ 'FILES' | translate }}</h1>
 
-                                        <div ngf-select ng-model="model.uploadFile" name="uploadFile" ngf-pattern="'application/zip,text/html,text/csv,text/calendar,application/pdf,application/x-rar-compressed,application/excel,application/xml,text/xml'"
-                                        ngf-accept="'application/zip,text/html,text/csv,text/calendar,application/pdf,application/x-rar-compressed,application/excel,application/xml,text/xml'" ngf-max-size="20MB" ngf-min-height="100"
+                                        <div ngf-select ng-model="model.uploadFile" name="uploadFile" ngf-pattern="'application/x-zip-compressed,text/yaml,text/csv,text/html,text/calendar,application/pdf,application/x-rar-compressed,application/rss+xml,application/octet-stream,application/vnd.ms-excel,application/xml,application/zip,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'"
+                                        ngf-accept="'application/x-zip-compressed,text/yaml,text/csv,text/html,text/calendar,application/pdf,application/x-rar-compressed,application/rss+xml,application/octet-stream,application/vnd.ms-excel,application/xml,application/zip,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'" ngf-max-size="20MB" ngf-min-height="100"
                                         ngf-resize="{width: 100, height: 100}"   ngf-before-model-change="beforeChange($files)"><i class="fa fa-plus add-image-button" aria-hidden="true"></i></div>
                                 </div>
                                 <div class="panel-body docuemnts-upload">
                                     <div class="row" ng-if="fileModel.name" >
-
                                         <div class="col-xs-2 typeImageUpload">
                                             <i class="fa {{fileModel.type}}" aria-hidden="true"></i>
                                         </div>

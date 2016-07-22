@@ -72,11 +72,11 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
             $scope.model.tags = tags.join(" - ");
         });
     };
-    
+
     $scope.edit = function(model) {
         modelService.edit($scope, model);
     };
-    
+
     var update = function() {
 
         $scope.tempData = {
@@ -94,7 +94,7 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
             // $location.path(url);
         });
     };
-    
+
     $scope.publish = function() {
         $scope.model.publishedAt = new Date().toISOString().slice(0, 19).replace('T', ' ');
         $scope.model.status = 'qWRhpRV';
@@ -113,7 +113,7 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
                 }
         );
     };
-    
+
     loadModel();
 
     $scope.confirmDelete = function(item) {
@@ -124,7 +124,7 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
     };
 }
 
-function FileCreateController($scope, $sce, rest, model, Flash, $location, Upload, $rootScope, modelService, $routeParams) {
+function FileCreateController($scope, $sce, rest, model, Flash, $location, Upload, $rootScope, modelService, $routeParams, Alertify) {
     modelService.initService("File", "files", $scope);
 
     $scope.clearUpload = function() {
@@ -134,7 +134,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
 
     $scope.beforeChange = function($files) {
         $scope.fileModel.name = $files[0].name;
-        $scope.model.name = $scope.fileModel.name;
+        //$scope.model.name = $scope.fileModel.name;
         var type = $files[0].name.split('.').pop();
         if (type == "doc" || type == "docx") {
             $scope.fileModel.type = 'fa-file-word-o';
@@ -152,6 +152,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
     $scope.status_default = true;
 
     $scope.model = new model();
+    $scope.model.uploadFile = '';
     $scope.steps = [];
     $scope.steps[0] = "active";
     $scope.steps[1] = "undone";
@@ -169,25 +170,32 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
 
     $scope.fileModel = []
     $scope.checkstep = function(step) {
-        if (($scope.fileModel.name && step == 1) || ($scope.fileModel.name && step == 2 && $scope.form.$valid) || step == 0) {
-            if (step == 0) {
-                $scope.steps[0] = "active";
-                $scope.steps[1] = "undone";
-                $scope.steps[2] = "undone";
-            } else if (step == 1) {
-                $scope.steps[0] = "done";
-                $scope.steps[1] = "active";
-                $scope.steps[2] = "undone";
-            } else {
-                $scope.steps[0] = "done";
-                $scope.steps[1] = "done";
-                $scope.steps[2] = "active";
+        if ($scope.model.uploadFile == null && step == 1 && $scope.fileModel.name)
+        {
+            $scope.clearUpload();
+            Alertify.alert('Archivo no permitido.');
+        } else {
+            if (($scope.fileModel.name && step == 1 && $scope.model.uploadFile != null) || ($scope.fileModel.name && step == 2 && $scope.form.$valid && $scope.model.uploadFile != null) || step == 0) {
+        
+                if (step == 0) {
+                    $scope.steps[0] = "active";
+                    $scope.steps[1] = "undone";
+                    $scope.steps[2] = "undone";
+                } else if (step == 1) {
+                    $scope.steps[0] = "done";
+                    $scope.steps[1] = "active";
+                    $scope.steps[2] = "undone";
+                } else {
+                    $scope.steps[0] = "done";
+                    $scope.steps[1] = "done";
+                    $scope.steps[2] = "active";
+                }
+                $scope.stepactive = step;
             }
-            $scope.stepactive = step;
         }
     }
     $scope.step = function(step) {
-        if (($scope.fileModel.name && step == 1) || ($scope.fileModel.name && step == 2) || step == 0) {
+        if (($scope.fileModel.name && step == 1) || ($scope.fileModel.name && step == 2) || step == 0 && ($scope.model.uploadFile != null)) {
             var step = $scope.steps[step];
             if (step == "undone") {
                 return "undone";
@@ -207,7 +215,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
     $scope.add = function(isValid) {
         $scope.uploadImageProgress = 10;
         var data = {
-            'name': $scope.model.name.replace(/\.[^/.]+$/, ""), //removes file extension from name
+            'name': $scope.model.name, //.replace(/\.[^/.]+$/, ""), //removes file extension from name
             'status': $scope.model.status,
             'organization': $scope.model.organization,
             'dataset': $scope.model.dataset,
@@ -254,7 +262,8 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
     $scope.fileModel = []
 
     $scope.checkstep = function(step) {
-        if (($scope.fileModel.name && step == 1) || ($scope.fileModel.name && step == 2) || step == 0) {
+
+        if (($scope.fileModel.name && step == 1) || ($scope.fileModel.name && step == 2) || (step == 0)) {
             if (step == 0) {
                 $scope.steps[0] = "active";
                 $scope.steps[1] = "undone";
