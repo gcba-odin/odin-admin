@@ -167,8 +167,7 @@ end Input uploadFile -->
     <label for="updateFrequency" class="col-sm-2 control-label"> {{ 'FREQUENCY' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.updateFrequency.$touched && form.updateFrequency.$invalid }">
 
-
-   <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="updatefrequencies" data-model="{{model.updateFrequency}}" select-two-ajax  name="frecuency" id="frecuency"
+    <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="updatefrequencies" data-model="{{model.updateFrequency}}" select-static-ajax  name="frecuency" id="frecuency"
       ng-model="model.updateFrequency"   class="selectize-width" required>
       </select>
 

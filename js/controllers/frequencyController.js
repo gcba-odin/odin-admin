@@ -24,7 +24,17 @@ function updateFrequencyListController($scope, $location, rest, $rootScope, Flas
         modelService.view($scope,model);
     }
 
-    modelService.loadAll($scope);    
+    $scope.limit = 20;
+
+    $scope.q = "&skip=0&limit=" + $scope.limit;
+
+    modelService.loadAll($scope);
+
+    $scope.paging = function(event, page, pageSize, total) {
+        var skip = (page - 1) * $scope.limit;
+        $scope.q = "&skip=" + skip + "&limit=" + $scope.limit;
+        modelService.loadAll($scope);
+    };  
 }
 
 function updateFrequencyViewController($scope, Flash, rest, $routeParams, $location,modelService) {

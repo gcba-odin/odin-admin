@@ -176,7 +176,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             Alertify.alert('Archivo no permitido.');
         } else {
             if (($scope.fileModel.name && step == 1 && $scope.model.uploadFile != null) || ($scope.fileModel.name && step == 2 && $scope.form.$valid && $scope.model.uploadFile != null) || step == 0) {
-        
+
                 if (step == 0) {
                     $scope.steps[0] = "active";
                     $scope.steps[1] = "undone";
@@ -336,7 +336,9 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
             type: $scope.type,
             params: "include=tags"
         }, function() {
+            $scope.model.updateFrequency = $scope.model.updateFrequency.id;
             $scope.model.status = $scope.model.status.id;
+
             $scope.fileModel.name = $scope.model.name;
             var type = $scope.fileModel.name.split('.').pop();
             if (type == "doc" || type == "docx") {
