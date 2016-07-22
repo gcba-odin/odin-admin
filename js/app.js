@@ -1,5 +1,5 @@
 (function() {
-    var app = angular.module('odin', ["config-odin","ngRoute",'Alertify','ngFlash','ui.bootstrap','localize','ckeditor','ngMessages', "ngCookies","ngResource","ngProgress","odin.controllers","store-directives", "store-factories", "bw.paging"]);
+    var app = angular.module('odin', ["config-odin","ngRoute",'Alertify','ngFlash','ui.bootstrap','localize','ckeditor','ngMessages', "ngCookies","ngResource","ngProgress","odin.controllers","store-directives", "store-factories", "bw.paging", 'color.picker']);
 
 
 

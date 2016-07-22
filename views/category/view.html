@@ -19,6 +19,15 @@
                             <td>{{ 'DESCRIPTION' | translate }}</td>
                             <td ng-bind-html="getHtml(model.description)"></td>
                         </tr> 
+                        <tr ng-if="model.color">
+                            <td>{{ 'COLOR' | translate }}</td>
+                            <td style="max-width: 50px;"><color-picker ng-model="model.color" options="options_color"></color-picker></td>
+                        </tr> 
+                        
+                        <tr ng-if="model.image">
+                            <td>{{ 'IMAGE' | translate }}</td>
+                            <td><img style="width: 80px;" ng-src="{{ model.image }}"></td>
+                        </tr> 
                         <tr>
                             <td>{{ 'STATE' | translate }}</td>
                             <td><span class="label label-default" >{{model.deletedAt ? 'Inactivo' : 'Activo'}}</span></td>

@@ -40,7 +40,7 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
 
     modelService.findOne($routeParams, $scope);
 
-
+    
     $scope.edit = function(model) {
         var url = '/' + $scope.type + '/' + model.id + "/edit";
         $location.path(url);
@@ -49,22 +49,68 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
         return $sce.trustAsHtml(html);
     };
 
+    $scope.options_color = {
+        format: 'hex',
+        alpha: false,
+        placeholder: 'Seleccione un color',
+        disabled: true,
+    };
+    
 }
 
-function CategoryCreateController($scope, rest, model, Flash, $location, $rootScope, Alertify, modelService) {
+function CategoryCreateController($scope, rest, model, Flash, $location, $rootScope, Alertify, modelService, Upload) {
     modelService.initService("Category", "categories", $scope);
+    
+    $scope.fileModel = [];
+    
+    $scope.mostrar = true;
+
+    $scope.clearUpload = function() {
+        $scope.fileModel.name = "";
+        $scope.fileModel.type = "";
+    }
+    
+    //image usada para subida de imagen como FILE y no
+    //como Blob, ya que convierte el svg a png y no genera bien la subida
+    image = null;
+
+    $scope.beforeChange = function($files) {
+        image = $files[0];
+        $scope.fileModel.name = $files[0].name;
+    };
+
 
     $scope.model = new model();
     $scope.add = function(isValid) {
         if (isValid) {
-            $scope.model.createdBy = $rootScope.globals.currentUser.user
-            rest().save({
-                type: $scope.type
-            }, $scope.model, function(resp) {
+                $scope.model.uploadImage = image;
+            
+            var data = {
+                'name': $scope.model.name,
+                'description': $scope.model.description,
+                'color': $scope.model.color,
+                'uploadImage': $scope.model.uploadImage,
+                'createdBy': $rootScope.globals.currentUser.user
+            };
+
+            Upload.upload({
+                url: $rootScope.url + "/categories",
+                data: data
+            }).then(function(resp) {
                 Alertify.success('Se ha creado la categoría con éxito');
-                var url = '/' + $scope.type;
-                $location.path(url);
+                $location.url('/categories/' + resp.data.data.id + '/view');
+            }, function(resp) {
+                // alert(resp.status);
+            }, function(evt) {
+//                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+//                $scope.uploadImageProgress = progressPercentage;
             });
+        } else {
+            if(image != null && image.type != 'image/svg+xml') {
+                Alertify.alert('Archivo no permitido.');
+            } else {
+                Alertify.alert('Hay campos sin completar.');
+            }
         }
     };
     $scope.activeClass = function(activeClass, type) {
@@ -80,14 +126,25 @@ function CategoryCreateController($scope, rest, model, Flash, $location, $rootSc
     $scope.onReady = function() {
 
     };
+    
+    $scope.model.color = '#FF0000';
+
+    $scope.options_color = {
+        format: 'hex',
+        alpha: false,
+        placeholder: 'Seleccione un color',
+    };
+
 }
 
 function valorCheckbox(valor) {
     console.log(valor);
 }
 
-function CategoryEditController($scope, Flash, rest, $routeParams, model, $location, Alertify, modelService) {
+function CategoryEditController($scope, Flash, rest, $routeParams, model, $location, Alertify, modelService, Upload) {
     modelService.initService("Category", "categories", $scope);
+
+    $scope.mostrar = false;
 
     $scope.model = new model();
     $scope.update = function(isValid) {
@@ -99,12 +156,8 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
                 type: $scope.type,
                 id: $scope.model.id
             }, $scope.model, function() {
-                if ($scope.model.active) {
-                    Alertify.success('Se ha editado y ACTIVADO la categoría con éxito');
-                } else {
-                    Alertify.success('Se ha editado y DESACTIVADO la categoría con éxito');
-                }
-
+                Alertify.success('Se ha editado la categoría con éxito');
+                
                 var url = '/' + $scope.type;
                 $location.path(url);
             });
@@ -127,6 +180,12 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
             type: $scope.type
         });
 
+    };
+    
+    $scope.options_color = {
+        format: 'hex',
+        alpha: false,
+        placeholder: 'Seleccione un color',
     };
 
 
