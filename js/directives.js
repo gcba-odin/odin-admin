@@ -15,12 +15,12 @@
                         $scope.q += "name=" + $scope.searchModel.q + "&";
                     }
                     for (var f in filters) {
-                      if (filters[f] != undefined) {
-                        if (Object.prototype.toString.call(filters[f]) === '[object Array]') {
-                            $scope.q += f + "=" + filters[f].join(",") + "&";
-                        } else {
-                            $scope.q += f + "=" + filters[f] + "&";
-                          }
+                        if (filters[f] != undefined) {
+                            if (Object.prototype.toString.call(filters[f]) === '[object Array]') {
+                                $scope.q += f + "=" + filters[f].join(",") + "&";
+                            } else {
+                                $scope.q += f + "=" + filters[f] + "&";
+                            }
                         }
                     }
                     modelService.search($scope);
@@ -129,9 +129,9 @@
                     placeholder: attrs.placeholder,
                     create: attrs.create,
                     onInitialize: function() {
-                        if(!angular.isUndefined(attrs.dis) && attrs.dis =='disabled') {
+                        if (!angular.isUndefined(attrs.dis) && attrs.dis == 'disabled') {
                             this.disable();
-                        } 
+                        }
                     },
                     onOptionAdd: function(a, item, talvez) {
 
@@ -354,7 +354,7 @@
             return md5(str);
         }
     });
-    
+
     app.filter('inArray', function() {
         return function(array, value) {
             return array.indexOf(value) !== -1;
@@ -390,9 +390,6 @@
             }
         };
     }]);
-
-
-
 
     app.directive("addOptionButton", ["$window", function($window) {
         return {
@@ -435,7 +432,4 @@
             }
         };
     });
-
-
-
 })();
