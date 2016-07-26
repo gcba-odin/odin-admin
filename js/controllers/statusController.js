@@ -49,7 +49,7 @@ function StatusCreateController($scope, rest, model, Flash,$location,modelServic
             rest().save({
                 type: $scope.type
             }, $scope.model,function (resp){
-                var url = '/'+$scope.type+'/' + resp.data.id + "/edit";
+                var url = '/'+$scope.type;
                 $location.path(url);
             });
         }
@@ -67,7 +67,7 @@ function StatusEditController($scope, Flash, rest, $routeParams, model,$location
                 type: $scope.type,
                 id: $scope.model.id
             }, $scope.model,function (resp){
-                var url = '/'+$scope.type+'/' + resp.data.id + "/edit";
+                var url = '/'+$scope.type;
                 $location.path(url);
             });
         }
