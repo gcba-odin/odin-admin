@@ -16,7 +16,7 @@
                         </tr>
                         <tr ng-if="model.description">
                             <td>{{ 'DESCRIPTION' | translate }}</td>
-                            <td>{{model.description}}</td>
+                            <td ng-bind-html="getHtml(model.description)"></td>
                         </tr>
                         <tr ng-if="model.createdBy">
                             <td>{{ 'CREATED_BY' | translate }}</td>

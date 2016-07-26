@@ -150,6 +150,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
     }
 
     $scope.status_default = true;
+    $scope.unsave = true;
 
     $scope.model = new model();
     $scope.model.uploadFile = '';
@@ -213,6 +214,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
     };
 
     $scope.add = function(isValid) {
+        $scope.unsave = false;
         $scope.uploadImageProgress = 10;
         var data = {
             'name': $scope.model.name, //.replace(/\.[^/.]+$/, ""), //removes file extension from name
@@ -236,9 +238,11 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             $location.url('/files/' + resp.data.data.id + '/view');
         }, function(resp) {
             // alert(resp.status);
+            $scope.unsave = false;
         }, function(evt) {
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
             $scope.uploadImageProgress = progressPercentage;
+            $scope.unsave = false;
         });
     };
 

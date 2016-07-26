@@ -24,13 +24,13 @@
                             <td>{{ 'DESCRIPTION' | translate }}</td>
                             <td ng-bind-html="getHtml(model.description)"></td>
                         </tr>
-                        <tr ng-if="model.notes">
-                            <td>{{ 'NOTES' | translate }}</td>
-                            <td ng-bind-html="getHtml(model.notes)"></td>
-                        </tr>
                         <tr ng-if="model.categories">
                             <td>{{ 'CATEGORIES' | translate }}</td>
                             <td ng-bind-html="getHtml(model.categories)"></td>
+                        </tr>
+                        <tr ng-if="model.status">
+                            <td>{{ 'STATUS' | translate }}</td>
+                            <td>{{model.status.name}}</td>
                         </tr>
                         <tr ng-if="model.createdBy">
                             <td>{{ 'CREATED_BY' | translate }} </td>
@@ -39,10 +39,6 @@
                         <tr ng-if="model.owner">
                             <td>{{ 'OWNER' | translate }} </td>
                             <td><a ng-href="#/users/{{model.owner.id}}/view">{{model.owner.username}}</a></td>
-                        </tr>
-                        <tr ng-if="model.status">
-                            <td>{{ 'STATUS' | translate }}</td>
-                            <td>{{model.status.name}}</td>
                         </tr>
                         <tr ng-if="model.createdAt">
                             <td>{{ 'CREATED_AT' | translate }}</td>
@@ -56,6 +52,16 @@
                             <td>{{ 'UPDATED_AT' | translate }}</td>
                             <td>{{model.updatedAt| date:'MMM d, y h:mm:ss a'}}</td>
                         </tr>
+                        <tr ng-if="model.notes">
+                            <td>{{ 'NOTES' | translate }}</td>
+                            <td ng-bind-html="getHtml(model.notes)"></td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
 
                         <!--<tr ng-if="model.visible">  
                             <td>{{ 'VISIBILITY' | translate }}</td>
