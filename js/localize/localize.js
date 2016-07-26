@@ -135,6 +135,10 @@ app.config(['$translateProvider', function ($translateProvider,$rootScope) {
     'DATA_OF_MAP': 'Datos del mapa',
     'SELECT_FIELDS': 'Elección de campos',
     'NEW_MAP': 'Agregar mapa',
+    'ACTIVATE': 'Activar',
+    'DEACTIVATE': 'Desactivar',
+    'COLOR': 'Color',
+    'IMAGE': 'Imagen',
   });
  console.log($rootScope);
   $translateProvider.preferredLanguage('es');

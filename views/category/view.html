@@ -30,7 +30,7 @@
                         </tr> 
                         <tr>
                             <td>{{ 'STATE' | translate }}</td>
-                            <td><span class="label label-default" >{{model.deletedAt ? 'Inactivo' : 'Activo'}}</span></td>
+                            <td><span class="label label-default" >{{model.active ? 'Activo' : 'Inactivo'}}</span></td>
                         </tr>
                         <tr ng-if="model.createdBy">
                             <td>{{ 'CREATED_BY' | translate }}</td>
