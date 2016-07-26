@@ -183,7 +183,11 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
             rest().save({
                 type: $scope.type
             }, $scope.model, function (resp) {
-                var url = '/' + $scope.type;
+                if (resp.data.id) {
+                    var url = '/' + $scope.type + '/' + resp.data.id + '/view';
+                } else {
+                    var url = '/' + $scope.type;
+                }
                 $location.path(url);
             });
         } else {
