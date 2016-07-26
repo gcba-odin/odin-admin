@@ -132,6 +132,9 @@ app.config(['$translateProvider', function ($translateProvider,$rootScope) {
     'MAPS': 'Mapas',
     'VIEW_MAPS': 'Ver mapas',
     'ADD_MAPS': 'Agregar mapas',
+    'DATA_OF_MAP': 'Datos del mapa',
+    'SELECT_FIELDS': 'Elección de campos',
+    'NEW_MAP': 'Agregar mapa',
   });
  console.log($rootScope);
   $translateProvider.preferredLanguage('es');

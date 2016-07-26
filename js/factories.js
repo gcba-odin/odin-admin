@@ -130,6 +130,20 @@
                         responseError: handError
                     }
                 },
+                contents: {
+                    url: $url + "/:id/contents?:params",
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'JWT ' + token
+                    },
+                    transformResponse: function(data) {
+                        $rootScope.progressbar.complete();
+                        return angular.fromJson(data);
+                    },
+                    interceptor: {
+                        responseError: handError
+                    }
+                },
                 getArray: {
                     url: $url + "/:id/:asociate",
                     method: 'GET',

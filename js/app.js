@@ -1,5 +1,5 @@
 (function() {
-    var app = angular.module('odin', ["config-odin","ngRoute",'Alertify','ngFlash','ui.bootstrap','localize','ckeditor','ngMessages', "ngCookies","ngResource","ngProgress","odin.controllers","store-directives", "store-factories", "bw.paging", 'color.picker']);
+    var app = angular.module('odin', ["config-odin","ngRoute",'Alertify','ngFlash','ui.bootstrap','localize','ckeditor','ngMessages', "ngCookies","ngResource","ngProgress","odin.controllers","store-directives", "store-factories", "bw.paging", 'color.picker', "leaflet-directive"]);
 
 
 
@@ -177,9 +177,9 @@
                 templateUrl: "views/map/view.html",
                 controller:MapViewController
             })
-            .when("/maps/new", {
+            .when("/maps/new/:file", {
                 templateUrl: "views/map/add.html",
-                controller:MapAddController
+                controller:MapCreateController
             })
             .when("/maps/:id/edit", {
                 templateUrl: "views/map/edit.html",

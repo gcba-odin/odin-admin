@@ -1,23 +1,28 @@
 <header-home></header-home>
 <div class="content-wrapper">
-<breadcrumbs data-type="{{ 'EDIT' | translate }}" data-model-name="{{ 'CATEGORY' | translate }}" data-model="{{type}}"></breadcrumbs>
+
+<breadcrumbs data-type="{{ 'EDIT' | translate }}" data-model-name="{{ 'MAPS' | translate }}" data-model="{{type}}"></breadcrumbs>
     <!-- Main content -->
     <section class="content">
         <div class="row">
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                      <h3 class="box-title">{{ 'EDIT' | translate }} {{ 'CATEGORY' | translate }}</h3>
-                      <button ng-click="activate()" ng-if="model.deletedAt" class="pull-right btn btn-success">Activar</button> <!--{{ 'PUBLISH' | translate }}-->
-                      <button ng-click="unActivate()" ng-if="!model.deletedAt" class="pull-right btn btn-warning">Desactivar</button><!-- {{ 'UNPUBLISH' | translate }} -->
+                        <h3 class="box-title">{{ 'EDIT' | translate }} {{ 'MAPS' | translate }}</h3>
                     </div>
-                    <form autocomplete="off" class="form-horizontal" name="form"  autocomplete="false"  role="form" ng-submit="update(form.$valid)" novalidate>
-                        <div class="box-body" ng-include="'views/category/_form.html'"></div>
+                    <form autocomplete="off"  class="form-horizontal" name="form"  autocomplete="false"  role="form" ng-submit="update(form.$valid)" novalidate>
+                        <div class="box-body" ng-include="'views/map/_form_step1.html'"></div>
                     </form>
+                    <div class="box-footer">
+                        <button class="btn btn-default pull-left" back-button>
+                            {{ 'BACK' | translate }}
+                        </button>
+                        <button ng-disabled="form.$invalid" type="submit" class="btn btn-primary pull-right" ng-click="update(form.$valid)">{{ 'SAVE' | translate }}</button>
+
+                    </div>
                 </div> 
             </div>
         </div>    
     </section>
-    <!--  Main content-->
 </div>
 <footer-home></footer-home>
