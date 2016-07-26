@@ -1,6 +1,6 @@
 var app = angular.module('odin.fileControllers', ['ngFileUpload']);
 
-app.factory('model', function($resource) {
+app.factory('model', function ($resource) {
     return $resource();
 });
 
@@ -23,19 +23,19 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
             modelInput: 'owner',
             multiple: false
         }];
-    $scope.confirmDelete = function(item) {
+    $scope.confirmDelete = function (item) {
         modelService.confirmDelete(item);
     }
 
-    $scope.deleteModel = function(model) {
+    $scope.deleteModel = function (model) {
         modelService.delete($scope, model);
     };
 
-    $scope.edit = function(model) {
+    $scope.edit = function (model) {
         modelService.edit($scope, model);
     }
 
-    $scope.view = function(model) {
+    $scope.view = function (model) {
         modelService.view($scope, model);
     }
 
@@ -45,7 +45,7 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
 
     modelService.loadAll($scope);
 
-    $scope.paging = function(event, page, pageSize, total) {
+    $scope.paging = function (event, page, pageSize, total) {
         var skip = (page - 1) * $scope.limit;
         $scope.q = "&skip=" + skip + "&limit=" + $scope.limit;
         modelService.loadAll($scope);
@@ -54,16 +54,16 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
 
 function FileViewController($scope, Flash, rest, $routeParams, $location, modelService, $sce, Alertify) {
     modelService.initService("File", "files", $scope);
-    $scope.getHtml = function(html) {
+    $scope.getHtml = function (html) {
         return $sce.trustAsHtml(html);
     };
 
-    var loadModel = function() {
+    var loadModel = function () {
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type,
             params: "include=tags"
-        }, function() {
+        }, function () {
             var tags = [];
             for (var i = 0; i < $scope.model.tags.length; i++) {
                 tags.push('<span class="label label-primary">' + $scope.model.tags[i].name + '</span>');
@@ -73,11 +73,11 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
         });
     };
 
-    $scope.edit = function(model) {
+    $scope.edit = function (model) {
         modelService.edit($scope, model);
     };
 
-    var update = function() {
+    var update = function () {
 
         $scope.tempData = {
             id: $scope.model.id,
@@ -88,20 +88,20 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
         rest().update({
             type: $scope.type,
             id: $scope.tempData.id
-        }, $scope.tempData, function(resp) {
+        }, $scope.tempData, function (resp) {
             loadModel();
             //var url = '/' + $scope.type;
             // $location.path(url);
         });
     };
 
-    $scope.publish = function() {
+    $scope.publish = function () {
         $scope.model.publishedAt = new Date().toISOString().slice(0, 19).replace('T', ' ');
         $scope.model.status = 'qWRhpRV';
         update();
     };
 
-    $scope.unPublish = function() {
+    $scope.unPublish = function () {
         Alertify.confirm('¿Está seguro que quiere despublicar este archivo?').then(
                 function onOk() {
                     $scope.model.publishedAt = null;
@@ -116,23 +116,33 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
 
     loadModel();
 
-    $scope.confirmDelete = function(item) {
-        modelService.confirmDelete(item).then(function(resp) {
-            var url = "/" + $scope.type;
-            $location.path(url);
-        });
+    $scope.confirmDelete = function (item) {
+        Alertify.confirm('¿Está seguro que quiere borrar este archivo?').then(
+                function onOk() {
+                    rest().delete({
+                        type: $scope.type,
+                        id: $scope.model.id
+                    }, function (resp) {
+                        var url = "/" + $scope.type;
+                        $location.path(url);
+                    });
+                },
+                function onCancel() {
+                    return false;
+                }
+        );
     };
 }
 
 function FileCreateController($scope, $sce, rest, model, Flash, $location, Upload, $rootScope, modelService, $routeParams, Alertify) {
     modelService.initService("File", "files", $scope);
 
-    $scope.clearUpload = function() {
+    $scope.clearUpload = function () {
         $scope.fileModel.name = "";
         $scope.fileModel.type = "";
     }
 
-    $scope.beforeChange = function($files) {
+    $scope.beforeChange = function ($files) {
         $scope.fileModel.name = $files[0].name;
         //$scope.model.name = $scope.fileModel.name;
         var type = $files[0].name.split('.').pop();
@@ -170,7 +180,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
     }
 
     $scope.fileModel = []
-    $scope.checkstep = function(step) {
+    $scope.checkstep = function (step) {
         if ($scope.model.uploadFile == null && step == 1 && $scope.fileModel.name)
         {
             $scope.clearUpload();
@@ -195,7 +205,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             }
         }
     }
-    $scope.step = function(step) {
+    $scope.step = function (step) {
         if (($scope.fileModel.name && step == 1) || ($scope.fileModel.name && step == 2) || step == 0 && ($scope.model.uploadFile != null)) {
             var step = $scope.steps[step];
             if (step == "undone") {
@@ -209,11 +219,11 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
         }
 
     }
-    $scope.getHtml = function(html) {
+    $scope.getHtml = function (html) {
         return $sce.trustAsHtml(html);
     };
 
-    $scope.add = function(isValid) {
+    $scope.add = function (isValid) {
         $scope.unsave = false;
         $scope.uploadImageProgress = 10;
         var data = {
@@ -229,17 +239,19 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             'updateFrequency': $scope.model.updateFrequency,
             'tags': $scope.model.tags ? $scope.model.tags.join(",") : "",
             'uploadFile': $scope.model.uploadFile,
-        }
+            'updated': $scope.model.updated,
+            'gatheringDate': $scope.model.gatheringDate.toISOString().slice(0, 10) //new Date().toISOString().slice(0, 19).replace('T', ' ');
+        };
 
         Upload.upload({
             url: $rootScope.url + "/files",
             data: data
-        }).then(function(resp) {
+        }).then(function (resp) {
             $location.url('/files/' + resp.data.data.id + '/view');
-        }, function(resp) {
+        }, function (resp) {
             // alert(resp.status);
             $scope.unsave = false;
-        }, function(evt) {
+        }, function (evt) {
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
             $scope.uploadImageProgress = progressPercentage;
             $scope.unsave = false;
@@ -265,7 +277,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
 
     $scope.fileModel = []
 
-    $scope.checkstep = function(step) {
+    $scope.checkstep = function (step) {
 
         if (($scope.fileModel.name && step == 1) || ($scope.fileModel.name && step == 2) || (step == 0)) {
             if (step == 0) {
@@ -284,7 +296,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
             $scope.stepactive = step;
         }
     }
-    $scope.step = function(step) {
+    $scope.step = function (step) {
         if (($scope.fileModel.name && step == 1) || ($scope.fileModel.name && step == 2) || step == 0) {
             var step = $scope.steps[step];
             if (step == "undone") {
@@ -298,12 +310,12 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
         }
 
     }
-    $scope.getHtml = function(html) {
+    $scope.getHtml = function (html) {
         return $sce.trustAsHtml(html);
     };
 
 
-    $scope.update = function(isValid) {
+    $scope.update = function (isValid) {
 
 
         $scope.uploadImageProgress = 10;
@@ -319,15 +331,15 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
             'owner': $scope.model.owner,
             'updateFrequency': $scope.model.updateFrequency,
             'tags': $scope.model.tags ? $scope.model.tags.join(",") : "",
-            //'updated': $scope.model.updated,
-            //'gatheringDate': $scope.model.gatheringDate //new Date().toISOString().slice(0, 19).replace('T', ' ');
+            'updated': $scope.model.updated,
+            'gatheringDate': $scope.model.gatheringDate //new Date().toISOString().slice(0, 19).replace('T', ' ');
         }
 
         if (isValid) {
             rest().update({
                 type: $scope.type,
                 id: $scope.model.id
-            }, data, function(resp) {
+            }, data, function (resp) {
                 var url = '/' + $scope.type;
                 $location.path(url);
             });
@@ -336,14 +348,15 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
 
     };
 
-    $scope.load = function() {
+    $scope.load = function () {
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type,
             params: "include=tags"
-        }, function() {
+        }, function () {
             $scope.model.updateFrequency = $scope.model.updateFrequency.id;
             $scope.model.status = $scope.model.status.id;
+            $scope.model.gatheringDate = moment($scope.model.gatheringDate);
 
             $scope.fileModel.name = $scope.model.name;
             var type = $scope.fileModel.name.split('.').pop();

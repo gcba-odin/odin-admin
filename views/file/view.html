@@ -1,20 +1,20 @@
 <header-home></header-home>
 <div class="content-wrapper">
-      <breadcrumbs data-type="{{ 'VIEW' | translate }}" data-model-name="{{ 'FILES' | translate }}" data-model="{{type}}"></breadcrumbs>
+    <breadcrumbs data-type="{{ 'VIEW' | translate }}" data-model-name="{{ 'FILES' | translate }}" data-model="{{type}}"></breadcrumbs>
     <!-- Main content -->
     <section class="content">
         <div class="row">
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                      <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} {{ model.name }}</h3>
+                        <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} {{ model.name}}</h3>
                         <button ng-click="unPublish()" ng-if="['qWRhpRV'] | inArray : model.status.id" class="pull-right btn btn-warning">{{ 'UNPUBLISH' | translate }}</button>
                         <button ng-click="publish()" ng-if="['nWRhpRV','oWRhpRV','pWRhpRV','rWRhpRV'] | inArray: model.status.id" class="pull-right btn btn-success">{{ 'PUBLISH' | translate }}</button> 
                         <!--<a ng-href="#/files/new/{{model.id}}" class="btn btn-default pull-right magin-right-10"><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_RESOURCES' | translate }}</a>-->
                         <a ng-href="#/maps/new/{{model.id}}" class="btn btn-default pull-right magin-right-10" ng-if="model.type.api"><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_MAP' | translate }}</a>
                         <button  data-toggle="modal" data-target="#viewLinkResources" class="btn btn-default pull-right magin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_RESOURCES' | translate }}</button> 
                     </div>
-                      <table class="table usertable">
+                    <table class="table usertable">
                         <tr ng-if="model.name">
                             <td>{{ 'NAME' | translate }}</td>
                             <td>{{model.name}}</td>
@@ -53,7 +53,7 @@
                         </tr>
                         <tr ng-if="model.createdAt">
                             <td>{{ 'CREATED_AT' | translate }}</td>
-                            <td>{{model.createdAt | date:'d/M/yy H:mm'}}</td>
+                            <td>{{model.createdAt| date:'d/M/yy H:mm'}}</td>
                         </tr>
                         <tr ng-if="model.updatedAt">
                             <td>{{ 'PUBLISHED_AT' | translate }}</td>
@@ -75,21 +75,29 @@
                             <td>{{ 'VISIVILITY' | translate }}</td>
                             <td>{{model.visibility}}</td>
                         </tr>-->
-                       <tr ng-if="model.tags">
+                        <tr ng-if="model.tags">
                             <td>{{ 'TAGS' | translate }}</td>
-                              <td ng-bind-html="getHtml(model.tags)" >
-                              </td>
-                            </tr>
-                      </table>
+                            <td ng-bind-html="getHtml(model.tags)" >
+                            </td>
+                        </tr>
+                        <tr ng-if="model.gatheringDate">
+                            <td>{{ 'GATHERING_DATE' | translate }}</td>
+                            <td>{{model.gatheringDate| date:'MMM d, y h:mm:ss a' }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ 'UPDATED' | translate }}</td>
+                            <td><span class="label label-default" >{{model.updated ? 'Si' : 'No'}}</span></td>
+                        </tr>
+                    </table>
                     <div class="box-footer">
                         <button back-button class="btn btn-default pull-left">
                             {{ 'BACK' | translate }}
                         </button>
                         <div class="pull-right">
                             <a class="btn btn-danger" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)">{{ 'DELETE' | translate }}</a>
-                          <button type="submit" class="btn btn-primary" ng-click="edit(model)">{{ 'EDIT' | translate }}</button>
-                          <a class="btn btn-success" target="_blank" href="{{ model.url }}" download="{{ model.name }}{{ model.type.name }}">{{ 'DOWNLOAD' | translate }}</a>
-                      </div>
+                            <button type="submit" class="btn btn-primary" ng-click="edit(model)">{{ 'EDIT' | translate }}</button>
+                            <a class="btn btn-success" target="_blank" href="{{ model.url}}" download="{{ model.name}}{{ model.type.name}}">{{ 'DOWNLOAD' | translate }}</a>
+                        </div>
                     </div>
                 </div>
 
