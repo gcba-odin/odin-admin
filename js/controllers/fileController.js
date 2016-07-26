@@ -319,6 +319,8 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
             'owner': $scope.model.owner,
             'updateFrequency': $scope.model.updateFrequency,
             'tags': $scope.model.tags ? $scope.model.tags.join(",") : "",
+            //'updated': $scope.model.updated,
+            //'gatheringDate': $scope.model.gatheringDate //new Date().toISOString().slice(0, 19).replace('T', ' ');
         }
 
         if (isValid) {
