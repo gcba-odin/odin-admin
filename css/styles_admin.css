@@ -63,13 +63,13 @@ a{
     height: 3em;
 }
 
+.sidebar-menu{
+    margin-top: 3em;
+}
+
 .user-panel > .info > p {
     text-transform: capitalize;
     font-family: avenir-medium;
-}
-
-.sidebar-menu{
-    margin-top: 3em;
 }
 
 ul.sidebar-menu span {
@@ -84,10 +84,14 @@ ul.sidebar-menu a {
     color: #ffb600;
 }
 
-
 ul.sidebar-menu .treeview.active > a {
     color: #ff386a;
 }
+
+ul.sidebar-menu .treeview.active > a > span {
+    color: #ff386a;
+}
+
 
 .sidebar-menu .treeview-menu  li a {
     text-transform: capitalize;
