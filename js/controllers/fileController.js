@@ -238,9 +238,10 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             'owner': $scope.model.owner,
             'updateFrequency': $scope.model.updateFrequency,
             'tags': $scope.model.tags ? $scope.model.tags.join(",") : "",
-            'uploadFile': $scope.model.uploadFile,
             'updated': $scope.model.updated,
-            'gatheringDate': $scope.model.gatheringDate.toISOString().slice(0, 10) //new Date().toISOString().slice(0, 19).replace('T', ' ');
+            'gatheringDate': $scope.model.gatheringDate,//.toISOString().slice(0, 10), //new Date().toISOString().slice(0, 19).replace('T', ' ');
+            'uploadFile': $scope.model.uploadFile,
+            
         };
 
         Upload.upload({

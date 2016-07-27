@@ -51,8 +51,14 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
             geojson: {
                 data: $scope.model.geojson,
                 onEachFeature: function(feature, layer) {
-                    if (feature.properties.Name) {
-                        layer.bindPopup(feature.properties.Name);
+                    if (feature.properties) {
+                        var html = '';
+                        angular.forEach(feature.properties, function(value, key) {
+                            html += '<strong>' + key + '</strong>: ' + value + '<br><br>';
+                        });
+                        if (html != '') {
+                            layer.bindPopup(html);
+                        }
                     }
                 }
             }
@@ -195,7 +201,7 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
             cont++;
         }
         $scope.model.properties = $scope.model.properties.toString();
-        
+
         if (validate(model)) {
             rest().save({
                 type: $scope.type
