@@ -139,6 +139,7 @@ app.config(['$translateProvider', function ($translateProvider,$rootScope) {
     'DEACTIVATE': 'Desactivar',
     'COLOR': 'Color',
     'IMAGE': 'Imagen',
+    'NEW_GRAPHIC': 'Agregar gráfico',
   });
  console.log($rootScope);
   $translateProvider.preferredLanguage('es');

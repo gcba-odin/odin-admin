@@ -11,7 +11,15 @@
                         <button ng-click="unPublish()" ng-if="['qWRhpRV'] | inArray : model.status.id" class="pull-right btn btn-warning">{{ 'UNPUBLISH' | translate }}</button>
                         <button ng-click="publish()" ng-if="['nWRhpRV','oWRhpRV','pWRhpRV','rWRhpRV'] | inArray: model.status.id" class="pull-right btn btn-success">{{ 'PUBLISH' | translate }}</button> 
                         <!--<a ng-href="#/files/new/{{model.id}}" class="btn btn-default pull-right magin-right-10"><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_RESOURCES' | translate }}</a>-->
-                        <a ng-href="#/maps/new/{{model.id}}" class="btn btn-default pull-right magin-right-10" ng-if="model.type.api"><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_MAP' | translate }}</a>
+                        <div class="dropdown pull-right" ng-if="model.type.api">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{ 'NEW_RESOURCES' | translate }}
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a ng-href="#/maps/new/{{model.id}}" ><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_MAP' | translate }}</a></li>
+                                    <li class="disabled"><a href="#"><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_GRAPHIC' | translate }}</a></li>
+                                </ul>
+                        </div>
+                        
                         <button  data-toggle="modal" data-target="#viewLinkResources" class="btn btn-default pull-right magin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_RESOURCES' | translate }}</button> 
                     </div>
                     <table class="table usertable">
