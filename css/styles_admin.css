@@ -37,10 +37,6 @@ html,body {
     font-family: avenir-roman;
 }
 
-/*
-Por que no funciona esto?
-Tampoco funciona poniendo .active a{
-*/
 .active {
     color: #ff386a;
 }
@@ -107,7 +103,6 @@ div.wrapper li.dropdown.user.user-menu.avenir-medium.ng-scope > a > span {
 }
 
 .footer-text > a, div, span
-/*footer > div,span,a */
 {
     color: #6d6e70;
     font-size: 9pt;
@@ -120,4 +115,41 @@ div.wrapper li.dropdown.user.user-menu.avenir-medium.ng-scope > a > span {
     background-color: #FFFFFF;
     border-color: #ffb600;
     color: #ffb600;
+}
+
+.btn:hover{
+    border-color: #ff386a;
+    background-color: #FFFFFF;
+    color: #ff386a;
+}
+
+/* Headers of each category */
+h3 {
+    font-family: avenir-black;
+    text-transform: uppercase;
+    color:#6d6e70;
+    font-size: 12pt;
+}
+
+/*Labels of the forms */
+
+.form-group  > label {
+    font-size: 11pt;
+    text-transform: uppercase;
+    color:#6d6e70;
+    font-family: avenir-medium;
+}
+
+.form-group  > div > input {
+    font-size: 11pt;
+    color:#6d6e70;
+    font-family: avenir-roman;
+}
+
+.table {
+    font-size: 11pt;
+}
+
+.table th {
+    text-transform: uppercase;
 }
