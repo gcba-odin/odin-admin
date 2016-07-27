@@ -1,0 +1,45 @@
+@font-face {
+    font-family: avenir-black; 
+    src: url('../fonts/avenir-black-webfont.woff'); 
+}
+
+@font-face {
+    font-family: avenir-light; 
+    src: url('../fonts/avenir-light-webfont.woff'); 
+}
+@font-face {
+    font-family: avenir-medium; 
+    src: url('../fonts/avenir-medium-webfont.woff'); 
+}
+@font-face {
+    font-family: avenir-roman; 
+    src: url('../fonts/avenir-roman-webfont.woff'); 
+}
+
+html,body {
+    font-family: avenir-medium;
+}
+
+.avenir-black {
+    font-family: avenir-black;
+}
+
+.avenir-light {
+    font-family: avenir-light;
+}
+
+.avenir-medium {
+    font-family: avenir-medium;
+}
+
+.avenir-roman {
+    font-family: avenir-roman;
+}
+
+.active {
+    color: #ff386a;
+}
+
+.online{
+    color: #00f468;
+}
