@@ -140,6 +140,8 @@ app.config(['$translateProvider', function ($translateProvider,$rootScope) {
     'COLOR': 'Color',
     'IMAGE': 'Imagen',
     'NEW_GRAPHIC': 'Agregar gráfico',
+    'ADD_PROPERTY': 'Agregar propiedad',
+    'PROPERTY': 'Propiedad',
   });
  console.log($rootScope);
   $translateProvider.preferredLanguage('es');

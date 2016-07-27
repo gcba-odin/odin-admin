@@ -4,25 +4,25 @@ var app = angular.module('odin.mapsControllers', []);
 function MapListController($scope, modelService) {
     modelService.initService("Map", "maps", $scope);
 
-    $scope.confirmDelete = function (item) {
+    $scope.confirmDelete = function(item) {
         modelService.confirmDelete(item);
     };
 
-    $scope.deleteModel = function (model) {
+    $scope.deleteModel = function(model) {
         modelService.delete($scope, model);
     };
 
-    $scope.edit = function (model) {
+    $scope.edit = function(model) {
         modelService.edit($scope, model);
     };
 
-    $scope.view = function (model) {
+    $scope.view = function(model) {
         modelService.view($scope, model);
     };
 
     modelService.loadAll($scope);
 
-    $scope.activeClass = function (activeClass) {
+    $scope.activeClass = function(activeClass) {
         modelService.activeClass(activeClass);
 
     };
@@ -42,15 +42,15 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
     $scope.model = rest().findOne({
         id: $routeParams.id,
         type: $scope.type
-    }, function () {
+    }, function() {
         loadGeojson();
     });
 
-    var loadGeojson = function () {
+    var loadGeojson = function() {
         angular.extend($scope, {// Map data
             geojson: {
                 data: $scope.model.geojson,
-                onEachFeature: function (feature, layer) {
+                onEachFeature: function(feature, layer) {
                     if (feature.properties.Name) {
                         layer.bindPopup(feature.properties.Name);
                     }
@@ -63,12 +63,12 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
 //        };
     };
 
-    $scope.edit = function (model) {
+    $scope.edit = function(model) {
         var url = '/' + $scope.type + '/' + model.id + "/edit";
         $location.path(url);
     };
 
-    $scope.getHtml = function (html) {
+    $scope.getHtml = function(html) {
         return $sce.trustAsHtml(html);
     };
 }
@@ -84,18 +84,18 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
     $scope.steps[2] = "undone";
     $scope.stepactive = 0;
 
-    var generate_headers = function () {
+    var generate_headers = function() {
         if ($scope.fileModel.data.length > 0)
         {
 
             $scope.headersFile = Object.keys($scope.fileModel.data[0]);
-            $scope.headersFile = $scope.headersFile.filter(function (header) {
+            $scope.headersFile = $scope.headersFile.filter(function(header) {
                 return header !== '_id';
             });
 
             var headers = [];
 
-            angular.forEach($scope.headersFile, function (value, key) {
+            angular.forEach($scope.headersFile, function(value, key) {
                 var header = {
                     id: value,
                     name: value
@@ -114,7 +114,7 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
             type: "files",
             id: $routeParams.file,
             params: "limit=1"
-        }, function () {
+        }, function() {
             $scope.model.file = $routeParams.file;
 
             $scope.headersFile = null;
@@ -126,7 +126,7 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
 
     }
 
-    $scope.checkstep = function (step) {
+    $scope.checkstep = function(step) {
         if ((step == 1) && ($scope.headersFile == null)) {
             Alertify.alert('Le faltó asociar el archivo o no se puede leer.');
         } else if ((step == 1) && (!angular.isUndefined($scope.model.url) && $scope.model.url != '')) {
@@ -152,7 +152,7 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
         }
     }
 
-    $scope.step = function (step) {
+    $scope.step = function(step) {
         if ((step == 1) || (step == 2) || step == 0) {
             var step = $scope.steps[step];
             if (step == "undone") {
@@ -166,11 +166,11 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
         }
 
     }
-    $scope.getHtml = function (html) {
+    $scope.getHtml = function(html) {
         return $sce.trustAsHtml(html);
     };
 
-    var validate = function (data) {
+    var validate = function(data) {
         if (data.name != '' && (data.basemap != '' || data.url != '')) {
             return true;
         } else {
@@ -178,11 +178,28 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
         }
     };
 
-    $scope.add = function (model) {
+    $scope.add = function(model) {
+
+        for (obj in $scope.model) {
+            if (obj.indexOf("property") != -1) {
+                delete $scope.model[obj]
+            }
+        }
+
+        var cont = 1;
+        $scope.model.properties = [];
+        for (var i = 0; i < $scope.model.items.length; i++) {
+            var values = [];
+            $scope.model["property" + cont] = "";
+            $scope.model.properties = $scope.model.properties.concat($scope.model.items[i].field2);
+            cont++;
+        }
+        $scope.model.properties = $scope.model.properties.toString();
+        
         if (validate(model)) {
             rest().save({
                 type: $scope.type
-            }, $scope.model, function (resp) {
+            }, $scope.model, function(resp) {
                 if (resp.data.id) {
                     var url = '/' + $scope.type + '/' + resp.data.id + '/view';
                 } else {
@@ -195,6 +212,31 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
         }
     };
 
+    $scope.model.items = [];
+
+    $scope.inputs = [];
+    var i = 0;
+    $scope.addInput = function() {
+        if ($scope.model.items.length < 10) {
+            var newItemNo = $scope.model.items.length + 1;
+            $scope.model.items.push({
+                field: ""
+            })
+        }
+
+    }
+    $scope.deleteIndexInput = function(index, field) {
+        $scope.model.items.splice(index, 1);
+    }
+
+    $scope.increment = function(a) {
+        return a + 1;
+    }
+
+    $scope.itemName = function(a) {
+        return "property" + (parseInt(a) + 1);
+    }
+
 }
 
 
@@ -202,12 +244,12 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
     modelService.initService("Map", "maps", $scope);
     $scope.model = new model();
 
-    $scope.getHtml = function (html) {
+    $scope.getHtml = function(html) {
         return $sce.trustAsHtml(html);
     };
 
 
-    $scope.update = function (isValid) {
+    $scope.update = function(isValid) {
 
         var data = {
             //id: $scope.model.id,
@@ -222,7 +264,7 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
             rest().update({
                 type: $scope.type,
                 id: $scope.model.id
-            }, data, function (resp) {
+            }, data, function(resp) {
                 var url = '/' + $scope.type;
                 $location.path(url);
             });
@@ -231,7 +273,7 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
 
     };
 
-    $scope.load = function () {
+    $scope.load = function() {
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type,
