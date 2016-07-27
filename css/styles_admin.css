@@ -1,3 +1,4 @@
+
 @font-face {
     font-family: avenir-black; 
     src: url('../fonts/avenir-black-webfont.woff'); 
@@ -36,10 +37,65 @@ html,body {
     font-family: avenir-roman;
 }
 
+/*
+Por que no funciona esto?
+Tampoco funciona poniendo .active a{
+*/
 .active {
     color: #ff386a;
 }
 
 .online{
     color: #00f468;
+}
+
+.logo {
+    background: -moz-linear-gradient(0deg, rgba(255,182,0,1) 0%, rgba(255,56,106,1) 100%); /* ff3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(255,182,0,1)), color-stop(100%, rgba(255,56,106,1))); /* safari4+,chrome */
+    background: -webkit-linear-gradient(0deg, rgba(255,182,0,1) 0%, rgba(255,56,106,1) 100%); /* safari5.1+,chrome10+ */
+    background: -o-linear-gradient(0deg, rgba(255,182,0,1) 0%, rgba(255,56,106,1) 100%); /* opera 11.10+ */
+    background: -ms-linear-gradient(0deg, rgba(255,182,0,1) 0%, rgba(255,56,106,1) 100%); /* ie10+ */
+    background: linear-gradient(90deg, rgba(255,182,0,1) 0%, rgba(255,56,106,1) 100%); /* w3c */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffb600', endColorstr='#ff386a',GradientType=1 );
+}
+
+/*
+Esto tampoco me esta agarrando todos los a
+*/
+a {
+    color: #ff386a;
+}
+
+.logo img {
+    height: 1.6em;
+}
+
+.user-panel > .info > p {
+    text-transform: capitalize;
+    font-family: avenir-medium;
+}
+
+ul.sidebar-menu a {
+    color: #ffb600;
+    font-size: 10pts;
+    text-transform: uppercase;
+    font-family: avenir-black;
+
+}
+
+ul.sidebar-menu .treeview.active > a {
+    color: #ff386a;
+}
+
+.sidebar-menu .treeview-menu  li a {
+    text-transform: capitalize;
+    font-family: avenir-medium;
+}
+
+.sidebar-menu .treeview-menu  li.active a {
+    color: #ff386a ;
+}
+
+div.wrapper li.dropdown.user.user-menu.avenir-medium.ng-scope > a > span {
+    text-transform: uppercase;
 }
