@@ -157,3 +157,7 @@ h3 {
 .table th {
     text-transform: uppercase;
 }
+
+.icon-menu {
+    width: 2em;
+}
