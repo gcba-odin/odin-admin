@@ -1,48 +1,44 @@
 <header-home></header-home>
 <div class="content-wrapper">
 
-  <breadcrumbs data-model-name="{{ 'CATEGORIES' | translate }}" data-model="{{type}}"></breadcrumbs>
+    <breadcrumbs data-model-name="{{ 'CATEGORIES' | translate }}" data-model="{{type}}"></breadcrumbs>
     <!-- Main content -->
     <section class="content">
         <div class="row">
             <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">{{ 'CATEGORIES' | translate }}</h3>
-              <div class="box-tools">
-                <div class="input-group input-group-sm" style="width: 150px;">
-                  <div class="input-group-btn">
-                        <a ng-href="#/categories/new" class="btn-primary btn nodecoration pull-right">{{ 'ADD' | translate }} </a>
-                  </div>
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">{{ 'CATEGORIES' | translate }}</h3>
+                        <div class="box-tools">
+                            <a ng-href="#/categories/new" class="btn-primary btn nodecoration pull-right">{{ 'ADD' | translate }} {{ 'CATEGORY' | translate }}</a>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table table-hover">
+                            <tbody><tr>
+                                    <th>{{ 'NAME' | translate }}</th>
+                                    <th>{{ 'STATE' | translate }}</th>
+                                    <th>{{ 'ACTIONS' | translate }}</th>
+                                </tr>
+                                <tr ng-repeat="model in data.data">
+                                    <td>{{model.name}}</td>
+                                    <td>
+                                        <span class="label label-default" ng-class="activeClass(model.active)">{{model.active ? 'Activo' : 'Inactivo'}}</span>
+                                    </td>
+                                    <td> 
+                                        <a class="btn btn-primary" ng-click="view({id: model.id})">{{ 'VIEW' | translate }}</a>
+                                        <a class="btn btn-info" ng-click="edit({id: model.id})">{{ 'EDIT' | translate }}</a>
+                                        <a class="btn btn-danger" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)">{{ 'DELETE' | translate }}</a>
+                                    </td>
+                                </tr>
+
+                            </tbody></table>
+                    </div>
+                    <!-- /.box-body -->
                 </div>
-              </div>
+                <!-- /.box -->
             </div>
-            <!-- /.box-header -->
-            <div class="box-body table-responsive no-padding">
-              <table class="table table-hover">
-                <tbody><tr>
-                  <th>{{ 'NAME' | translate }}</th>
-                  <th>{{ 'STATE' | translate }}</th>
-                  <th>{{ 'ACTIONS' | translate }}</th>
-                </tr>
-                <tr ng-repeat="model in data.data">
-                  <td>{{model.name}}</td>
-                  <td>
-                    <span class="label label-default" ng-class="activeClass(model.active)">{{model.active ? 'Activo' : 'Inactivo'}}</span>
-                  </td>
-                  <td> 
-                    <a class="btn btn-primary" ng-click="view({id:model.id})">{{ 'VIEW' | translate }}</a>
-                    <a class="btn btn-info" ng-click="edit({id:model.id})">{{ 'EDIT' | translate }}</a>
-                    <a class="btn btn-danger" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)">{{ 'DELETE' | translate }}</a>
-                  </td>
-                </tr>
-              
-              </tbody></table>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-        </div>
         </div>
     </section>
     <!--  Main content-->
@@ -50,7 +46,7 @@
 <footer-home></footer-home>
 
 <script>
-  $('#myStateButton').on('click', function () {
-    $(this).button('complete') // button text will be "finished!"
-  })
+            $('#myStateButton').on('click', function() {
+                $(this).button('complete') // button text will be "finished!"
+            })
 </script>
