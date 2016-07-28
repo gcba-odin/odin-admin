@@ -1,21 +1,21 @@
 <header class="main-header">
-    <!-- Logo -->
-    <a href="#/" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><img src="images/odin-sm.png"></span>
-      <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><img src="images/odin.png"></span>
+  <!-- Logo -->
+  <a href="#/" class="logo">
+    <!-- mini logo for sidebar mini 50x50 pixels -->
+    <span class="logo-mini"><img src="images/odin-sm.png" alt="Odin"></span>
+    <!-- logo for regular state and mobile devices -->
+    <span class="logo-lg"><img src="images/odin.png" alt="Odin"></span>
+  </a>
+  <!-- Header Navbar: style can be found in header.less -->
+  <nav class="navbar navbar-static-top">
+    <!-- Sidebar toggle button-->
+    <a href="javascript:void(0)" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+      <span class="sr-only">Toggle navigation</span>
     </a>
-    <!-- Header Navbar: style can be found in header.less -->
-    <nav class="navbar navbar-static-top">
-      <!-- Sidebar toggle button-->
-      <a href="javascript:void(0)"  class="sidebar-toggle" data-toggle="offcanvas" role="button">
-        <span class="sr-only">Toggle navigation</span>
-      </a>
 
-      <div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">
-<!--
+    <div class="navbar-custom-menu">
+      <ul class="nav navbar-nav">
+        <!--
           <li class="dropdown messages-menu">
             <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-envelope-o"></i>
@@ -37,7 +37,7 @@
                       <p>Why not buy a new awesome theme?</p>
                     </a>
                   </li>
-                
+
                   <li>
                     <a href="javascript:void(0)">
                       <div class="pull-left">
@@ -153,7 +153,7 @@
                       </div>
                     </a>
                   </li>
-                  
+
                   <li>
                     <a href="javascript:void(0)">
                       <h3>
@@ -167,7 +167,7 @@
                       </div>
                     </a>
                   </li>
-                 
+
                   <li>
                     <a href="javascript:void(0)">
                       <h3>
@@ -181,7 +181,7 @@
                       </div>
                     </a>
                   </li>
-              
+
                   <li>
                     <a href="javascript:void(0)">
                       <h3>
@@ -195,7 +195,7 @@
                       </div>
                     </a>
                   </li>
-                
+
                 </ul>
               </li>
               <li class="footer">
@@ -205,40 +205,38 @@
           </li>
 -->
 
-          <!-- User Account: style can be found in dropdown.less -->
-          <li class="dropdown user user-menu avenir-medium" ng-controller="mainController as main"> 
-            <a href="javascript:void(0)" class="dropdown-toggle active" data-toggle="dropdown">
-            <img  class="user-image"  ng-src="http://www.gravatar.com/avatar/{{globals.currentUser.username | md5}}fs=150"/>
+        <!-- User Account: style can be found in dropdown.less -->
+        <li class="dropdown user user-menu avenir-medium" ng-controller="mainController as main">
+          <a href="javascript:void(0)" class="dropdown-toggle active" data-toggle="dropdown">
+            <span class="hidden-xs">{{globals.currentUser.username}}</span>
+          </a>
+          <ul class="dropdown-menu">
+            <!-- User image -->
+            <li class="user-header">
+              <img class="img-circle" ng-src="http://www.gravatar.com/avatar/{{globals.currentUser.username | md5}}fs=150" />
 
-              <span class="hidden-xs">{{globals.currentUser.username}}</span>
-            </a>
-            <ul class="dropdown-menu">
-              <!-- User image -->
-              <li class="user-header">
-              <img class="img-circle" ng-src="http://www.gravatar.com/avatar/{{globals.currentUser.username | md5}}fs=150"/>
-   
-                <!--<p>
+              <!--<p>
                   <small>Member since Nov. 2012</small>
                 </p>-->
-              </li>
-              <!-- Menu Body -->
-           
-              <!-- Menu Footer-->
-              <li class="user-footer">
-                <div class="pull-left">
-                  <a href="javascript:void(0)" ng-click="main.changeLanguage()" class="btn btn-default btn-flat">{{ 'LANGUAGE' | translate }}</a>
-                </div>
-                <div class="pull-right">
-                  <a href="javascript:void(0)" ng-click="main.logout()" class="btn btn-default btn-flat">{{ 'SIGN_OUT' | translate }}</a>
-                </div>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href="#/config" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </header>
-  <sidebar-home></sidebar-home>
+            </li>
+            <!-- Menu Body -->
+
+            <!-- Menu Footer-->
+            <li class="user-footer">
+              <div class="pull-left">
+                <a href="javascript:void(0)" ng-click="main.changeLanguage()" class="btn btn-default btn-flat">{{ 'LANGUAGE' | translate }}</a>
+              </div>
+              <div class="pull-right">
+                <a href="javascript:void(0)" ng-click="main.logout()" class="btn btn-default btn-flat">{{ 'SIGN_OUT' | translate }}</a>
+              </div>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#/config" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+<sidebar-home></sidebar-home>

@@ -1,23 +1,25 @@
-
 @font-face {
-    font-family: avenir-black; 
-    src: url('../fonts/avenir-black-webfont.woff'); 
+    font-family: avenir-black;
+    src: url('../fonts/avenir-black-webfont.woff');
 }
 
 @font-face {
-    font-family: avenir-light; 
-    src: url('../fonts/avenir-light-webfont.woff'); 
-}
-@font-face {
-    font-family: avenir-medium; 
-    src: url('../fonts/avenir-medium-webfont.woff'); 
-}
-@font-face {
-    font-family: avenir-roman; 
-    src: url('../fonts/avenir-roman-webfont.woff'); 
+    font-family: avenir-light;
+    src: url('../fonts/avenir-light-webfont.woff');
 }
 
-html,body {
+@font-face {
+    font-family: avenir-medium;
+    src: url('../fonts/avenir-medium-webfont.woff');
+}
+
+@font-face {
+    font-family: avenir-roman;
+    src: url('../fonts/avenir-roman-webfont.woff');
+}
+
+html,
+body {
     font-family: avenir-medium;
 }
 
@@ -41,25 +43,31 @@ html,body {
     color: #ff386a;
 }
 
-.online{
+.online {
     color: #00f468;
 }
 
 .logo {
-    background: -moz-linear-gradient(0deg, rgba(255,182,0,1) 0%, rgba(255,56,106,1) 100%); /* ff3.6+ */
-    background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(255,182,0,1)), color-stop(100%, rgba(255,56,106,1))); /* safari4+,chrome */
-    background: -webkit-linear-gradient(0deg, rgba(255,182,0,1) 0%, rgba(255,56,106,1) 100%); /* safari5.1+,chrome10+ */
-    background: -o-linear-gradient(0deg, rgba(255,182,0,1) 0%, rgba(255,56,106,1) 100%); /* opera 11.10+ */
-    background: -ms-linear-gradient(0deg, rgba(255,182,0,1) 0%, rgba(255,56,106,1) 100%); /* ie10+ */
-    background: linear-gradient(90deg, rgba(255,182,0,1) 0%, rgba(255,56,106,1) 100%); /* w3c */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffb600', endColorstr='#ff386a',GradientType=1 );
+    background: -moz-linear-gradient(0deg, rgba(255, 182, 0, 1) 0%, rgba(255, 56, 106, 1) 100%);
+    /* ff3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(255, 182, 0, 1)), color-stop(100%, rgba(255, 56, 106, 1)));
+    /* safari4+,chrome */
+    background: -webkit-linear-gradient(0deg, rgba(255, 182, 0, 1) 0%, rgba(255, 56, 106, 1) 100%);
+    /* safari5.1+,chrome10+ */
+    background: -o-linear-gradient(0deg, rgba(255, 182, 0, 1) 0%, rgba(255, 56, 106, 1) 100%);
+    /* opera 11.10+ */
+    background: -ms-linear-gradient(0deg, rgba(255, 182, 0, 1) 0%, rgba(255, 56, 106, 1) 100%);
+    /* ie10+ */
+    background: linear-gradient(90deg, rgba(255, 182, 0, 1) 0%, rgba(255, 56, 106, 1) 100%);
+    /* w3c */
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#ffb600', endColorstr='#ff386a', GradientType=1);
 }
 
-a{
-    color: #ff386a ;
+a {
+    color: #ff386a;
 }
 
-a:hover{
+a:hover {
     color: #ffb600;
 }
 
@@ -67,8 +75,12 @@ a:hover{
     height: 3em;
 }
 
-.sidebar-menu{
+.sidebar-menu {
     margin-top: 3em;
+}
+
+.user-panel {
+    height: 4em
 }
 
 .user-panel > .info > p {
@@ -81,7 +93,6 @@ ul.sidebar-menu span {
     font-size: 10pt;
     text-transform: uppercase;
     font-family: avenir-black;
-
 }
 
 ul.sidebar-menu a {
@@ -96,26 +107,26 @@ ul.sidebar-menu .treeview.active > a > span {
     color: #ff386a;
 }
 
-
-.sidebar-menu .treeview-menu  li a {
+.sidebar-menu .treeview-menu li a {
     text-transform: capitalize;
     font-family: avenir-medium;
 }
 
-.sidebar-menu .treeview-menu  li.active a {
-    color: #ff386a ;
+.sidebar-menu .treeview-menu li.active a {
+    color: #ff386a;
 }
 
 div.wrapper li.dropdown.user.user-menu.avenir-medium.ng-scope > a > span {
     text-transform: uppercase;
 }
 
-.footer-text > a, div, span
-{
+.footer-text > a,
+div,
+span {
     color: #6d6e70;
     font-size: 9pt;
-    text-transform: capitalize;
 }
+
 .btn {
     font-family: avenir-medium;
     font-size: 9pt;
@@ -125,32 +136,39 @@ div.wrapper li.dropdown.user.user-menu.avenir-medium.ng-scope > a > span {
     color: #ffb600;
 }
 
-.btn:hover{
+.btn:hover {
     border-color: #ff386a;
     background-color: #FFFFFF;
     color: #ff386a;
 }
 
+
 /* Headers of each category */
+
 h3 {
     font-family: avenir-black;
     text-transform: uppercase;
-    color:#6d6e70;
+    color: #6d6e70;
     font-size: 12pt;
 }
 
+th,
+tr {
+    text-align: center;
+}
+
+
 /*Labels of the forms */
 
-.form-group  > label {
+.form-group > label {
     font-size: 9pt;
-    text-transform: uppercase;
-    color:#6d6e70;
+    color: #6d6e70;
     font-family: avenir-medium;
 }
 
-.form-group  > div > input {
+.form-group > div > input {
     font-size: 11pt;
-    color:#6d6e70;
+    color: #6d6e70;
     font-family: avenir-roman;
 }
 

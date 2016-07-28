@@ -1,18 +1,13 @@
-
 <aside class="main-sidebar">
-    <section class="sidebar" style="height: auto;">
-      <!-- Sidebar user panel -->
-      <div class="user-panel">
-        <div class="pull-left image">
-          <img ng-src="http://www.gravatar.com/avatar/{{globals.currentUser.username | md5}}fs=150"/>
-
-        </div>
-        <div class="pull-left info">
-            <p class="active">{{globals.currentUser.username}}</p>
-          <a ng-href="#"><i class="fa fa-caret-up text-success online "></i> Online</a>
-        </div>
+  <section class="sidebar" style="height: auto;">
+    <!-- Sidebar user panel -->
+    <div class="user-panel">
+      <div class="pull-left info">
+        <p class="active">{{globals.currentUser.username}}</p>
+        <a ng-href="#"><i class="fa fa-caret-up text-success online "></i> Online</a>
       </div>
-      <!-- search form -->
+    </div>
+    <!-- search form -->
     <!--  <form action="#" method="get" class="sidebar-form ng-pristine ng-valid">
         <div class="input-group">
           <input type="text" name="q" class="form-control" placeholder="Search...">
@@ -22,73 +17,73 @@
               </span>
         </div>
       </form>-->
-      <!-- /.search form -->
-      <!-- sidebar menu: : style can be found in sidebar.less -->
-      <ul class="sidebar-menu">
-        <li ng-class="{active: isActive('/users/new') || isActive('/users') || isActiveEdit('users')}" class="treeview">
-          <a ng-href="javascript:void(0)">
-              <img class="icon-menu" src="images/icons/usuario_y-01.svg" alt="{{ 'USERS' | translate }}"><span>{{ 'USERS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-          </a>
-          <ul class="treeview-menu">
-            <li ng-class="{active: isActive('/users/new')}"><a ng-href="#/users/new"><i class="fa fa-circle-o"></i> {{ 'ADD_USER' | translate }}</a></li>
-            <li ng-class="{active: isActive('/users')}"><a ng-href="#/users"><i class="fa fa-circle-o"></i> {{ 'VIEW_USERS' | translate }}  </a></li>
-          </ul>
-        </li>
-        <li ng-class="{active: isActive('/organizations/new') || isActive('/organizations') || isActiveEdit('organizations')}" class="treeview">
-          <a ng-href="javascript:void(0)">
-            <img class="icon-menu" src="images/icons/usuario_y-01.svg" alt="{{ 'ORGANIZATIONS' | translate }}"><span>{{ 'ORGANIZATIONS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-          </a>
-          <ul class="treeview-menu">
-            <li   ng-class="{active: isActive('/organizations/new')}"><a ng-href="#/organizations/new"><i class="fa fa-circle-o"></i> {{ 'ADD_ORGANIZATIONS' | translate }}</a></li>
-            <li ng-class="{active: isActive('/organizations')}"><a ng-href="#/organizations"><i class="fa fa-circle-o"></i> {{ 'VIEW_ORGANIZATIONS' | translate }} </a></li>
-          </ul>
-        </li>
-        <li ng-class="{active: isActive('/categories/new') || isActive('/categories') || isActiveEdit('categories')}" class="treeview">
-          <a ng-href="javascript:void(0)">
-            <img class="icon-menu" src="images/icons/categorias_y-01.svg" alt="{{ 'CATEGORIES' | translate }}"><span>{{ 'CATEGORIES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-          </a>
-          <ul class="treeview-menu">
-            <li ng-class="{active: isActive('/categories/new')}"><a ng-href="#/categories/new"><i class="fa fa-circle-o"></i>  {{ 'ADD_CATEGORIES' | translate }}</a></li>
-            <li ng-class="{active: isActive('/categories')}"><a ng-href="#/categories"><i class="fa fa-circle-o"></i> {{ 'VIEW_CATEGORIES' | translate }}</a></li>
-          </ul>
-        </li>
-        <li ng-class="{active: isActive('/statuses/new') || isActive('/statuses') || isActiveEdit('statuses')}" class="treeview">
-          <a ng-href="javascript:void(0)">
-            <img class="icon-menu" src="images/icons/estados_y-01.svg" alt="{{ 'STATUSES' | translate }}"><span>{{ 'STATUSES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-          </a>
-          <ul class="treeview-menu">
-            <li ng-class="{active: isActive('/statuses/new')}"><a ng-href="#/statuses/new"><i class="fa fa-circle-o"></i>{{ 'ADD_STATUSES' | translate }}</a></li>
-            <li ng-class="{active: isActive('/statuses')}"><a ng-href="#/statuses"><i class="fa fa-circle-o"></i>  {{ 'VIEW_STATUSES' | translate }} </a></li>
-          </ul>
-        </li>
-        <li ng-class="{active: isActive('/filetypes/new') || isActive('/filetypes') || isActiveEdit('filetypes')}" class="treeview">
-          <a ng-href="javascript:void(0)">
-            <img class="icon-menu" src="images/icons/tiposdearchivos_y-01.svg" alt="{{ 'FILE_TYPES' | translate }}"><span>{{ 'FILE_TYPES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-          </a>
-          <ul class="treeview-menu">
-            <li ng-class="{active: isActive('/filetypes/new')}"><a ng-href="#/filetypes/new"><i class="fa fa-circle-o"></i>  {{ 'ADD_FILETYPES' | translate }}</a></li>
-            <li ng-class="{active: isActive('/filetypes')}"><a ng-href="#/filetypes"><i class="fa fa-circle-o"></i>  {{ 'VIEW_FILETYPES' | translate }} </a></li>
-          </ul>
-        </li>
-        <li ng-class="{active: isActive('/files/new/:dataset?') || isActive('/files') || isActiveEdit('files')}" class="treeview">
-          <a ng-href="javascript:void(0)">
-            <img class="icon-menu" src="images/icons/archivos_y-01.svg" alt="{{ 'FILES' | translate }}"><span>{{ 'FILES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-          </a>
-          <ul class="treeview-menu">
-            <li ng-class="{active: isActive('/files/new/:dataset?')}"><a ng-href="#/files/new"><i class="fa fa-circle-o"></i>{{ 'ADD_FILES' | translate }} </a></li>
-            <li ng-class="{active: isActive('/files')}"><a ng-href="#/files"><i class="fa fa-circle-o"></i>{{ 'VIEW_FILES' | translate }} </a></li>
-          </ul>
-        </li>
-        <li ng-class="{active: isActive('/maps/new') || isActive('/maps') || isActiveEdit('maps')}" class="treeview">
-          <a ng-href="javascript:void(0)">
-            <img class="icon-menu" src="images/icons/usuario_y-01.svg" alt="{{ 'ORGANIZATIONS' | translate }}"><span>{{ 'MAPS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-          </a>
-          <ul class="treeview-menu">
-            <!--<li ng-class="{active: isActive('/maps/new')}"><a ng-href="#/maps/new"><i class="fa fa-circle-o"></i>{{ 'ADD_MAPS' | translate }} </a></li>-->
-            <li ng-class="{active: isActive('/maps')}"><a ng-href="#/maps"><i class="fa fa-circle-o"></i>{{ 'VIEW_MAPS' | translate }} </a></li>
-          </ul>
-        </li>
-       <!-- <li ng-class="{active: isActive('/databases/new') || isActive('/databases') || isActiveEdit('databases')}" class="treeview">
+    <!-- /.search form -->
+    <!-- sidebar menu: : style can be found in sidebar.less -->
+    <ul class="sidebar-menu">
+      <li ng-class="{active: isActive('/users/new') || isActive('/users') || isActiveEdit('users')}" class="treeview">
+        <a ng-href="javascript:void(0)">
+          <img class="icon-menu" src="images/icons/usuario_y-01.svg" alt="{{ 'USERS' | translate }}"><span>{{ 'USERS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          <li ng-class="{active: isActive('/users/new')}"><a ng-href="#/users/new"><i class="fa fa-circle-o"></i> {{ 'ADD_USER' | translate }}</a></li>
+          <li ng-class="{active: isActive('/users')}"><a ng-href="#/users"><i class="fa fa-circle-o"></i> {{ 'VIEW_USERS' | translate }}  </a></li>
+        </ul>
+      </li>
+      <li ng-class="{active: isActive('/organizations/new') || isActive('/organizations') || isActiveEdit('organizations')}" class="treeview">
+        <a ng-href="javascript:void(0)">
+          <img class="icon-menu" src="images/icons/usuario_y-01.svg" alt="{{ 'ORGANIZATIONS' | translate }}"><span>{{ 'ORGANIZATIONS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          <li ng-class="{active: isActive('/organizations/new')}"><a ng-href="#/organizations/new"><i class="fa fa-circle-o"></i> {{ 'ADD_ORGANIZATIONS' | translate }}</a></li>
+          <li ng-class="{active: isActive('/organizations')}"><a ng-href="#/organizations"><i class="fa fa-circle-o"></i> {{ 'VIEW_ORGANIZATIONS' | translate }} </a></li>
+        </ul>
+      </li>
+      <li ng-class="{active: isActive('/categories/new') || isActive('/categories') || isActiveEdit('categories')}" class="treeview">
+        <a ng-href="javascript:void(0)">
+          <img class="icon-menu" src="images/icons/categorias_y-01.svg" alt="{{ 'CATEGORIES' | translate }}"><span>{{ 'CATEGORIES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          <li ng-class="{active: isActive('/categories/new')}"><a ng-href="#/categories/new"><i class="fa fa-circle-o"></i>  {{ 'ADD_CATEGORIES' | translate }}</a></li>
+          <li ng-class="{active: isActive('/categories')}"><a ng-href="#/categories"><i class="fa fa-circle-o"></i> {{ 'VIEW_CATEGORIES' | translate }}</a></li>
+        </ul>
+      </li>
+      <li ng-class="{active: isActive('/statuses/new') || isActive('/statuses') || isActiveEdit('statuses')}" class="treeview">
+        <a ng-href="javascript:void(0)">
+          <img class="icon-menu" src="images/icons/estados_y-01.svg" alt="{{ 'STATUSES' | translate }}"><span>{{ 'STATUSES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          <li ng-class="{active: isActive('/statuses/new')}"><a ng-href="#/statuses/new"><i class="fa fa-circle-o"></i>{{ 'ADD_STATUSES' | translate }}</a></li>
+          <li ng-class="{active: isActive('/statuses')}"><a ng-href="#/statuses"><i class="fa fa-circle-o"></i>  {{ 'VIEW_STATUSES' | translate }} </a></li>
+        </ul>
+      </li>
+      <li ng-class="{active: isActive('/filetypes/new') || isActive('/filetypes') || isActiveEdit('filetypes')}" class="treeview">
+        <a ng-href="javascript:void(0)">
+          <img class="icon-menu" src="images/icons/tiposdearchivos_y-01.svg" alt="{{ 'FILE_TYPES' | translate }}"><span>{{ 'FILE_TYPES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          <li ng-class="{active: isActive('/filetypes/new')}"><a ng-href="#/filetypes/new"><i class="fa fa-circle-o"></i>  {{ 'ADD_FILETYPES' | translate }}</a></li>
+          <li ng-class="{active: isActive('/filetypes')}"><a ng-href="#/filetypes"><i class="fa fa-circle-o"></i>  {{ 'VIEW_FILETYPES' | translate }} </a></li>
+        </ul>
+      </li>
+      <li ng-class="{active: isActive('/files/new/:dataset?') || isActive('/files') || isActiveEdit('files')}" class="treeview">
+        <a ng-href="javascript:void(0)">
+          <img class="icon-menu" src="images/icons/archivos_y-01.svg" alt="{{ 'FILES' | translate }}"><span>{{ 'FILES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          <li ng-class="{active: isActive('/files/new/:dataset?')}"><a ng-href="#/files/new"><i class="fa fa-circle-o"></i>{{ 'ADD_FILES' | translate }} </a></li>
+          <li ng-class="{active: isActive('/files')}"><a ng-href="#/files"><i class="fa fa-circle-o"></i>{{ 'VIEW_FILES' | translate }} </a></li>
+        </ul>
+      </li>
+      <li ng-class="{active: isActive('/maps/new') || isActive('/maps') || isActiveEdit('maps')}" class="treeview">
+        <a ng-href="javascript:void(0)">
+          <img class="icon-menu" src="images/icons/usuario_y-01.svg" alt="{{ 'ORGANIZATIONS' | translate }}"><span>{{ 'MAPS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          <!--<li ng-class="{active: isActive('/maps/new')}"><a ng-href="#/maps/new"><i class="fa fa-circle-o"></i>{{ 'ADD_MAPS' | translate }} </a></li>-->
+          <li ng-class="{active: isActive('/maps')}"><a ng-href="#/maps"><i class="fa fa-circle-o"></i>{{ 'VIEW_MAPS' | translate }} </a></li>
+        </ul>
+      </li>
+      <!-- <li ng-class="{active: isActive('/databases/new') || isActive('/databases') || isActiveEdit('databases')}" class="treeview">
           <a ng-href="javascript:void(0)">
             <i class="fa fa-database"></i> <span>{{ 'DATABASES' | translate }} </span> <i class="fa fa-angle-left pull-right"></i>
           </a>
@@ -97,33 +92,33 @@
             <li ng-class="{active: isActive('/databases')}"><a ng-href="#/databases"><i class="fa fa-circle-o"></i> {{ 'VIEW_DATABASES' | translate }}</a></li>
           </ul>
         </li>-->
-        <li ng-class="{active: isActive('/datasets/new') || isActive('/datasets')  || isActiveEdit('datasets')}" class="treeview">
-          <a ng-href="javascript:void(0)">
-            <img class="icon-menu" src="images/icons/setdedatos_y-01.svg" alt="{{ 'DATASETS' | translate }}"><span>{{ 'DATASETS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-          </a>
-          <ul class="treeview-menu">
-            <li ng-class="{active: isActive('/datasets/new')}"><a ng-href="#/datasets/new"><i class="fa fa-circle-o"></i> {{ 'ADD_DATASET' | translate }}</a></li>
-            <li ng-class="{active: isActive('/datasets')}"><a ng-href="#/datasets"><i class="fa fa-circle-o"></i> {{ 'VIEW_DATASET' | translate }}</a></li>
-          </ul>
-        </li>
-        <li ng-class="{active: isActive('/tags/new') || isActive('/tags') || isActiveEdit('tags')}" class="treeview">
-          <a ng-href="javascript:void(0)">
-            <img class="icon-menu" src="images/icons/etiquetas_y-01.svg" alt="{{ 'TAGS' | translate }}"><span>{{ 'TAGS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-          </a>
-          <ul class="treeview-menu">
-            <li ng-class="{active: isActive('/tags/new')}"><a ng-href="#/tags/new"><i class="fa fa-circle-o"></i> {{ 'ADD_TAG' | translate }}</a></li>
-            <li ng-class="{active: isActive('/tags')}"><a ng-href="#/tags"><i class="fa fa-circle-o"></i> {{ 'VIEW_TAGS' | translate }}</a></li>
-          </ul>
-        </li>
-        <li ng-class="{active: isActive('/updatefrequencies/new') || isActive('/updatefrequencies') || isActiveEdit('updatefrequencies')}" class="treeview">
-          <a ng-href="javascript:void(0)">
-            <img class="icon-menu" src="images/icons/frecuencias_y-01.svg" alt="{{ 'FREQUENCY' | translate }}"><span>{{ 'FREQUENCY' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-          </a>
-          <ul class="treeview-menu">
-            <li ng-class="{active: isActive('/updatefrequencies/new')}"><a ng-href="#/updatefrequencies/new"><i class="fa fa-circle-o"></i> {{ 'ADD_FREQUENCY' | translate }}</a></li>
-            <li ng-class="{active: isActive('/updatefrequencies')}"><a ng-href="#/updatefrequencies"><i class="fa fa-circle-o"></i> {{ 'VIEW_FREQUENCY' | translate }}</a></li>
-          </ul>
-        </li>
-      </ul>
-    </section>
+      <li ng-class="{active: isActive('/datasets/new') || isActive('/datasets')  || isActiveEdit('datasets')}" class="treeview">
+        <a ng-href="javascript:void(0)">
+          <img class="icon-menu" src="images/icons/setdedatos_y-01.svg" alt="{{ 'DATASETS' | translate }}"><span>{{ 'DATASETS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          <li ng-class="{active: isActive('/datasets/new')}"><a ng-href="#/datasets/new"><i class="fa fa-circle-o"></i> {{ 'ADD_DATASET' | translate }}</a></li>
+          <li ng-class="{active: isActive('/datasets')}"><a ng-href="#/datasets"><i class="fa fa-circle-o"></i> {{ 'VIEW_DATASET' | translate }}</a></li>
+        </ul>
+      </li>
+      <li ng-class="{active: isActive('/tags/new') || isActive('/tags') || isActiveEdit('tags')}" class="treeview">
+        <a ng-href="javascript:void(0)">
+          <img class="icon-menu" src="images/icons/etiquetas_y-01.svg" alt="{{ 'TAGS' | translate }}"><span>{{ 'TAGS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          <li ng-class="{active: isActive('/tags/new')}"><a ng-href="#/tags/new"><i class="fa fa-circle-o"></i> {{ 'ADD_TAG' | translate }}</a></li>
+          <li ng-class="{active: isActive('/tags')}"><a ng-href="#/tags"><i class="fa fa-circle-o"></i> {{ 'VIEW_TAGS' | translate }}</a></li>
+        </ul>
+      </li>
+      <li ng-class="{active: isActive('/updatefrequencies/new') || isActive('/updatefrequencies') || isActiveEdit('updatefrequencies')}" class="treeview">
+        <a ng-href="javascript:void(0)">
+          <img class="icon-menu" src="images/icons/frecuencias_y-01.svg" alt="{{ 'FREQUENCY' | translate }}"><span>{{ 'FREQUENCY' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          <li ng-class="{active: isActive('/updatefrequencies/new')}"><a ng-href="#/updatefrequencies/new"><i class="fa fa-circle-o"></i> {{ 'ADD_FREQUENCY' | translate }}</a></li>
+          <li ng-class="{active: isActive('/updatefrequencies')}"><a ng-href="#/updatefrequencies"><i class="fa fa-circle-o"></i> {{ 'VIEW_FREQUENCY' | translate }}</a></li>
+        </ul>
+      </li>
+    </ul>
+  </section>
 </aside>
