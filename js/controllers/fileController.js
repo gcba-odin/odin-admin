@@ -143,6 +143,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
     }
 
     $scope.beforeChange = function ($files) {
+        console.log($files[0]);
         $scope.fileModel.name = $files[0].name;
         //$scope.model.name = $scope.fileModel.name;
         var type = $files[0].name.split('.').pop();
