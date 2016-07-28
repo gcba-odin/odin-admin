@@ -57,7 +57,7 @@
             <img class="icon-menu" src="images/icons/estados_y-01.svg" alt="{{ 'STATUSES' | translate }}"><span>{{ 'STATUSES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu">
-            <li ng-class="{active: isActive('/statuses/new')}"><a ng-href="#/statuses/new"><i class="fa fa-circle-o"></i> Add  {{ 'ADD_STATUSES' | translate }}</a></li>
+            <li ng-class="{active: isActive('/statuses/new')}"><a ng-href="#/statuses/new"><i class="fa fa-circle-o"></i>{{ 'ADD_STATUSES' | translate }}</a></li>
             <li ng-class="{active: isActive('/statuses')}"><a ng-href="#/statuses"><i class="fa fa-circle-o"></i>  {{ 'VIEW_STATUSES' | translate }} </a></li>
           </ul>
         </li>
@@ -70,12 +70,12 @@
             <li ng-class="{active: isActive('/filetypes')}"><a ng-href="#/filetypes"><i class="fa fa-circle-o"></i>  {{ 'VIEW_FILETYPES' | translate }} </a></li>
           </ul>
         </li>
-        <li ng-class="{active: isActive('/files/new') || isActive('/files') || isActiveEdit('files')}" class="treeview">
+        <li ng-class="{active: isActive('/files/new/:dataset?') || isActive('/files') || isActiveEdit('files')}" class="treeview">
           <a ng-href="javascript:void(0)">
             <img class="icon-menu" src="images/icons/archivos_y-01.svg" alt="{{ 'FILES' | translate }}"><span>{{ 'FILES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu">
-            <li ng-class="{active: isActive('/files/new')}"><a ng-href="#/files/new"><i class="fa fa-circle-o"></i>{{ 'ADD_FILES' | translate }} </a></li>
+            <li ng-class="{active: isActive('/files/new/:dataset?')}"><a ng-href="#/files/new"><i class="fa fa-circle-o"></i>{{ 'ADD_FILES' | translate }} </a></li>
             <li ng-class="{active: isActive('/files')}"><a ng-href="#/files"><i class="fa fa-circle-o"></i>{{ 'VIEW_FILES' | translate }} </a></li>
           </ul>
         </li>
@@ -115,7 +115,7 @@
             <li ng-class="{active: isActive('/tags')}"><a ng-href="#/tags"><i class="fa fa-circle-o"></i> {{ 'VIEW_TAGS' | translate }}</a></li>
           </ul>
         </li>
-        <li ng-class="{active: isActive('/Updatefrequency/new') || isActive('/Updatefrequency') || isActiveEdit('tags')}" class="treeview">
+        <li ng-class="{active: isActive('/updatefrequencies/new') || isActive('/updatefrequencies') || isActiveEdit('updatefrequencies')}" class="treeview">
           <a ng-href="javascript:void(0)">
             <img class="icon-menu" src="images/icons/frecuencias_y-01.svg" alt="{{ 'FREQUENCY' | translate }}"><span>{{ 'FREQUENCY' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
           </a>

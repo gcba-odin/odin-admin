@@ -181,6 +181,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
 
     $scope.fileModel = []
     $scope.checkstep = function (step) {
+        console.log($scope.model.uploadFile);
         if ($scope.model.uploadFile == null && step == 1 && $scope.fileModel.name)
         {
             $scope.clearUpload();
