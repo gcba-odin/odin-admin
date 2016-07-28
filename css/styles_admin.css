@@ -80,7 +80,9 @@ a:hover {
 }
 
 .user-panel {
-    height: 4em
+    text-align: center;
+    vertical-align: middle;
+    height: 5em
 }
 
 .user-panel > .info > p {
