@@ -5,15 +5,13 @@
         return {
             restrict: "E",
             templateUrl: "directives/home/sidebar-home.html",
-            controller: function($scope,$rootScope) {
+            controller: function($scope, $rootScope) {
                 $rootScope.isActive = function(viewLocation) {
-                    console.log(viewLocation);
-                    console.log($rootScope.actualUrl);
-                  return  viewLocation === $rootScope.actualUrl;
-                }; 
+                    return  viewLocation === $rootScope.actualUrl;
+                };
                 $rootScope.isActiveEdit = function(viewLocation) {
-                  return  "/"+viewLocation+"/:id/edit" === $rootScope.actualUrl;
-                }; 
+                    return  "/" + viewLocation + "/:id/edit" === $rootScope.actualUrl;
+                };
             },
             controllerAs: "sidebarHome"
         };
@@ -25,16 +23,16 @@
             templateUrl: "directives/breadcrumbs.html",
             controller: function($scope) {
             }, link: function(scope, element, attrs) {
-                  scope.modelUrl=attrs.model;
-                  scope.typeModel=attrs.type;
-                  scope.modelName=attrs.modelName;
+                scope.modelUrl = attrs.model;
+                scope.typeModel = attrs.type;
+                scope.modelName = attrs.modelName;
 
-               },
+            },
             controllerAs: "breadcrumbs"
         };
     });
 
-       app.directive("headerHome", function() {
+    app.directive("headerHome", function() {
         return {
             restrict: "E",
             templateUrl: "directives/home/header-home.html",
@@ -54,7 +52,7 @@
             controllerAs: "controlHome"
         };
     });
-        app.directive("footerHome", function() {
+    app.directive("footerHome", function() {
         return {
             restrict: "E",
             templateUrl: "directives/home/footer-home.html",
