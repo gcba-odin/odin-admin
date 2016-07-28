@@ -1,19 +1,19 @@
 <header-home></header-home>
 <div class="content-wrapper">
-     <breadcrumbs data-type="{{ 'VIEW' | translate }}" data-model-name="{{ 'USERS' | translate }}" data-model="{{type}}"></breadcrumbs>
+    <breadcrumbs data-type="{{ 'VIEW' | translate }}" data-model-name="{{ 'USERS' | translate }}" data-model="{{type}}"></breadcrumbs>
     <!-- Main content -->
     <section class="content">
         <div class="row">
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                      <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} <b>{{model.username}}</b></h3>
+                        <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} <b>{{model.username}}</b></h3>
                     </div>
-                      <table class="table usertable">
-                        <tr ng-if="model.email">
-                            <td></td>
-                            <td><img ng-src="http://www.gravatar.com/avatar/{{model.email | md5}}fs=150"/></td>
-                        </tr>
+                    <table class="table usertable">
+                        <!--<tr ng-if="model.email">-->
+                        <!--<td></td>-->
+                        <!--<td><img ng-src="http://www.gravatar.com/avatar/{{model.email | md5}}fs=150"/></td>-->
+                        <!--</tr>-->
                         <tr ng-if="model.firstName">
                             <td>{{ 'FIRST_NAME' | translate }}</td>
                             <td>{{model.firstName}}</td>
@@ -40,16 +40,16 @@
                         </tr>
 
                     </table>
-                    <div class="box-footer"> 
+                    <div class="box-footer">
                         <button back-button class="btn btn-default pull-left">
                             {{ 'BACK' | translate }}
                         </button>
                         <button type="submit" class="btn btn-primary pull-right" ng-click="edit(model)">{{ 'EDIT' | translate }}</button>
                     </div>
-                </div>  
-              
+                </div>
+
             </div>
-        </div>    
+        </div>
     </section>
     <!--  Main content-->
 </div>
