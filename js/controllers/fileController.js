@@ -62,15 +62,15 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type,
-            params: "include=tags"
-        }, function () {
+            //params: "include=tags"
+        }/*, function () {
             var tags = [];
             for (var i = 0; i < $scope.model.tags.length; i++) {
                 tags.push('<span class="label label-primary">' + $scope.model.tags[i].name + '</span>');
             }
             ;
             $scope.model.tags = tags.join(" - ");
-        });
+        }*/);
     };
 
     $scope.edit = function (model) {
@@ -239,9 +239,9 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             'visible': $scope.model.visible,
             'owner': $scope.model.owner,
             'updateFrequency': $scope.model.updateFrequency,
-            'tags': $scope.model.tags ? $scope.model.tags.join(",") : "",
+            //'tags': $scope.model.tags ? $scope.model.tags.join(",") : "",
             'updated': $scope.model.updated,
-            'gatheringDate': $scope.model.gatheringDate,//.toISOString().slice(0, 10), //new Date().toISOString().slice(0, 19).replace('T', ' ');
+            //'gatheringDate': $scope.model.gatheringDate,//.toISOString().slice(0, 10), //new Date().toISOString().slice(0, 19).replace('T', ' ');
             'uploadFile': $scope.model.uploadFile,
             
         };
@@ -333,9 +333,9 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
             'visible': $scope.model.visible,
             'owner': $scope.model.owner,
             'updateFrequency': $scope.model.updateFrequency,
-            'tags': $scope.model.tags ? $scope.model.tags.join(",") : "",
+            //'tags': $scope.model.tags ? $scope.model.tags.join(",") : "",
             'updated': $scope.model.updated,
-            'gatheringDate': $scope.model.gatheringDate //new Date().toISOString().slice(0, 19).replace('T', ' ');
+            //'gatheringDate': $scope.model.gatheringDate //new Date().toISOString().slice(0, 19).replace('T', ' ');
         }
 
         if (isValid) {
@@ -355,11 +355,11 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type,
-            params: "include=tags"
+            //params: "include=tags"
         }, function () {
             $scope.model.updateFrequency = $scope.model.updateFrequency.id;
             $scope.model.status = $scope.model.status.id;
-            $scope.model.gatheringDate = moment($scope.model.gatheringDate);
+            //$scope.model.gatheringDate = moment($scope.model.gatheringDate);
 
             $scope.fileModel.name = $scope.model.name;
             var type = $scope.fileModel.name.split('.').pop();

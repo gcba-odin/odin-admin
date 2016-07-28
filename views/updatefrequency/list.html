@@ -1,49 +1,45 @@
 <header-home></header-home>
 <div class="content-wrapper">
-      <breadcrumbs   data-model-name="{{ 'FREQUENCIES' | translate }}" data-model="{{type}}"></breadcrumbs>
+    <breadcrumbs   data-model-name="{{ 'FREQUENCIES' | translate }}" data-model="{{type}}"></breadcrumbs>
     <!-- Main content -->
     <section class="content">
         <div class="row">
             <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">{{ 'FREQUENCIES' | translate }}</h3>
-              <div class="box-tools">
-                <div class="input-group input-group-sm" style="width: 150px;">
-                  <div class="input-group-btn">
-                        <a ng-href="#/{{type}}/new" class="btn-primary btn nodecoration pull-right">{{ 'ADD_NEW' | translate }} </a>
-                  </div>
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">{{ 'FREQUENCIES' | translate }}</h3>
+                        <div class="box-tools">
+                            <a ng-href="#/tags/new" class="btn-primary btn nodecoration pull-right">{{ 'ADD' | translate }} {{ 'FREQUENCY' | translate }}</a>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table table-hover">
+                            <tbody><tr>
+                                    <!-- <th>ID</th>-->
+                                    <th>{{ 'NAME' | translate }}</th>
+                                    <th>{{ 'ACTIONS' | translate }}</th>
+                                </tr>
+                                <tr ng-repeat="model in data.data">
+                                    <!--<td>{{model.id}}</td>-->
+                                    <td>{{model.name}}</td>
+                                    <td>
+                                        <a class="btn btn-primary" ng-click="view({id: model.id})">{{ 'VIEW' | translate }}</a>
+                                        <a class="btn btn-info" ng-click="edit({id: model.id})">{{ 'EDIT' | translate }}</a>
+                                        <a class="btn btn-danger" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)">{{ 'DELETE' | translate }}</a>
+                                    </td>
+                                </tr>
+
+                            </tbody></table>
+                    </div>
+                    <!-- /.box-body -->
+                    <paging page="data.meta.page" page-size="limit" total="data.meta.count"
+                            paging-action="paging('pageClick', page, pageSize, total)" 
+                            show-prev-next="true"
+                            show-first-last="true" hide-if-empty="true"></paging> 
                 </div>
-              </div>
+                <!-- /.box -->
             </div>
-            <!-- /.box-header -->
-            <div class="box-body table-responsive no-padding">
-              <table class="table table-hover">
-                <tbody><tr>
-                 <!-- <th>ID</th>-->
-                  <th>{{ 'NAME' | translate }}</th>
-                  <th>{{ 'ACTIONS' | translate }}</th>
-                </tr>
-                <tr ng-repeat="model in data.data">
-                  <!--<td>{{model.id}}</td>-->
-                  <td>{{model.name}}</td>
-                  <td>
-                    <a class="btn btn-primary" ng-click="view({id:model.id})">{{ 'VIEW' | translate }}</a>
-                    <a class="btn btn-info" ng-click="edit({id:model.id})">{{ 'EDIT' | translate }}</a>
-                    <a class="btn btn-danger" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)">{{ 'DELETE' | translate }}</a>
-                  </td>
-                </tr>
-              
-              </tbody></table>
-            </div>
-            <!-- /.box-body -->
-            <paging page="data.meta.page" page-size="limit" total="data.meta.count"
-                paging-action="paging('pageClick', page, pageSize, total)" 
-                show-prev-next="true"
-                show-first-last="true" hide-if-empty="true"></paging> 
-          </div>
-          <!-- /.box -->
-        </div>
         </div>
     </section>
     <!--  Main content-->
