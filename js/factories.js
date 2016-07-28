@@ -76,7 +76,6 @@
             },
             confirmDelete: function(item, scope) {
                 var _this = this;
-                console.log(item.target.dataset);
                 var item = item.target.dataset;
                 Alertify.confirm(item.textdelete).then(
                     function onOk() {

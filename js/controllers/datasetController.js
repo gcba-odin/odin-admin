@@ -12,8 +12,15 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
     modelService.initService("Dataset", "datasets", $scope);
 
     $scope.confirmDelete = function(item) {
-        modelService.confirmDelete(item);
-    }
+        Alertify.confirm('¿Está seguro que quiere borrar este dataset?<br> Al hacerlo, se borrarán todos los recursos asociados').then(
+                function onOk() {
+                    $scope.deleteModel(item);
+                },
+                function onCancel() {
+                    return false;
+                }
+        );
+    };
 
     $scope.deleteModel = function(model) {
         modelService.delete($scope, model);
@@ -254,7 +261,6 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
                 type: $scope.type,
                 params: "include=tags,files,categories"
             }, function() {
-                console.log($scope.model);
                 $scope.model.items = [];
                 $scope.publishAt = $scope.model.publishAt;
                 var counter = 0;

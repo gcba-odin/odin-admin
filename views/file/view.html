@@ -14,13 +14,12 @@
                         <div class="dropdown pull-right" ng-if="model.type.api">
                             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{ 'NEW_RESOURCES' | translate }}
                                 <span class="caret"></span></button>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a ng-href="#/maps/new/{{model.id}}" ><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_MAP' | translate }}</a></li>
-                                    <li class="disabled"><a><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_GRAPHIC' | translate }}</a></li>
-                                </ul>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a ng-href="#/maps/new/{{model.id}}" ><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_MAP' | translate }}</a></li>
+                                <li class="disabled"><a><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_GRAPHIC' | translate }}</a></li>
+                            </ul>
                         </div>
-                        
-                        <button  data-toggle="modal" data-target="#viewLinkResources" class="btn btn-default pull-right magin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_RESOURCES' | translate }}</button> 
+                        <button ng-if="model.resources && model.resources.length > 0"  data-toggle="modal" data-target="#viewLinkResources" class="btn btn-default pull-right magin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_RESOURCES' | translate }}</button> 
                     </div>
                     <table class="table usertable">
                         <tr ng-if="model.name">
@@ -113,5 +112,35 @@
         </div>
     </section>
     <!--  Main content-->
+    <div class="modal fade" id="viewLinkResources" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">{{ 'RESOURCES' | translate }}</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <thead>
+                        <th>{{ 'RESOURCE' | translate }}</th>
+                        <th>{{ 'VIEW' | translate }}</th>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="resource in model.resources">
+                                <td>
+                                    <span>{{resource.name}}</span>
+                                </td>
+                                <td>
+                                    <a ng-if="resource.geojson" target="_blank" class="btn btn-primary" ng-href="#/maps/{{resource.id}}/view">{{ 'VIEW' | translate }}</a>
+                                    <a ng-if="!resource.geojson" target="_blank" class="btn btn-primary" ng-href="#/graphics/{{resource.id}}/view">{{ 'VIEW' | translate }}</a>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <footer-home></footer-home>

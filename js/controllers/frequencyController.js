@@ -4,24 +4,24 @@ app.factory('model', function($resource) {
     return $resource();
 });
 
-function updateFrequencyListController($scope, $location, rest, $rootScope, Flash,Alertify,modelService) {
+function updateFrequencyListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService) {
 
- modelService.initService("updateFrequency","updatefrequencies",$scope);
+    modelService.initService("updateFrequency", "updatefrequencies", $scope);
 
-    $scope.confirmDelete=function (item){
+    $scope.confirmDelete = function(item) {
         modelService.confirmDelete(item);
     }
 
     $scope.deleteModel = function(model) {
-        modelService.delete($scope,model);
+        modelService.delete($scope, model);
     };
 
     $scope.edit = function(model) {
-        modelService.edit($scope,model);
+        modelService.edit($scope, model);
     }
 
     $scope.view = function(model) {
-        modelService.view($scope,model);
+        modelService.view($scope, model);
     }
 
     $scope.limit = 20;
@@ -34,22 +34,22 @@ function updateFrequencyListController($scope, $location, rest, $rootScope, Flas
         var skip = (page - 1) * $scope.limit;
         $scope.q = "&skip=" + skip + "&limit=" + $scope.limit;
         modelService.loadAll($scope);
-    };  
+    };
 }
 
-function updateFrequencyViewController($scope, Flash, rest, $routeParams, $location,modelService) {
- modelService.initService("updateFrequency","updatefrequencies",$scope);
+function updateFrequencyViewController($scope, Flash, rest, $routeParams, $location, modelService) {
+    modelService.initService("updateFrequency", "updatefrequencies", $scope);
 
-    modelService.findOne($routeParams,$scope);
+    modelService.findOne($routeParams, $scope);
 
 
     $scope.edit = function(model) {
-        modelService.edit($scope,model);
+        modelService.edit($scope, model);
     }
 }
 
-function updateFrequencyCreateController($scope, rest, model, Flash,$location,modelService) {
- modelService.initService("updateFrequency","updatefrequencies",$scope);
+function updateFrequencyCreateController($scope, rest, model, Flash, $location, modelService, Alertify) {
+    modelService.initService("updateFrequency", "updatefrequencies", $scope);
 
 
     $scope.model = new model();
@@ -57,16 +57,22 @@ function updateFrequencyCreateController($scope, rest, model, Flash,$location,mo
         if (isValid) {
             rest().save({
                 type: $scope.type
-            }, $scope.model,function (resp){
-                var url = '/'+$scope.type;
+            }, $scope.model, function(resp) {
+                var url = '/' + $scope.type;
                 $location.path(url);
+            }, function(error) {
+                if (!!error.data.links.name[0]) {
+                    Alertify.alert('La frequencia que quiere guardar ya existe.');
+                } else {
+                    Alertify.alert('Hubo un error al crear la frecuencia.');
+                }
             });
         }
     };
 }
 
-function updateFrequencyEditController($scope, Flash, rest, $routeParams, model,$location,modelService) {
- modelService.initService("updateFrequency","updatefrequencies",$scope);
+function updateFrequencyEditController($scope, Flash, rest, $routeParams, model, $location, modelService, Alertify) {
+    modelService.initService("updateFrequency", "updatefrequencies", $scope);
 
 
     $scope.model = new model();
@@ -75,9 +81,15 @@ function updateFrequencyEditController($scope, Flash, rest, $routeParams, model,
             rest().update({
                 type: $scope.type,
                 id: $scope.model.id
-            }, $scope.model,function (resp){
-                var url = '/'+$scope.type;
+            }, $scope.model, function(resp) {
+                var url = '/' + $scope.type;
                 $location.path(url);
+            }, function(error) {
+                if (!!error.data.links.name[0]) {
+                    Alertify.alert('La frequencia que quiere guardar ya existe.');
+                } else {
+                    Alertify.alert('Hubo un error al crear la frecuencia.');
+                }
             });
         }
     };

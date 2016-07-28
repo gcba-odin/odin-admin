@@ -5,7 +5,6 @@ var app=angular.module('odin.controllers', ["odin.homeControllers","odin.userCon
         $scope.language="español";
 
         this.changeLanguage=function (element){
-                console.log(element);
             if($scope.language=="english"){
                 $scope.language="español";
                 $translate.use("es");
