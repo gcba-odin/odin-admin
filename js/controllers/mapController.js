@@ -79,7 +79,7 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
     };
 }
 
-function MapCreateController($scope, modelService, rest, $location, model, $sce, $routeParams, Alertify) {
+function MapCreateController($scope, modelService, rest, $location, model, $sce, $routeParams, Alertify, usSpinnerService) {
 
     modelService.initService("Map", "maps", $scope);
 
@@ -185,6 +185,7 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
     };
 
     $scope.add = function(model) {
+        usSpinnerService.spin('spinner');
 
         for (obj in $scope.model) {
             if (obj.indexOf("property") != -1) {
@@ -206,14 +207,18 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
             rest().save({
                 type: $scope.type
             }, $scope.model, function(resp) {
+                usSpinnerService.stop('spinner');
                 if (resp.data.id) {
                     var url = '/' + $scope.type + '/' + resp.data.id + '/view';
                 } else {
                     var url = '/' + $scope.type;
                 }
                 $location.path(url);
+            }, function(error) {
+                usSpinnerService.stop('spinner');
             });
         } else {
+            usSpinnerService.stop('spinner');
             Alertify.alert('Hay datos incompletos.');
         }
     };
@@ -246,7 +251,7 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
 }
 
 
-function MapEditController($scope, modelService, $routeParams, $sce, rest, $location, model, Alertify) {
+function MapEditController($scope, modelService, $routeParams, $sce, rest, $location, model, Alertify, usSpinnerService) {
     modelService.initService("Map", "maps", $scope);
     $scope.model = new model();
 
@@ -285,7 +290,7 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
 
 
     $scope.checkstep = function(step) {
-        
+
         if ((step == 1) && ($scope.headersFile == null)) {
             Alertify.alert('Le faltó asociar el archivo o no se puede leer.');
         } else if ((step == 1) && (!angular.isUndefined($scope.model.url) && $scope.model.url != '' && ($scope.model.url != url_map))) {
@@ -341,6 +346,8 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
 
     $scope.update = function(model) {
 
+        usSpinnerService.spin('spinner');
+
         for (obj in $scope.model) {
             if (obj.indexOf("property") != -1) {
                 delete $scope.model[obj]
@@ -363,14 +370,18 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
                 type: $scope.type,
                 id: $scope.model.id
             }, $scope.model, function(resp) {
+                usSpinnerService.stop('spinner');
                 if (resp.data.id) {
                     var url = '/' + $scope.type + '/' + resp.data.id + '/view';
                 } else {
                     var url = '/' + $scope.type;
                 }
                 $location.path(url);
+            }, function(error) {
+                usSpinnerService.stop('spinner');
             });
         } else {
+            usSpinnerService.stop('spinner');
             Alertify.alert('Hay datos incompletos.');
         }
     };

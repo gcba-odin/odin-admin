@@ -52,7 +52,7 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
     };
 }
 
-function FileViewController($scope, Flash, rest, $routeParams, $location, modelService, $sce, Alertify) {
+function FileViewController($scope, Flash, rest, $routeParams, $location, modelService, $sce, Alertify, usSpinnerService) {
     modelService.initService("File", "files", $scope);
     $scope.getHtml = function(html) {
         return $sce.trustAsHtml(html);
@@ -84,7 +84,7 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
     };
 
     var update = function() {
-
+        usSpinnerService.spin('spinner');
         $scope.tempData = {
             id: $scope.model.id,
             publishedAt: $scope.model.publishedAt,
@@ -95,9 +95,12 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
             type: $scope.type,
             id: $scope.tempData.id
         }, $scope.tempData, function(resp) {
+            usSpinnerService.stop('spinner');
             loadModel();
             //var url = '/' + $scope.type;
             // $location.path(url);
+        }, function(error){
+            usSpinnerService.stop('spinner');
         });
     };
 
@@ -125,12 +128,16 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
     $scope.confirmDelete = function(item) {
         Alertify.confirm('¿Está seguro que quiere borrar este archivo?').then(
                 function onOk() {
+                    usSpinnerService.spin('spinner');
                     rest().delete({
                         type: $scope.type,
                         id: $scope.model.id
                     }, function(resp) {
+                        usSpinnerService.stop('spinner');
                         var url = "/" + $scope.type;
                         $location.path(url);
+                    }, function(error) {
+                        usSpinnerService.stop('spinner');
                     });
                 },
                 function onCancel() {
@@ -140,7 +147,7 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
     };
 }
 
-function FileCreateController($scope, $sce, rest, model, Flash, $location, Upload, $rootScope, modelService, $routeParams, Alertify) {
+function FileCreateController($scope, $sce, rest, model, Flash, $location, Upload, $rootScope, modelService, $routeParams, Alertify, usSpinnerService) {
     modelService.initService("File", "files", $scope);
 
     $scope.clearUpload = function() {
@@ -230,6 +237,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
     };
 
     $scope.add = function(isValid) {
+        usSpinnerService.spin('spinner');
         $scope.unsave = false;
         $scope.uploadImageProgress = 10;
         var data = {
@@ -253,14 +261,17 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             url: $rootScope.url + "/files",
             data: data
         }).then(function(resp) {
+            usSpinnerService.stop('spinner');
             $location.url('/files/' + resp.data.data.id + '/view');
         }, function(resp) {
+            usSpinnerService.stop('spinner');
             // alert(resp.status);
             $scope.unsave = false;
         }, function(evt) {
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
             $scope.uploadImageProgress = progressPercentage;
             $scope.unsave = false;
+            usSpinnerService.stop('spinner');
         });
     };
 
@@ -268,7 +279,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
 
 }
 
-function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model, $location, modelService, $sce, Upload) {
+function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model, $location, modelService, $sce, Upload, usSpinnerService) {
     modelService.initService("File", "files", $scope);
     $scope.model = new model();
 
@@ -322,7 +333,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
 
 
     $scope.update = function(isValid) {
-
+        usSpinnerService.spin('spinner');
 
         $scope.uploadImageProgress = 10;
         var data = {
@@ -346,8 +357,11 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
                 type: $scope.type,
                 id: $scope.model.id
             }, data, function(resp) {
+                usSpinnerService.stop('spinner');
                 var url = '/' + $scope.type;
                 $location.path(url);
+            }, function(error){
+                usSpinnerService.stop('spinner');
             });
         }
 

@@ -47,18 +47,21 @@ function TagViewController($scope, Flash, rest, $routeParams, $location, modelSe
     }
 }
 
-function TagCreateController($scope, rest, model, Flash, $location, modelService, Alertify) {
+function TagCreateController($scope, rest, model, Flash, $location, modelService, Alertify, usSpinnerService) {
     modelService.initService("Tag", "tags", $scope);
 
     $scope.model = new model();
     $scope.add = function(isValid) {
+        usSpinnerService.spin('spinner');
         if (isValid) {
             rest().save({
                 type: $scope.type
             }, $scope.model, function(resp) {
+                usSpinnerService.stop('spinner');
                 var url = '/' + $scope.type;
                 $location.path(url);
             }, function(error) {
+                usSpinnerService.stop('spinner');
                 if (!!error.data.links.name[0]) {
                     Alertify.alert('La etiqueta que quiere guardar ya existe.');
                 } else {
@@ -69,19 +72,22 @@ function TagCreateController($scope, rest, model, Flash, $location, modelService
     };
 }
 
-function TagEditController($scope, Flash, rest, $routeParams, model, $location, modelService, Alertify) {
+function TagEditController($scope, Flash, rest, $routeParams, model, $location, modelService, Alertify, usSpinnerService) {
     modelService.initService("Tag", "tags", $scope);
 
     $scope.model = new model();
     $scope.update = function(isValid) {
+        usSpinnerService.spin('spinner');
         if (isValid) {
             rest().update({
                 type: $scope.type,
                 id: $scope.model.id
             }, $scope.model, function(resp) {
+                usSpinnerService.stop('spinner');
                 var url = '/' + $scope.type;
                 $location.path(url);
             }, function(error) {
+                usSpinnerService.stop('spinner');
                 if (!!error.data.links.name[0]) {
                     Alertify.alert('La etiqueta que quiere guardar ya existe.');
                 } else {

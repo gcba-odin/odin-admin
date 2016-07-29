@@ -48,19 +48,22 @@ function updateFrequencyViewController($scope, Flash, rest, $routeParams, $locat
     }
 }
 
-function updateFrequencyCreateController($scope, rest, model, Flash, $location, modelService, Alertify) {
+function updateFrequencyCreateController($scope, rest, model, Flash, $location, modelService, Alertify, usSpinnerService) {
     modelService.initService("updateFrequency", "updatefrequencies", $scope);
 
 
     $scope.model = new model();
     $scope.add = function(isValid) {
+        usSpinnerService.spin('spinner');
         if (isValid) {
             rest().save({
                 type: $scope.type
             }, $scope.model, function(resp) {
+                usSpinnerService.stop('spinner');
                 var url = '/' + $scope.type;
                 $location.path(url);
             }, function(error) {
+                usSpinnerService.stop('spinner');
                 if (!!error.data.links.name[0]) {
                     Alertify.alert('La frequencia que quiere guardar ya existe.');
                 } else {
@@ -71,20 +74,23 @@ function updateFrequencyCreateController($scope, rest, model, Flash, $location, 
     };
 }
 
-function updateFrequencyEditController($scope, Flash, rest, $routeParams, model, $location, modelService, Alertify) {
+function updateFrequencyEditController($scope, Flash, rest, $routeParams, model, $location, modelService, Alertify, usSpinnerService) {
     modelService.initService("updateFrequency", "updatefrequencies", $scope);
 
 
     $scope.model = new model();
     $scope.update = function(isValid) {
+        usSpinnerService.spin('spinner');
         if (isValid) {
             rest().update({
                 type: $scope.type,
                 id: $scope.model.id
             }, $scope.model, function(resp) {
+                usSpinnerService.stop('spinner');
                 var url = '/' + $scope.type;
                 $location.path(url);
             }, function(error) {
+                usSpinnerService.stop('spinner');
                 if (!!error.data.links.name[0]) {
                     Alertify.alert('La frequencia que quiere guardar ya existe.');
                 } else {

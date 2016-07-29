@@ -37,7 +37,7 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
     modelService.loadAll($scope);
 }
 
-function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sce, modelService, Alertify) {
+function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sce, modelService, Alertify, usSpinnerService) {
 
     modelService.initService("Dataset", "datasets", $scope);
 
@@ -74,7 +74,7 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
     });
 
     var update = function() {
-
+        usSpinnerService.spin('spinner');
         $scope.tempData = {
             id: $scope.model.id,
             publishedAt: $scope.model.publishedAt
@@ -87,6 +87,7 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
             var url = '/' + $scope.type;
             // $location.path(url);
         });
+        usSpinnerService.stop('spinner');
     };
 
     $scope.publish = function() {
@@ -107,7 +108,7 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
     };
 }
 
-function DatasetCreateController($scope, rest, model, Flash, $location, modelService, flashService) {
+function DatasetCreateController($scope, rest, model, Flash, $location, modelService, flashService, usSpinnerService) {
     modelService.initService("Dataset", "datasets", $scope);
 
     $scope.tagsmodel = rest().get({
@@ -123,6 +124,7 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
     $scope.model = new model();
     $scope.model.items = [];
     $scope.add = function(isValid) {
+        usSpinnerService.spin('spinner');
         for (obj in $scope.model) {
             if (obj.indexOf("optional") != -1) {
                 delete $scope.model[obj]
@@ -145,8 +147,11 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
             rest().save({
                 type: $scope.type
             }, $scope.model, function(resp) {
+                usSpinnerService.stop('spinner');
                 var url = '/' + $scope.type + '/' + resp.data.id;
                 $location.path(url);
+            }, function(error){
+                usSpinnerService.stop('spinner');
             });
         }
     };
@@ -177,7 +182,7 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
 
 }
 
-function DatasetEditController($scope, Flash, rest, $routeParams, model, $location, modelService) {
+function DatasetEditController($scope, Flash, rest, $routeParams, model, $location, modelService, usSpinnerService) {
 
     modelService.initService("Dataset", "datasets", $scope);
 
@@ -194,6 +199,8 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
         $scope.model.publishedAt = "";
     }
     $scope.update = function(isValid) {
+        usSpinnerService.spin('spinner');
+        
         for (obj in $scope.model) {
             if (obj.indexOf("optional") != -1) {
                 delete $scope.model[obj]
@@ -245,8 +252,11 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
                 type: $scope.type,
                 id: $scope.tempData.id
             }, $scope.tempData, function(resp) {
+                usSpinnerService.stop('spinner');
                 var url = '/' + $scope.type + '/' + $scope.tempData.id + '/view';
                 $location.path(url);
+            }, function(error) {
+                usSpinnerService.stop('spinner');
             });
         }
     };

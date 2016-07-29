@@ -65,18 +65,22 @@ function OrganizationViewController($scope, Flash, rest, $routeParams, $location
     };
 }
 
-function OrganizationCreateController($scope, rest, model, Flash, $location, modelService) {
+function OrganizationCreateController($scope, rest, model, Flash, $location, modelService, usSpinnerService) {
     modelService.initService("Organization", "organizations", $scope);
 
 
     $scope.model = new model();
     $scope.add = function (isValid) {
+        usSpinnerService.spin('spinner');
         if (isValid) {
             rest().save({
                 type: $scope.type
             }, $scope.model, function (resp) {
+                usSpinnerService.stop('spinner');
                 var url = '/' + $scope.type;
                 $location.path(url);
+            }, function(error) {
+                usSpinnerService.stop('spinner');
             });
         }
     };
@@ -90,7 +94,7 @@ function OrganizationCreateController($scope, rest, model, Flash, $location, mod
     };
 }
 
-function OrganizationEditController($scope, Flash, rest, $routeParams, model, $location, modelService) {
+function OrganizationEditController($scope, Flash, rest, $routeParams, model, $location, modelService, usSpinnerService) {
 
     $scope.editorOptions = {
         language: 'es',
@@ -101,13 +105,17 @@ function OrganizationEditController($scope, Flash, rest, $routeParams, model, $l
 
     $scope.model = new model();
     $scope.update = function (isValid) {
+        usSpinnerService.spin('spinner');
         if (isValid) {
             rest().update({
                 type: $scope.type,
                 id: $scope.model.id
             }, $scope.model, function (resp) {
+                usSpinnerService.stop('spinner');
                 var url = '/' + $scope.type;
                 $location.path(url);
+            }, function(error) {
+                usSpinnerService.stop('spinner');
             });
         }
     };

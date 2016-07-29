@@ -38,20 +38,23 @@ function StatusViewController($scope, Flash, rest, $routeParams, $location, mode
     }
 }
 
-function StatusCreateController($scope, rest, model, Flash, $location, modelService, Alertify) {
+function StatusCreateController($scope, rest, model, Flash, $location, modelService, Alertify, usSpinnerService) {
 
     modelService.initService("Status", "statuses", $scope);
 
 
     $scope.model = new model();
     $scope.add = function(isValid) {
+        usSpinnerService.spin('spinner');
         if (isValid) {
             rest().save({
                 type: $scope.type
             }, $scope.model, function(resp) {
+                usSpinnerService.stop('spinner');
                 var url = '/' + $scope.type;
                 $location.path(url);
             }, function(error) {
+                usSpinnerService.stop('spinner');
                 if (!!error.data.links.name[0]) {
                     Alertify.alert('El estado que quiere guardar ya existe.');
                 } else {
@@ -62,20 +65,23 @@ function StatusCreateController($scope, rest, model, Flash, $location, modelServ
     };
 }
 
-function StatusEditController($scope, Flash, rest, $routeParams, model, $location, modelService, Alertify) {
+function StatusEditController($scope, Flash, rest, $routeParams, model, $location, modelService, Alertify, usSpinnerService) {
     modelService.initService("Status", "statuses", $scope);
 
 
     $scope.model = new model();
     $scope.update = function(isValid) {
+        usSpinnerService.spin('spinner');
         if (isValid) {
             rest().update({
                 type: $scope.type,
                 id: $scope.model.id
             }, $scope.model, function(resp) {
+                usSpinnerService.stop('spinner');
                 var url = '/' + $scope.type;
                 $location.path(url);
             }, function(error) {
+                usSpinnerService.stop('spinner');
                 if (!!error.data.links.name[0]) {
                     Alertify.alert('El estado que quiere guardar ya existe.');
                 } else {
