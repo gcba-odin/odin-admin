@@ -234,3 +234,7 @@ text-align: center;
     display: block;
     content: "";
 }
+
+.box {
+    border: 0;
+}
