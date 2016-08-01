@@ -1,7 +1,7 @@
 <!-- Input name -->
 <div class="form-group">
     <label for="name" class="col-sm-2 control-label">{{ 'NAME' | translate }}</label>
-    <div class="col-sm-10"  ng-class="{ 'has-error': form.name.$touched && form.name.$invalid }">
+    <div class="col-sm-10" ng-class="{ 'has-error': form.name.$touched && form.name.$invalid }">
         <input type="text" ng-model="model.name" name="name" class="form-control" id="name" placeholder="{{ 'PLACE' | translate }} {{ 'NAME' | translate }} {{ 'HERE' | translate }}" required />
         <div class="help-block" ng-messages="form.name.$error" ng-if="form.name.$touched">
             <div ng-messages-include="views/messages.html"></div>
@@ -13,9 +13,9 @@
 <!-- Input Description -->
 <div class="form-group">
     <label for="description" class="col-sm-2 control-label"> {{ 'DESCRIPTION' | translate }}</label>
-    <div class="col-sm-10"  ng-class="{ 'has-error': form.description.$touched && form.description.$invalid }">
+    <div class="col-sm-10" ng-class="{ 'has-error': form.description.$touched && form.description.$invalid }">
 
-        <textarea id="description" class="form-control"  ckeditor="options" ng-model="model.description" name="description" required></textarea>
+        <textarea id="description" class="form-control" ckeditor="options" ng-model="model.description" name="description" required></textarea>
 
         <div class="help-block" ng-messages="form.description.$error" ng-if="form.description.$touched">
             <div ng-messages-include="views/messages.html"></div>
@@ -27,8 +27,8 @@
 <!-- Input Notes -->
 <div class="form-group">
     <label for="notes" class="col-sm-2 control-label"> {{ 'NOTES' | translate }}</label>
-    <div class="col-sm-10"  ng-class="{ 'has-error': form.notes.$touched && form.notes.$invalid }">
-        <textarea class="form-control" id="notes"  ckeditor="options" ng-model="model.notes" name="notes"></textarea>
+    <div class="col-sm-10" ng-class="{ 'has-error': form.notes.$touched && form.notes.$invalid }">
+        <textarea class="form-control" id="notes" ckeditor="options" ng-model="model.notes" name="notes"></textarea>
 
         <div class="help-block" ng-messages="form.notes.$error" ng-if="form.notes.$touched">
             <div ng-messages-include="views/messages.html"></div>
@@ -40,10 +40,9 @@
 <!-- Input basemap -->
 <div class="form-group">
     <label for="basemap" class="col-sm-2 control-label"> {{ 'BASE_MAP' | translate }}</label>
-    <div class="col-sm-10"  ng-class="{ 'has-error': form.basemap.$touched && form.basemap.$invalid }">
+    <div class="col-sm-10" ng-class="{ 'has-error': form.basemap.$touched && form.basemap.$invalid }">
 
-    <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="basemap" data-model="{{model.basemap}}"  name="basemap" id="basemap"
-      ng-model="model.basemap"   class="selectize-width" required>
+        <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="basemap" data-model="{{model.basemap}}" name="basemap" id="basemap" ng-model="model.basemap" class="selectize-input items required full has-options has-items" required>
         <option value="">Seleccione una opción</option>
         <option value="roadmap">Carretera</option>
         <option value="satellite">Satelital</option>
@@ -61,7 +60,7 @@
 <!-- Input link 
 <div class="form-group">
     <label for="url" class="col-sm-2 control-label">{{ 'URL' | translate }}</label>
-    <div class="col-sm-10"  ng-class="{ 'has-error': form.url.$touched && form.url.$invalid }">
+    <div class="col-sm-10" ng-class="{ 'has-error': form.url.$touched && form.url.$invalid }">
         <input type="text" ng-model="model.url" name="name" class="form-control" id="url" placeholder="{{ 'PLACE' | translate }} {{ 'URL' | translate }} {{ 'HERE' | translate }}" required />
         <div class="help-block" ng-messages="form.url.$error" ng-if="form.url.$touched">
             <div ng-messages-include="views/messages.html"></div>

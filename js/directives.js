@@ -263,6 +263,39 @@
         };
     }]);
 
+    /*  selectStaticAjax using selectize library!
+    * TBD: Placeholder + on edit choose the selected model.
+     return {
+                restrict: 'A',
+                link: function(scope, element, attrs) {
+
+                    scope.options = [];
+
+
+                    $.ajax({
+                        url: scope.$root.url + '/' + attrs.modelname,
+                        type: 'GET',
+                        error: function() {},
+                        success: function(res) {
+                            scope.options = scope.options.concat(res.data.slice(0, 10));
+                            console.dir(scope.options)
+                            scope.options = $.map(scope.options, function(elem) {
+                                return {
+                                    text: elem.name,
+                                    value: elem.id
+                                }
+                            })
+                            console.dir(scope.options)
+                            var selectize = $(element).selectize({
+                                placeholder: 'aaaa'
+                            })[0].selectize;
+                            selectize.addOption(scope.options)
+                        }
+                    });
+                }
+            };
+
+    */
 
 
     app.directive('fileUpload', function() {
