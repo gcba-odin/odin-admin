@@ -9,37 +9,41 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} <b>{{model.username}}</b></h3>
                     </div>
-                    <table class="table usertable">
-                        <!--<tr ng-if="model.email">-->
-                        <!--<td></td>-->
-                        <!--<td><img ng-src="http://www.gravatar.com/avatar/{{model.email | md5}}fs=150"/></td>-->
-                        <!--</tr>-->
-                        <tr ng-if="model.firstName">
-                            <td>{{ 'FIRST_NAME' | translate }}</td>
-                            <td>{{model.firstName}}</td>
-                        </tr>
-                        <tr ng-if="model.lastName">
-                            <td>{{ 'LAST_NAME' | translate }}</td>
-                            <td>{{model.lastName}}</td>
-                        </tr>
-                        <tr ng-if="model.email">
-                            <td>{{ 'EMAIL' | translate }}</td>
-                            <td>{{model.email}}</td>
-                        </tr>
-                        <tr ng-if="model.organization">
-                            <td>{{ 'ORGANIZATION' | translate }}</td>
-                            <td>{{model.organization.name}}</td>
-                        </tr>
-                        <tr ng-if="model.createdBy">
-                            <td>{{ 'CREATED_BY' | translate }}</td>
-                            <td>{{model.createdBy.username}}</td>
-                        </tr>
-                        <tr ng-if="model.createdAt">
-                            <td>{{ 'CREATED_AT' | translate }}</td>
-                            <td>{{model.createdAt | date}}</td>
-                        </tr>
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table usertable">
+                            <!--<tr ng-if="model.email">-->
+                            <!--<td></td>-->
+                            <!--<td><img ng-src="http://www.gravatar.com/avatar/{{model.email | md5}}fs=150"/></td>-->
+                            <!--</tr>-->
+                            <tr ng-if="model.firstName">
+                                <td class="detail-bold">{{ 'FIRST_NAME' | translate }}</td>
+                                <td>{{model.firstName}}</td>
+                            </tr>
+                            <tr ng-if="model.lastName">
+                                <td class="detail-bold">{{ 'LAST_NAME' | translate }}</td>
+                                <td>{{model.lastName}}</td>
+                            </tr>
+                            <tr ng-if="model.email">
+                                <td class="detail-bold">{{ 'EMAIL' | translate }}</td>
+                                <td>{{model.email}}</td>
+                            </tr>
+                            <tr ng-if="model.organization">
+                                <td class="detail-bold">{{ 'ORGANIZATION' | translate }}</td>
+                                <td>{{model.organization.name}}</td>
+                            </tr>
+                            <tr ng-if="model.createdBy">
+                                <td class="detail-bold">{{ 'CREATED_BY' | translate }}</td>
+                                <td><a ng-href="#/users/{{model.createdBy.id}}/view">{{model.createdBy.username}}</a></td>
+                            </tr>
+                            <tr ng-if="model.createdAt">
+                                <td class="detail-bold">{{ 'CREATED_AT' | translate }}</td>
+                                <td>{{model.createdAt| date}}</td>
+                            </tr>
 
-                    </table>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+
                     <div class="box-footer">
                         <button back-button class="btn btn-default pull-left">
                             {{ 'BACK' | translate }}

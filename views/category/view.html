@@ -1,47 +1,49 @@
 <header-home></header-home>
 <div class="content-wrapper">
-    
-<breadcrumbs data-type="{{ 'VIEW' | translate }}" data-model-name="{{ 'CATEGORY' | translate }}" data-model="{{type}}"></breadcrumbs>
+
+    <breadcrumbs data-type="{{ 'VIEW' | translate }}" data-model-name="{{ 'CATEGORY' | translate }}" data-model="{{type}}"></breadcrumbs>
     <!-- Main content -->
     <section class="content">
         <div class="row">
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                      <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} <b>{{ 'CATEGORY' | translate }}</b></h3>
+                        <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} <b>{{ 'CATEGORY' | translate }}</b></h3>
                     </div>
-                      <table class="table usertable">
-                        <tr ng-if="model.name">
-                            <td>{{ 'NAME' | translate }}</td>
-                            <td>{{model.name}}</td>
-                        </tr>
-                        <tr ng-if="model.description">
-                            <td>{{ 'DESCRIPTION' | translate }}</td>
-                            <td ng-bind-html="getHtml(model.description)"></td>
-                        </tr> 
-                        <tr ng-if="model.color">
-                            <td>{{ 'COLOR' | translate }}</td>
-                            <td style="max-width: 50px;"><color-picker ng-model="model.color" options="options_color"></color-picker></td>
-                        </tr> 
-                        
-                        <tr ng-if="model.image">
-                            <td>{{ 'IMAGE' | translate }}</td>
-                            <td><img style="width: 80px;" ng-src="{{ model.image }}"></td>
-                        </tr> 
-                        <tr>
-                            <td>{{ 'STATE' | translate }}</td>
-                            <td><span class="label label-default" >{{model.active ? 'Activo' : 'Inactivo'}}</span></td>
-                        </tr>
-                        <tr ng-if="model.createdBy">
-                            <td>{{ 'CREATED_BY' | translate }}</td>
-                            <td>{{model.createdBy.username}}</td>
-                        </tr>
-                        <tr ng-if="model.createdAt">
-                            <td>{{ 'CREATED_AT' | translate }}</td>
-                            <td>{{model.createdAt | date}}</td>
-                        </tr>
-                        
-                    </table>
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table usertable">
+                            <tr ng-if="model.name">
+                                <td class="detail-bold">{{ 'NAME' | translate }}</td>
+                                <td>{{model.name}}</td>
+                            </tr>
+                            <tr ng-if="model.description">
+                                <td class="detail-bold">{{ 'DESCRIPTION' | translate }}</td>
+                                <td ng-bind-html="getHtml(model.description)"></td>
+                            </tr> 
+                            <tr ng-if="model.color">
+                                <td class="detail-bold">{{ 'COLOR' | translate }}</td>
+                                <td style="max-width: 50px;"><color-picker ng-model="model.color" options="options_color"></color-picker></td>
+                            </tr> 
+
+                            <tr ng-if="model.image">
+                                <td class="detail-bold">{{ 'IMAGE' | translate }}</td>
+                                <td><img style="width: 80px;" ng-src="{{ model.image}}"></td>
+                            </tr> 
+                            <tr>
+                                <td class="detail-bold">{{ 'STATE' | translate }}</td>
+                                <td><span class="label label-default" >{{model.active ? 'Activo' : 'Inactivo'}}</span></td>
+                            </tr>
+                            <tr ng-if="model.createdBy">
+                                <td class="detail-bold">{{ 'CREATED_BY' | translate }}</td>
+                                <td><a ng-href="#/users/{{model.createdBy.id}}/view">{{model.createdBy.username}}</a></td>
+                            </tr>
+                            <tr ng-if="model.createdAt">
+                                <td class="detail-bold">{{ 'CREATED_AT' | translate }}</td>
+                                <td>{{model.createdAt| date}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
                     <div class="box-footer"> 
                         <button back-button class="btn btn-default pull-left">
                             {{ 'BACK' | translate }}
@@ -49,7 +51,7 @@
                         <button type="submit" class="btn btn-primary pull-right" ng-click="edit(model)">{{ 'EDIT' | translate }}</button>
                     </div>
                 </div>  
-              
+
             </div>
         </div>    
     </section>
