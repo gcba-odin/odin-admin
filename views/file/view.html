@@ -128,6 +128,8 @@
                         <thead>
                         <th>{{ 'RESOURCE' | translate }}</th>
                         <th>{{ 'VIEW' | translate }}</th>
+                        <th>{{ 'EDIT' | translate }}</th>
+                        <th>{{ 'DELETE' | translate }}</th>
                         </thead>
                         <tbody>
                             <tr ng-repeat="resource in model.resources">
@@ -137,6 +139,14 @@
                                 <td>
                                     <a ng-if="resource.geojson" target="_blank" class="btn btn-primary" ng-href="#/maps/{{resource.id}}/view">{{ 'VIEW' | translate }}</a>
                                     <a ng-if="!resource.geojson" target="_blank" class="btn btn-primary" ng-href="#/graphics/{{resource.id}}/view">{{ 'VIEW' | translate }}</a>
+                                </td>
+                                <td>
+                                    <a ng-if="resource.geojson" target="_blank" class="btn btn-primary" ng-href="#/maps/{{resource.id}}/edit">{{ 'EDIT' | translate }}</a>
+                                    <a ng-if="!resource.geojson" target="_blank" class="btn btn-primary" ng-href="#/graphics/{{resource.id}}/edit">{{ 'EDIT' | translate }}</a>
+                                </td>
+                                <td>
+                                    <a ng-if="resource.geojson" class="btn btn-danger" ng-click="deleteResource(resource.id, 'maps')">{{ 'DELETE' | translate }}</a>
+                                    <a ng-if="!resource.geojson" class="btn btn-danger" ng-click="deleteResource(resource.id, 'graphics')">{{ 'DELETE' | translate }}</a>
                                 </td>
                             </tr>
 

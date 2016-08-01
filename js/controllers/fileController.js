@@ -52,7 +52,7 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
     };
 }
 
-function FileViewController($scope, Flash, rest, $routeParams, $location, modelService, $sce, Alertify, usSpinnerService) {
+function FileViewController($scope, Flash, rest, $routeParams, $location, modelService, $sce, Alertify, usSpinnerService, $window) {
     modelService.initService("File", "files", $scope);
     $scope.getHtml = function(html) {
         return $sce.trustAsHtml(html);
@@ -99,7 +99,7 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
             loadModel();
             //var url = '/' + $scope.type;
             // $location.path(url);
-        }, function(error){
+        }, function(error) {
             usSpinnerService.stop('spinner');
         });
     };
@@ -136,6 +136,26 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
                         usSpinnerService.stop('spinner');
                         var url = "/" + $scope.type;
                         $location.path(url);
+                    }, function(error) {
+                        usSpinnerService.stop('spinner');
+                    });
+                },
+                function onCancel() {
+                    return false;
+                }
+        );
+    };
+
+    $scope.deleteResource = function(id, type) {
+        Alertify.confirm('¿Está seguro que quiere borrar este recurso?').then(
+                function onOk() {
+                    usSpinnerService.spin('spinner');
+                    rest().delete({
+                        type: type,
+                        id: id
+                    }, function(resp) {
+                        usSpinnerService.stop('spinner');
+                        $window.location.reload();
                     }, function(error) {
                         usSpinnerService.stop('spinner');
                     });
@@ -360,7 +380,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
                 usSpinnerService.stop('spinner');
                 var url = '/' + $scope.type;
                 $location.path(url);
-            }, function(error){
+            }, function(error) {
                 usSpinnerService.stop('spinner');
             });
         }

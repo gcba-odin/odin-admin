@@ -33,6 +33,10 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
 
     //modelService.findOne($routeParams, $scope);
 
+    $scope.tiles = {
+        url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    };
+
     $scope.center = {
         lat: -34.603722,
         lng: -58.381592,
@@ -48,6 +52,9 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
 
     var loadGeojson = function() {
         angular.extend($scope, {// Map data
+//            tiles: {
+//                url: 'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png'
+//            },
             geojson: {
                 data: $scope.model.geojson,
                 onEachFeature: function(feature, layer) {
@@ -61,8 +68,7 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
                         }
                     }
                 }
-            }
-
+            },
         });
 //        $scope.geojson = {
 //            data: $scope.model.geojson,
