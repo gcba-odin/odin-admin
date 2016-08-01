@@ -90,11 +90,21 @@ a:hover {
     font-family: avenir-medium;
 }
 
+.sidebar-menu .sidebar-svg {
+    vertical-align: middle;
+    height: 2em;
+}
+
+.sidebar-menu .treeview.active .sidebar-svg > path {
+    fill: #ff386a;
+}
+
 ul.sidebar-menu span {
     color: #ffb600;
     font-size: 10pt;
     text-transform: uppercase;
     font-family: avenir-black;
+    vertical-align: middle;
 }
 
 ul.sidebar-menu a {
@@ -162,6 +172,8 @@ footer > span > a {*/
     background-color: #ff386a !important;
     border-color: #ff386a;
 }
+
+
 /* Headers of each category */
 
 h3 {
@@ -170,6 +182,8 @@ h3 {
     color: #6d6e70;
     font-size: 12pt;
 }
+
+
 /*th,
 tr {
 text-align: center;
@@ -208,8 +222,9 @@ text-align: center;
     width: 100% !important;
     height: 100% !important;
 }
+
 .spinner:before {
-    background-color: rgba(255,255,255,0.7);
+    background-color: rgba(255, 255, 255, 0.7);
     top: -50%;
     left: -50%;
     border-radius: 5px;
