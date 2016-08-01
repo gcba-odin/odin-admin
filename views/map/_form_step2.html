@@ -1,9 +1,8 @@
 <!-- Input latitude -->
 <div class="form-group">
     <label for="latitudeKey" class="col-sm-2 control-label">{{ 'LATITUDE' | translate }}</label>
-    <div class="col-sm-10"  ng-class="{ 'has-error': form.latitudeKey.$touched && form.latitudeKey.$invalid }">
-        <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" name="latitudeKey" id="latitudeKey"
-                ng-model="model.latitudeKey"   class="selectize-width" required>
+    <div class="col-sm-10" ng-class="{ 'has-error': form.latitudeKey.$touched && form.latitudeKey.$invalid }">
+        <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" name="latitudeKey" id="latitudeKey" ng-model="model.latitudeKey" class="selectize-input items required full has-options has-items" required>
             <option value="">Seleccione una opción</option>
             <option value="{{ header.id}}" ng-repeat="header in headersFile">{{ header.name}}</option>
         </select>
@@ -18,9 +17,8 @@
 <!-- Input longitude -->
 <div class="form-group">
     <label for="longitudeKey" class="col-sm-2 control-label">{{ 'LONGITUDE' | translate }}</label>
-    <div class="col-sm-10"  ng-class="{ 'has-error': form.longitudeKey.$touched && form.longitudeKey.$invalid }">
-        <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" name="longitudeKey" id="longitudeKey"
-                ng-model="model.longitudeKey"   class="selectize-width" required>
+    <div class="col-sm-10" ng-class="{ 'has-error': form.longitudeKey.$touched && form.longitudeKey.$invalid }">
+        <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" name="longitudeKey" id="longitudeKey" ng-model="model.longitudeKey" class="selectize-input items required full has-options has-items" required>
             <option value="">Seleccione una opción</option>
             <option value="{{ header.id}}" ng-repeat="header in headersFile">{{ header.name}}</option>
         </select>
@@ -32,11 +30,11 @@
 </div>
 <!-- end Input longitude -->
 
-<div class="extraoptionals" ng-repeat="item in model.items"  >
+<div class="extraoptionals" ng-repeat="item in model.items">
     <!-- Input properties -->
     <div class="form-group" id="option1">
-        <label  class="col-sm-2 control-label">{{ 'PROPERTY' | translate }} {{increment($index)}}</label>
-        <div class="col-sm-10"  ng-class="{ 'has-error': form[item.name].$touched && form[item.name].$invalid }">
+        <label class="col-sm-2 control-label">{{ 'PROPERTY' | translate }} {{increment($index)}}</label>
+        <div class="col-sm-10" ng-class="{ 'has-error': form[item.name].$touched && form[item.name].$invalid }">
 
             <div class="row">
                 <div class="col-xs-5">
@@ -44,8 +42,7 @@
                     <!--<input type="text" ng-model="model.items[$index].field1" name="{{item.field}}" class="form-control" id="title" required />   -->
                 </div>
                 <div class="col-xs-5">
-                    <select placeholder="{{ 'SELECT_ONE' | translate }}" name="{{item.field}}" id="{{item.field}}"
-                            ng-model="model.items[$index].field2"   class="selectize-width" required>
+                    <select placeholder="{{ 'SELECT_ONE' | translate }}" name="{{item.field}}" id="{{item.field}}" ng-model="model.items[$index].field2" class="selectize-input items required full has-options has-items" required>
                         <option value="">Seleccione una opción</option>
                         <option value="{{ header.id}}" ng-repeat="header in headersFile">{{ header.name}}</option>
                     </select>
@@ -67,7 +64,7 @@
 <div class="form-group">
     <label for="properties" class="col-sm-2 control-label"></label>
     <div class="col-sm-10">
-        <button type="button" ng-click="addInput()" ng-show="model.items.length < headersFile.length"  class="btn btn-default">{{ 'ADD_PROPERTY' | translate }}</button>
+        <button type="button" ng-click="addInput()" ng-show="model.items.length < headersFile.length" class="btn btn-default">{{ 'ADD_PROPERTY' | translate }}</button>
     </div>
 </div>
 <!-- end Input properties -->
