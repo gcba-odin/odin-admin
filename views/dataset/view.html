@@ -15,108 +15,105 @@
                         <a ng-href="#/files/new/{{model.id}}" class="btn btn-default pull-right magin-right-10"><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_RESOURCES' | translate }}</a>  
                         <button  data-toggle="modal" data-target="#viewLinkResources" class="btn btn-default pull-right magin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_RESOURCES' | translate }}</button> 
                     </div>
-                    <table class="table usertable">
-                        <tr ng-if="model.name">
-                            <td>{{ 'TITLE' | translate }}</td>
-                            <td>{{model.name}}</td>
-                        </tr>
-                        <tr ng-if="model.description">
-                            <td>{{ 'DESCRIPTION' | translate }}</td>
-                            <td ng-bind-html="getHtml(model.description)"></td>
-                        </tr>
-                        <tr ng-if="model.categories">
-                            <td>{{ 'CATEGORIES' | translate }}</td>
-                            <td ng-bind-html="getHtml(model.categories)"></td>
-                        </tr>
-                        <tr ng-if="model.status">
-                            <td>{{ 'STATUS' | translate }}</td>
-                            <td>{{model.status.name}}</td>
-                        </tr>
-                        <tr ng-if="model.createdBy">
-                            <td>{{ 'CREATED_BY' | translate }} </td>
-                            <td><a ng-href="#/users/{{model.createdBy.id}}/view">{{model.createdBy.username}}</a></td>
-                        </tr>
-                        <tr ng-if="model.owner">
-                            <td>{{ 'OWNER' | translate }} </td>
-                            <td><a ng-href="#/users/{{model.owner.id}}/view">{{model.owner.username}}</a></td>
-                        </tr>
-                        <tr ng-if="model.createdAt">
-                            <td>{{ 'CREATED_AT' | translate }}</td>
-                            <td>{{model.createdAt| date:'MMM d, y h:mm:ss a'}}</td>
-                        </tr>
-                        <tr ng-if="model.updatedAt">
-                            <td>{{ 'PUBLISHED_AT' | translate }}</td>
-                            <td>{{model.publishedAt| date:'MMM d, y h:mm:ss a' }}</td>
-                        </tr>
-                        <tr ng-if="model.updatedAt">
-                            <td>{{ 'UPDATED_AT' | translate }}</td>
-                            <td>{{model.updatedAt| date:'MMM d, y h:mm:ss a'}}</td>
-                        </tr>
-                        <tr ng-if="model.notes">
-                            <td>{{ 'NOTES' | translate }}</td>
-                            <td ng-bind-html="getHtml(model.notes)"></td>
-                        </tr>
-                        
-                        
-                        
-                        
-                        
-                        
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table usertable">
+                            <tr ng-if="model.name">
+                                <td class="detail-bold">{{ 'TITLE' | translate }}</td>
+                                <td>{{model.name}}</td>
+                            </tr>
+                            <tr ng-if="model.description">
+                                <td class="detail-bold">{{ 'DESCRIPTION' | translate }}</td>
+                                <td ng-bind-html="getHtml(model.description)"></td>
+                            </tr>
+                            <tr ng-if="model.categories">
+                                <td class="detail-bold">{{ 'CATEGORIES' | translate }}</td>
+                                <td ng-bind-html="getHtml(model.categories)"></td>
+                            </tr>
+                            <tr ng-if="model.status">
+                                <td class="detail-bold">{{ 'STATUS' | translate }}</td>
+                                <td>{{model.status.name}}</td>
+                            </tr>
+                            <tr ng-if="model.createdBy">
+                                <td class="detail-bold">{{ 'CREATED_BY' | translate }} </td>
+                                <td><a ng-href="#/users/{{model.createdBy.id}}/view">{{model.createdBy.username}}</a></td>
+                            </tr>
+                            <tr ng-if="model.owner">
+                                <td class="detail-bold">{{ 'OWNER' | translate }} </td>
+                                <td><a ng-href="#/users/{{model.owner.id}}/view">{{model.owner.username}}</a></td>
+                            </tr>
+                            <tr ng-if="model.createdAt">
+                                <td class="detail-bold">{{ 'CREATED_AT' | translate }}</td>
+                                <td>{{model.createdAt| date:'MMM d, y h:mm:ss a'}}</td>
+                            </tr>
+                            <tr ng-if="model.updatedAt">
+                                <td class="detail-bold">{{ 'PUBLISHED_AT' | translate }}</td>
+                                <td>{{model.publishedAt| date:'MMM d, y h:mm:ss a' }}</td>
+                            </tr>
+                            <tr ng-if="model.updatedAt">
+                                <td class="detail-bold">{{ 'UPDATED_AT' | translate }}</td>
+                                <td>{{model.updatedAt| date:'MMM d, y h:mm:ss a'}}</td>
+                            </tr>
+                            <tr ng-if="model.notes">
+                                <td class="detail-bold">{{ 'NOTES' | translate }}</td>
+                                <td ng-bind-html="getHtml(model.notes)"></td>
+                            </tr>
+                            <!--<tr ng-if="model.visible">  
+                                <td class="detail-bold">{{ 'VISIBILITY' | translate }}</td>
+                                <td>{{model.visible ? 'Público' : 'No público'}}</td>
+                            </tr>-->
+                            <tr ng-if="model.starred">
+                                <td class="detail-bold">{{ 'STARRED' | translate }}</td>
+                                <td>{{model.starred ? 'Si' : 'No'}}</td>
+                            </tr>
 
-                        <!--<tr ng-if="model.visible">  
-                            <td>{{ 'VISIBILITY' | translate }}</td>
-                            <td>{{model.visible ? 'Público' : 'No público'}}</td>
-                        </tr>-->
-                        <tr ng-if="model.starred">
-                            <td>{{ 'STARRED' | translate }}</td>
-                            <td>{{model.starred ? 'Si' : 'No'}}</td>
-                        </tr>
+                            <tr ng-if="model.tags">
+                                <td class="detail-bold">{{ 'TAGS' | translate }} </td>
+                                <td ng-bind-html="getHtml(model.tags)"></td>
+                            </tr>
+                            <tr ng-if="model.optional1">
+                                <td class="detail-bold">{{ 'OPTIONAL' | translate }} 1</td>
+                                <td>{{model.optional1}}</td>
+                            </tr>
+                            <tr ng-if="model.optional2">
+                                <td class="detail-bold">{{ 'OPTIONAL' | translate }} 2</td>
+                                <td>{{model.optional2}}</td>
+                            </tr>
+                            <tr ng-if="model.optional3">
+                                <td class="detail-bold">{{ 'OPTIONAL' | translate }} 3</td>
+                                <td>{{model.optional3}}</td>
+                            </tr>
+                            <tr ng-if="model.optional4">
+                                <td class="detail-bold">{{ 'OPTIONAL' | translate }} 4</td>
+                                <td>{{model.optional4}}</td>
+                            </tr>
+                            <tr ng-if="model.optional5">
+                                <td class="detail-bold">{{ 'OPTIONAL' | translate }} 5</td>
+                                <td>{{model.optional5}}</td>
+                            </tr>
+                            <tr ng-if="model.optional6">
+                                <td class="detail-bold">{{ 'OPTIONAL' | translate }} 6</td>
+                                <td>{{model.optional6}}</td>
+                            </tr>
+                            <tr ng-if="model.optional7">
+                                <td class="detail-bold">{{ 'OPTIONAL' | translate }} 7</td>
+                                <td>{{model.optional7}}</td>
+                            </tr>
+                            <tr ng-if="model.optional8">
+                                <td class="detail-bold">{{ 'OPTIONAL' | translate }} 8</td>
+                                <td>{{model.optional8}}</td>
+                            </tr>
+                            <tr ng-if="model.optional9">
+                                <td class="detail-bold">{{ 'OPTIONAL' | translate }} 9</td>
+                                <td>{{model.optional9}}</td>
+                            </tr>
+                            <tr ng-if="model.optional10">
+                                <td class="detail-bold">{{ 'OPTIONAL' | translate }} 10</td>
+                                <td>{{model.optional10}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
 
-                        <tr ng-if="model.tags">
-                            <td>{{ 'TAGS' | translate }} </td>
-                            <td ng-bind-html="getHtml(model.tags)"></td>
-                        </tr>
-                        <tr ng-if="model.optional1">
-                            <td>{{ 'OPTIONAL' | translate }} 1</td>
-                            <td>{{model.optional1}}</td>
-                        </tr>
-                        <tr ng-if="model.optional2">
-                            <td>{{ 'OPTIONAL' | translate }} 2</td>
-                            <td>{{model.optional2}}</td>
-                        </tr>
-                        <tr ng-if="model.optional3">
-                            <td>{{ 'OPTIONAL' | translate }} 3</td>
-                            <td>{{model.optional3}}</td>
-                        </tr>
-                        <tr ng-if="model.optional4">
-                            <td>{{ 'OPTIONAL' | translate }} 4</td>
-                            <td>{{model.optional4}}</td>
-                        </tr>
-                        <tr ng-if="model.optional5">
-                            <td>{{ 'OPTIONAL' | translate }} 5</td>
-                            <td>{{model.optional5}}</td>
-                        </tr>
-                        <tr ng-if="model.optional6">
-                            <td>{{ 'OPTIONAL' | translate }} 6</td>
-                            <td>{{model.optional6}}</td>
-                        </tr>
-                        <tr ng-if="model.optional7">
-                            <td>{{ 'OPTIONAL' | translate }} 7</td>
-                            <td>{{model.optional7}}</td>
-                        </tr>
-                        <tr ng-if="model.optional8">
-                            <td>{{ 'OPTIONAL' | translate }} 8</td>
-                            <td>{{model.optional8}}</td>
-                        </tr>
-                        <tr ng-if="model.optional9">
-                            <td>{{ 'OPTIONAL' | translate }} 9</td>
-                            <td>{{model.optional9}}</td>
-                        </tr>
-                        <tr ng-if="model.optional10">
-                            <td>{{ 'OPTIONAL' | translate }} 10</td>
-                            <td>{{model.optional10}}</td>
-                        </tr>
-                    </table>
                     <div class="box-footer"> 
                         <button    back-button class="btn btn-default pull-left">
                             {{ 'BACK' | translate }}

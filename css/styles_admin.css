@@ -206,7 +206,7 @@ text-align: center;
 }
 
 .table th {
-    text-transform: uppercase;
+    //text-transform: uppercase;
 }
 
 .icon-menu {
@@ -237,4 +237,39 @@ text-align: center;
 
 .box {
     border: 0;
+}
+
+.chat {
+    padding: 50px 20px 5px 10px;
+}
+
+#chat-box .item {
+    height: 50px;
+}
+
+.box-header {
+    padding: 1em;
+}
+.box-header .box-title{
+    line-height: 2 !important;
+    padding: 0 1em;
+}
+
+.box-header .box-tools {
+    padding: .7em;
+}
+
+.box-body {
+    padding: 1em 1em 1em 2em !important;
+}
+
+.table-btn .btn:first-child{
+    margin-right: 1.5em;
+}
+.table-btn .btn:last-child{
+    margin-left: 1.5em;
+}
+
+.detail-bold{
+    font-weight: bold;
 }

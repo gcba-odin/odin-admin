@@ -78,7 +78,7 @@
             <div class="box-body chat" id="chat-box"  >
               <!-- chat item -->
               <div class="item" ng-repeat="log in logs.data">
-                <img class="online" alt="user image"  ng-src="http://www.gravatar.com/avatar/{{log.user.email | md5}}fs=150"/>
+                <!--<img class="online" alt="user image"  ng-src="http://www.gravatar.com/avatar/{{log.user.email | md5}}fs=150"/>-->
                     <p class="message">
                       <a ng-href="#/users/{{log.user.id}}/view" class="name">
                         <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> {{log.createdAt | date: "MMM d, y h:mm:ss a"}}</small>

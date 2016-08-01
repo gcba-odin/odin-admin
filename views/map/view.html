@@ -9,12 +9,10 @@
                     <div class="box-header with-border">
                       <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} {{ model.name }}</h3>
                     </div>
-
-                    <leaflet lf-center="center" id="mapid" geojson="geojson"></leaflet>
-                    <!-- <leaflet lf-center="center" height="480px" width="640px"></leaflet> -->
-
-                    <!--<div id="mapid" height="480px" width="640px"></div>-->
-
+                    <div class="box-body table-responsive no-padding">
+                        <leaflet lf-center="center" id="mapid" geojson="geojson"></leaflet>
+                    </div>
+                    <!-- /.box-body -->
                     <div class="box-footer">
                         <div class="pull-right">
                           <button class="btn btn-primary" ng-click="edit(model)">{{ 'EDIT' | translate }}</button>
