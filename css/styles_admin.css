@@ -72,7 +72,7 @@ a:hover {
 }
 
 .logo img {
-    height: 1.5em;
+    height: 2.5em;
 }
 
 .sidebar-menu {
@@ -95,7 +95,7 @@ a:hover {
     height: 2em;
 }
 
-.sidebar-menu .treeview.active .sidebar-svg > path {
+.sidebar-menu .treeview.active .sidebar-svg path {
     fill: #ff386a;
 }
 
@@ -257,7 +257,8 @@ div.form-group div.has-error p {
 .box-header {
     padding: 1em;
 }
-.box-header .box-title{
+
+.box-header .box-title {
     line-height: 2 !important;
     padding: 0 1em;
 }
@@ -270,13 +271,14 @@ div.form-group div.has-error p {
     padding: 1em 1em 1em 2em !important;
 }
 
-.table-btn .btn:first-child{
+.table-btn .btn:first-child {
     margin-right: 1.5em;
 }
-.table-btn .btn:last-child{
+
+.table-btn .btn:last-child {
     margin-left: 1.5em;
 }
 
-.detail-bold{
+.detail-bold {
     font-weight: bold;
 }
