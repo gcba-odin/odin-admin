@@ -71,8 +71,8 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
     'DATABASES': 'Bases de datos',
     'DATABASE': 'Base de datos',
     'NEXT': 'Siguiente',
-    'DATASETS': 'Set de datos',
-    'DATASET': 'Set de datos',
+    'DATASETS': 'Datasets',
+    'DATASET': 'Dataset',
     'DOWNLOAD': 'Descargar',
     'ADD_USER': 'Crear usuario',
     'VIEW_USERS': 'Ver usuarios',
@@ -90,8 +90,8 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
     'VIEW_LINK_FILES': 'Ver archivos asociados',
     'ADD_DATABASE': 'Crear bases de datos',
     'VIEW_DATABASES': 'Ver bases de datos',
-    'ADD_DATASET': 'Crear set de datos',
-    'VIEW_DATASET': 'Ver set de datos',
+    'ADD_DATASET': 'Crear dataset',
+    'VIEW_DATASET': 'Ver dataset',
     'ID': 'Id',
     'NAME': 'Nombre',
     'CREATED_BY': 'Creado por',
@@ -154,7 +154,7 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
     'LONGITUDE': 'Longitud',
     'RESOURCES': 'Recursos',
     'RESOURCE': 'Recurso'
-    
+
   });
   console.log($rootScope);
   $translateProvider.preferredLanguage('es');

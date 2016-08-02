@@ -13,12 +13,12 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
 
     $scope.confirmDelete = function(item) {
         Alertify.confirm('¿Está seguro que quiere borrar este dataset?<br> Al hacerlo, se borrarán todos los recursos asociados').then(
-                function onOk() {
-                    $scope.deleteModel(item);
-                },
-                function onCancel() {
-                    return false;
-                }
+            function onOk() {
+                $scope.deleteModel(item);
+            },
+            function onCancel() {
+                return false;
+            }
         );
     };
 
@@ -37,7 +37,7 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
     modelService.loadAll($scope);
 }
 
-function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sce, modelService, Alertify, usSpinnerService) {
+function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sce, modelService, Alertify, usSpinnerService, $window) {
 
     modelService.initService("Dataset", "datasets", $scope);
 
@@ -51,7 +51,7 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
             tags.push('<span class="label label-primary">' + $scope.model.tags[i].name + '</span>')
         }
         $scope.model.tags = tags.join(" - ");
-        
+
         var categories = [];
         for (var i = 0; i < $scope.model.categories.length; i++) {
             categories.push('<span class="label label-primary">' + $scope.model.categories[i].name + '</span>')
@@ -97,15 +97,36 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
 
     $scope.unPublish = function() {
         Alertify.confirm('¿Está seguro que quiere despublicar este dataset?').then(
-                function onOk() {
-                    $scope.model.publishedAt = null;
-                    update();
-                },
-                function onCancel() {
-                    return false;
-                }
+            function onOk() {
+                $scope.model.publishedAt = null;
+                update();
+            },
+            function onCancel() {
+                return false;
+            }
         );
     };
+
+    $scope.deleteResource = function(id, type) {
+        Alertify.confirm('¿Está seguro que quiere borrar este recurso?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+                rest().delete({
+                    type: type,
+                    id: id
+                }, function(resp) {
+                    usSpinnerService.stop('spinner');
+                    $window.location.reload();
+                }, function(error) {
+                    usSpinnerService.stop('spinner');
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+
 }
 
 function DatasetCreateController($scope, rest, model, Flash, $location, modelService, flashService, usSpinnerService) {
@@ -142,7 +163,7 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
         // transform the array of objects into a string of ids
         $scope.model.tags = $scope.model.tags.toString();
         $scope.model.categories = $scope.model.categories.toString();
-        
+
         if (isValid) {
             rest().save({
                 type: $scope.type
@@ -150,7 +171,7 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
                 usSpinnerService.stop('spinner');
                 var url = '/' + $scope.type + '/' + resp.data.id;
                 $location.path(url);
-            }, function(error){
+            }, function(error) {
                 usSpinnerService.stop('spinner');
             });
         }
@@ -200,7 +221,7 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
     }
     $scope.update = function(isValid) {
         usSpinnerService.spin('spinner');
-        
+
         for (obj in $scope.model) {
             if (obj.indexOf("optional") != -1) {
                 delete $scope.model[obj]
@@ -244,8 +265,7 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
                 // rObj[obj.id] = obj.value;
             });
             return reformattedArray;
-        }
-        ;
+        };
 
         if (isValid) {
             rest().update({
