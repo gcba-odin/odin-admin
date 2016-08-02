@@ -280,3 +280,9 @@ div.form-group div.has-error p {
 .detail-bold{
     font-weight: bold;
 }
+
+#iframeDiv{
+    height: 480px;
+    width: 100%;
+    border: 0;
+}

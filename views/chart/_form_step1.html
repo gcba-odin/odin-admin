@@ -24,6 +24,27 @@
 </div>
 <!-- end Input Description -->
 
+<!-- Input chart types -->
+<div class="form-group">
+    <label for="type" class="col-sm-2 control-label"> {{ 'CHART_TYPES' | translate }}</label>
+    <div class="col-sm-10" ng-class="{ 'has-error': form.type.$touched && form.type.$invalid }">
+
+        <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="type" data-model="{{model.type}}" name="type" id="type" ng-model="model.type" class="selectize-input items required full has-options has-items" required>
+            <option value="">Seleccione una opción</option>
+            <option value="bar">Barras</option>
+            <option value="pie">Tortas</option>
+            <option value="line">Líneas</option>
+            <option value="stackedbar">Mosaicos</option>
+            <option value="heatmap">Calor</option>
+        </select>
+
+        <div class="help-block" ng-messages="form.chartType.$error" ng-if="form.type.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input chart types -->
+
 <!-- Input Notes -->
 <div class="form-group">
     <label for="notes" class="col-sm-2 control-label"> {{ 'NOTES' | translate }}</label>
@@ -36,26 +57,6 @@
     </div>
 </div>
 <!-- end Input Notes -->
-
-<!-- Input basemap -->
-<div class="form-group">
-    <label for="basemap" class="col-sm-2 control-label"> {{ 'BASE_MAP' | translate }}</label>
-    <div class="col-sm-10" ng-class="{ 'has-error': form.basemap.$touched && form.basemap.$invalid }">
-
-        <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="basemap" data-model="{{model.basemap}}" name="basemap" id="basemap" ng-model="model.basemap" class="selectize-input items required full has-options has-items" required>
-        <option value="">Seleccione una opción</option>
-        <option value="roadmap">Carretera</option>
-        <option value="satellite">Satelital</option>
-        <option value="hybrid">Híbrido</option>
-        <option value="terrain">Terrestre</option>
-      </select>
-
-        <div class="help-block" ng-messages="form.basemap.$error" ng-if="form.basemap.$touched">
-            <div ng-messages-include="views/messages.html"></div>
-        </div>
-    </div>
-</div>
-<!-- end Input basemap -->
 
 <!-- Input link -->
 <div class="form-group">

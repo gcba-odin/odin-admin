@@ -1,230 +1,245 @@
 <aside class="main-sidebar">
-  <section class="sidebar" style="height: auto;">
-    <!-- Sidebar user panel -->
+    <section class="sidebar" style="height: auto;">
+        <!-- Sidebar user panel -->
 
-    <!-- search form -->
-    <!--  <form action="#" method="get" class="sidebar-form ng-pristine ng-valid">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
-              <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-        </div>
+        <!-- search form -->
+        <!--  <form action="#" method="get" class="sidebar-form ng-pristine ng-valid">
+            <div class="input-group">
+              <input type="text" name="q" class="form-control" placeholder="Search...">
+                  <span class="input-group-btn">
+                    <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                    </button>
+                  </span>
+            </div>
+    
+          </form>-->
+        <!-- /.search form -->
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu">
 
-      </form>-->
-    <!-- /.search form -->
-    <!-- sidebar menu: : style can be found in sidebar.less -->
-    <ul class="sidebar-menu">
-
-      <li ng-class="{active: isActive('/users/new') || isActive('/users') || isActiveEdit('users')}" class="treeview">
-        <a ng-href="javascript:void(0)">
-          <svg version="1.1" id="users-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
-            <path fill="#FFB600" d="M12.337,10.705v0.969H4.214v-0.969l2.707-1.739V8.291c-0.166,0-0.321-0.168-0.463-0.504
-            c-0.143-0.339-0.213-0.62-0.213-0.852V5.583c0-0.561,0.199-1.04,0.596-1.436c0.396-0.398,0.876-0.597,1.435-0.597
-            c0.56,0,1.038,0.198,1.435,0.597c0.397,0.396,0.597,0.875,0.597,1.436v1.353c0,0.231-0.07,0.513-0.214,0.852
-            C9.952,8.123,9.797,8.291,9.63,8.291v0.675L12.337,10.705z"/>
-          </svg>
-          <span>{{ 'USERS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">
-          <li ng-class="{active: isActive('/users/new')}"><a ng-href="#/users/new"><i class="fa fa-circle-o"></i> {{ 'ADD_USER' | translate }}</a></li>
-          <li ng-class="{active: isActive('/users')}"><a ng-href="#/users"><i class="fa fa-circle-o"></i> {{ 'VIEW_USERS' | translate }}  </a></li>
-        </ul>
-      </li>
+            <li ng-class="{active: isActive('/users/new') || isActive('/users') || isActiveEdit('users')}" class="treeview">
+                <a ng-href="javascript:void(0)">
+                    <svg version="1.1" id="users-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
+                        <path fill="#FFB600" d="M12.337,10.705v0.969H4.214v-0.969l2.707-1.739V8.291c-0.166,0-0.321-0.168-0.463-0.504
+                              c-0.143-0.339-0.213-0.62-0.213-0.852V5.583c0-0.561,0.199-1.04,0.596-1.436c0.396-0.398,0.876-0.597,1.435-0.597
+                              c0.56,0,1.038,0.198,1.435,0.597c0.397,0.396,0.597,0.875,0.597,1.436v1.353c0,0.231-0.07,0.513-0.214,0.852
+                              C9.952,8.123,9.797,8.291,9.63,8.291v0.675L12.337,10.705z"/>
+                    </svg>
+                    <span>{{ 'USERS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li ng-class="{active: isActive('/users/new')}"><a ng-href="#/users/new"><i class="fa fa-circle-o"></i> {{ 'ADD_USER' | translate }}</a></li>
+                    <li ng-class="{active: isActive('/users')}"><a ng-href="#/users"><i class="fa fa-circle-o"></i> {{ 'VIEW_USERS' | translate }}  </a></li>
+                </ul>
+            </li>
 
 
-      <li ng-class="{active: isActive('/organizations/new') || isActive('/organizations') || isActiveEdit('organizations')}" class="treeview">
-        <a ng-href="javascript:void(0)">
-          <svg version="1.1" id="organizations-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
-            <path fill="#FFB600" d="M3.357,4.24V3.411c0-0.114,0.038-0.213,0.119-0.294c0.08-0.08,0.177-0.119,0.294-0.119h0.826
-              c0.117,0,0.216,0.039,0.294,0.119c0.082,0.081,0.121,0.18,0.121,0.294V4.24c0,0.111-0.039,0.207-0.121,0.289
-              C4.812,4.611,4.714,4.654,4.597,4.654H3.771c-0.117,0-0.214-0.043-0.294-0.125C3.396,4.447,3.357,4.352,3.357,4.24z M3.357,6.725
-              V5.898c0-0.117,0.038-0.216,0.119-0.295c0.08-0.082,0.177-0.119,0.294-0.119h0.826c0.117,0,0.216,0.037,0.294,0.119
-              c0.082,0.079,0.121,0.178,0.121,0.295v0.826c0,0.111-0.039,0.207-0.121,0.291C4.812,7.097,4.714,7.139,4.597,7.139H3.771
-              c-0.117,0-0.214-0.042-0.294-0.123C3.396,6.932,3.357,6.836,3.357,6.725z M3.357,9.21V8.38c0-0.116,0.038-0.214,0.119-0.294
-              c0.08-0.078,0.177-0.121,0.294-0.121h0.826c0.117,0,0.216,0.043,0.294,0.121c0.082,0.08,0.121,0.178,0.121,0.294v0.83
-              c0,0.107-0.039,0.206-0.121,0.288C4.812,9.58,4.714,9.621,4.597,9.621H3.771c-0.117,0-0.214-0.041-0.294-0.123
-              C3.396,9.416,3.357,9.317,3.357,9.21z M3.357,11.693v-0.829c0-0.114,0.038-0.213,0.119-0.294c0.08-0.081,0.177-0.119,0.294-0.119
-              h0.826c0.117,0,0.216,0.038,0.294,0.119c0.082,0.081,0.121,0.18,0.121,0.294v0.829c0,0.108-0.039,0.206-0.121,0.289
-              c-0.078,0.082-0.177,0.124-0.294,0.124H3.771c-0.117,0-0.214-0.042-0.294-0.124C3.396,11.899,3.357,11.802,3.357,11.693z M5.84,4.24
-              V3.411c0-0.114,0.041-0.213,0.12-0.294c0.082-0.08,0.177-0.119,0.294-0.119h6.625c0.114,0,0.212,0.039,0.294,0.119
-              c0.078,0.081,0.119,0.18,0.119,0.294V4.24c0,0.111-0.041,0.207-0.119,0.289c-0.082,0.082-0.18,0.125-0.294,0.125H6.254
-              c-0.117,0-0.212-0.043-0.294-0.125C5.881,4.447,5.84,4.352,5.84,4.24z M5.84,6.725V5.898c0-0.117,0.041-0.216,0.12-0.295
-              c0.082-0.082,0.177-0.119,0.294-0.119h6.625c0.114,0,0.212,0.037,0.294,0.119c0.078,0.079,0.119,0.178,0.119,0.295v0.826
-              c0,0.111-0.041,0.207-0.119,0.291c-0.082,0.081-0.18,0.123-0.294,0.123H6.254c-0.117,0-0.212-0.042-0.294-0.123
-              C5.881,6.932,5.84,6.836,5.84,6.725z M5.84,9.21V8.38c0-0.116,0.041-0.214,0.12-0.294c0.082-0.078,0.177-0.121,0.294-0.121h6.625
-              c0.114,0,0.212,0.043,0.294,0.121c0.078,0.08,0.119,0.178,0.119,0.294v0.83c0,0.107-0.041,0.206-0.119,0.288
-              c-0.082,0.082-0.18,0.123-0.294,0.123H6.254c-0.117,0-0.212-0.041-0.294-0.123C5.881,9.416,5.84,9.317,5.84,9.21z M5.84,11.693
-              v-0.829c0-0.114,0.041-0.213,0.12-0.294c0.082-0.081,0.177-0.119,0.294-0.119h6.625c0.114,0,0.212,0.038,0.294,0.119
-              c0.078,0.081,0.119,0.18,0.119,0.294v0.829c0,0.108-0.041,0.206-0.119,0.289c-0.082,0.082-0.18,0.124-0.294,0.124H6.254
-              c-0.117,0-0.212-0.042-0.294-0.124C5.881,11.899,5.84,11.802,5.84,11.693z"/>
-          </svg>
-          <span>{{ 'ORGANIZATIONS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">
-          <li ng-class="{active: isActive('/organizations/new')}"><a ng-href="#/organizations/new"><i class="fa fa-circle-o"></i> {{ 'ADD_ORGANIZATIONS' | translate }}</a></li>
-          <li ng-class="{active: isActive('/organizations')}"><a ng-href="#/organizations"><i class="fa fa-circle-o"></i> {{ 'VIEW_ORGANIZATIONS' | translate }} </a></li>
-        </ul>
-      </li>
-      <li ng-class="{active: isActive('/categories/new') || isActive('/categories') || isActiveEdit('categories')}" class="treeview">
-        <a ng-href="javascript:void(0)">
-          <svg version="1.1" id="organizations-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
-            <path fill="#FFB600" d="M3.357,4.24V3.411c0-0.114,0.038-0.213,0.119-0.294c0.08-0.08,0.177-0.119,0.294-0.119h0.826
-              c0.117,0,0.216,0.039,0.294,0.119c0.082,0.081,0.121,0.18,0.121,0.294V4.24c0,0.111-0.039,0.207-0.121,0.289
-              C4.812,4.611,4.714,4.654,4.597,4.654H3.771c-0.117,0-0.214-0.043-0.294-0.125C3.396,4.447,3.357,4.352,3.357,4.24z M3.357,6.725
-              V5.898c0-0.117,0.038-0.216,0.119-0.295c0.08-0.082,0.177-0.119,0.294-0.119h0.826c0.117,0,0.216,0.037,0.294,0.119
-              c0.082,0.079,0.121,0.178,0.121,0.295v0.826c0,0.111-0.039,0.207-0.121,0.291C4.812,7.097,4.714,7.139,4.597,7.139H3.771
-              c-0.117,0-0.214-0.042-0.294-0.123C3.396,6.932,3.357,6.836,3.357,6.725z M3.357,9.21V8.38c0-0.116,0.038-0.214,0.119-0.294
-              c0.08-0.078,0.177-0.121,0.294-0.121h0.826c0.117,0,0.216,0.043,0.294,0.121c0.082,0.08,0.121,0.178,0.121,0.294v0.83
-              c0,0.107-0.039,0.206-0.121,0.288C4.812,9.58,4.714,9.621,4.597,9.621H3.771c-0.117,0-0.214-0.041-0.294-0.123
-              C3.396,9.416,3.357,9.317,3.357,9.21z M3.357,11.693v-0.829c0-0.114,0.038-0.213,0.119-0.294c0.08-0.081,0.177-0.119,0.294-0.119
-              h0.826c0.117,0,0.216,0.038,0.294,0.119c0.082,0.081,0.121,0.18,0.121,0.294v0.829c0,0.108-0.039,0.206-0.121,0.289
-              c-0.078,0.082-0.177,0.124-0.294,0.124H3.771c-0.117,0-0.214-0.042-0.294-0.124C3.396,11.899,3.357,11.802,3.357,11.693z M5.84,4.24
-              V3.411c0-0.114,0.041-0.213,0.12-0.294c0.082-0.08,0.177-0.119,0.294-0.119h6.625c0.114,0,0.212,0.039,0.294,0.119
-              c0.078,0.081,0.119,0.18,0.119,0.294V4.24c0,0.111-0.041,0.207-0.119,0.289c-0.082,0.082-0.18,0.125-0.294,0.125H6.254
-              c-0.117,0-0.212-0.043-0.294-0.125C5.881,4.447,5.84,4.352,5.84,4.24z M5.84,6.725V5.898c0-0.117,0.041-0.216,0.12-0.295
-              c0.082-0.082,0.177-0.119,0.294-0.119h6.625c0.114,0,0.212,0.037,0.294,0.119c0.078,0.079,0.119,0.178,0.119,0.295v0.826
-              c0,0.111-0.041,0.207-0.119,0.291c-0.082,0.081-0.18,0.123-0.294,0.123H6.254c-0.117,0-0.212-0.042-0.294-0.123
-              C5.881,6.932,5.84,6.836,5.84,6.725z M5.84,9.21V8.38c0-0.116,0.041-0.214,0.12-0.294c0.082-0.078,0.177-0.121,0.294-0.121h6.625
-              c0.114,0,0.212,0.043,0.294,0.121c0.078,0.08,0.119,0.178,0.119,0.294v0.83c0,0.107-0.041,0.206-0.119,0.288
-              c-0.082,0.082-0.18,0.123-0.294,0.123H6.254c-0.117,0-0.212-0.041-0.294-0.123C5.881,9.416,5.84,9.317,5.84,9.21z M5.84,11.693
-              v-0.829c0-0.114,0.041-0.213,0.12-0.294c0.082-0.081,0.177-0.119,0.294-0.119h6.625c0.114,0,0.212,0.038,0.294,0.119
-              c0.078,0.081,0.119,0.18,0.119,0.294v0.829c0,0.108-0.041,0.206-0.119,0.289c-0.082,0.082-0.18,0.124-0.294,0.124H6.254
-              c-0.117,0-0.212-0.042-0.294-0.124C5.881,11.899,5.84,11.802,5.84,11.693z"/>
-          </svg>
-          <span>{{ 'CATEGORIES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">
-          <li ng-class="{active: isActive('/categories/new')}"><a ng-href="#/categories/new"><i class="fa fa-circle-o"></i>  {{ 'ADD_CATEGORIES' | translate }}</a></li>
-          <li ng-class="{active: isActive('/categories')}"><a ng-href="#/categories"><i class="fa fa-circle-o"></i> {{ 'VIEW_CATEGORIES' | translate }}</a></li>
-        </ul>
-      </li>
-      <li ng-class="{active: isActive('/statuses/new') || isActive('/statuses') || isActiveEdit('statuses')}" class="treeview">
-        <a ng-href="javascript:void(0)">
-          <svg version="1.1" id="statuses-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
-            <path fill="#FFB600" d="M9.076,3.923c-2.045,0-3.702,1.654-3.702,3.698c0,2.043,1.657,3.7,3.702,3.7c2.044,0,3.7-1.657,3.7-3.7
-              C12.776,5.577,11.12,3.923,9.076,3.923z M9.562,9.966H8.59V6.827h0.972V9.966z M9.472,6.236C9.363,6.347,9.23,6.401,9.076,6.401
-              c-0.155,0-0.288-0.055-0.398-0.165S8.514,5.993,8.514,5.839s0.054-0.287,0.164-0.396c0.11-0.111,0.243-0.165,0.398-0.165
-              c0.154,0,0.287,0.054,0.396,0.165c0.11,0.109,0.166,0.242,0.166,0.396S9.582,6.126,9.472,6.236z"/>
-          </svg>
-          <span>{{ 'STATUSES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">
-          <li ng-class="{active: isActive('/statuses/new')}"><a ng-href="#/statuses/new"><i class="fa fa-circle-o"></i>{{ 'ADD_STATUSES' | translate }}</a></li>
-          <li ng-class="{active: isActive('/statuses')}"><a ng-href="#/statuses"><i class="fa fa-circle-o"></i>  {{ 'VIEW_STATUSES' | translate }} </a></li>
-        </ul>
-      </li>
-      <li ng-class="{active: isActive('/filetypes/new') || isActive('/filetypes') || isActiveEdit('filetypes')}" class="treeview">
-        <a ng-href="javascript:void(0)">
-          <svg version="1.1" id="filetypes-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
-            <path fill="#FFB600" d="M9.13,7.558h2.445v4.254c0,0.045-0.015,0.082-0.042,0.111c-0.031,0.031-0.066,0.045-0.112,0.045H6.225
-              c-0.045,0-0.081-0.014-0.111-0.045c-0.027-0.029-0.042-0.066-0.042-0.111V4.564c0-0.043,0.015-0.082,0.042-0.111
-              c0.03-0.03,0.065-0.044,0.111-0.044H9.13V7.558z M11.575,6.929H9.742V5.039L11.575,6.929z"/>
-          </svg>
-          <span>{{ 'FILE_TYPES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">
-          <li ng-class="{active: isActive('/filetypes/new')}"><a ng-href="#/filetypes/new"><i class="fa fa-circle-o"></i>  {{ 'ADD_FILETYPES' | translate }}</a></li>
-          <li ng-class="{active: isActive('/filetypes')}"><a ng-href="#/filetypes"><i class="fa fa-circle-o"></i>  {{ 'VIEW_FILETYPES' | translate }} </a></li>
-        </ul>
-      </li>
-      <li ng-class="{active: isActive('/files/new/:dataset?') || isActive('/files') || isActiveEdit('files')}" class="treeview">
-        <a ng-href="javascript:void(0)">
-          <svg version="1.1" id="files-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
-            <path fill="#FFB600" d="M13.343,3.055v9.314H4.806V3.055H13.343z M12.566,4.608H5.581v6.986h6.985V4.608z M7.133,5.384H6.357V6.16
-              h0.775V5.384z M7.133,6.936H6.357v0.776h0.775V6.936z M7.133,8.49H6.357v0.775h0.775V8.49z M7.133,10.042H6.357v0.776h0.775V10.042z
-              M11.791,5.384H7.91V6.16h3.881V5.384z M11.791,6.936H7.91v0.776h3.881V6.936z M11.791,8.49H7.91v0.775h3.881V8.49z M11.791,10.818
-              H7.91v-0.776h3.881V10.818z"/>
-          </svg>
-          <span>{{ 'FILES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">
-          <li ng-class="{active: isActive('/files/new/:dataset?')}"><a ng-href="#/files/new"><i class="fa fa-circle-o"></i>{{ 'ADD_FILES' | translate }} </a></li>
-          <li ng-class="{active: isActive('/files')}"><a ng-href="#/files"><i class="fa fa-circle-o"></i>{{ 'VIEW_FILES' | translate }} </a></li>
-        </ul>
-      </li>
-      <li ng-class="{active: isActive('/maps/new') || isActive('/maps') || isActiveEdit('maps')}" class="treeview">
-        <a ng-href="javascript:void(0)">
-          <svg version="1.1" id="files-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
-            <path fill="#FFB600" d="M13.343,3.055v9.314H4.806V3.055H13.343z M12.566,4.608H5.581v6.986h6.985V4.608z M7.133,5.384H6.357V6.16
-              h0.775V5.384z M7.133,6.936H6.357v0.776h0.775V6.936z M7.133,8.49H6.357v0.775h0.775V8.49z M7.133,10.042H6.357v0.776h0.775V10.042z
-              M11.791,5.384H7.91V6.16h3.881V5.384z M11.791,6.936H7.91v0.776h3.881V6.936z M11.791,8.49H7.91v0.775h3.881V8.49z M11.791,10.818
-              H7.91v-0.776h3.881V10.818z"/>
-          </svg>
-          <span>{{ 'MAPS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">
-          <!--<li ng-class="{active: isActive('/maps/new')}"><a ng-href="#/maps/new"><i class="fa fa-circle-o"></i>{{ 'ADD_MAPS' | translate }} </a></li>-->
-          <li ng-class="{active: isActive('/maps')}"><a ng-href="#/maps"><i class="fa fa-circle-o"></i>{{ 'VIEW_MAPS' | translate }} </a></li>
-        </ul>
-      </li>
+            <li ng-class="{active: isActive('/organizations/new') || isActive('/organizations') || isActiveEdit('organizations')}" class="treeview">
+                <a ng-href="javascript:void(0)">
+                    <svg version="1.1" id="organizations-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
+                        <path fill="#FFB600" d="M3.357,4.24V3.411c0-0.114,0.038-0.213,0.119-0.294c0.08-0.08,0.177-0.119,0.294-0.119h0.826
+                              c0.117,0,0.216,0.039,0.294,0.119c0.082,0.081,0.121,0.18,0.121,0.294V4.24c0,0.111-0.039,0.207-0.121,0.289
+                              C4.812,4.611,4.714,4.654,4.597,4.654H3.771c-0.117,0-0.214-0.043-0.294-0.125C3.396,4.447,3.357,4.352,3.357,4.24z M3.357,6.725
+                              V5.898c0-0.117,0.038-0.216,0.119-0.295c0.08-0.082,0.177-0.119,0.294-0.119h0.826c0.117,0,0.216,0.037,0.294,0.119
+                              c0.082,0.079,0.121,0.178,0.121,0.295v0.826c0,0.111-0.039,0.207-0.121,0.291C4.812,7.097,4.714,7.139,4.597,7.139H3.771
+                              c-0.117,0-0.214-0.042-0.294-0.123C3.396,6.932,3.357,6.836,3.357,6.725z M3.357,9.21V8.38c0-0.116,0.038-0.214,0.119-0.294
+                              c0.08-0.078,0.177-0.121,0.294-0.121h0.826c0.117,0,0.216,0.043,0.294,0.121c0.082,0.08,0.121,0.178,0.121,0.294v0.83
+                              c0,0.107-0.039,0.206-0.121,0.288C4.812,9.58,4.714,9.621,4.597,9.621H3.771c-0.117,0-0.214-0.041-0.294-0.123
+                              C3.396,9.416,3.357,9.317,3.357,9.21z M3.357,11.693v-0.829c0-0.114,0.038-0.213,0.119-0.294c0.08-0.081,0.177-0.119,0.294-0.119
+                              h0.826c0.117,0,0.216,0.038,0.294,0.119c0.082,0.081,0.121,0.18,0.121,0.294v0.829c0,0.108-0.039,0.206-0.121,0.289
+                              c-0.078,0.082-0.177,0.124-0.294,0.124H3.771c-0.117,0-0.214-0.042-0.294-0.124C3.396,11.899,3.357,11.802,3.357,11.693z M5.84,4.24
+                              V3.411c0-0.114,0.041-0.213,0.12-0.294c0.082-0.08,0.177-0.119,0.294-0.119h6.625c0.114,0,0.212,0.039,0.294,0.119
+                              c0.078,0.081,0.119,0.18,0.119,0.294V4.24c0,0.111-0.041,0.207-0.119,0.289c-0.082,0.082-0.18,0.125-0.294,0.125H6.254
+                              c-0.117,0-0.212-0.043-0.294-0.125C5.881,4.447,5.84,4.352,5.84,4.24z M5.84,6.725V5.898c0-0.117,0.041-0.216,0.12-0.295
+                              c0.082-0.082,0.177-0.119,0.294-0.119h6.625c0.114,0,0.212,0.037,0.294,0.119c0.078,0.079,0.119,0.178,0.119,0.295v0.826
+                              c0,0.111-0.041,0.207-0.119,0.291c-0.082,0.081-0.18,0.123-0.294,0.123H6.254c-0.117,0-0.212-0.042-0.294-0.123
+                              C5.881,6.932,5.84,6.836,5.84,6.725z M5.84,9.21V8.38c0-0.116,0.041-0.214,0.12-0.294c0.082-0.078,0.177-0.121,0.294-0.121h6.625
+                              c0.114,0,0.212,0.043,0.294,0.121c0.078,0.08,0.119,0.178,0.119,0.294v0.83c0,0.107-0.041,0.206-0.119,0.288
+                              c-0.082,0.082-0.18,0.123-0.294,0.123H6.254c-0.117,0-0.212-0.041-0.294-0.123C5.881,9.416,5.84,9.317,5.84,9.21z M5.84,11.693
+                              v-0.829c0-0.114,0.041-0.213,0.12-0.294c0.082-0.081,0.177-0.119,0.294-0.119h6.625c0.114,0,0.212,0.038,0.294,0.119
+                              c0.078,0.081,0.119,0.18,0.119,0.294v0.829c0,0.108-0.041,0.206-0.119,0.289c-0.082,0.082-0.18,0.124-0.294,0.124H6.254
+                              c-0.117,0-0.212-0.042-0.294-0.124C5.881,11.899,5.84,11.802,5.84,11.693z"/>
+                    </svg>
+                    <span>{{ 'ORGANIZATIONS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li ng-class="{active: isActive('/organizations/new')}"><a ng-href="#/organizations/new"><i class="fa fa-circle-o"></i> {{ 'ADD_ORGANIZATIONS' | translate }}</a></li>
+                    <li ng-class="{active: isActive('/organizations')}"><a ng-href="#/organizations"><i class="fa fa-circle-o"></i> {{ 'VIEW_ORGANIZATIONS' | translate }} </a></li>
+                </ul>
+            </li>
+            <li ng-class="{active: isActive('/categories/new') || isActive('/categories') || isActiveEdit('categories')}" class="treeview">
+                <a ng-href="javascript:void(0)">
+                    <svg version="1.1" id="organizations-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
+                        <path fill="#FFB600" d="M3.357,4.24V3.411c0-0.114,0.038-0.213,0.119-0.294c0.08-0.08,0.177-0.119,0.294-0.119h0.826
+                              c0.117,0,0.216,0.039,0.294,0.119c0.082,0.081,0.121,0.18,0.121,0.294V4.24c0,0.111-0.039,0.207-0.121,0.289
+                              C4.812,4.611,4.714,4.654,4.597,4.654H3.771c-0.117,0-0.214-0.043-0.294-0.125C3.396,4.447,3.357,4.352,3.357,4.24z M3.357,6.725
+                              V5.898c0-0.117,0.038-0.216,0.119-0.295c0.08-0.082,0.177-0.119,0.294-0.119h0.826c0.117,0,0.216,0.037,0.294,0.119
+                              c0.082,0.079,0.121,0.178,0.121,0.295v0.826c0,0.111-0.039,0.207-0.121,0.291C4.812,7.097,4.714,7.139,4.597,7.139H3.771
+                              c-0.117,0-0.214-0.042-0.294-0.123C3.396,6.932,3.357,6.836,3.357,6.725z M3.357,9.21V8.38c0-0.116,0.038-0.214,0.119-0.294
+                              c0.08-0.078,0.177-0.121,0.294-0.121h0.826c0.117,0,0.216,0.043,0.294,0.121c0.082,0.08,0.121,0.178,0.121,0.294v0.83
+                              c0,0.107-0.039,0.206-0.121,0.288C4.812,9.58,4.714,9.621,4.597,9.621H3.771c-0.117,0-0.214-0.041-0.294-0.123
+                              C3.396,9.416,3.357,9.317,3.357,9.21z M3.357,11.693v-0.829c0-0.114,0.038-0.213,0.119-0.294c0.08-0.081,0.177-0.119,0.294-0.119
+                              h0.826c0.117,0,0.216,0.038,0.294,0.119c0.082,0.081,0.121,0.18,0.121,0.294v0.829c0,0.108-0.039,0.206-0.121,0.289
+                              c-0.078,0.082-0.177,0.124-0.294,0.124H3.771c-0.117,0-0.214-0.042-0.294-0.124C3.396,11.899,3.357,11.802,3.357,11.693z M5.84,4.24
+                              V3.411c0-0.114,0.041-0.213,0.12-0.294c0.082-0.08,0.177-0.119,0.294-0.119h6.625c0.114,0,0.212,0.039,0.294,0.119
+                              c0.078,0.081,0.119,0.18,0.119,0.294V4.24c0,0.111-0.041,0.207-0.119,0.289c-0.082,0.082-0.18,0.125-0.294,0.125H6.254
+                              c-0.117,0-0.212-0.043-0.294-0.125C5.881,4.447,5.84,4.352,5.84,4.24z M5.84,6.725V5.898c0-0.117,0.041-0.216,0.12-0.295
+                              c0.082-0.082,0.177-0.119,0.294-0.119h6.625c0.114,0,0.212,0.037,0.294,0.119c0.078,0.079,0.119,0.178,0.119,0.295v0.826
+                              c0,0.111-0.041,0.207-0.119,0.291c-0.082,0.081-0.18,0.123-0.294,0.123H6.254c-0.117,0-0.212-0.042-0.294-0.123
+                              C5.881,6.932,5.84,6.836,5.84,6.725z M5.84,9.21V8.38c0-0.116,0.041-0.214,0.12-0.294c0.082-0.078,0.177-0.121,0.294-0.121h6.625
+                              c0.114,0,0.212,0.043,0.294,0.121c0.078,0.08,0.119,0.178,0.119,0.294v0.83c0,0.107-0.041,0.206-0.119,0.288
+                              c-0.082,0.082-0.18,0.123-0.294,0.123H6.254c-0.117,0-0.212-0.041-0.294-0.123C5.881,9.416,5.84,9.317,5.84,9.21z M5.84,11.693
+                              v-0.829c0-0.114,0.041-0.213,0.12-0.294c0.082-0.081,0.177-0.119,0.294-0.119h6.625c0.114,0,0.212,0.038,0.294,0.119
+                              c0.078,0.081,0.119,0.18,0.119,0.294v0.829c0,0.108-0.041,0.206-0.119,0.289c-0.082,0.082-0.18,0.124-0.294,0.124H6.254
+                              c-0.117,0-0.212-0.042-0.294-0.124C5.881,11.899,5.84,11.802,5.84,11.693z"/>
+                    </svg>
+                    <span>{{ 'CATEGORIES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li ng-class="{active: isActive('/categories/new')}"><a ng-href="#/categories/new"><i class="fa fa-circle-o"></i>  {{ 'ADD_CATEGORIES' | translate }}</a></li>
+                    <li ng-class="{active: isActive('/categories')}"><a ng-href="#/categories"><i class="fa fa-circle-o"></i> {{ 'VIEW_CATEGORIES' | translate }}</a></li>
+                </ul>
+            </li>
+            <li ng-class="{active: isActive('/statuses/new') || isActive('/statuses') || isActiveEdit('statuses')}" class="treeview">
+                <a ng-href="javascript:void(0)">
+                    <svg version="1.1" id="statuses-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
+                        <path fill="#FFB600" d="M9.076,3.923c-2.045,0-3.702,1.654-3.702,3.698c0,2.043,1.657,3.7,3.702,3.7c2.044,0,3.7-1.657,3.7-3.7
+                              C12.776,5.577,11.12,3.923,9.076,3.923z M9.562,9.966H8.59V6.827h0.972V9.966z M9.472,6.236C9.363,6.347,9.23,6.401,9.076,6.401
+                              c-0.155,0-0.288-0.055-0.398-0.165S8.514,5.993,8.514,5.839s0.054-0.287,0.164-0.396c0.11-0.111,0.243-0.165,0.398-0.165
+                              c0.154,0,0.287,0.054,0.396,0.165c0.11,0.109,0.166,0.242,0.166,0.396S9.582,6.126,9.472,6.236z"/>
+                    </svg>
+                    <span>{{ 'STATUSES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li ng-class="{active: isActive('/statuses/new')}"><a ng-href="#/statuses/new"><i class="fa fa-circle-o"></i>{{ 'ADD_STATUSES' | translate }}</a></li>
+                    <li ng-class="{active: isActive('/statuses')}"><a ng-href="#/statuses"><i class="fa fa-circle-o"></i>  {{ 'VIEW_STATUSES' | translate }} </a></li>
+                </ul>
+            </li>
+            <li ng-class="{active: isActive('/filetypes/new') || isActive('/filetypes') || isActiveEdit('filetypes')}" class="treeview">
+                <a ng-href="javascript:void(0)">
+                    <svg version="1.1" id="filetypes-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
+                        <path fill="#FFB600" d="M9.13,7.558h2.445v4.254c0,0.045-0.015,0.082-0.042,0.111c-0.031,0.031-0.066,0.045-0.112,0.045H6.225
+                              c-0.045,0-0.081-0.014-0.111-0.045c-0.027-0.029-0.042-0.066-0.042-0.111V4.564c0-0.043,0.015-0.082,0.042-0.111
+                              c0.03-0.03,0.065-0.044,0.111-0.044H9.13V7.558z M11.575,6.929H9.742V5.039L11.575,6.929z"/>
+                    </svg>
+                    <span>{{ 'FILE_TYPES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li ng-class="{active: isActive('/filetypes/new')}"><a ng-href="#/filetypes/new"><i class="fa fa-circle-o"></i>  {{ 'ADD_FILETYPES' | translate }}</a></li>
+                    <li ng-class="{active: isActive('/filetypes')}"><a ng-href="#/filetypes"><i class="fa fa-circle-o"></i>  {{ 'VIEW_FILETYPES' | translate }} </a></li>
+                </ul>
+            </li>
+            <li ng-class="{active: isActive('/files/new/:dataset?') || isActive('/files') || isActiveEdit('files')}" class="treeview">
+                <a ng-href="javascript:void(0)">
+                    <svg version="1.1" id="files-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
+                        <path fill="#FFB600" d="M13.343,3.055v9.314H4.806V3.055H13.343z M12.566,4.608H5.581v6.986h6.985V4.608z M7.133,5.384H6.357V6.16
+                              h0.775V5.384z M7.133,6.936H6.357v0.776h0.775V6.936z M7.133,8.49H6.357v0.775h0.775V8.49z M7.133,10.042H6.357v0.776h0.775V10.042z
+                              M11.791,5.384H7.91V6.16h3.881V5.384z M11.791,6.936H7.91v0.776h3.881V6.936z M11.791,8.49H7.91v0.775h3.881V8.49z M11.791,10.818
+                              H7.91v-0.776h3.881V10.818z"/>
+                    </svg>
+                    <span>{{ 'FILES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li ng-class="{active: isActive('/files/new/:dataset?')}"><a ng-href="#/files/new"><i class="fa fa-circle-o"></i>{{ 'ADD_FILES' | translate }} </a></li>
+                    <li ng-class="{active: isActive('/files')}"><a ng-href="#/files"><i class="fa fa-circle-o"></i>{{ 'VIEW_FILES' | translate }} </a></li>
+                </ul>
+            </li>
+            <li ng-class="{active: isActive('/maps/new') || isActive('/maps') || isActiveEdit('maps')}" class="treeview">
+                <a ng-href="javascript:void(0)">
+                    <svg version="1.1" id="files-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
+                        <path fill="#FFB600" d="M13.343,3.055v9.314H4.806V3.055H13.343z M12.566,4.608H5.581v6.986h6.985V4.608z M7.133,5.384H6.357V6.16
+                              h0.775V5.384z M7.133,6.936H6.357v0.776h0.775V6.936z M7.133,8.49H6.357v0.775h0.775V8.49z M7.133,10.042H6.357v0.776h0.775V10.042z
+                              M11.791,5.384H7.91V6.16h3.881V5.384z M11.791,6.936H7.91v0.776h3.881V6.936z M11.791,8.49H7.91v0.775h3.881V8.49z M11.791,10.818
+                              H7.91v-0.776h3.881V10.818z"/>
+                    </svg>
+                    <span>{{ 'MAPS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <!--<li ng-class="{active: isActive('/maps/new')}"><a ng-href="#/maps/new"><i class="fa fa-circle-o"></i>{{ 'ADD_MAPS' | translate }} </a></li>-->
+                    <li ng-class="{active: isActive('/maps')}"><a ng-href="#/maps"><i class="fa fa-circle-o"></i>{{ 'VIEW_MAPS' | translate }} </a></li>
+                </ul>
+            </li>
+            <li ng-class="{active: isActive('/charts/new') || isActive('/charts') || isActiveEdit('charts')}" class="treeview">
+                <a ng-href="javascript:void(0)">
+                    <svg version="1.1" id="files-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
+                        <path fill="#FFB600" d="M13.343,3.055v9.314H4.806V3.055H13.343z M12.566,4.608H5.581v6.986h6.985V4.608z M7.133,5.384H6.357V6.16
+                              h0.775V5.384z M7.133,6.936H6.357v0.776h0.775V6.936z M7.133,8.49H6.357v0.775h0.775V8.49z M7.133,10.042H6.357v0.776h0.775V10.042z
+                              M11.791,5.384H7.91V6.16h3.881V5.384z M11.791,6.936H7.91v0.776h3.881V6.936z M11.791,8.49H7.91v0.775h3.881V8.49z M11.791,10.818
+                              H7.91v-0.776h3.881V10.818z"/>
+                    </svg>
+                    <span>{{ 'CHARTS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <!--<li ng-class="{active: isActive('/maps/new')}"><a ng-href="#/maps/new"><i class="fa fa-circle-o"></i>{{ 'ADD_MAPS' | translate }} </a></li>-->
+                    <li ng-class="{active: isActive('/charts')}"><a ng-href="#/charts"><i class="fa fa-circle-o"></i>{{ 'VIEW_CHARTS' | translate }} </a></li>
+                </ul>
+            </li>
 
-      <li ng-class="{active: isActive('/datasets/new') || isActive('/datasets')  || isActiveEdit('datasets')}" class="treeview">
-        <a ng-href="javascript:void(0)">
-          <svg version="1.1" id="datasets-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
-            <path fill="#FFB600" d="M7.683,3.225V4.74c0,0.107-0.036,0.196-0.108,0.27C7.499,5.083,7.41,5.12,7.305,5.12H5.788
-              c-0.106,0-0.197-0.037-0.27-0.11s-0.11-0.162-0.11-0.27V3.225c0-0.105,0.038-0.196,0.11-0.269c0.072-0.074,0.163-0.11,0.27-0.11
-              h1.517c0.105,0,0.194,0.036,0.27,0.11C7.646,3.028,7.683,3.119,7.683,3.225z M7.683,6.257v1.517c0,0.106-0.036,0.197-0.108,0.27
-              c-0.075,0.072-0.164,0.11-0.27,0.11H5.788c-0.106,0-0.197-0.038-0.27-0.11s-0.11-0.163-0.11-0.27V6.257
-              c0-0.105,0.038-0.195,0.11-0.269s0.163-0.109,0.27-0.109h1.517c0.105,0,0.194,0.036,0.27,0.109C7.646,6.062,7.683,6.151,7.683,6.257
-              z M7.683,9.291v1.517c0,0.105-0.036,0.195-0.108,0.269c-0.075,0.073-0.164,0.109-0.27,0.109H5.788c-0.106,0-0.197-0.036-0.27-0.109
-              s-0.11-0.163-0.11-0.269V9.291c0-0.106,0.038-0.195,0.11-0.27s0.163-0.11,0.27-0.11h1.517c0.105,0,0.194,0.036,0.27,0.11
-              C7.646,9.096,7.683,9.185,7.683,9.291z M10.716,3.225V4.74c0,0.107-0.036,0.196-0.11,0.27c-0.073,0.073-0.163,0.11-0.269,0.11H8.821
-              c-0.107,0-0.197-0.037-0.27-0.11c-0.074-0.073-0.11-0.162-0.11-0.27V3.225c0-0.105,0.036-0.196,0.11-0.269
-              c0.072-0.074,0.162-0.11,0.27-0.11h1.516c0.105,0,0.195,0.036,0.269,0.11C10.68,3.028,10.716,3.119,10.716,3.225z M10.716,6.257
-              v1.517c0,0.106-0.036,0.197-0.11,0.27c-0.073,0.072-0.163,0.11-0.269,0.11H8.821c-0.107,0-0.197-0.038-0.27-0.11
-              c-0.074-0.072-0.11-0.163-0.11-0.27V6.257c0-0.105,0.036-0.195,0.11-0.269c0.072-0.073,0.162-0.109,0.27-0.109h1.516
-              c0.105,0,0.195,0.036,0.269,0.109C10.68,6.062,10.716,6.151,10.716,6.257z M10.716,9.291v1.517c0,0.105-0.036,0.195-0.11,0.269
-              c-0.073,0.073-0.163,0.109-0.269,0.109H8.821c-0.107,0-0.197-0.036-0.27-0.109c-0.074-0.073-0.11-0.163-0.11-0.269V9.291
-              c0-0.106,0.036-0.195,0.11-0.27c0.072-0.074,0.162-0.11,0.27-0.11h1.516c0.105,0,0.195,0.036,0.269,0.11
-              C10.68,9.096,10.716,9.185,10.716,9.291z M13.749,3.225V4.74c0,0.107-0.037,0.196-0.11,0.27c-0.074,0.073-0.163,0.11-0.269,0.11
-              h-1.517c-0.106,0-0.196-0.037-0.27-0.11s-0.11-0.162-0.11-0.27V3.225c0-0.105,0.037-0.196,0.11-0.269
-              c0.073-0.074,0.163-0.11,0.27-0.11h1.517c0.105,0,0.194,0.036,0.269,0.11C13.712,3.028,13.749,3.119,13.749,3.225z M13.749,6.257
-              v1.517c0,0.106-0.037,0.197-0.11,0.27c-0.074,0.072-0.163,0.11-0.269,0.11h-1.517c-0.106,0-0.196-0.038-0.27-0.11
-              s-0.11-0.163-0.11-0.27V6.257c0-0.105,0.037-0.195,0.11-0.269s0.163-0.109,0.27-0.109h1.517c0.105,0,0.194,0.036,0.269,0.109
-              C13.712,6.062,13.749,6.151,13.749,6.257z M13.749,9.291v1.517c0,0.105-0.037,0.195-0.11,0.269
-              c-0.074,0.073-0.163,0.109-0.269,0.109h-1.517c-0.106,0-0.196-0.036-0.27-0.109s-0.11-0.163-0.11-0.269V9.291
-              c0-0.106,0.037-0.195,0.11-0.27s0.163-0.11,0.27-0.11h1.517c0.105,0,0.194,0.036,0.269,0.11C13.712,9.096,13.749,9.185,13.749,9.291
-              z"/>
-          </svg>
-          <span>{{ 'DATASETS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">
-          <li ng-class="{active: isActive('/datasets/new')}"><a ng-href="#/datasets/new"><i class="fa fa-circle-o"></i> {{ 'ADD_DATASET' | translate }}</a></li>
-          <li ng-class="{active: isActive('/datasets')}"><a ng-href="#/datasets"><i class="fa fa-circle-o"></i> {{ 'VIEW_DATASET' | translate }}</a></li>
+            <li ng-class="{active: isActive('/datasets/new') || isActive('/datasets') || isActiveEdit('datasets')}" class="treeview">
+                <a ng-href="javascript:void(0)">
+                    <svg version="1.1" id="datasets-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
+                        <path fill="#FFB600" d="M7.683,3.225V4.74c0,0.107-0.036,0.196-0.108,0.27C7.499,5.083,7.41,5.12,7.305,5.12H5.788
+                              c-0.106,0-0.197-0.037-0.27-0.11s-0.11-0.162-0.11-0.27V3.225c0-0.105,0.038-0.196,0.11-0.269c0.072-0.074,0.163-0.11,0.27-0.11
+                              h1.517c0.105,0,0.194,0.036,0.27,0.11C7.646,3.028,7.683,3.119,7.683,3.225z M7.683,6.257v1.517c0,0.106-0.036,0.197-0.108,0.27
+                              c-0.075,0.072-0.164,0.11-0.27,0.11H5.788c-0.106,0-0.197-0.038-0.27-0.11s-0.11-0.163-0.11-0.27V6.257
+                              c0-0.105,0.038-0.195,0.11-0.269s0.163-0.109,0.27-0.109h1.517c0.105,0,0.194,0.036,0.27,0.109C7.646,6.062,7.683,6.151,7.683,6.257
+                              z M7.683,9.291v1.517c0,0.105-0.036,0.195-0.108,0.269c-0.075,0.073-0.164,0.109-0.27,0.109H5.788c-0.106,0-0.197-0.036-0.27-0.109
+                              s-0.11-0.163-0.11-0.269V9.291c0-0.106,0.038-0.195,0.11-0.27s0.163-0.11,0.27-0.11h1.517c0.105,0,0.194,0.036,0.27,0.11
+                              C7.646,9.096,7.683,9.185,7.683,9.291z M10.716,3.225V4.74c0,0.107-0.036,0.196-0.11,0.27c-0.073,0.073-0.163,0.11-0.269,0.11H8.821
+                              c-0.107,0-0.197-0.037-0.27-0.11c-0.074-0.073-0.11-0.162-0.11-0.27V3.225c0-0.105,0.036-0.196,0.11-0.269
+                              c0.072-0.074,0.162-0.11,0.27-0.11h1.516c0.105,0,0.195,0.036,0.269,0.11C10.68,3.028,10.716,3.119,10.716,3.225z M10.716,6.257
+                              v1.517c0,0.106-0.036,0.197-0.11,0.27c-0.073,0.072-0.163,0.11-0.269,0.11H8.821c-0.107,0-0.197-0.038-0.27-0.11
+                              c-0.074-0.072-0.11-0.163-0.11-0.27V6.257c0-0.105,0.036-0.195,0.11-0.269c0.072-0.073,0.162-0.109,0.27-0.109h1.516
+                              c0.105,0,0.195,0.036,0.269,0.109C10.68,6.062,10.716,6.151,10.716,6.257z M10.716,9.291v1.517c0,0.105-0.036,0.195-0.11,0.269
+                              c-0.073,0.073-0.163,0.109-0.269,0.109H8.821c-0.107,0-0.197-0.036-0.27-0.109c-0.074-0.073-0.11-0.163-0.11-0.269V9.291
+                              c0-0.106,0.036-0.195,0.11-0.27c0.072-0.074,0.162-0.11,0.27-0.11h1.516c0.105,0,0.195,0.036,0.269,0.11
+                              C10.68,9.096,10.716,9.185,10.716,9.291z M13.749,3.225V4.74c0,0.107-0.037,0.196-0.11,0.27c-0.074,0.073-0.163,0.11-0.269,0.11
+                              h-1.517c-0.106,0-0.196-0.037-0.27-0.11s-0.11-0.162-0.11-0.27V3.225c0-0.105,0.037-0.196,0.11-0.269
+                              c0.073-0.074,0.163-0.11,0.27-0.11h1.517c0.105,0,0.194,0.036,0.269,0.11C13.712,3.028,13.749,3.119,13.749,3.225z M13.749,6.257
+                              v1.517c0,0.106-0.037,0.197-0.11,0.27c-0.074,0.072-0.163,0.11-0.269,0.11h-1.517c-0.106,0-0.196-0.038-0.27-0.11
+                              s-0.11-0.163-0.11-0.27V6.257c0-0.105,0.037-0.195,0.11-0.269s0.163-0.109,0.27-0.109h1.517c0.105,0,0.194,0.036,0.269,0.109
+                              C13.712,6.062,13.749,6.151,13.749,6.257z M13.749,9.291v1.517c0,0.105-0.037,0.195-0.11,0.269
+                              c-0.074,0.073-0.163,0.109-0.269,0.109h-1.517c-0.106,0-0.196-0.036-0.27-0.109s-0.11-0.163-0.11-0.269V9.291
+                              c0-0.106,0.037-0.195,0.11-0.27s0.163-0.11,0.27-0.11h1.517c0.105,0,0.194,0.036,0.269,0.11C13.712,9.096,13.749,9.185,13.749,9.291
+                              z"/>
+                    </svg>
+                    <span>{{ 'DATASETS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li ng-class="{active: isActive('/datasets/new')}"><a ng-href="#/datasets/new"><i class="fa fa-circle-o"></i> {{ 'ADD_DATASET' | translate }}</a></li>
+                    <li ng-class="{active: isActive('/datasets')}"><a ng-href="#/datasets"><i class="fa fa-circle-o"></i> {{ 'VIEW_DATASET' | translate }}</a></li>
+                </ul>
+            </li>
+            <li ng-class="{active: isActive('/tags/new') || isActive('/tags') || isActiveEdit('tags')}" class="treeview">
+                <a ng-href="javascript:void(0)">
+                    <svg version="1.1" id="tags-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
+                        <path fill="#FFB600" d="M13.338,7.729l-3.487,3.488L4.974,6.333V3.021c0-0.047,0.018-0.088,0.053-0.122
+                              c0.035-0.035,0.075-0.053,0.122-0.053h3.306L13.338,7.729z M7.199,5.064C7.334,4.93,7.401,4.764,7.401,4.568
+                              c0-0.194-0.067-0.359-0.202-0.494c-0.141-0.14-0.306-0.21-0.499-0.21c-0.192,0-0.358,0.07-0.499,0.21
+                              c-0.134,0.135-0.202,0.3-0.202,0.494c0,0.195,0.068,0.361,0.202,0.496C6.342,5.203,6.508,5.273,6.7,5.273
+                              C6.894,5.273,7.059,5.203,7.199,5.064z"/>
+                    </svg>
+                    <span>{{ 'TAGS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li ng-class="{active: isActive('/tags/new')}"><a ng-href="#/tags/new"><i class="fa fa-circle-o"></i> {{ 'ADD_TAG' | translate }}</a></li>
+                    <li ng-class="{active: isActive('/tags')}"><a ng-href="#/tags"><i class="fa fa-circle-o"></i> {{ 'VIEW_TAGS' | translate }}</a></li>
+                </ul>
+            </li>
+            <li ng-class="{active: isActive('/updatefrequencies/new') || isActive('/updatefrequencies') || isActiveEdit('updatefrequencies')}" class="treeview">
+                <a ng-href="javascript:void(0)">
+                    <svg version="1.1" id="updatefrequencies-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16.799px" height="16.293px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293"
+                         xml:space="preserve">
+                        <path fill="#FFB600" d="M5.803,13.142h-1.53v-2.295h1.53V13.142z M8.098,9.315H6.566v3.826h1.531V9.315z M10.392,7.021H8.862v6.121
+                              h1.529V7.021z M12.688,3.961h-1.529v9.181h1.529V3.961z"/>
+                    </svg>
+                    <span>{{ 'FREQUENCY_MENU' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li ng-class="{active: isActive('/updatefrequencies/new')}"><a ng-href="#/updatefrequencies/new"><i class="fa fa-circle-o"></i> {{ 'ADD_FREQUENCY_MENU' | translate }}</a></li>
+                    <li ng-class="{active: isActive('/updatefrequencies')}"><a ng-href="#/updatefrequencies"><i class="fa fa-circle-o"></i> {{ 'VIEW_FREQUENCY' | translate }}</a></li>
+                </ul>
+            </li>
         </ul>
-      </li>
-      <li ng-class="{active: isActive('/tags/new') || isActive('/tags') || isActiveEdit('tags')}" class="treeview">
-        <a ng-href="javascript:void(0)">
-          <svg version="1.1" id="tags-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
-          <path fill="#FFB600" d="M13.338,7.729l-3.487,3.488L4.974,6.333V3.021c0-0.047,0.018-0.088,0.053-0.122
-            c0.035-0.035,0.075-0.053,0.122-0.053h3.306L13.338,7.729z M7.199,5.064C7.334,4.93,7.401,4.764,7.401,4.568
-            c0-0.194-0.067-0.359-0.202-0.494c-0.141-0.14-0.306-0.21-0.499-0.21c-0.192,0-0.358,0.07-0.499,0.21
-            c-0.134,0.135-0.202,0.3-0.202,0.494c0,0.195,0.068,0.361,0.202,0.496C6.342,5.203,6.508,5.273,6.7,5.273
-            C6.894,5.273,7.059,5.203,7.199,5.064z"/>
-        </svg>
-          <span>{{ 'TAGS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">
-          <li ng-class="{active: isActive('/tags/new')}"><a ng-href="#/tags/new"><i class="fa fa-circle-o"></i> {{ 'ADD_TAG' | translate }}</a></li>
-          <li ng-class="{active: isActive('/tags')}"><a ng-href="#/tags"><i class="fa fa-circle-o"></i> {{ 'VIEW_TAGS' | translate }}</a></li>
-        </ul>
-      </li>
-      <li ng-class="{active: isActive('/updatefrequencies/new') || isActive('/updatefrequencies') || isActiveEdit('updatefrequencies')}" class="treeview">
-        <a ng-href="javascript:void(0)">
-          <svg version="1.1" id="updatefrequencies-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16.799px" height="16.293px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293"
-            xml:space="preserve">
-            <path fill="#FFB600" d="M5.803,13.142h-1.53v-2.295h1.53V13.142z M8.098,9.315H6.566v3.826h1.531V9.315z M10.392,7.021H8.862v6.121
-            h1.529V7.021z M12.688,3.961h-1.529v9.181h1.529V3.961z"/>
-          </svg>
-          <span>{{ 'FREQUENCY_MENU' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">
-          <li ng-class="{active: isActive('/updatefrequencies/new')}"><a ng-href="#/updatefrequencies/new"><i class="fa fa-circle-o"></i> {{ 'ADD_FREQUENCY_MENU' | translate }}</a></li>
-          <li ng-class="{active: isActive('/updatefrequencies')}"><a ng-href="#/updatefrequencies"><i class="fa fa-circle-o"></i> {{ 'VIEW_FREQUENCY' | translate }}</a></li>
-        </ul>
-      </li>
-    </ul>
-  </section>
+    </section>
 </aside>

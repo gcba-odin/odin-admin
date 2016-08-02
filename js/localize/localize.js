@@ -141,10 +141,21 @@ app.config(['$translateProvider', function ($translateProvider,$rootScope) {
     'DEACTIVATE': 'Desactivar',
     'COLOR': 'Color',
     'IMAGE': 'Imagen',
-    'NEW_GRAPHIC': 'Agregar gráfico',
+    'NEW_CHART': 'Agregar gráfico',
     'ADD_PROPERTY': 'Agregar propiedad',
     'PROPERTY': 'Propiedad',
     'BASE_MAP': 'Mapa base',
+    'CHARTS': 'Gráficos',
+    'CHART': 'Gráfico',
+    'VIEW_CHARTS': 'Ver gráficos',
+    'CHART_TYPES': 'Tipos de gráfico',
+    'DATA_OF_CHART': 'Datos del gráfico',
+    'CHART_TYPE': 'Tipo de gráfico',
+    'LATITUDE': 'Latitud',
+    'LONGITUDE': 'Longitud',
+    'RESOURCES': 'Recursos',
+    'RESOURCE': 'Recurso'
+    
   });
  console.log($rootScope);
   $translateProvider.preferredLanguage('es');
