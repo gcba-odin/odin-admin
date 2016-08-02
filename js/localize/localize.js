@@ -143,6 +143,7 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
     'NEW_GRAPHIC': 'Agregar gráfico',
     'ADD_PROPERTY': 'Agregar propiedad',
     'PROPERTY': 'Propiedad',
+    'BASE_MAP': 'Mapa base',
   });
   console.log($rootScope);
   $translateProvider.preferredLanguage('es');

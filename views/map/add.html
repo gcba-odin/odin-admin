@@ -67,10 +67,10 @@
                                         <td>{{ 'BASE_MAP' | translate }}</td>
                                         <td ng-bind-html="getHtml(model.basemap)"></td>
                                     </tr>
-                                    <tr ng-if="model.url">
+                                    <!--<tr ng-if="model.url">
                                         <td>{{ 'URL' | translate }}</td>
                                         <td><a target="_blank" ng-href="{{model.url}}">{{model.url}}</a></td>
-                                    </tr>
+                                    </tr>-->
                                 </table>
 
                             </div>
@@ -78,10 +78,10 @@
                         </div>
                     </div>
                     <div class="box-footer">
-                        <button class="btn btn-default pull-left" back-button ng-if="dataset_disabled == 'disabled'">
+                        <button class="btn btn-default pull-left" back-button ng-if="stepactive == 0">
                             {{ 'BACK' | translate }}
                         </button>
-                        <button class="btn btn-default pull-left" ng-click="checkstep(stepactive - 1)" ng-disabled="stepactive == 0" ng-if="dataset_disabled == 'enabled'">
+                        <button class="btn btn-default pull-left" ng-click="checkstep(stepactive - 1)" ng-if="stepactive != 0">
                             {{ 'BACK' | translate }}
                         </button>
                         <button ng-if="stepactive != 2" type="submit" class="btn btn-primary pull-right" ng-click="checkstep(stepactive + 1)" ng-disabled="(form.$invalid && stepactive == 1) || (stepactive == 2)">{{ 'NEXT' | translate }}</button>
