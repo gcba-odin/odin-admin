@@ -289,3 +289,7 @@ div.form-group div.has-error p {
     width: 100%;
     border: 0;
 }
+
+.selectize-input > * {
+    display: block;
+}
