@@ -64,9 +64,8 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
             type: $scope.type,
             //params: "include=tags"
         }, function() {
-            $scope.model.resources = rest().getArray({
+            $scope.model.resources = rest().resources({
                 id: $scope.model.id,
-                asociate: 'resources',
                 type: $scope.type
             });
         }/*, function () {

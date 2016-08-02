@@ -1,8 +1,8 @@
-var app = angular.module('odin.mapsControllers', []);
+var app = angular.module('odin.chartsControllers', []);
 
 
-function MapListController($scope, modelService) {
-    modelService.initService("Map", "maps", $scope);
+function ChartListController($scope, modelService) {
+    modelService.initService("Chart", "charts", $scope);
 
     $scope.confirmDelete = function(item) {
         modelService.confirmDelete(item);
@@ -28,55 +28,16 @@ function MapListController($scope, modelService) {
     };
 }
 
-function MapViewController($scope, modelService, $routeParams, rest, $location, $sce) {
-    modelService.initService("Map", "maps", $scope);
-
-    //modelService.findOne($routeParams, $scope);
-
-    $scope.tiles = {
-        url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    };
-
-    $scope.center = {
-        lat: -34.603722,
-        lng: -58.381592,
-        zoom: 13
-    };
+function ChartViewController($scope, modelService, $routeParams, rest, $location, $sce) {
+    modelService.initService("Chart", "charts", $scope);
 
     $scope.model = rest().findOne({
         id: $routeParams.id,
         type: $scope.type
     }, function() {
         $scope.model.link = $sce.trustAsResourceUrl($scope.model.link);
-        if (!!$scope.model.link) {
-            loadGeojson();
-        }
+        //load Chart;
     });
-
-    var loadGeojson = function() {
-        angular.extend($scope, {// Map data
-//            tiles: {
-//                url: 'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png'
-//            },
-            geojson: {
-                data: $scope.model.geojson,
-                onEachFeature: function(feature, layer) {
-                    if (feature.properties) {
-                        var html = '';
-                        angular.forEach(feature.properties, function(value, key) {
-                            html += '<strong>' + key + '</strong>: ' + value + '<br><br>';
-                        });
-                        if (html != '') {
-                            layer.bindPopup(html);
-                        }
-                    }
-                }
-            },
-        });
-//        $scope.geojson = {
-//            data: $scope.model.geojson,
-//        };
-    };
 
     $scope.edit = function(model) {
         var url = '/' + $scope.type + '/' + model.id + "/edit";
@@ -88,9 +49,9 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
     };
 }
 
-function MapCreateController($scope, modelService, rest, $location, model, $sce, $routeParams, Alertify, usSpinnerService) {
+function ChartCreateController($scope, modelService, rest, $location, model, $sce, $routeParams, Alertify, usSpinnerService) {
 
-    modelService.initService("Map", "maps", $scope);
+    modelService.initService("Chart", "charts", $scope);
 
     $scope.model = new model();
     $scope.steps = [];
@@ -147,7 +108,7 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
         } else if ((step == 1) && (!angular.isUndefined($scope.model.link) && $scope.model.link != '')) {
             $scope.checkstep(2);
         } else {
-            if ((step == 1 && ($scope.model.basemap) && ($scope.model.file)) || (step == 2 && ($scope.model.file) && ($scope.model.link || $scope.model.basemap)) || step == 0) {
+            if ((step == 1 && ($scope.model.type) && ($scope.model.file)) || (step == 2 && ($scope.model.file) && ($scope.model.link || $scope.model.type)) || step == 0) {
 
                 if (step == 0) {
                     $scope.steps[0] = "active";
@@ -181,12 +142,9 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
         }
 
     }
-    $scope.getHtml = function(html) {
-        return $sce.trustAsHtml(html);
-    };
 
     var validate = function(data) {
-        if (data.name != '' && (data.basemap != '' || data.link != '')) {
+        if (data.name != '' && (data.type != '' || data.link != '')) {
             return true;
         } else {
             return false;
@@ -195,22 +153,6 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
 
     $scope.add = function(model) {
         usSpinnerService.spin('spinner');
-
-        for (obj in $scope.model) {
-            if (obj.indexOf("property") != -1) {
-                delete $scope.model[obj]
-            }
-        }
-
-        var cont = 1;
-        $scope.model.properties = [];
-        for (var i = 0; i < $scope.model.items.length; i++) {
-            var values = [];
-            $scope.model["property" + cont] = "";
-            $scope.model.properties = $scope.model.properties.concat($scope.model.items[i].field2);
-            cont++;
-        }
-        $scope.model.properties = $scope.model.properties.toString();
 
         if (validate(model)) {
             rest().save({
@@ -232,36 +174,16 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
         }
     };
 
-    $scope.model.items = [];
-
-    $scope.inputs = [];
-    var i = 0;
-    $scope.addInput = function() {
-        if ($scope.model.items.length < 10) {
-            var newItemNo = $scope.model.items.length + 1;
-            $scope.model.items.push({
-                field: ""
-            })
-        }
-
-    }
-    $scope.deleteIndexInput = function(index, field) {
-        $scope.model.items.splice(index, 1);
-    }
-
-    $scope.increment = function(a) {
-        return a + 1;
-    }
-
-    $scope.itemName = function(a) {
-        return "property" + (parseInt(a) + 1);
-    }
+    $scope.getHtml = function(html) {
+        return $sce.trustAsHtml(html);
+    };
 
 }
 
 
-function MapEditController($scope, modelService, $routeParams, $sce, rest, $location, model, Alertify, usSpinnerService) {
-    modelService.initService("Map", "maps", $scope);
+function ChartEditController($scope, modelService, $routeParams, $sce, rest, $location, model, Alertify, usSpinnerService) {
+    modelService.initService("Chart", "charts", $scope);
+
     $scope.model = new model();
 
     $scope.steps = [];
@@ -269,8 +191,6 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
     $scope.steps[1] = "undone";
     $scope.steps[2] = "undone";
     $scope.stepactive = 0;
-
-    var url_map = '';
 
     var generate_headers = function() {
         if ($scope.fileModel.data.length > 0)
@@ -296,16 +216,14 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
         }
     };
 
-
-
     $scope.checkstep = function(step) {
 
         if ((step == 1) && ($scope.headersFile == null)) {
             Alertify.alert('Le faltó asociar el archivo o no se puede leer.');
-        } else if ((step == 1) && (!angular.isUndefined($scope.model.link) && $scope.model.link != '' && ($scope.model.link != url_map))) {
+        } else if ((step == 1) && (!angular.isUndefined($scope.model.link) && $scope.model.link != '')) {
             $scope.checkstep(2);
         } else {
-            if ((step == 1 && ($scope.model.basemap) && ($scope.model.file)) || (step == 2 && ($scope.model.file) && ($scope.model.link || $scope.model.basemap)) || step == 0) {
+            if ((step == 1 && ($scope.model.type) && ($scope.model.file)) || (step == 2 && ($scope.model.file) && ($scope.model.link || $scope.model.type)) || step == 0) {
 
                 if (step == 0) {
                     $scope.steps[0] = "active";
@@ -340,13 +258,8 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
 
     }
 
-    $scope.getHtml = function(html) {
-        return $sce.trustAsHtml(html);
-    };
-
-
     var validate = function(data) {
-        if (data.name != '' && (data.basemap != '' || data.link != '')) {
+        if (data.name != '' && (data.type != '' || data.link != '')) {
             return true;
         } else {
             return false;
@@ -356,22 +269,6 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
     $scope.update = function(model) {
 
         usSpinnerService.spin('spinner');
-
-        for (obj in $scope.model) {
-            if (obj.indexOf("property") != -1) {
-                delete $scope.model[obj]
-            }
-        }
-
-        var cont = 1;
-        $scope.model.properties = [];
-        for (var i = 0; i < $scope.model.items.length; i++) {
-            var values = [];
-            $scope.model["property" + cont] = "";
-            $scope.model.properties = $scope.model.properties.concat($scope.model.items[i].field2);
-            cont++;
-        }
-        $scope.model.properties = $scope.model.properties.toString();
 
         if (validate(model)) {
 
@@ -402,7 +299,6 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
             id: $routeParams.id,
             type: $scope.type,
         }, function() {
-            url_map = $scope.model.link;
             $scope.file_disabled = 'enabled';
             if (!angular.isUndefined($scope.model.file)) {
                 $scope.fileModel = rest().contents({
@@ -417,50 +313,13 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
                     generate_headers();
                 });
                 $scope.file_disabled = 'disabled';
-
-
-            }
-
-            $scope.model.items = [];
-
-            var counter = 0;
-            if (!!$scope.model.geojson.features[0]) {
-                var valores = Object.keys($scope.model.geojson.features[0].properties);
-                angular.forEach(valores, function(value, key) {
-                    $scope.model.items.push({
-                        field2: value,
-                        index: counter
-                    });
-                    counter++;
-                });
             }
         });
     };
 
     $scope.load();
 
-
-
-    $scope.inputs = [];
-    var i = 0;
-    $scope.addInput = function() {
-        if ($scope.model.items.length < 10) {
-            var newItemNo = $scope.model.items.length + 1;
-            $scope.model.items.push({
-                field: ""
-            })
-        }
-
-    }
-    $scope.deleteIndexInput = function(index, field) {
-        $scope.model.items.splice(index, 1);
-    }
-
-    $scope.increment = function(a) {
-        return a + 1;
-    }
-
-    $scope.itemName = function(a) {
-        return "property" + (parseInt(a) + 1);
-    }
+    $scope.getHtml = function(html) {
+        return $sce.trustAsHtml(html);
+    };
 }

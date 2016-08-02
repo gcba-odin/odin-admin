@@ -209,6 +209,24 @@
                     controller: MapEditController
                 })
 
+                // Charts
+                .when("/charts", {
+                    templateUrl: "views/chart/list.html",
+                    controller: ChartListController
+                })
+                .when("/charts/:id/view", {
+                    templateUrl: "views/chart/view.html",
+                    controller: ChartViewController
+                })
+                .when("/charts/new/:file", {
+                    templateUrl: "views/chart/add.html",
+                    controller: ChartCreateController
+                })
+                .when("/charts/:id/edit", {
+                    templateUrl: "views/chart/edit.html",
+                    controller: ChartEditController
+                })
+
                 .otherwise({
                     redirectTo: '/'
                 });

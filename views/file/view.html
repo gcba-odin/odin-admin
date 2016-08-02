@@ -16,10 +16,11 @@
                                 <span class="caret"></span></button>
                             <ul class="dropdown-menu dropdown-menu-right">
                                 <li><a ng-href="#/maps/new/{{model.id}}" ><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_MAP' | translate }}</a></li>
-                                <li class="disabled"><a><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_GRAPHIC' | translate }}</a></li>
+                                <li><a ng-href="#/charts/new/{{model.id}}" ><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_CHART' | translate }}</a></li>
                             </ul>
                         </div>
-                        <button ng-if="model.resources && model.resources.length > 0"  data-toggle="modal" data-target="#viewLinkResources" class="btn btn-default pull-right magin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_RESOURCES' | translate }}</button> 
+                        
+                        <button ng-if="!!model.resources.data.maps || !!model.resources.data.charts"  data-toggle="modal" data-target="#viewLinkResources" class="btn btn-default pull-right magin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_RESOURCES' | translate }}</button> 
                     </div>
                     <div class="box-body table-responsive no-padding">
                         <table class="table usertable">
@@ -127,26 +128,44 @@
                     <table class="table">
                         <thead>
                         <th>{{ 'RESOURCE' | translate }}</th>
+                        <th>{{ 'TYPE' | translate }}</th>
                         <th>{{ 'VIEW' | translate }}</th>
                         <th>{{ 'EDIT' | translate }}</th>
                         <th>{{ 'DELETE' | translate }}</th>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="resource in model.resources">
+                            <tr ng-repeat="map in model.resources.data.maps">
                                 <td>
-                                    <span>{{resource.name}}</span>
+                                    <span>{{map.name}}</span>
                                 </td>
                                 <td>
-                                    <a ng-if="resource.geojson" target="_blank" class="btn btn-primary" ng-href="#/maps/{{resource.id}}/view">{{ 'VIEW' | translate }}</a>
-                                    <a ng-if="!resource.geojson" target="_blank" class="btn btn-primary" ng-href="#/graphics/{{resource.id}}/view">{{ 'VIEW' | translate }}</a>
+                                    <span>{{'MAP'| translate }}</span>
                                 </td>
                                 <td>
-                                    <a ng-if="resource.geojson" target="_blank" class="btn btn-primary" ng-href="#/maps/{{resource.id}}/edit">{{ 'EDIT' | translate }}</a>
-                                    <a ng-if="!resource.geojson" target="_blank" class="btn btn-primary" ng-href="#/graphics/{{resource.id}}/edit">{{ 'EDIT' | translate }}</a>
+                                    <a target="_blank" class="btn btn-primary" ng-href="#/maps/{{map.id}}/view">{{ 'VIEW' | translate }}</a>
                                 </td>
                                 <td>
-                                    <a ng-if="resource.geojson" class="btn btn-danger" ng-click="deleteResource(resource.id, 'maps')">{{ 'DELETE' | translate }}</a>
-                                    <a ng-if="!resource.geojson" class="btn btn-danger" ng-click="deleteResource(resource.id, 'graphics')">{{ 'DELETE' | translate }}</a>
+                                    <a target="_blank" class="btn btn-primary" ng-href="#/maps/{{map.id}}/edit">{{ 'EDIT' | translate }}</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-danger" ng-click="deleteResource(map.id, 'maps')">{{ 'DELETE' | translate }}</a>
+                                </td>
+                            </tr>
+                            <tr ng-repeat="chart in model.resources.data.charts">
+                                <td>
+                                    <span>{{chart.name}}</span>
+                                </td>
+                                <td>
+                                    <span>{{'CHART'| translate }}</span>
+                                </td>
+                                <td>
+                                    <a target="_blank" class="btn btn-primary" ng-href="#/charts/{{chart.id}}/view">{{ 'VIEW' | translate }}</a>
+                                </td>
+                                <td>
+                                    <a target="_blank" class="btn btn-primary" ng-href="#/charts/{{chart.id}}/edit">{{ 'EDIT' | translate }}</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-danger" ng-click="deleteResource(chart.id, 'charts')">{{ 'DELETE' | translate }}</a>
                                 </td>
                             </tr>
 

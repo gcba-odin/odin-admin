@@ -143,6 +143,20 @@
                         responseError: handError
                     }
                 },
+                resources: {
+                    url: $url + "/:id/resources?:params",
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'JWT ' + token
+                    },
+                    transformResponse: function(data) {
+                        $rootScope.progressbar.complete();
+                        return angular.fromJson(data);
+                    },
+                    interceptor: {
+                        responseError: handError
+                    }
+                },
                 getArray: {
                     url: $url + "/:id/:asociate",
                     method: 'GET',

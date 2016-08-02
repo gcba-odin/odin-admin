@@ -1,6 +1,6 @@
 <header-home></header-home>
 <div class="content-wrapper">
-      <breadcrumbs data-type="{{ 'VIEW' | translate }}" data-model-name="{{ 'MAPS' | translate }}" data-model="{{type}}"></breadcrumbs>
+      <breadcrumbs data-type="{{ 'VIEW' | translate }}" data-model-name="{{ 'CHARTS' | translate }}" data-model="{{type}}"></breadcrumbs>
     <!-- Main content -->
     <section class="content">
         <div class="row">
@@ -10,8 +10,7 @@
                       <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} {{ model.name }}</h3>
                     </div>
                     <div class="box-body table-responsive no-padding">
-                        <leaflet ng-if="!model.link" lf-center="center" id="mapid" geojson="geojson" tiles="tiles"></leaflet>
-                        <iframe id="iframeDiv" ng-src="{{ model.link }}" ng-if="model.link"></iframe>
+                        <iframe id="iframeDiv" ng-if="model.link" ng-src="{{ model.link }}"></iframe>
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">
@@ -27,9 +26,4 @@
     <!--  Main content-->
 </div>
 
-<style media="screen">
-  #mapid{
-    height:480px;
-  }
-</style>
 <footer-home></footer-home>
