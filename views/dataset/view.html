@@ -13,7 +13,7 @@
                         <button ng-click="unPublish()" ng-if="model.publishedAt" class="pull-right btn btn-warning">{{ 'UNPUBLISH' | translate }}</button>
                         <button ng-click="publish()" ng-if="!model.publishedAt" class="pull-right btn btn-success">{{ 'PUBLISH' | translate }}</button>
                         <a ng-href="#/files/new/{{model.id}}" class="btn btn-default pull-right magin-right-10"><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_FILES' | translate }}</a>
-                        <button data-toggle="modal" data-target="#viewLinkResources" class="btn btn-default pull-right magin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_FILES' | translate }}</button>
+                        <button ng-if="model.files.length > 0" data-toggle="modal" data-target="#viewLinkResources" class="btn btn-default pull-right magin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_FILES' | translate }}</button>
                     </div>
                     <div class="box-body table-responsive no-padding">
                         <table class="table usertable">
