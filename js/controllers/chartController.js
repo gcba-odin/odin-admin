@@ -36,6 +36,7 @@ function ChartViewController($scope, modelService, $routeParams, rest, $location
         type: $scope.type
     }, function() {
         $scope.model.link = $sce.trustAsResourceUrl($scope.model.link);
+        $scope.model.charttype = 'chart-' + $scope.model.type;
         //load Chart;
     });
 
@@ -59,6 +60,8 @@ function ChartCreateController($scope, modelService, rest, $location, model, $sc
     $scope.steps[1] = "undone";
     $scope.steps[2] = "undone";
     $scope.stepactive = 0;
+
+    $scope.model.items = [{field: ""}, {field: ""}];
 
     var generate_headers = function() {
         if ($scope.fileModel.data.length > 0)
@@ -108,7 +111,7 @@ function ChartCreateController($scope, modelService, rest, $location, model, $sc
         } else if ((step == 1) && (!angular.isUndefined($scope.model.link) && $scope.model.link != '')) {
             $scope.checkstep(2);
         } else {
-            if ((step == 1 && ($scope.model.type) && ($scope.model.file)) || (step == 2 && ($scope.model.file) && ($scope.model.link || $scope.model.type)) || step == 0) {
+            if ((step == 1 && ($scope.model.type) && ($scope.model.file)) || (step == 2 && ($scope.model.file) && ($scope.model.link || ($scope.model.type && $scope.model.dataType && $scope.model.items[0]))) || step == 0) {
 
                 if (step == 0) {
                     $scope.steps[0] = "active";
@@ -153,6 +156,16 @@ function ChartCreateController($scope, modelService, rest, $location, model, $sc
 
     $scope.add = function(model) {
         usSpinnerService.spin('spinner');
+
+        $scope.model.dataSeries = [];
+        for (var i = 0; i < $scope.model.items.length; i++) {
+            var values = [];
+            //$scope.model["property" + cont] = "";
+            if ($scope.model.items[i].field2) {
+                $scope.model.dataSeries = $scope.model.dataSeries.concat($scope.model.items[i].field2);
+            }
+        }
+        $scope.model.dataSeries = $scope.model.dataSeries.toString();
 
         if (validate(model)) {
             rest().save({
@@ -217,13 +230,12 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
     };
 
     $scope.checkstep = function(step) {
-
         if ((step == 1) && ($scope.headersFile == null)) {
             Alertify.alert('Le faltó asociar el archivo o no se puede leer.');
-        } else if ((step == 1) && (!angular.isUndefined($scope.model.link) && $scope.model.link != '')) {
+        } else if ((step == 1) && (!angular.isUndefined($scope.model.link) && !!$scope.model.link)) {
             $scope.checkstep(2);
         } else {
-            if ((step == 1 && ($scope.model.type) && ($scope.model.file)) || (step == 2 && ($scope.model.file) && ($scope.model.link || $scope.model.type)) || step == 0) {
+            if ((step == 1 && ($scope.model.type) && ($scope.model.file)) || (step == 2 && ($scope.model.file) && ($scope.model.link || ($scope.model.type && $scope.model.subtype && $scope.model.element))) || step == 0) {
 
                 if (step == 0) {
                     $scope.steps[0] = "active";
@@ -270,6 +282,16 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
 
         usSpinnerService.spin('spinner');
 
+        $scope.model.dataSeries = [];
+        for (var i = 0; i < $scope.model.items.length; i++) {
+            var values = [];
+            //$scope.model["property" + cont] = "";
+            if ($scope.model.items[i].field2) {
+                $scope.model.dataSeries = $scope.model.dataSeries.concat($scope.model.items[i].field2);
+            }
+        }
+        $scope.model.dataSeries = $scope.model.dataSeries.toString();
+
         if (validate(model)) {
 
             rest().update({
@@ -313,6 +335,19 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
                     generate_headers();
                 });
                 $scope.file_disabled = 'disabled';
+
+                $scope.model.items = [];
+
+                var counter = 0;
+                if (!!$scope.model.dataSeries) {
+                    angular.forEach($scope.model.dataSeries, function(value, key) {
+                        $scope.model.items.push({
+                            field2: value,
+                            index: counter
+                        });
+                        counter++;
+                    });
+                }
             }
         });
     };

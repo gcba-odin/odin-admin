@@ -11,8 +11,8 @@
                     </div>
                     <div class="box-body table-responsive no-padding">
                         <iframe id="iframeDiv" ng-if="model.link" ng-src="{{ model.link}}"></iframe>
-                        <canvas ng-if="!model.link" id="chartDiv" class="chart chart-{{model.type}}"
-                                chart-data="model.chartjson.data" chart-labels="model.chartjson.labels"></canvas>
+                        <canvas ng-if="!model.link" id="chartDiv" class="chart chart-base" chart-type="model.type"
+                                chart-data="model.data.data" chart-labels="model.data.labels"></canvas>
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">
