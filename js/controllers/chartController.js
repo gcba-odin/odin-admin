@@ -235,7 +235,7 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
         } else if ((step == 1) && (!angular.isUndefined($scope.model.link) && !!$scope.model.link)) {
             $scope.checkstep(2);
         } else {
-            if ((step == 1 && ($scope.model.type) && ($scope.model.file)) || (step == 2 && ($scope.model.file) && ($scope.model.link || ($scope.model.type && $scope.model.subtype && $scope.model.element))) || step == 0) {
+            if ((step == 1 && ($scope.model.type) && ($scope.model.file)) || (step == 2 && ($scope.model.file) && ($scope.model.link || ($scope.model.type && $scope.model.dataType && $scope.model.items[0]))) || step == 0) {
 
                 if (step == 0) {
                     $scope.steps[0] = "active";
