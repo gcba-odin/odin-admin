@@ -48,7 +48,7 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
         type: $scope.type
     }, function() {
         $scope.model.link = $sce.trustAsResourceUrl($scope.model.link);
-        if (!!$scope.model.link) {
+        if (!$scope.model.link) {
             loadGeojson();
         }
     });
