@@ -15,8 +15,11 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive no-padding">
+                        <search-bar data-search="{required:true,name:'Nombre'}" data-filters="{{filtersView}}"></search-bar>
+
                         <table class="table table-hover">
-                            <tbody><tr>
+                            <tbody>
+                                <tr>
                                     <th>{{ 'NAME' | translate }}</th>
                                     <th>{{ 'STATE' | translate }}</th>
                                     <th class="text-center">{{ 'ACTIONS' | translate }}</th>
@@ -26,14 +29,15 @@
                                     <td>
                                         <span class="label label-default" ng-class="activeClass(model.active)">{{model.active ? 'Activo' : 'Inactivo'}}</span>
                                     </td>
-                                    <td class="text-center table-btn"> 
+                                    <td class="text-center table-btn">
                                         <a class="btn btn-primary" ng-click="view({id: model.id})">{{ 'VIEW' | translate }}</a>
                                         <a class="btn btn-info" ng-click="edit({id: model.id})">{{ 'EDIT' | translate }}</a>
                                         <a class="btn btn-danger" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)">{{ 'DELETE' | translate }}</a>
                                     </td>
                                 </tr>
 
-                            </tbody></table>
+                            </tbody>
+                        </table>
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -46,7 +50,7 @@
 <footer-home></footer-home>
 
 <script>
-            $('#myStateButton').on('click', function() {
-                $(this).button('complete') // button text will be "finished!"
-            })
+    $('#myStateButton').on('click', function() {
+        $(this).button('complete') // button text will be "finished!"
+    })
 </script>

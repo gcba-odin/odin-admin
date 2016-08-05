@@ -39,10 +39,12 @@ function FileTypeViewController($scope, Flash, rest, $routeParams, $location, mo
     }
 }
 
-function FileTypeCreateController($scope, rest, model, Flash, $location, modelService, Alertify, usSpinnerService) {
+function FileTypeCreateController($scope, $http, rest, model, Flash, $location, modelService, Alertify, usSpinnerService) {
     modelService.initService("File Type", "filetypes", $scope);
 
-
+    $http.get('/config/mimetypes.json').success(function(data) {
+        $scope.mimetypes = Object.keys(data);
+    });
     $scope.model = new model();
     $scope.add = function(isValid) {
         usSpinnerService.spin('spinner');
@@ -51,7 +53,7 @@ function FileTypeCreateController($scope, rest, model, Flash, $location, modelSe
                 type: $scope.type
             }, $scope.model, function(resp) {
                 usSpinnerService.stop('spinner');
-                var url = '/' + $scope.type + '/' + resp.data.id + "/edit";
+                var url = '/' + $scope.type + '/' + resp.data.id + "/view";
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
@@ -65,9 +67,12 @@ function FileTypeCreateController($scope, rest, model, Flash, $location, modelSe
     };
 }
 
-function FileTypeEditController($scope, Flash, rest, $routeParams, model, $location, modelService, Alertify, usSpinnerService) {
+function FileTypeEditController($scope, $http, Flash, rest, $routeParams, model, $location, modelService, Alertify, usSpinnerService) {
     modelService.initService("File Type", "filetypes", $scope);
 
+    $http.get('/config/mimetypes.json').success(function(data) {
+        $scope.mimetypes = Object.keys(data);
+    });
 
     $scope.model = new model();
     $scope.update = function(isValid) {
@@ -78,7 +83,7 @@ function FileTypeEditController($scope, Flash, rest, $routeParams, model, $locat
                 id: $scope.model.id
             }, $scope.model, function(resp) {
                 usSpinnerService.stop('spinner');
-                var url = '/' + $scope.type + '/' + resp.data.id + "/edit";
+                var url = '/' + $scope.type + '/' + resp.data.id + "/view";
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');

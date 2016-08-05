@@ -1,6 +1,6 @@
 <header-home></header-home>
 <div class="content-wrapper">
-    <breadcrumbs   data-model-name="{{ 'FILE_TYPES' | translate }}" data-model="{{type}}"></breadcrumbs>
+    <breadcrumbs data-model-name="{{ 'FILE_TYPES' | translate }}" data-model="{{type}}"></breadcrumbs>
     <!-- Main content -->
     <section class="content">
         <div class="row">
@@ -15,14 +15,17 @@
                     <!-- /.box-header -->
                     <div class="box-body table-responsive no-padding">
                         <table class="table table-hover">
-                            <tbody><tr>
+                            <tbody>
+                                <tr>
                                     <!-- <th>ID</th>-->
                                     <th>{{ 'NAME' | translate }}</th>
+                                    <th>{{ 'MIMETYPE' | translate }}</th>
                                     <th class="text-center">{{ 'ACTIONS' | translate }}</th>
                                 </tr>
                                 <tr ng-repeat="model in data.data">
                                     <!--<td>{{model.id}}</td>-->
                                     <td>{{model.name}}</td>
+                                    <td>{{model.mimetype}}</td>
                                     <td class="text-center table-btn">
                                         <a class="btn btn-primary" ng-click="view({id: model.id})">{{ 'VIEW' | translate }}</a>
                                         <a class="btn btn-info" ng-click="edit({id: model.id})">{{ 'EDIT' | translate }}</a>
@@ -30,7 +33,8 @@
                                     </td>
                                 </tr>
 
-                            </tbody></table>
+                            </tbody>
+                        </table>
                     </div>
                     <!-- /.box-body -->
                 </div>

@@ -65,7 +65,7 @@ function ConfigCreateController($scope, rest, model, Flash, $location, modelServ
     };
 }
 
-function ConfigEditController($scope, Flash, rest, $routeParams, model, $location, modelService, Alertify, usSpinnerService) {
+function ConfigEditController($scope, Flash, rest, $routeParams, model, $location, modelService, Alertify, usSpinnerService, $filter) {
     modelService.initService("Config", "configs", $scope);
 
 
@@ -92,11 +92,21 @@ function ConfigEditController($scope, Flash, rest, $routeParams, model, $locatio
     };
 
     $scope.load = function() {
+
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type
+        }, function() {
+            if (!!$scope.model.model) {
+                $scope.value = rest().findOne({
+                    id: $scope.model.value,
+                    type: $filter('lowercase')($scope.model.model)
+                }, function() {
+                    $scope.model.value = $scope.value.id
+
+                });
+            }
         });
     };
-
     $scope.load();
 }

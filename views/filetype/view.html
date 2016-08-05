@@ -15,19 +15,23 @@
                                 <td class="detail-bold">{{ 'NAME' | translate }}</td>
                                 <td>{{model.name}}</td>
                             </tr>
+                            <tr ng-if="model.mimetype">
+                                <td class="detail-bold">{{ 'mimetype' | translate }}</td>
+                                <td>{{model.mimetype}}</td>
+                            </tr>
                         </table>
                     </div>
                     <!-- /.box-body -->
-                    <div class="box-footer"> 
+                    <div class="box-footer">
                         <a ng-href="#" back-button class="btn btn-default pull-left">
                             {{ 'BACK' | translate }}
                         </a>
                         <button type="submit" class="btn btn-primary pull-right" ng-click="edit(model)">{{ 'EDIT' | translate }}</button>
                     </div>
-                </div>  
+                </div>
 
             </div>
-        </div>    
+        </div>
     </section>
     <!--  Main content-->
 </div>
