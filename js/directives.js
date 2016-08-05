@@ -23,6 +23,7 @@
                             }
                         }
                     }
+                    $scope.q += 'condition=AND'
                     modelService.search($scope);
                 }
             },

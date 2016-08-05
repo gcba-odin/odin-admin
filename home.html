@@ -1,105 +1,103 @@
 <header-home></header-home>
 <div class="content-wrapper">
 
-   
 
-    <!-- Main content -->
-    <section class="content">
+
+  <!-- Main content -->
+  <section class="content">
     <div class="row">
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-aqua">
-            <div class="inner">
-              <h3>{{datasetsCount.data.count}}</h3>
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-aqua">
+          <div class="inner">
+            <h3>{{datasetsCount.data.count}}</h3>
 
-              <p>{{'DATASETS' | translate}} </p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-bar-chart"></i>
-            </div>
-            <a href="#/datasets" class="small-box-footer">{{'MORE_INFO' | translate}} <i class="fa fa-arrow-circle-right"></i></a>
+            <p>{{'DATASETS' | translate}} </p>
           </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-green">
-            <div class="inner">
-              <h3>{{filesCount.data.count}}<sup style="font-size: 20px"></sup></h3>
-
-              <p>{{'FILES' | translate}}</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-file"></i>
-            </div>
-            <a href="#/files" class="small-box-footer">{{'MORE_INFO' | translate}}  <i class="fa fa-arrow-circle-right"></i></a>
+          <div class="icon">
+            <i class="fa fa-bar-chart"></i>
           </div>
+          <a href="#/datasets" class="small-box-footer">{{'MORE_INFO' | translate}} <i class="fa fa-arrow-circle-right"></i></a>
         </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-yellow">
-            <div class="inner">
-              <h3>{{organizationsCount.data.count}}</h3>
-
-              <p>{{'ORGANIZATIONS' | translate}}</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-users"></i>
-            </div>
-            <a href="#/organizations" class="small-box-footer">{{'MORE_INFO' | translate}}  <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-red">
-            <div class="inner">
-              <h3>{{usersCount.data.count}}</h3>
-
-              <p>{{'USERS' | translate}}</p>
-            </div>
-            <div class="icon">
-                <i class="fa fa-user-plus"></i>
-            </div>
-            <a href="#/users" class="small-box-footer">{{'MORE_INFO' | translate}} <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
       </div>
-        <div class="box box-success"  >
-            <div class="box-header ui-sortable-handle"  >
-              <i class="fa fa-eye"></i>
+      <!-- ./col -->
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-green">
+          <div class="inner">
+            <h3>{{filesCount.data.count}}<sup style="font-size: 20px"></sup></h3>
 
-              <h3 class="box-title">Log</h3>
- 
-              
-            </div>
-            <div class="box-body chat" id="chat-box"  >
-              <!-- chat item -->
-              <div class="item" ng-repeat="log in logs.data">
-                <!--<img class="online" alt="user image"  ng-src="http://www.gravatar.com/avatar/{{log.user.email | md5}}fs=150"/>-->
-                    <p class="message">
-                      <a ng-href="#/users/{{log.user.id}}/view" class="name">
-                        <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> {{log.createdAt | date: "MMM d, y h:mm:ss a"}}</small>
-                        {{log.user.username}}
-                      </a>
-                      <span class="label label-default" ng-class="setClassLog(log.action)" >{{log.action+'D'  | uppercase | translate | capitalize}}</span>
-                       {{log.target | uppercase| translate | generalize | translate}}
-                      <a ng-href="#/{{log.target}}s/{{log.resource}}/view" ng-if="log.action == 'create'  ||  log.action == 'update'">
-                        {{log.target | uppercase | translate}} 
-                      </a>
-                      <span  ng-if="log.action == 'delete'">
-                        {{log.target | uppercase | translate}} 
-                      </span>
-                    </p>
-                </div>
-              <!-- /.item -->
-            </div>
-        
+            <p>{{'FILES' | translate}}</p>
           </div>
-    </section>
-    <!--  Main content-->
+          <div class="icon">
+            <i class="fa fa-file"></i>
+          </div>
+          <a href="#/files" class="small-box-footer">{{'MORE_INFO' | translate}}  <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-yellow">
+          <div class="inner">
+            <h3>{{organizationsCount.data.count}}</h3>
+
+            <p>{{'ORGANIZATIONS' | translate}}</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-users"></i>
+          </div>
+          <a href="#/organizations" class="small-box-footer">{{'MORE_INFO' | translate}}  <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-red">
+          <div class="inner">
+            <h3>{{usersCount.data.count}}</h3>
+
+            <p>{{'USERS' | translate}}</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-user-plus"></i>
+          </div>
+          <a href="#/users" class="small-box-footer">{{'MORE_INFO' | translate}} <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+    </div>
+    <div class="box box-success">
+      <div class="box-header ui-sortable-handle">
+        <i class="fa fa-eye"></i>
+
+        <h3 class="box-title">Log</h3>
+
+
+      </div>
+      <div class="box-body chat" id="chat-box">
+        <!-- chat item -->
+        <div class="item" ng-repeat="log in logs.data">
+          <!--<img class="online" alt="user image"  ng-src="http://www.gravatar.com/avatar/{{log.user.email | md5}}fs=150"/>-->
+          <p class="message">
+            <a class="name">
+              <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> {{log.createdAt | date: "MMM d, y h:mm:ss a"}}</small> {{log.user.username}}
+            </a>
+            <span class="label label-default" ng-class="setClassLog(log.action)">{{log.action+'D'  | uppercase | translate | capitalize}}</span> {{log.target | uppercase| translate | generalize | translate}}
+            <a ng-href="#/{{log.target}}s/{{log.resource}}/view" ng-if="log.action == 'create'  ||  log.action == 'update'">
+                        {{log.target | uppercase | translate}}
+                      </a>
+            <span ng-if="log.action == 'delete'">
+                        {{log.target | uppercase | translate}}
+                      </span>
+          </p>
+        </div>
+        <!-- /.item -->
+      </div>
+
+    </div>
+  </section>
+  <!--  Main content-->
 
 </div>
 

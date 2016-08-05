@@ -1,12 +1,12 @@
-var app = angular.module('odin.filetypeControllers', []);
+var app = angular.module('odin.configsControllers', []);
 
 app.factory('model', function($resource) {
     return $resource();
 });
 
-function FileTypeListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService) {
+function ConfigListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService) {
 
-    modelService.initService("File Type", "filetypes", $scope);
+    modelService.initService("Config", "configs", $scope);
 
     $scope.confirmDelete = function(item) {
         modelService.confirmDelete(item);
@@ -27,24 +27,22 @@ function FileTypeListController($scope, $location, rest, $rootScope, Flash, Aler
     modelService.loadAll($scope);
 }
 
-function FileTypeViewController($scope, Flash, rest, $routeParams, $location, modelService) {
-    modelService.initService("File Type", "filetypes", $scope);
+function ConfigViewController($scope, Flash, rest, $routeParams, $location, modelService) {
+    modelService.initService("Config", "configs", $scope);
 
     modelService.findOne($routeParams, $scope);
 
-
     $scope.edit = function(model) {
-        modelService.edit($scope, model);
-
+        var url = '/' + $scope.type + '/' + model.id + "/edit";
+        $location.path(url);
     }
 }
 
-function FileTypeCreateController($scope, $http, rest, model, Flash, $location, modelService, Alertify, usSpinnerService) {
-    modelService.initService("File Type", "filetypes", $scope);
+function ConfigCreateController($scope, rest, model, Flash, $location, modelService, Alertify, usSpinnerService) {
 
-    $http.get('/config/mimetypes.json').success(function(data) {
-        $scope.mimetypes = Object.keys(data);
-    });
+    modelService.initService("Config", "configs", $scope);
+
+
     $scope.model = new model();
     $scope.add = function(isValid) {
         usSpinnerService.spin('spinner');
@@ -53,26 +51,23 @@ function FileTypeCreateController($scope, $http, rest, model, Flash, $location, 
                 type: $scope.type
             }, $scope.model, function(resp) {
                 usSpinnerService.stop('spinner');
-                var url = '/' + $scope.type + '/' + resp.data.id + "/view";
+                var url = '/' + $scope.type;
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
                 if (!!error.data.links.name[0]) {
-                    Alertify.alert('El tipo de archivo que quiere guardar ya existe.');
+                    Alertify.alert('La configuracion que quiere guardar ya existe.');
                 } else {
-                    Alertify.alert('Hubo un error al crear el tipo de archivo.');
+                    Alertify.alert('Hubo un error al crear la configuracion.');
                 }
             });
         }
     };
 }
 
-function FileTypeEditController($scope, $http, Flash, rest, $routeParams, model, $location, modelService, Alertify, usSpinnerService) {
-    modelService.initService("File Type", "filetypes", $scope);
+function ConfigEditController($scope, Flash, rest, $routeParams, model, $location, modelService, Alertify, usSpinnerService, $filter) {
+    modelService.initService("Config", "configs", $scope);
 
-    $http.get('/config/mimetypes.json').success(function(data) {
-        $scope.mimetypes = Object.keys(data);
-    });
 
     $scope.model = new model();
     $scope.update = function(isValid) {
@@ -83,25 +78,35 @@ function FileTypeEditController($scope, $http, Flash, rest, $routeParams, model,
                 id: $scope.model.id
             }, $scope.model, function(resp) {
                 usSpinnerService.stop('spinner');
-                var url = '/' + $scope.type + '/' + resp.data.id + "/view";
+                var url = '/' + $scope.type;
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
                 if (!!error.data.links.name[0]) {
-                    Alertify.alert('El tipo de archivo que quiere guardar ya existe.');
+                    Alertify.alert('La configuracion que quiere guardar ya existe.');
                 } else {
-                    Alertify.alert('Hubo un error al crear el tipo de archivo.');
+                    Alertify.alert('Hubo un error al crear la configuracion.');
                 }
             });
         }
     };
 
     $scope.load = function() {
+
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type
+        }, function() {
+            if (!!$scope.model.model) {
+                $scope.value = rest().findOne({
+                    id: $scope.model.value,
+                    type: $filter('lowercase')($scope.model.model)
+                }, function() {
+                    $scope.model.value = $scope.value.id
+
+                });
+            }
         });
     };
-
     $scope.load();
 }

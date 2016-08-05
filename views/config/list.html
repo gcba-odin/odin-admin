@@ -1,35 +1,31 @@
 <header-home></header-home>
 <div class="content-wrapper">
-    <breadcrumbs data-model-name="{{ 'FILE_TYPES' | translate }}" data-model="{{type}}"></breadcrumbs>
+    <breadcrumbs data-model-name="{{ 'CONFIG' | translate }}" data-model="{{type}}"></breadcrumbs>
     <!-- Main content -->
     <section class="content">
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">{{ 'FILE_TYPES' | translate }}</h3>
-                        <div class="box-tools">
-                            <a ng-href="#/{{type}}/new" class="btn-primary btn nodecoration pull-right">{{ 'ADD' | translate }} {{ 'FILE_TYPES' | translate }}</a>
-                        </div>
+                        <h3 class="box-title">{{ 'CONFIGS' | translate }}</h3>
+                        <!--<div class="box-tools">
+                            <a ng-href="#/configs/new" class="btn-primary btn nodecoration pull-right">{{ 'ADD' | translate }} {{ 'CONFIG' | translate }}</a>
+                        </div>-->
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive no-padding">
                         <table class="table table-hover">
                             <tbody>
                                 <tr>
-                                    <!-- <th>ID</th>-->
-                                    <th>{{ 'NAME' | translate }}</th>
-                                    <th>{{ 'MIMETYPE' | translate }}</th>
+                                    <th>{{ 'DESCRIPTION' | translate }}</th>
                                     <th class="text-center">{{ 'ACTIONS' | translate }}</th>
                                 </tr>
                                 <tr ng-repeat="model in data.data">
-                                    <!--<td>{{model.id}}</td>-->
-                                    <td>{{model.name}}</td>
-                                    <td>{{model.mimetype}}</td>
+                                    <td>{{model.description }}</td>
                                     <td class="text-center table-btn">
-                                        <a class="btn btn-primary" ng-click="view({id: model.id})">{{ 'VIEW' | translate }}</a>
+                                        <!--<a class="btn btn-primary" ng-click="view({id: model.id})">{{ 'VIEW' | translate }}</a>-->
                                         <a class="btn btn-info" ng-click="edit({id: model.id})">{{ 'EDIT' | translate }}</a>
-                                        <a class="btn btn-danger" ng-click="delete({id: model.id})" confirm-click="{{ 'DO_THIS_ACTION' | translate }}">{{ 'DELETE' | translate }}</a>
+                                        <!--<a class="btn btn-danger" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)">{{ 'DELETE' | translate }}</a>-->
                                     </td>
                                 </tr>
 

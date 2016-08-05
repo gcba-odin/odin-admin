@@ -15,8 +15,12 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive no-padding">
+
+                        <search-bar data-search="{required:true,name:'Nombre'}" data-filters="{{filtersView}}"></search-bar>
+
                         <table class="table table-hover">
-                            <tbody><tr>
+                            <tbody>
+                                <tr>
                                     <!-- <th>ID</th>-->
                                     <th>{{ 'NAME' | translate }}</th>
                                     <th>{{ 'STATUS' | translate }}</th>
@@ -25,8 +29,8 @@
                                 <tr ng-repeat="model in data.data">
                                     <!-- <td>{{model.id}}</td>-->
                                     <td>{{model.name}}</td>
-                                    <td> 
-                                        <span ng-if="model.status">{{ model.status.name}} </span> 
+                                    <td>
+                                        <span ng-if="model.status">{{ model.status.name}} </span>
                                     </td>
                                     <td class="text-center table-btn">
                                         <a class="btn btn-primary" ng-click="view({id: model.id})">{{ 'VIEW' | translate }}</a>
@@ -35,7 +39,8 @@
                                     </td>
                                 </tr>
 
-                            </tbody></table>
+                            </tbody>
+                        </table>
                     </div>
                     <!-- /.box-body -->
                 </div>

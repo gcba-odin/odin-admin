@@ -11,6 +11,26 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
 
     modelService.initService("Dataset", "datasets", $scope);
 
+    $scope.filtersView = [{
+        name: 'Estado',
+        model: 'statuses',
+        key: 'name',
+        modelInput: 'status',
+        multiple: true
+    }, {
+        name: 'Autor',
+        model: 'users',
+        key: 'username',
+        modelInput: 'owner',
+        multiple: false
+    }, {
+        name: 'Categoria',
+        model: 'categories',
+        key: 'name',
+        modelInput: 'categories',
+        multiple: false
+    }];
+
     $scope.confirmDelete = function(item) {
         Alertify.confirm('¿Está seguro que quiere borrar este dataset?<br> Al hacerlo, se borrarán todos los recursos asociados').then(
             function onOk() {
@@ -169,7 +189,7 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
                 type: $scope.type
             }, $scope.model, function(resp) {
                 usSpinnerService.stop('spinner');
-                var url = '/' + $scope.type + '/' + resp.data.id;
+                var url = '/' + $scope.type + '/' + resp.data.id + '/view';
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
