@@ -154,7 +154,11 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
     'LONGITUDE': 'Longitud',
     'RESOURCES': 'Recursos',
     'RESOURCE': 'Recurso',
-    'GATHERING_DATE': 'Relevamiento de datos'
+    'GATHERING_DATE': 'Relevamiento de datos',
+    'BASEMAPS': 'Mapas base',
+    'VIEW_BASEMAPS': 'Ver mapas base',
+    'ADD_BASEMAPS': 'Agregar mapa base',
+    'BASEMAP': 'Mapa base',
 
   });
   console.log($rootScope);

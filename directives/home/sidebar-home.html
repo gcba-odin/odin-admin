@@ -1,42 +1,42 @@
 <aside class="main-sidebar">
-  <section class="sidebar" style="height: auto;">
-    <!-- Sidebar user panel -->
+    <section class="sidebar" style="height: auto;">
+        <!-- Sidebar user panel -->
 
-    <!-- search form -->
-    <!--  <form action="#" method="get" class="sidebar-form ng-pristine ng-valid">
-            <div class="input-group">
-              <input type="text" name="q" class="form-control" placeholder="Search...">
-                  <span class="input-group-btn">
-                    <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                    </button>
-                  </span>
-            </div>
+        <!-- search form -->
+        <!--  <form action="#" method="get" class="sidebar-form ng-pristine ng-valid">
+                <div class="input-group">
+                  <input type="text" name="q" class="form-control" placeholder="Search...">
+                      <span class="input-group-btn">
+                        <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                        </button>
+                      </span>
+                </div>
+    
+              </form>-->
+        <!-- /.search form -->
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu">
 
-          </form>-->
-    <!-- /.search form -->
-    <!-- sidebar menu: : style can be found in sidebar.less -->
-    <ul class="sidebar-menu">
-
-      <li ng-class="{active: isActive('/users/new') || isActive('/users') || isActiveEdit('users')}" class="treeview">
-        <a ng-href="javascript:void(0)">
-          <svg version="1.1" id="users-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
+            <li ng-class="{active: isActive('/users/new') || isActive('/users') || isActiveEdit('users')}" class="treeview">
+                <a ng-href="javascript:void(0)">
+                    <svg version="1.1" id="users-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                         <path fill="#FFB600" d="M12.337,10.705v0.969H4.214v-0.969l2.707-1.739V8.291c-0.166,0-0.321-0.168-0.463-0.504
                               c-0.143-0.339-0.213-0.62-0.213-0.852V5.583c0-0.561,0.199-1.04,0.596-1.436c0.396-0.398,0.876-0.597,1.435-0.597
                               c0.56,0,1.038,0.198,1.435,0.597c0.397,0.396,0.597,0.875,0.597,1.436v1.353c0,0.231-0.07,0.513-0.214,0.852
                               C9.952,8.123,9.797,8.291,9.63,8.291v0.675L12.337,10.705z"/>
                     </svg>
-          <span>{{ 'USERS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">
-          <li ng-class="{active: isActive('/users/new')}"><a ng-href="#/users/new"><i class="fa fa-circle-o"></i> {{ 'ADD_USER' | translate }}</a></li>
-          <li ng-class="{active: isActive('/users')}"><a ng-href="#/users"><i class="fa fa-circle-o"></i> {{ 'VIEW_USERS' | translate }}  </a></li>
-        </ul>
-      </li>
+                    <span>{{ 'USERS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li ng-class="{active: isActive('/users/new')}"><a ng-href="#/users/new"><i class="fa fa-circle-o"></i> {{ 'ADD_USER' | translate }}</a></li>
+                    <li ng-class="{active: isActive('/users')}"><a ng-href="#/users"><i class="fa fa-circle-o"></i> {{ 'VIEW_USERS' | translate }}  </a></li>
+                </ul>
+            </li>
 
 
-      <li ng-class="{active: isActive('/organizations/new') || isActive('/organizations') || isActiveEdit('organizations')}" class="treeview">
-        <a ng-href="javascript:void(0)">
-          <svg version="1.1" id="organizations-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
+            <li ng-class="{active: isActive('/organizations/new') || isActive('/organizations') || isActiveEdit('organizations')}" class="treeview">
+                <a ng-href="javascript:void(0)">
+                    <svg version="1.1" id="organizations-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                         <g>
                             <g>
                                 <path fill="#FFB600" d="M9.702,8.26c1.025,0,1.854-1.007,1.854-2.25c0-1.242-0.272-2.25-1.854-2.25
@@ -59,16 +59,16 @@
                             </g>
                         </g>
                     </svg>
-          <span>{{ 'ORGANIZATIONS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">
-          <li ng-class="{active: isActive('/organizations/new')}"><a ng-href="#/organizations/new"><i class="fa fa-circle-o"></i> {{ 'ADD_ORGANIZATIONS' | translate }}</a></li>
-          <li ng-class="{active: isActive('/organizations')}"><a ng-href="#/organizations"><i class="fa fa-circle-o"></i> {{ 'VIEW_ORGANIZATIONS' | translate }} </a></li>
-        </ul>
-      </li>
-      <li ng-class="{active: isActive('/categories/new') || isActive('/categories') || isActiveEdit('categories')}" class="treeview">
-        <a ng-href="javascript:void(0)">
-          <svg version="1.1" id="organizations-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
+                    <span>{{ 'ORGANIZATIONS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li ng-class="{active: isActive('/organizations/new')}"><a ng-href="#/organizations/new"><i class="fa fa-circle-o"></i> {{ 'ADD_ORGANIZATIONS' | translate }}</a></li>
+                    <li ng-class="{active: isActive('/organizations')}"><a ng-href="#/organizations"><i class="fa fa-circle-o"></i> {{ 'VIEW_ORGANIZATIONS' | translate }} </a></li>
+                </ul>
+            </li>
+            <li ng-class="{active: isActive('/categories/new') || isActive('/categories') || isActiveEdit('categories')}" class="treeview">
+                <a ng-href="javascript:void(0)">
+                    <svg version="1.1" id="organizations-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                         <path fill="#FFB600" d="M3.357,4.24V3.411c0-0.114,0.038-0.213,0.119-0.294c0.08-0.08,0.177-0.119,0.294-0.119h0.826
                               c0.117,0,0.216,0.039,0.294,0.119c0.082,0.081,0.121,0.18,0.121,0.294V4.24c0,0.111-0.039,0.207-0.121,0.289
                               C4.812,4.611,4.714,4.654,4.597,4.654H3.771c-0.117,0-0.214-0.043-0.294-0.125C3.396,4.447,3.357,4.352,3.357,4.24z M3.357,6.725
@@ -92,149 +92,149 @@
                               c0.078,0.081,0.119,0.18,0.119,0.294v0.829c0,0.108-0.041,0.206-0.119,0.289c-0.082,0.082-0.18,0.124-0.294,0.124H6.254
                               c-0.117,0-0.212-0.042-0.294-0.124C5.881,11.899,5.84,11.802,5.84,11.693z"/>
                     </svg>
-          <span>{{ 'CATEGORIES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">
-          <li ng-class="{active: isActive('/categories/new')}"><a ng-href="#/categories/new"><i class="fa fa-circle-o"></i>  {{ 'ADD_CATEGORIES' | translate }}</a></li>
-          <li ng-class="{active: isActive('/categories')}"><a ng-href="#/categories"><i class="fa fa-circle-o"></i> {{ 'VIEW_CATEGORIES' | translate }}</a></li>
-        </ul>
-      </li>
-      <li ng-class="{active: isActive('/statuses/new') || isActive('/statuses') || isActiveEdit('statuses')}" class="treeview">
-        <a ng-href="javascript:void(0)">
-          <svg version="1.1" id="statuses-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
+                    <span>{{ 'CATEGORIES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li ng-class="{active: isActive('/categories/new')}"><a ng-href="#/categories/new"><i class="fa fa-circle-o"></i>  {{ 'ADD_CATEGORIES' | translate }}</a></li>
+                    <li ng-class="{active: isActive('/categories')}"><a ng-href="#/categories"><i class="fa fa-circle-o"></i> {{ 'VIEW_CATEGORIES' | translate }}</a></li>
+                </ul>
+            </li>
+            <li ng-class="{active: isActive('/statuses/new') || isActive('/statuses') || isActiveEdit('statuses')}" class="treeview">
+                <a ng-href="javascript:void(0)">
+                    <svg version="1.1" id="statuses-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                         <path fill="#FFB600" d="M9.076,3.923c-2.045,0-3.702,1.654-3.702,3.698c0,2.043,1.657,3.7,3.702,3.7c2.044,0,3.7-1.657,3.7-3.7
                               C12.776,5.577,11.12,3.923,9.076,3.923z M9.562,9.966H8.59V6.827h0.972V9.966z M9.472,6.236C9.363,6.347,9.23,6.401,9.076,6.401
                               c-0.155,0-0.288-0.055-0.398-0.165S8.514,5.993,8.514,5.839s0.054-0.287,0.164-0.396c0.11-0.111,0.243-0.165,0.398-0.165
                               c0.154,0,0.287,0.054,0.396,0.165c0.11,0.109,0.166,0.242,0.166,0.396S9.582,6.126,9.472,6.236z"/>
                     </svg>
-          <span>{{ 'STATUSES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">
-          <li ng-class="{active: isActive('/statuses/new')}"><a ng-href="#/statuses/new"><i class="fa fa-circle-o"></i>{{ 'ADD_STATUSES' | translate }}</a></li>
-          <li ng-class="{active: isActive('/statuses')}"><a ng-href="#/statuses"><i class="fa fa-circle-o"></i>  {{ 'VIEW_STATUSES' | translate }} </a></li>
-        </ul>
-      </li>
-      <li ng-class="{active: isActive('/filetypes/new') || isActive('/filetypes') || isActiveEdit('filetypes')}" class="treeview">
-        <a ng-href="javascript:void(0)">
-          <svg version="1.1" id="filetypes-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
+                    <span>{{ 'STATUSES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li ng-class="{active: isActive('/statuses/new')}"><a ng-href="#/statuses/new"><i class="fa fa-circle-o"></i>{{ 'ADD_STATUSES' | translate }}</a></li>
+                    <li ng-class="{active: isActive('/statuses')}"><a ng-href="#/statuses"><i class="fa fa-circle-o"></i>  {{ 'VIEW_STATUSES' | translate }} </a></li>
+                </ul>
+            </li>
+            <li ng-class="{active: isActive('/filetypes/new') || isActive('/filetypes') || isActiveEdit('filetypes')}" class="treeview">
+                <a ng-href="javascript:void(0)">
+                    <svg version="1.1" id="filetypes-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                         <path fill="#FFB600" d="M9.13,7.558h2.445v4.254c0,0.045-0.015,0.082-0.042,0.111c-0.031,0.031-0.066,0.045-0.112,0.045H6.225
                               c-0.045,0-0.081-0.014-0.111-0.045c-0.027-0.029-0.042-0.066-0.042-0.111V4.564c0-0.043,0.015-0.082,0.042-0.111
                               c0.03-0.03,0.065-0.044,0.111-0.044H9.13V7.558z M11.575,6.929H9.742V5.039L11.575,6.929z"/>
                     </svg>
-          <span>{{ 'FILE_TYPES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">
-          <li ng-class="{active: isActive('/filetypes/new')}"><a ng-href="#/filetypes/new"><i class="fa fa-circle-o"></i>  {{ 'ADD_FILETYPES' | translate }}</a></li>
-          <li ng-class="{active: isActive('/filetypes')}"><a ng-href="#/filetypes"><i class="fa fa-circle-o"></i>  {{ 'VIEW_FILETYPES' | translate }} </a></li>
-        </ul>
-      </li>
-      <li ng-class="{active: isActive('/files/new/:dataset?') || isActive('/files') || isActiveEdit('files')}" class="treeview">
-        <a ng-href="javascript:void(0)">
-          <svg version="1.1" id="files-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
+                    <span>{{ 'FILE_TYPES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li ng-class="{active: isActive('/filetypes/new')}"><a ng-href="#/filetypes/new"><i class="fa fa-circle-o"></i>  {{ 'ADD_FILETYPES' | translate }}</a></li>
+                    <li ng-class="{active: isActive('/filetypes')}"><a ng-href="#/filetypes"><i class="fa fa-circle-o"></i>  {{ 'VIEW_FILETYPES' | translate }} </a></li>
+                </ul>
+            </li>
+            <li ng-class="{active: isActive('/files/new/:dataset?') || isActive('/files') || isActiveEdit('files')}" class="treeview">
+                <a ng-href="javascript:void(0)">
+                    <svg version="1.1" id="files-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                         <path fill="#FFB600" d="M13.343,3.055v9.314H4.806V3.055H13.343z M12.566,4.608H5.581v6.986h6.985V4.608z M7.133,5.384H6.357V6.16
                               h0.775V5.384z M7.133,6.936H6.357v0.776h0.775V6.936z M7.133,8.49H6.357v0.775h0.775V8.49z M7.133,10.042H6.357v0.776h0.775V10.042z
                               M11.791,5.384H7.91V6.16h3.881V5.384z M11.791,6.936H7.91v0.776h3.881V6.936z M11.791,8.49H7.91v0.775h3.881V8.49z M11.791,10.818
                               H7.91v-0.776h3.881V10.818z"/>
                     </svg>
-          <span>{{ 'FILES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">
-          <li ng-class="{active: isActive('/files/new/:dataset?')}"><a ng-href="#/files/new"><i class="fa fa-circle-o"></i>{{ 'ADD_FILES' | translate }} </a></li>
-          <li ng-class="{active: isActive('/files')}"><a ng-href="#/files"><i class="fa fa-circle-o"></i>{{ 'VIEW_FILES' | translate }} </a></li>
-        </ul>
-      </li>
-      <li ng-class="{active: isActive('/maps/new') || isActive('/maps') || isActiveEdit('maps')}" class="treeview">
-        <a ng-href="javascript:void(0)">
-          <svg version="1.1" id="map-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
-<g>
-	<g>
-		<g>
-			<rect x="48.728" y="5.943" fill="#FFB600" width="1.421" height="4.129"/>
-			<rect x="50.543" y="6.891" fill="#FFB600" width="1.42" height="3.182"/>
-			<rect x="46.914" y="8.312" fill="#FFB600" width="1.42" height="1.761"/>
-		</g>
-		<g>
-			<path fill="#FFB600" d="M45.435,11.104c0.854,1.153,2.195,1.927,3.724,2.011v-1.491c-0.967-0.077-1.822-0.547-2.407-1.251
-				L45.435,11.104z"/>
-			<path fill="#FFB600" d="M44.459,8.144c0,0.93,0.256,1.799,0.698,2.542l1.301-0.724c-0.324-0.527-0.512-1.15-0.512-1.818
-				c0-0.996,0.418-1.896,1.088-2.531l-1.092-1.014C45.027,5.501,44.459,6.756,44.459,8.144z"/>
-			<path fill="#FFB600" d="M47.423,5.29c0.498-0.352,1.094-0.577,1.735-0.629V3.169c-1.073,0.062-2.056,0.461-2.842,1.096
-				L47.423,5.29z"/>
-			<path fill="#FFB600" d="M49.658,13.115c2.647-0.115,4.76-2.295,4.76-4.973s-2.11-4.858-4.76-4.976v1.489
-				c1.826,0.113,3.272,1.631,3.272,3.484c0,1.854-1.446,3.37-3.272,3.482V13.115z"/>
-		</g>
-	</g>
-</g>
-<g>
-	<path fill="#FFB600" d="M13.689,9.432c0.83-2.846-0.812-5.836-3.657-6.665C7.188,1.938,4.197,3.578,3.368,6.423
-		c-0.83,2.846,0.811,5.836,3.656,6.666S12.86,12.277,13.689,9.432z M3.724,6.592C4.192,4.983,5.66,3.563,7.156,3.111
-		C7.115,3.286,7.329,3.706,7.203,3.889C7.133,3.99,7.008,4.042,6.936,4.142C6.863,4.24,6.842,4.365,6.762,4.458
-		c-0.131,0.153-0.34,0.195-0.49,0.324C6.128,4.906,6.047,5.079,5.999,5.259C5.941,5.477,6.036,5.688,6.05,5.904
-		C6.065,6.16,6.045,6.418,6.006,6.672C5.922,7.215,6.609,7.455,6.861,7.819c0.112,0.164,0.131,0.373,0.24,0.537
-		c0.058,0.086,0.244,0.229,0.289,0.047c0.031-0.126-0.025-0.249-0.055-0.37C7.313,7.939,7.324,7.824,7.247,7.755
-		c-0.051-0.047-0.13-0.062-0.175-0.114c-0.081-0.093,0.01-0.194,0.005-0.294C7.062,7.078,6.59,7.326,6.532,7.014
-		C6.467,6.66,6.805,6.394,7.129,6.405C7.298,6.41,7.439,6.484,7.57,6.587c0.076,0.061,0.174,0.2,0.271,0.22
-		c0.132,0.028,0.203-0.258,0.334-0.306c0.108-0.039,0.22-0.065,0.316-0.128C8.73,6.22,8.899,6.056,9.201,6.037
-		c0.219-0.014,0.602-0.08,0.768-0.236c0.152-0.146-0.049-0.488-0.144-0.617C9.749,5.08,9.616,4.981,9.588,4.849
-		C9.554,4.693,9.684,4.586,9.81,4.524c0.181-0.088,0.246,0.107,0.301,0.238c0.045,0.108,0.261,0.399,0.413,0.3
-		c0.127-0.082,0.048-0.336,0.133-0.456c0.08-0.111,0.174-0.195,0.1-0.336c-0.003-0.005-0.005-0.01-0.008-0.016
-		c-0.049-0.08-0.132-0.134-0.182-0.213c-0.1-0.157-0.149-0.557-0.189-0.737c0.379,0.159,0.828,0.462,1.145,0.704
-		c-0.011,0.025-0.115,0.175-0.113,0.204c0.004,0.065,0.045,0.119,0.085,0.168c0.092,0.117,0.154,0.235,0.226,0.365
-		c0.137,0.247,0.471,0.349,0.505,0.658c0.016,0.144-0.06,0.293,0,0.431c0.049,0.112,0.148,0.187,0.096,0.318
-		c-0.041,0.101-0.11,0.212,0.043,0.251c0.06,0.015,0.134,0.01,0.181-0.032c0.065-0.059,0.045-0.164,0.065-0.241
-		c0.064-0.25,0.253,0.088,0.38,0.1c0.071,0.187,0.131,0.377,0.179,0.572c-0.024,0.004-0.05,0.008-0.079-0.005
-		c-0.055-0.024-0.078-0.102-0.117-0.142c-0.119-0.125-0.198,0.01-0.278,0.112s-0.196,0.19-0.254,0.308
-		c-0.076,0.155-0.054,0.356-0.094,0.524c-0.043,0.18-0.108,0.355-0.124,0.541c-0.023,0.269,0.007,0.543,0.057,0.807
-		c0.025,0.139,0.021,0.515,0.218,0.529c0.11,0.009,0.191-0.112,0.285-0.151c0.128-0.053,0.416,0.037,0.502,0.102
-		c-0.802,2.427-3.69,4.026-6.163,3.306C4.592,11.995,2.987,9.119,3.724,6.592z"/>
-	<path fill="#FFB600" d="M8.82,11.722c0.169-0.065,0.312-0.182,0.48-0.249c0.149-0.06,0.316-0.066,0.463-0.133
-		c0.182-0.08,0.223-0.224,0.338-0.368c0.066-0.083,0.148-0.116,0.236-0.173c0.225-0.146,0.391-0.407,0.122-0.604
-		c-0.317-0.233-0.694-0.232-0.929-0.588C9.265,9.2,9.035,8.874,8.604,8.622c-0.308-0.18-0.604-0.327-0.926-0.104
-		C7.377,8.726,7.104,9.078,7.033,9.441c-0.08,0.411,0.181,0.835,0.414,1.155c0.097,0.134,0.096,0.279,0.043,0.43
-		c-0.176,0.5-0.9,0.818-0.574,1.158c0.111,0.116,0.343-0.018,0.454-0.07C7.828,11.895,8.352,11.901,8.82,11.722z"/>
-</g>
-</svg>
-          <span>{{ 'MAPS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">
-          <!--<li ng-class="{active: isActive('/maps/new')}"><a ng-href="#/maps/new"><i class="fa fa-circle-o"></i>{{ 'ADD_MAPS' | translate }} </a></li>-->
-          <li ng-class="{active: isActive('/maps')}"><a ng-href="#/maps"><i class="fa fa-circle-o"></i>{{ 'VIEW_MAPS' | translate }} </a></li>
-        </ul>
-      </li>
-      <li ng-class="{active: isActive('/charts/new') || isActive('/charts') || isActiveEdit('charts')}" class="treeview">
-        <a ng-href="javascript:void(0)">
-          <svg version="1.1" id="chart-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
-            <g>
-              <g>
-                <g>
-                  <rect x="7.603" y="6.068" fill="#FFB600" width="1.421" height="4.129"/>
-                  <rect x="9.418" y="7.016" fill="#FFB600" width="1.42" height="3.182"/>
-                  <rect x="5.789" y="8.437" fill="#FFB600" width="1.42" height="1.761"/>
-                </g>
-                <g>
-                  <path fill="#FFB600" d="M4.31,11.229c0.854,1.153,2.195,1.927,3.724,2.011v-1.491c-0.967-0.077-1.822-0.547-2.407-1.251
-                    L4.31,11.229z"/>
-                  <path fill="#FFB600" d="M3.334,8.269c0,0.93,0.256,1.799,0.698,2.542l1.301-0.724C5.009,9.56,4.821,8.937,4.821,8.269
-                    c0-0.996,0.418-1.896,1.088-2.531L4.817,4.724C3.902,5.626,3.334,6.881,3.334,8.269z"/>
-                  <path fill="#FFB600" d="M6.298,5.415c0.498-0.352,1.094-0.577,1.735-0.629V3.294C6.96,3.356,5.978,3.755,5.191,4.39L6.298,5.415z
-                    "/>
-                  <path fill="#FFB600" d="M8.533,13.24c2.647-0.115,4.76-2.295,4.76-4.973s-2.11-4.858-4.76-4.976v1.489
-                    c1.826,0.113,3.272,1.631,3.272,3.484c0,1.854-1.446,3.37-3.272,3.482V13.24z"/>
-                </g>
-              </g>
-            </g>
-            </svg>
-          <span>{{ 'CHARTS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">
-          <!--<li ng-class="{active: isActive('/maps/new')}"><a ng-href="#/maps/new"><i class="fa fa-circle-o"></i>{{ 'ADD_MAPS' | translate }} </a></li>-->
-          <li ng-class="{active: isActive('/charts')}"><a ng-href="#/charts"><i class="fa fa-circle-o"></i>{{ 'VIEW_CHARTS' | translate }} </a></li>
-        </ul>
-      </li>
+                    <span>{{ 'FILES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li ng-class="{active: isActive('/files/new/:dataset?')}"><a ng-href="#/files/new"><i class="fa fa-circle-o"></i>{{ 'ADD_FILES' | translate }} </a></li>
+                    <li ng-class="{active: isActive('/files')}"><a ng-href="#/files"><i class="fa fa-circle-o"></i>{{ 'VIEW_FILES' | translate }} </a></li>
+                </ul>
+            </li>
+            <li ng-class="{active: isActive('/maps/new') || isActive('/maps') || isActiveEdit('maps')}" class="treeview">
+                <a ng-href="javascript:void(0)">
+                    <svg version="1.1" id="map-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
+                        <g>
+                            <g>
+                                <g>
+                                    <rect x="48.728" y="5.943" fill="#FFB600" width="1.421" height="4.129"/>
+                                    <rect x="50.543" y="6.891" fill="#FFB600" width="1.42" height="3.182"/>
+                                    <rect x="46.914" y="8.312" fill="#FFB600" width="1.42" height="1.761"/>
+                                </g>
+                                <g>
+                                    <path fill="#FFB600" d="M45.435,11.104c0.854,1.153,2.195,1.927,3.724,2.011v-1.491c-0.967-0.077-1.822-0.547-2.407-1.251
+                                          L45.435,11.104z"/>
+                                    <path fill="#FFB600" d="M44.459,8.144c0,0.93,0.256,1.799,0.698,2.542l1.301-0.724c-0.324-0.527-0.512-1.15-0.512-1.818
+                                          c0-0.996,0.418-1.896,1.088-2.531l-1.092-1.014C45.027,5.501,44.459,6.756,44.459,8.144z"/>
+                                    <path fill="#FFB600" d="M47.423,5.29c0.498-0.352,1.094-0.577,1.735-0.629V3.169c-1.073,0.062-2.056,0.461-2.842,1.096
+                                          L47.423,5.29z"/>
+                                    <path fill="#FFB600" d="M49.658,13.115c2.647-0.115,4.76-2.295,4.76-4.973s-2.11-4.858-4.76-4.976v1.489
+                                          c1.826,0.113,3.272,1.631,3.272,3.484c0,1.854-1.446,3.37-3.272,3.482V13.115z"/>
+                                </g>
+                            </g>
+                        </g>
+                        <g>
+                            <path fill="#FFB600" d="M13.689,9.432c0.83-2.846-0.812-5.836-3.657-6.665C7.188,1.938,4.197,3.578,3.368,6.423
+                                  c-0.83,2.846,0.811,5.836,3.656,6.666S12.86,12.277,13.689,9.432z M3.724,6.592C4.192,4.983,5.66,3.563,7.156,3.111
+                                  C7.115,3.286,7.329,3.706,7.203,3.889C7.133,3.99,7.008,4.042,6.936,4.142C6.863,4.24,6.842,4.365,6.762,4.458
+                                  c-0.131,0.153-0.34,0.195-0.49,0.324C6.128,4.906,6.047,5.079,5.999,5.259C5.941,5.477,6.036,5.688,6.05,5.904
+                                  C6.065,6.16,6.045,6.418,6.006,6.672C5.922,7.215,6.609,7.455,6.861,7.819c0.112,0.164,0.131,0.373,0.24,0.537
+                                  c0.058,0.086,0.244,0.229,0.289,0.047c0.031-0.126-0.025-0.249-0.055-0.37C7.313,7.939,7.324,7.824,7.247,7.755
+                                  c-0.051-0.047-0.13-0.062-0.175-0.114c-0.081-0.093,0.01-0.194,0.005-0.294C7.062,7.078,6.59,7.326,6.532,7.014
+                                  C6.467,6.66,6.805,6.394,7.129,6.405C7.298,6.41,7.439,6.484,7.57,6.587c0.076,0.061,0.174,0.2,0.271,0.22
+                                  c0.132,0.028,0.203-0.258,0.334-0.306c0.108-0.039,0.22-0.065,0.316-0.128C8.73,6.22,8.899,6.056,9.201,6.037
+                                  c0.219-0.014,0.602-0.08,0.768-0.236c0.152-0.146-0.049-0.488-0.144-0.617C9.749,5.08,9.616,4.981,9.588,4.849
+                                  C9.554,4.693,9.684,4.586,9.81,4.524c0.181-0.088,0.246,0.107,0.301,0.238c0.045,0.108,0.261,0.399,0.413,0.3
+                                  c0.127-0.082,0.048-0.336,0.133-0.456c0.08-0.111,0.174-0.195,0.1-0.336c-0.003-0.005-0.005-0.01-0.008-0.016
+                                  c-0.049-0.08-0.132-0.134-0.182-0.213c-0.1-0.157-0.149-0.557-0.189-0.737c0.379,0.159,0.828,0.462,1.145,0.704
+                                  c-0.011,0.025-0.115,0.175-0.113,0.204c0.004,0.065,0.045,0.119,0.085,0.168c0.092,0.117,0.154,0.235,0.226,0.365
+                                  c0.137,0.247,0.471,0.349,0.505,0.658c0.016,0.144-0.06,0.293,0,0.431c0.049,0.112,0.148,0.187,0.096,0.318
+                                  c-0.041,0.101-0.11,0.212,0.043,0.251c0.06,0.015,0.134,0.01,0.181-0.032c0.065-0.059,0.045-0.164,0.065-0.241
+                                  c0.064-0.25,0.253,0.088,0.38,0.1c0.071,0.187,0.131,0.377,0.179,0.572c-0.024,0.004-0.05,0.008-0.079-0.005
+                                  c-0.055-0.024-0.078-0.102-0.117-0.142c-0.119-0.125-0.198,0.01-0.278,0.112s-0.196,0.19-0.254,0.308
+                                  c-0.076,0.155-0.054,0.356-0.094,0.524c-0.043,0.18-0.108,0.355-0.124,0.541c-0.023,0.269,0.007,0.543,0.057,0.807
+                                  c0.025,0.139,0.021,0.515,0.218,0.529c0.11,0.009,0.191-0.112,0.285-0.151c0.128-0.053,0.416,0.037,0.502,0.102
+                                  c-0.802,2.427-3.69,4.026-6.163,3.306C4.592,11.995,2.987,9.119,3.724,6.592z"/>
+                            <path fill="#FFB600" d="M8.82,11.722c0.169-0.065,0.312-0.182,0.48-0.249c0.149-0.06,0.316-0.066,0.463-0.133
+                                  c0.182-0.08,0.223-0.224,0.338-0.368c0.066-0.083,0.148-0.116,0.236-0.173c0.225-0.146,0.391-0.407,0.122-0.604
+                                  c-0.317-0.233-0.694-0.232-0.929-0.588C9.265,9.2,9.035,8.874,8.604,8.622c-0.308-0.18-0.604-0.327-0.926-0.104
+                                  C7.377,8.726,7.104,9.078,7.033,9.441c-0.08,0.411,0.181,0.835,0.414,1.155c0.097,0.134,0.096,0.279,0.043,0.43
+                                  c-0.176,0.5-0.9,0.818-0.574,1.158c0.111,0.116,0.343-0.018,0.454-0.07C7.828,11.895,8.352,11.901,8.82,11.722z"/>
+                        </g>
+                    </svg>
+                    <span>{{ 'MAPS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <!--<li ng-class="{active: isActive('/maps/new')}"><a ng-href="#/maps/new"><i class="fa fa-circle-o"></i>{{ 'ADD_MAPS' | translate }} </a></li>-->
+                    <li ng-class="{active: isActive('/maps')}"><a ng-href="#/maps"><i class="fa fa-circle-o"></i>{{ 'VIEW_MAPS' | translate }} </a></li>
+                </ul>
+            </li>
+            <li ng-class="{active: isActive('/charts/new') || isActive('/charts') || isActiveEdit('charts')}" class="treeview">
+                <a ng-href="javascript:void(0)">
+                    <svg version="1.1" id="chart-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
+                        <g>
+                            <g>
+                                <g>
+                                    <rect x="7.603" y="6.068" fill="#FFB600" width="1.421" height="4.129"/>
+                                    <rect x="9.418" y="7.016" fill="#FFB600" width="1.42" height="3.182"/>
+                                    <rect x="5.789" y="8.437" fill="#FFB600" width="1.42" height="1.761"/>
+                                </g>
+                                <g>
+                                    <path fill="#FFB600" d="M4.31,11.229c0.854,1.153,2.195,1.927,3.724,2.011v-1.491c-0.967-0.077-1.822-0.547-2.407-1.251
+                                          L4.31,11.229z"/>
+                                    <path fill="#FFB600" d="M3.334,8.269c0,0.93,0.256,1.799,0.698,2.542l1.301-0.724C5.009,9.56,4.821,8.937,4.821,8.269
+                                          c0-0.996,0.418-1.896,1.088-2.531L4.817,4.724C3.902,5.626,3.334,6.881,3.334,8.269z"/>
+                                    <path fill="#FFB600" d="M6.298,5.415c0.498-0.352,1.094-0.577,1.735-0.629V3.294C6.96,3.356,5.978,3.755,5.191,4.39L6.298,5.415z
+                                          "/>
+                                    <path fill="#FFB600" d="M8.533,13.24c2.647-0.115,4.76-2.295,4.76-4.973s-2.11-4.858-4.76-4.976v1.489
+                                          c1.826,0.113,3.272,1.631,3.272,3.484c0,1.854-1.446,3.37-3.272,3.482V13.24z"/>
+                                </g>
+                            </g>
+                        </g>
+                    </svg>
+                    <span>{{ 'CHARTS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <!--<li ng-class="{active: isActive('/maps/new')}"><a ng-href="#/maps/new"><i class="fa fa-circle-o"></i>{{ 'ADD_MAPS' | translate }} </a></li>-->
+                    <li ng-class="{active: isActive('/charts')}"><a ng-href="#/charts"><i class="fa fa-circle-o"></i>{{ 'VIEW_CHARTS' | translate }} </a></li>
+                </ul>
+            </li>
 
-      <li ng-class="{active: isActive('/datasets/new') || isActive('/datasets') || isActiveEdit('datasets')}" class="treeview">
-        <a ng-href="javascript:void(0)">
-          <svg version="1.1" id="datasets-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
+            <li ng-class="{active: isActive('/datasets/new') || isActive('/datasets') || isActiveEdit('datasets')}" class="treeview">
+                <a ng-href="javascript:void(0)">
+                    <svg version="1.1" id="datasets-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                         <path fill="#FFB600" d="M7.683,3.225V4.74c0,0.107-0.036,0.196-0.108,0.27C7.499,5.083,7.41,5.12,7.305,5.12H5.788
                               c-0.106,0-0.197-0.037-0.27-0.11s-0.11-0.162-0.11-0.27V3.225c0-0.105,0.038-0.196,0.11-0.269c0.072-0.074,0.163-0.11,0.27-0.11
                               h1.517c0.105,0,0.194,0.036,0.27,0.11C7.646,3.028,7.683,3.119,7.683,3.225z M7.683,6.257v1.517c0,0.106-0.036,0.197-0.108,0.27
@@ -260,40 +260,55 @@
                               c0-0.106,0.037-0.195,0.11-0.27s0.163-0.11,0.27-0.11h1.517c0.105,0,0.194,0.036,0.269,0.11C13.712,9.096,13.749,9.185,13.749,9.291
                               z"/>
                     </svg>
-          <span>{{ 'DATASETS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">
-          <li ng-class="{active: isActive('/datasets/new')}"><a ng-href="#/datasets/new"><i class="fa fa-circle-o"></i> {{ 'ADD_DATASET' | translate }}</a></li>
-          <li ng-class="{active: isActive('/datasets')}"><a ng-href="#/datasets"><i class="fa fa-circle-o"></i> {{ 'VIEW_DATASET' | translate }}</a></li>
-        </ul>
-      </li>
-      <li ng-class="{active: isActive('/tags/new') || isActive('/tags') || isActiveEdit('tags')}" class="treeview">
-        <a ng-href="javascript:void(0)">
-          <svg version="1.1" id="tags-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
+                    <span>{{ 'DATASETS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li ng-class="{active: isActive('/datasets/new')}"><a ng-href="#/datasets/new"><i class="fa fa-circle-o"></i> {{ 'ADD_DATASET' | translate }}</a></li>
+                    <li ng-class="{active: isActive('/datasets')}"><a ng-href="#/datasets"><i class="fa fa-circle-o"></i> {{ 'VIEW_DATASET' | translate }}</a></li>
+                </ul>
+            </li>
+            <li ng-class="{active: isActive('/tags/new') || isActive('/tags') || isActiveEdit('tags')}" class="treeview">
+                <a ng-href="javascript:void(0)">
+                    <svg version="1.1" id="tags-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                         <path fill="#FFB600" d="M13.338,7.729l-3.487,3.488L4.974,6.333V3.021c0-0.047,0.018-0.088,0.053-0.122
                               c0.035-0.035,0.075-0.053,0.122-0.053h3.306L13.338,7.729z M7.199,5.064C7.334,4.93,7.401,4.764,7.401,4.568
                               c0-0.194-0.067-0.359-0.202-0.494c-0.141-0.14-0.306-0.21-0.499-0.21c-0.192,0-0.358,0.07-0.499,0.21
                               c-0.134,0.135-0.202,0.3-0.202,0.494c0,0.195,0.068,0.361,0.202,0.496C6.342,5.203,6.508,5.273,6.7,5.273
                               C6.894,5.273,7.059,5.203,7.199,5.064z"/>
                     </svg>
-          <span>{{ 'TAGS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">
-          <li ng-class="{active: isActive('/tags/new')}"><a ng-href="#/tags/new"><i class="fa fa-circle-o"></i> {{ 'ADD_TAG' | translate }}</a></li>
-          <li ng-class="{active: isActive('/tags')}"><a ng-href="#/tags"><i class="fa fa-circle-o"></i> {{ 'VIEW_TAGS' | translate }}</a></li>
-        </ul>
-      </li>
-      <li ng-class="{active: isActive('/updatefrequencies/new') || isActive('/updatefrequencies') || isActiveEdit('updatefrequencies')}" class="treeview">
-        <a ng-href="javascript:void(0)">
-          <svg version="1.1" id="updatefrequencies-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
+                    <span>{{ 'TAGS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li ng-class="{active: isActive('/tags/new')}"><a ng-href="#/tags/new"><i class="fa fa-circle-o"></i> {{ 'ADD_TAG' | translate }}</a></li>
+                    <li ng-class="{active: isActive('/tags')}"><a ng-href="#/tags"><i class="fa fa-circle-o"></i> {{ 'VIEW_TAGS' | translate }}</a></li>
+                </ul>
+            </li>
+            <li ng-class="{active: isActive('/updatefrequencies/new') || isActive('/updatefrequencies') || isActiveEdit('updatefrequencies')}" class="treeview">
+                <a ng-href="javascript:void(0)">
+                    <svg version="1.1" id="updatefrequencies-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                         <path fill="#FFB600" d="M5.803,13.142h-1.53v-2.295h1.53V13.142z M8.098,9.315H6.566v3.826h1.531V9.315z M10.392,7.021H8.862v6.121
                               h1.529V7.021z M12.688,3.961h-1.529v9.181h1.529V3.961z"/>
                     </svg>
-          <span>{{ 'FREQUENCY_MENU' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">
-          <li ng-class="{active: isActive('/updatefrequencies/new')}"><a ng-href="#/updatefrequencies/new"><i class="fa fa-circle-o"></i> {{ 'ADD_FREQUENCY_MENU' | translate }}</a></li>
-          <li ng-class="{active: isActive('/updatefrequencies')}"><a ng-href="#/updatefrequencies"><i class="fa fa-circle-o"></i> {{ 'VIEW_FREQUENCY' | translate }}</a></li>
+                    <span>{{ 'FREQUENCY_MENU' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li ng-class="{active: isActive('/updatefrequencies/new')}"><a ng-href="#/updatefrequencies/new"><i class="fa fa-circle-o"></i> {{ 'ADD_FREQUENCY_MENU' | translate }}</a></li>
+                    <li ng-class="{active: isActive('/updatefrequencies')}"><a ng-href="#/updatefrequencies"><i class="fa fa-circle-o"></i> {{ 'VIEW_FREQUENCY' | translate }}</a></li>
+                </ul>
+            </li>
+            <li ng-class="{active: isActive('/basemaps/new') || isActive('/basemaps') || isActiveEdit('basemaps')}" class="treeview">
+                <a ng-href="javascript:void(0)">
+                    <svg version="1.1" id="updatefrequencies-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
+                        <path fill="#FFB600" d="M5.803,13.142h-1.53v-2.295h1.53V13.142z M8.098,9.315H6.566v3.826h1.531V9.315z M10.392,7.021H8.862v6.121
+                              h1.529V7.021z M12.688,3.961h-1.529v9.181h1.529V3.961z"/>
+                    </svg>
+                    <span>{{ 'BASEMAPS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li ng-class="{active: isActive('/basemaps/new')}"><a ng-href="#/basemaps/new"><i class="fa fa-circle-o"></i> {{ 'ADD_BASEMAPS' | translate }}</a></li>
+                    <li ng-class="{active: isActive('/basemaps')}"><a ng-href="#/basemaps"><i class="fa fa-circle-o"></i> {{ 'VIEW_BASEMAPS' | translate }}</a></li>
+                </ul>
+            </li>
         </ul>
-  </section>
+    </section>
 </aside>

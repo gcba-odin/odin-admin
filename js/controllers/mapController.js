@@ -55,9 +55,9 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
 
     var loadGeojson = function() {
         angular.extend($scope, {// Map data
-//            tiles: {
-//                url: 'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png'
-//            },
+            tiles: {
+                url: $scope.model.basemap.url
+            },
             geojson: {
                 data: $scope.model.geojson,
                 onEachFeature: function(feature, layer) {
@@ -257,6 +257,10 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
         return "property" + (parseInt(a) + 1);
     }
 
+    $scope.basemaps = rest().get({
+        type: 'basemaps'
+    });
+
 }
 
 
@@ -402,6 +406,7 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
             id: $routeParams.id,
             type: $scope.type,
         }, function() {
+            $scope.model.basemap = $scope.model.basemap.id;
             url_map = $scope.model.link;
             $scope.file_disabled = 'enabled';
             if (!angular.isUndefined($scope.model.file)) {
@@ -434,6 +439,10 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
                     counter++;
                 });
             }
+        });
+
+        $scope.basemaps = rest().get({
+            type: 'basemaps'
         });
     };
 

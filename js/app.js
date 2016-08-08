@@ -244,6 +244,24 @@
                 templateUrl: "views/config/edit.html",
                 controller: ConfigEditController
             })
+            
+            // Basemaps
+            .when("/basemaps", {
+                templateUrl: "views/basemap/list.html",
+                controller: BasemapListController
+            })
+            .when("/basemaps/:id/view", {
+                templateUrl: "views/basemap/view.html",
+                controller: BasemapViewController
+            })
+            .when("/basemaps/new", {
+                templateUrl: "views/basemap/add.html",
+                controller: BasemapCreateController
+            })
+            .when("/basemaps/:id/edit", {
+                templateUrl: "views/basemap/edit.html",
+                controller: BasemapEditController
+            })
 
             .otherwise({
                 redirectTo: '/'
