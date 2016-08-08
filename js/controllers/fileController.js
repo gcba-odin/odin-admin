@@ -344,7 +344,20 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
     $scope.itemName = function(a) {
         return "optional" + (parseInt(a) + 1);
     }
+    
+    var loadFileTypes = function(){
+        var fileTypes = rest().get({
+            type: 'fileTypes'
+        }, function(){
+            $scope.fileTypes = [];
+            angular.forEach(fileTypes.data, function(element){
+                $scope.fileTypes.push(element.mimetype);
+            });
+            $scope.fileTypes = $scope.fileTypes.toString();
+        });
+    };
 
+    loadFileTypes();
 
 }
 
