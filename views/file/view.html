@@ -88,14 +88,18 @@
                                 <td class="detail-bold">{{ 'TAGS' | translate }}</td>
                                 <td ng-bind-html="getHtml(model.tags)" >
                                 </td>
-                            </tr>
+                            </tr> -->
                             <tr ng-if="model.gatheringDate">
                                 <td class="detail-bold">{{ 'GATHERING_DATE' | translate }}</td>
-                                <td>{{model.gatheringDate| date:'MMM d, y h:mm:ss a' }}</td>
-                            </tr>-->
+                                <td>{{model.gatheringDate| date:'MMM d, y' : 'UTC' }}</td>
+                            </tr>
                             <tr>
                                 <td class="detail-bold">{{ 'UPDATED' | translate }}</td>
                                 <td><span class="label label-default" >{{model.updated ? 'Si' : 'No'}}</span></td>
+                            </tr>
+                            <tr ng-repeat="(key, val) in model.optionals">
+                                <td class="detail-bold">{{key}}</td>
+                                <td>{{val}}</td>
                             </tr>
                         </table>
                     </div>

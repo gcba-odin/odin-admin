@@ -153,7 +153,8 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
     'LATITUDE': 'Latitud',
     'LONGITUDE': 'Longitud',
     'RESOURCES': 'Recursos',
-    'RESOURCE': 'Recurso'
+    'RESOURCE': 'Recurso',
+    'GATHERING_DATE': 'Relevamiento de datos'
 
   });
   console.log($rootScope);

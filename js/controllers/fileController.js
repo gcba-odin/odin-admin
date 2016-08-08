@@ -195,6 +195,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
     $scope.unsave = true;
 
     $scope.model = new model();
+    $scope.model.items = [];
     $scope.model.uploadFile = '';
     $scope.steps = [];
     $scope.steps[0] = "active";
@@ -259,26 +260,52 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
         usSpinnerService.spin('spinner');
         $scope.unsave = false;
         $scope.uploadImageProgress = 10;
+
+        for (obj in $scope.model) {
+            if (obj.indexOf("optional") != -1) {
+                delete $scope.model[obj]
+            }
+        }
+
+        $scope.model.optionals = {};
+        var cont = 1;
+        for (var i = 0; i < $scope.model.items.length; i++) {
+            var values = [];
+            $scope.model["optional" + cont] = "";
+            $scope.model.optionals[$scope.model.items[i].field1] = $scope.model.items[i].field2;
+            cont++;
+        }
+
         var data = {
             'name': $scope.model.name, //.replace(/\.[^/.]+$/, ""), //removes file extension from name
-            'status': $scope.model.status,
+            //'status': $scope.model.status,
             'organization': $scope.model.organization,
             'dataset': $scope.model.dataset,
             'description': $scope.model.description,
             'notes': $scope.model.notes,
+            'optionals': Upload.json($scope.model.optionals),
             //  'url': $scope.model.url,
-            'visible': $scope.model.visible,
+            //'visible': $scope.model.visible,
             'owner': $scope.model.owner,
             'updateFrequency': $scope.model.updateFrequency,
             //'tags': $scope.model.tags ? $scope.model.tags.join(",") : "",
+
             'updated': $scope.model.updated,
-            //'gatheringDate': $scope.model.gatheringDate,//.toISOString().slice(0, 10), //new Date().toISOString().slice(0, 19).replace('T', ' ');
             'uploadFile': $scope.model.uploadFile,
         };
 
+        var param = {
+            gatheringDate: null
+        };
+
+        if ($scope.model.gatheringDate) {
+            param.gatheringDate = $scope.model.gatheringDate.toISOString().slice(0, 10);//.toISOString().slice(0, 10), //new Date().toISOString().slice(0, 19).replace('T', ' ');
+        }
+
         Upload.upload({
             url: $rootScope.url + "/files",
-            data: data
+            data: data,
+            params: param
         }).then(function(resp) {
             usSpinnerService.stop('spinner');
             $location.url('/files/' + resp.data.data.id + '/view');
@@ -294,6 +321,29 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
         });
     };
 
+
+    $scope.inputs = [];
+    var i = 0;
+    $scope.addInput = function() {
+        if ($scope.model.items.length < 10) {
+            var newItemNo = $scope.model.items.length + 1;
+            $scope.model.items.push({
+                field: ""
+            })
+        }
+
+    }
+    $scope.deleteIndexInput = function(index, field) {
+        $scope.model.items.splice(index, 1);
+    }
+
+    $scope.increment = function(a) {
+        return a + 1;
+    }
+
+    $scope.itemName = function(a) {
+        return "optional" + (parseInt(a) + 1);
+    }
 
 
 }
@@ -354,6 +404,10 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
     $scope.update = function(isValid) {
         usSpinnerService.spin('spinner');
 
+        angular.forEach($scope.model.items, function(element) {
+            $scope.model.optionals[element.field1] = element.field2;
+        });
+
         $scope.uploadImageProgress = 10;
         var data = {
             'name': $scope.model.name,
@@ -361,14 +415,21 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
             'organization': $scope.model.organization,
             'dataset': $scope.model.dataset,
             'description': $scope.model.description,
+            'optionals': $scope.model.optionals,
             'notes': $scope.model.notes,
             // 'url': $scope.model.url,
-            'visible': $scope.model.visible,
+            //'visible': $scope.model.visible,
             'owner': $scope.model.owner,
             'updateFrequency': $scope.model.updateFrequency,
             //'tags': $scope.model.tags ? $scope.model.tags.join(",") : "",
             'updated': $scope.model.updated,
-            //'gatheringDate': $scope.model.gatheringDate //new Date().toISOString().slice(0, 19).replace('T', ' ');
+            //    'gatheringDate': $scope.model.gatheringDate //new Date().toISOString().slice(0, 19).replace('T', ' ');
+        }
+
+        if ($scope.model.gatheringDate && $scope.model.gatheringDate != "") {
+            data.gatheringDate = $scope.model.gatheringDate;
+        } else {
+            data.gatheringDate = null;
         }
 
         if (isValid) {
@@ -395,7 +456,15 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
         }, function() {
             $scope.model.updateFrequency = $scope.model.updateFrequency.id;
             $scope.model.status = $scope.model.status.id;
-            //$scope.model.gatheringDate = moment($scope.model.gatheringDate);
+            $scope.model.gatheringDate = $scope.model.gatheringDate ? moment($scope.model.gatheringDate).utc() : '';
+
+            $scope.model.items = [];
+            angular.forEach($scope.model.optionals, function(val, key) {
+                $scope.model.items.push({
+                    field1: key,
+                    field2: val,
+                });
+            });
 
             $scope.fileModel.name = $scope.model.name;
             var type = $scope.fileModel.name.split('.').pop();
@@ -412,6 +481,29 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
             }
         });
     };
+
+    $scope.inputs = [];
+    var i = 0;
+    $scope.addInput = function() {
+        if ($scope.model.items.length < 10) {
+            var newItemNo = $scope.model.items.length + 1;
+            $scope.model.items.push({
+                field: ""
+            })
+        }
+
+    }
+    $scope.deleteIndexInput = function(index, field) {
+        $scope.model.items.splice(index, 1);
+    }
+
+    $scope.increment = function(a) {
+        return a + 1;
+    }
+
+    $scope.itemName = function(a) {
+        return "optional" + (parseInt(a) + 1);
+    }
 
     $scope.load();
 }

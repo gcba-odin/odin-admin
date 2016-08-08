@@ -12,33 +12,33 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
     modelService.initService("Dataset", "datasets", $scope);
 
     $scope.filtersView = [{
-        name: 'Estado',
-        model: 'statuses',
-        key: 'name',
-        modelInput: 'status',
-        multiple: true
-    }, {
-        name: 'Autor',
-        model: 'users',
-        key: 'username',
-        modelInput: 'owner',
-        multiple: false
-    }, {
-        name: 'Categoria',
-        model: 'categories',
-        key: 'name',
-        modelInput: 'categories',
-        multiple: false
-    }];
+            name: 'Estado',
+            model: 'statuses',
+            key: 'name',
+            modelInput: 'status',
+            multiple: true
+        }, {
+            name: 'Autor',
+            model: 'users',
+            key: 'username',
+            modelInput: 'owner',
+            multiple: false
+        }, {
+            name: 'Categoria',
+            model: 'categories',
+            key: 'name',
+            modelInput: 'categories',
+            multiple: false
+        }];
 
     $scope.confirmDelete = function(item) {
         Alertify.confirm('¿Está seguro que quiere borrar este dataset?<br> Al hacerlo, se borrarán todos los recursos asociados').then(
-            function onOk() {
-                $scope.deleteModel(item);
-            },
-            function onCancel() {
-                return false;
-            }
+                function onOk() {
+                    $scope.deleteModel(item);
+                },
+                function onCancel() {
+                    return false;
+                }
         );
     };
 
@@ -77,6 +77,18 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
             categories.push('<span class="label label-primary">' + $scope.model.categories[i].name + '</span>')
         }
         $scope.model.categories = categories.join(" - ");
+
+        $scope.model.items = [];
+        for (obj in $scope.model) {
+            if (obj.indexOf("optional") != -1) {
+                if (!!$scope.model[obj]) {
+                    $scope.model.items.push({
+                        clave: $scope.model[obj].clave,
+                        valor: $scope.model[obj].valor,
+                    });
+                }
+            }
+        }
     });
 
     $scope.edit = function(model) {
@@ -117,33 +129,33 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
 
     $scope.unPublish = function() {
         Alertify.confirm('¿Está seguro que quiere despublicar este dataset?').then(
-            function onOk() {
-                $scope.model.publishedAt = null;
-                update();
-            },
-            function onCancel() {
-                return false;
-            }
+                function onOk() {
+                    $scope.model.publishedAt = null;
+                    update();
+                },
+                function onCancel() {
+                    return false;
+                }
         );
     };
 
     $scope.deleteResource = function(id, type) {
         Alertify.confirm('¿Está seguro que quiere borrar este recurso?').then(
-            function onOk() {
-                usSpinnerService.spin('spinner');
-                rest().delete({
-                    type: type,
-                    id: id
-                }, function(resp) {
-                    usSpinnerService.stop('spinner');
-                    $window.location.reload();
-                }, function(error) {
-                    usSpinnerService.stop('spinner');
-                });
-            },
-            function onCancel() {
-                return false;
-            }
+                function onOk() {
+                    usSpinnerService.spin('spinner');
+                    rest().delete({
+                        type: type,
+                        id: id
+                    }, function(resp) {
+                        usSpinnerService.stop('spinner');
+                        $window.location.reload();
+                    }, function(error) {
+                        usSpinnerService.stop('spinner');
+                    });
+                },
+                function onCancel() {
+                    return false;
+                }
         );
     };
 
@@ -172,11 +184,12 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
             }
         }
 
+        $scope.model.optionals = {};
         var cont = 1;
         for (var i = 0; i < $scope.model.items.length; i++) {
             var values = [];
             $scope.model["optional" + cont] = "";
-            $scope.model["optional" + cont] = $scope.model.items[i].field1 + "|" + $scope.model.items[i].field2;
+            $scope.model.optionals[$scope.model.items[i].field1] = $scope.model.items[i].field2;
             cont++;
         }
 
@@ -257,18 +270,14 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
 
             if (verified) {
                 optionsTemp.push(verified);
-            } else {
-                optionsTemp.push("");
             }
         }
 
         $scope.tempData.items = optionsTemp;
-        var cont = 1;
-        for (var i = 0; i < $scope.tempData.items.length; i++) {
-            $scope.tempData["optional" + cont] = "";
-            $scope.tempData["optional" + cont] = $scope.tempData.items[i];
-            cont++;
-        }
+        $scope.tempData.optionals = {};
+        angular.forEach($scope.tempData.items, function(element) {
+            $scope.tempData.optionals[element.clave] = element.valor;
+        });
 
         // transform the array of objects into a string of ids
         $scope.tempData.files = reformatArray($scope.tempData.files).toString();
@@ -285,8 +294,8 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
                 // rObj[obj.id] = obj.value;
             });
             return reformattedArray;
-        };
-
+        }
+        ;
         if (isValid) {
             rest().update({
                 type: $scope.type,
@@ -313,20 +322,24 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
             }, function() {
                 $scope.model.items = [];
                 $scope.publishAt = $scope.model.publishAt;
-                var counter = 0;
-                for (obj in $scope.model) {
-                    if (obj.indexOf("optional") != -1) {
-                        if (!!$scope.model[obj]) {
-                            var valores = $scope.model[obj].split("|");
-                            $scope.model.items.push({
-                                field1: valores[0],
-                                field2: valores[1],
-                                index: counter
-                            });
-                            counter++;
-                        }
-                    }
-                }
+                angular.forEach($scope.model.optionals, function(val, key) {
+                    $scope.model.items.push({
+                        field1: key,
+                        field2: val,
+                    });
+                });
+//                for (obj in $scope.model) {
+//                    if (obj.indexOf("optional") != -1) {
+//                        if (!!$scope.model[obj]) {
+//                            $scope.model.items.push({
+//                                field1: $scope.model[obj].clave,
+//                                field2: $scope.model[obj].valor,
+//                                index: counter
+//                            });
+//                            counter++;
+//                        }
+//                    }
+//                }
             });
         });
     }
@@ -335,8 +348,11 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
         var returnOption = false;
         for (var j = 0; j < arrayOptions.length; j++) {
             if (j == index) {
-                console.dir(arrayOptions[j]);
-                returnOption = arrayOptions[j].field1 + "|" + arrayOptions[j].field2;
+                returnOption = {
+                    clave: arrayOptions[j].field1,
+                    valor: arrayOptions[j].field2,
+                    index: j
+                }
                 break;
             }
         }

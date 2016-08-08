@@ -70,45 +70,9 @@
                                 <td class="detail-bold">{{ 'TAGS' | translate }} </td>
                                 <td ng-bind-html="getHtml(model.tags)"></td>
                             </tr>
-                            <tr ng-if="model.optional1">
-                                <td class="detail-bold">{{ 'OPTIONAL' | translate }} 1</td>
-                                <td>{{model.optional1}}</td>
-                            </tr>
-                            <tr ng-if="model.optional2">
-                                <td class="detail-bold">{{ 'OPTIONAL' | translate }} 2</td>
-                                <td>{{model.optional2}}</td>
-                            </tr>
-                            <tr ng-if="model.optional3">
-                                <td class="detail-bold">{{ 'OPTIONAL' | translate }} 3</td>
-                                <td>{{model.optional3}}</td>
-                            </tr>
-                            <tr ng-if="model.optional4">
-                                <td class="detail-bold">{{ 'OPTIONAL' | translate }} 4</td>
-                                <td>{{model.optional4}}</td>
-                            </tr>
-                            <tr ng-if="model.optional5">
-                                <td class="detail-bold">{{ 'OPTIONAL' | translate }} 5</td>
-                                <td>{{model.optional5}}</td>
-                            </tr>
-                            <tr ng-if="model.optional6">
-                                <td class="detail-bold">{{ 'OPTIONAL' | translate }} 6</td>
-                                <td>{{model.optional6}}</td>
-                            </tr>
-                            <tr ng-if="model.optional7">
-                                <td class="detail-bold">{{ 'OPTIONAL' | translate }} 7</td>
-                                <td>{{model.optional7}}</td>
-                            </tr>
-                            <tr ng-if="model.optional8">
-                                <td class="detail-bold">{{ 'OPTIONAL' | translate }} 8</td>
-                                <td>{{model.optional8}}</td>
-                            </tr>
-                            <tr ng-if="model.optional9">
-                                <td class="detail-bold">{{ 'OPTIONAL' | translate }} 9</td>
-                                <td>{{model.optional9}}</td>
-                            </tr>
-                            <tr ng-if="model.optional10">
-                                <td class="detail-bold">{{ 'OPTIONAL' | translate }} 10</td>
-                                <td>{{model.optional10}}</td>
+                            <tr ng-repeat="(key, val) in model.optionals">
+                                <td class="detail-bold">{{key}}</td>
+                                <td>{{val}}</td>
                             </tr>
                         </table>
                     </div>
