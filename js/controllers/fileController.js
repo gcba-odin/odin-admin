@@ -52,7 +52,7 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
     };
 }
 
-function FileViewController($scope, Flash, rest, $routeParams, $location, modelService, $sce, Alertify, usSpinnerService, $window) {
+function FileViewController($scope, Flash, rest, $routeParams, $location, modelService, $sce, Alertify, usSpinnerService, $window, configs) {
     modelService.initService("File", "files", $scope);
     $scope.getHtml = function(html) {
         return $sce.trustAsHtml(html);
@@ -102,10 +102,14 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
             usSpinnerService.stop('spinner');
         });
     };
+    
+    //factory configs 
+    configs.statuses($scope);
 
     $scope.publish = function() {
         $scope.model.publishedAt = new Date().toISOString().slice(0, 19).replace('T', ' ');
-        $scope.model.status = 'qWRhpRV';
+        $scope.model.status = $scope.statuses.published;
+        
         update();
     };
 
@@ -113,7 +117,7 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
         Alertify.confirm('¿Está seguro que quiere despublicar este archivo?').then(
                 function onOk() {
                     $scope.model.publishedAt = null;
-                    $scope.model.status = 'rWRhpRV';
+                    $scope.model.status = $scope.statuses.unpublished;
                     update();
                 },
                 function onCancel() {

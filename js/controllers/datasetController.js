@@ -57,7 +57,7 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
     modelService.loadAll($scope);
 }
 
-function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sce, modelService, Alertify, usSpinnerService, $window) {
+function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sce, modelService, Alertify, usSpinnerService, $window, configs) {
 
     modelService.initService("Dataset", "datasets", $scope);
 
@@ -105,11 +105,15 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
         };
     });
 
+    //factory configs 
+    configs.statuses($scope);
+
     var update = function() {
         usSpinnerService.spin('spinner');
         $scope.tempData = {
             id: $scope.model.id,
-            publishedAt: $scope.model.publishedAt
+            publishedAt: $scope.model.publishedAt,
+            status: $scope.model.status
         };
 
         rest().update({
@@ -124,6 +128,8 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
 
     $scope.publish = function() {
         $scope.model.publishedAt = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        $scope.model.status = $scope.statuses.published;
+
         update();
     };
 
@@ -131,6 +137,7 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
         Alertify.confirm('¿Está seguro que quiere despublicar este dataset?').then(
                 function onOk() {
                     $scope.model.publishedAt = null;
+                    $scope.model.status = $scope.statuses.unpublished;
                     update();
                 },
                 function onCancel() {
@@ -236,7 +243,7 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
 
 }
 
-function DatasetEditController($scope, Flash, rest, $routeParams, model, $location, modelService, usSpinnerService) {
+function DatasetEditController($scope, Flash, rest, $routeParams, model, $location, modelService, usSpinnerService, configs) {
 
     modelService.initService("Dataset", "datasets", $scope);
 
@@ -246,11 +253,17 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
     var tagstemporal = [];
     $scope.tempData = [];
     $scope.publishAt = "";
+
+    //factory configs 
+    configs.statuses($scope);
+
     $scope.publish = function() {
         $scope.model.publishedAt = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        $scope.model.status = $scope.statuses.published;
     }
     $scope.unPublish = function() {
         $scope.model.publishedAt = "";
+        $scope.model.status = $scope.statuses.unpublished;
     }
     $scope.update = function(isValid) {
         usSpinnerService.spin('spinner');
