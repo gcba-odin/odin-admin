@@ -102,14 +102,14 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
             usSpinnerService.stop('spinner');
         });
     };
-    
+
     //factory configs 
     configs.statuses($scope);
 
     $scope.publish = function() {
         $scope.model.publishedAt = new Date().toISOString().slice(0, 19).replace('T', ' ');
         $scope.model.status = $scope.statuses.published;
-        
+
         update();
     };
 
@@ -348,13 +348,13 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
     $scope.itemName = function(a) {
         return "optional" + (parseInt(a) + 1);
     }
-    
-    var loadFileTypes = function(){
+
+    var loadFileTypes = function() {
         var fileTypes = rest().get({
             type: 'fileTypes'
-        }, function(){
+        }, function() {
             $scope.fileTypes = [];
-            angular.forEach(fileTypes.data, function(element){
+            angular.forEach(fileTypes.data, function(element) {
                 $scope.fileTypes.push(element.mimetype);
             });
             $scope.fileTypes = $scope.fileTypes.toString();
@@ -378,7 +378,19 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
     $scope.steps[2] = "undone";
     $scope.stepactive = 0;
 
-    $scope.fileModel = []
+    $scope.mostrar = false;
+
+    $scope.fileModel = [];
+
+    $scope.clearUpload = function() {
+        $scope.fileModel.name = "";
+        $scope.fileModel.type = "";
+    }
+
+    $scope.beforeChange = function($files) {
+        $scope.fileModel.name = $files[0].name;
+        $scope.mostrar = true;
+    };
 
     $scope.checkstep = function(step) {
 
@@ -443,13 +455,36 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
             //    'gatheringDate': $scope.model.gatheringDate //new Date().toISOString().slice(0, 19).replace('T', ' ');
         }
 
+        if ($scope.model.uploadFile != null) {
+            data.uploadFile = $scope.model.uploadFile;
+        }
+
+        var param = {
+            gatheringDate: null
+        };
         if ($scope.model.gatheringDate && $scope.model.gatheringDate != "") {
-            data.gatheringDate = $scope.model.gatheringDate;
-        } else {
-            data.gatheringDate = null;
+            param.gatheringDate = $scope.model.gatheringDate.toISOString().slice(0, 10);//.toISOString().slice(0, 10), //new Date().toISOString().slice(0, 19).replace('T', ' ');
         }
 
         if (isValid) {
+            Upload.upload({
+                url: $rootScope.url + "/files/" + $scope.model.id,
+                data: data,
+                method: 'PATCH',
+                params: param
+            }).then(function(resp) {
+                usSpinnerService.stop('spinner');
+                $location.url('/files/' + resp.data.data.id + '/view');
+            }, function(resp) {
+                usSpinnerService.stop('spinner');
+                // alert(resp.status);
+                $scope.unsave = false;
+            }, function(evt) {
+                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                $scope.uploadImageProgress = progressPercentage;
+                $scope.unsave = false;
+                usSpinnerService.stop('spinner');
+            });
             rest().update({
                 type: $scope.type,
                 id: $scope.model.id

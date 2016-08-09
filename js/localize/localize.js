@@ -159,7 +159,8 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
     'VIEW_BASEMAPS': 'Ver mapas base',
     'ADD_BASEMAPS': 'Agregar mapa base',
     'BASEMAP': 'Mapa base',
-
+    'ELEMENT': 'Elemento',
+    'CHART_SUBTYPE': 'Lógica'
   });
   console.log($rootScope);
   $translateProvider.preferredLanguage('es');
