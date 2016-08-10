@@ -31,7 +31,7 @@
                     </div>
                     <div class="row" ng-show="stepactive == 0">
                         <div class="col-xs-12">
-                            <form autocomplete="off" class="form-horizontal" name="form" autocomplete="false" role="form" ng-submit="add(form.$valid)" novalidate>
+                            <form autocomplete="off" class="form-horizontal" name="form1" autocomplete="false" role="form" novalidate>
                                 <div class="box-body" ng-include="'views/map/_form_step1.html'"></div>
 
                             </form>
@@ -39,7 +39,7 @@
                     </div>
                     <div class="row" ng-show="stepactive == 1">
                         <div class="col-xs-12">
-                            <form autocomplete="off" enctype="multipart/form-data" class="form-horizontal" name="form" autocomplete="false" role="form" ng-submit="add(form.$valid)" novalidate>
+                            <form autocomplete="off" enctype="multipart/form-data" class="form-horizontal" name="form2" autocomplete="false" role="form" novalidate>
                                 <div class="box-body" ng-include="'views/map/_form_step2.html'"></div>
                             </form>
                         </div>
@@ -84,7 +84,7 @@
                         <button class="btn btn-default pull-left" ng-click="checkstep(stepactive - 1)" ng-if="stepactive != 0">
                             {{ 'BACK' | translate }}
                         </button>
-                        <button ng-if="stepactive != 2" type="submit" class="btn btn-primary pull-right" ng-click="checkstep(stepactive + 1)" ng-disabled="(form.$invalid && stepactive == 1) || (stepactive == 2)">{{ 'NEXT' | translate }}</button>
+                        <button ng-if="stepactive != 2" type="submit" class="btn btn-primary pull-right" ng-click="checkstep(stepactive + 1)" ng-disabled="(form1.$invalid && stepactive == 0) || (form1.$invalid && form2.$invalid && stepactive == 1)">{{ 'NEXT' | translate }}</button>
                         <button ng-if="stepactive == 2" type="submit" class="btn btn-primary pull-right" ng-click="add(model)">{{ 'SAVE' | translate }}</button>
 
                     </div>

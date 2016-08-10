@@ -40,7 +40,7 @@ function UserViewController($scope, Flash, rest, $routeParams, $location, modelS
     }
 }
 
-function UserCreateController($scope, rest, model, Flash, $location, modelService, usSpinnerService) {
+function UserCreateController($scope, rest, model, Flash, $location, modelService, usSpinnerService, Alertify) {
     modelService.initService("User", "users", $scope);
 
     $scope.model = new model();
@@ -51,12 +51,13 @@ function UserCreateController($scope, rest, model, Flash, $location, modelServic
                 type: $scope.type
             }, $scope.model, function(resp) {
                 usSpinnerService.stop('spinner');
-                if (!!resp.data) {
-                    var url = '/' + $scope.type + '/' + resp.data.id + "/edit";
-
-                } else {
+                Alertify.alert('El usuario se ha creado exitosamente.');
+//                if (!!resp.data) {
+//                    var url = '/' + $scope.type + '/' + resp.data.id + "/edit";
+//
+//                } else {
                     var url = '/' + $scope.type + '/';
-                }
+//                }
                 $location.path(url);
 
             }, function(error) {
@@ -66,7 +67,7 @@ function UserCreateController($scope, rest, model, Flash, $location, modelServic
     };
 }
 
-function UserEditController($scope, Flash, rest, $routeParams, model, $location, modelService, usSpinnerService) {
+function UserEditController($scope, Flash, rest, $routeParams, model, $location, modelService, usSpinnerService, Alertify) {
     modelService.initService("User", "users", $scope);
 
     $scope.model = new model();
@@ -78,6 +79,7 @@ function UserEditController($scope, Flash, rest, $routeParams, model, $location,
                 id: $scope.model.id
             }, $scope.model, function() {
                 usSpinnerService.stop('spinner');
+                Alertify.alert('El usuario se ha editado exitosamente.');
                 var url = '/' + $scope.type + '/';
                 $location.path(url);
             }, function(error) {

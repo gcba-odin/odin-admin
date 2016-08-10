@@ -55,8 +55,6 @@ function BasemapCreateController($scope, modelService, rest, $location, model, $
     $scope.add = function(model) {
         usSpinnerService.spin('spinner');
 
-console.log($scope.model);
-
         if (model) {
             rest().save({
                 type: $scope.type
