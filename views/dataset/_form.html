@@ -22,12 +22,29 @@
 </div>
 <!-- end Input Description -->
 
+<!-- Input status -->
+<div class="form-group" ng-if="!status_default">
+    <label for="status" class="col-sm-2 control-label"> {{ 'STATUS' | translate }}</label>
+    <div class="col-sm-10" ng-class="{ 'has-error': form.status.$touched && form.status.$invalid }">
+
+
+        <select placeholder="{{ 'SELECT_ONE' | translate }}" class="selectize-input items required full has-options has-items" data-key="name" data-modelname="statuses" data-opt="{{ options.data}}" data-model="{{model.status}}" select-static-ajax name="status"
+                id="status" ng-model="model.status" class="selectize-width" required>
+        </select>
+
+        <div class="help-block" ng-messages="form.status.$error" ng-if="form.status.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input status -->
+
 <!-- Input categories -->
 <div class="form-group">
     <label for="categories" class="col-sm-2 control-label">{{ 'CATEGORIES' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.categories.$touched && form.categories.$invalid }">
         <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="categories" data-model="{{model.categories}}" select-two-ajax name="categories" id="categories" ng-model="model.categories" required class="selectize-width" multiple>
-      </select>
+        </select>
 
         <div class="help-block" ng-messages="form.categories.$error" ng-if="form.categories.$touched">
             <div ng-messages-include="views/messages.html"></div>
@@ -41,7 +58,7 @@
     <label for="owner" class="col-sm-2 control-label">* {{ 'OWNER' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.owner.$touched && form.owner.$invalid }">
         <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="username" data-modelname="users" data-model="{{model.owner}}" select-two-ajax name="organization" id="organization" ng-model="model.owner" required class="selectize-width">
-      </select>
+        </select>
         <div class="help-block" ng-messages="form.owner.$error" ng-if="form.owner.$touched">
             <div ng-messages-include="views/messages.html"></div>
         </div>
@@ -54,7 +71,7 @@
     <label for="tags" class="col-sm-2 control-label">{{ 'TAGS' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.tags.$touched && form.tags.$invalid }">
         <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="tags" data-model="{{model.tags}}" select-two-ajax data-create="true" name="tags" id="tags" ng-model="model.tags" required class="selectize-width" multiple>
-      </select>
+        </select>
 
         <div class="help-block" ng-messages="form.tags.$error" ng-if="form.tags.$touched">
             <div ng-messages-include="views/messages.html"></div>
@@ -68,12 +85,12 @@
     <label class="col-sm-2 control-label">* {{ 'STARRED' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.starred.$touched && form.starred.$invalid }">
         <div>
-            <label class="btn btn-default" ng-class="activeClass(model.starred,1)">
-            <input   type="radio" ng-value="true" name="starred"    ng-model="model.starred" id="option1" autocomplete="off" ng-checked="model.V" required> {{ 'YES' | translate }}
-          </label>
-            <label class="btn btn-warning" ng-class="activeClass(model.starred,2)">
-            <input type="radio" ng-value="false" name="starred"  ng-model="model.starred" id="option2" autocomplete="off"> {{ 'NO' | translate }}
-          </label>
+            <label class="btn btn-default" ng-class="activeClass(model.starred, 1)">
+                <input   type="radio" ng-value="true" name="starred"    ng-model="model.starred" id="option1" autocomplete="off" ng-checked="model.V" required> {{ 'YES' | translate }}
+            </label>
+            <label class="btn btn-warning" ng-class="activeClass(model.starred, 2)">
+                <input type="radio" ng-value="false" name="starred"  ng-model="model.starred" id="option2" autocomplete="off"> {{ 'NO' | translate }}
+            </label>
         </div>
 
         <div class="help-block" ng-messages="form.starred.$error" ng-if="form.starred.$touched">
@@ -145,7 +162,7 @@
 <div class="form-group">
     <label for="title" class="col-sm-2 control-label"></label>
     <div class="col-sm-10">
-        <button type="button" ng-click="addInput()" ng-show="model.items.length <10" class="btn btn-default">{{ 'ADD_OPTION' | translate }}</button>
+        <button type="button" ng-click="addInput()" ng-show="model.items.length < 10" class="btn btn-default">{{ 'ADD_OPTION' | translate }}</button>
     </div>
 </div>
 <!-- end Input optional -->

@@ -181,6 +181,8 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
         params: "orderBy=name&sort=DESC"
     });
 
+    $scope.status_default = true;
+
     $scope.model = new model();
     $scope.model.items = [];
     $scope.add = function(isValid) {
@@ -247,6 +249,7 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
 
     modelService.initService("Dataset", "datasets", $scope);
 
+    $scope.status_default = false;
 
     $scope.model = new model();
     $scope.tags = [];
@@ -333,6 +336,7 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
                 type: $scope.type,
                 params: "include=tags,files,categories"
             }, function() {
+                $scope.model.status = $scope.model.status.id;
                 $scope.model.items = [];
                 $scope.publishAt = $scope.model.publishAt;
                 angular.forEach($scope.model.optionals, function(val, key) {
