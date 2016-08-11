@@ -106,10 +106,12 @@ function ChartCreateController($scope, modelService, rest, $location, model, $sc
     }
 
     $scope.checkstep = function(step) {
-        if ((step == 1) && ($scope.headersFile == null)) {
-            Alertify.alert('Le faltó asociar el archivo o no se puede leer.');
-        } else if ((step == 1) && (!angular.isUndefined($scope.model.link) && $scope.model.link != '')) {
+        $scope.jump = 1;
+        if ((step == 1) && (!angular.isUndefined($scope.model.link) && $scope.model.link != '')) {
             $scope.checkstep(2);
+            $scope.jump = 2;
+        } else if ((step == 1) && ($scope.headersFile == null)) {
+            Alertify.alert('Le faltó asociar el archivo o no se puede leer.');
         } else {
             if ((step == 1 && ($scope.model.type) && ($scope.model.file)) || (step == 2 && ($scope.model.file) && ($scope.model.link || ($scope.model.type && $scope.model.dataType && $scope.model.items[0]))) || step == 0) {
 
@@ -204,7 +206,7 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
     $scope.steps[1] = "undone";
     $scope.steps[2] = "undone";
     $scope.stepactive = 0;
-
+    
     var generate_headers = function() {
         if ($scope.fileModel.data.length > 0)
         {
@@ -230,10 +232,12 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
     };
 
     $scope.checkstep = function(step) {
-        if ((step == 1) && ($scope.headersFile == null)) {
-            Alertify.alert('Le faltó asociar el archivo o no se puede leer.');
-        } else if ((step == 1) && (!angular.isUndefined($scope.model.link) && !!$scope.model.link)) {
+        $scope.jump = 1;
+        if ((step == 1) && (!angular.isUndefined($scope.model.link) && $scope.model.link != '')) {
             $scope.checkstep(2);
+            $scope.jump = 2;
+        } else if ((step == 1) && ($scope.headersFile == null)) {
+            Alertify.alert('Le faltó asociar el archivo o no se puede leer.');
         } else {
             if ((step == 1 && ($scope.model.type) && ($scope.model.file)) || (step == 2 && ($scope.model.file) && ($scope.model.link || ($scope.model.type && $scope.model.dataType && $scope.model.items[0]))) || step == 0) {
 
