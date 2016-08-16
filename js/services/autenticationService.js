@@ -5,6 +5,7 @@
     app.factory('AuthenticationService', AuthenticationService);
 
     AuthenticationService.$inject = ['$http', '$cookieStore', '$rootScope', '$timeout', 'UserService'];
+
     function AuthenticationService($http, $cookieStore, $rootScope, $timeout, UserService, $scope, Alertify) {
         var service = {};
 
@@ -16,26 +17,27 @@
         function Login(username, password, callback) {
             /* Use this for real authenticationa
              ----------------------------------------------*/
-            $http.post($rootScope.url + '/users/login', {username: username, password: password})
-                    .success(function(response) {
-                        callback(response);
-                    })
-                    .error(function(response) {
-                        alert(response.message);
+            $http.post($rootScope.url + '/users/login', {
+                    username: username,
+                    password: password
+                })
+                .success(function(response) {
+                    callback(response);
+                })
+                .error(function(response) {
+                    //alert(response.message);
 
-                    });
+                });
 
         }
 
         function SetCredentials(username, password, token, user) {
             var authdata = Base64.encode(username + ':' + password);
-            $rootScope.globals = {
-                currentUser: {
-                    username: username,
-                    authdata: authdata,
-                    token: token,
-                    user: user
-                }
+            $rootScope.globals.currentUser = {
+                username: username,
+                authdata: authdata,
+                token: token,
+                user: user
             };
 
             $http.defaults.headers.common['x-admin-authorization'] = token;
@@ -46,7 +48,7 @@
             $rootScope.globals = {};
             $cookieStore.remove('globals');
             //$http.defaults.headers.common.Authorization = 'Basic';
-            $http.defaults.headers.common['x-admin-authorization'] = 'Basic';
+            $http.defaults.headers.common['x-admin-authorization'] = '';
         }
     }
 
@@ -76,10 +78,10 @@
                 }
 
                 output = output +
-                        this.keyStr.charAt(enc1) +
-                        this.keyStr.charAt(enc2) +
-                        this.keyStr.charAt(enc3) +
-                        this.keyStr.charAt(enc4);
+                    this.keyStr.charAt(enc1) +
+                    this.keyStr.charAt(enc2) +
+                    this.keyStr.charAt(enc3) +
+                    this.keyStr.charAt(enc4);
                 chr1 = chr2 = chr3 = "";
                 enc1 = enc2 = enc3 = enc4 = "";
             } while (i < input.length);
@@ -96,8 +98,8 @@
             var base64test = /[^A-Za-z0-9\+\/\=]/g;
             if (base64test.exec(input)) {
                 window.alert("There were invalid base64 characters in the input text.\n" +
-                        "Valid base64 characters are A-Z, a-z, 0-9, '+', '/',and '='\n" +
-                        "Expect errors in decoding.");
+                    "Valid base64 characters are A-Z, a-z, 0-9, '+', '/',and '='\n" +
+                    "Expect errors in decoding.");
             }
             input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
 

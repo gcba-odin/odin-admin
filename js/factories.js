@@ -103,270 +103,270 @@
                 var _this = this;
                 var item = item.target.dataset;
                 Alertify.confirm(item.textdelete).then(
-                        function onOk() {
+                    function onOk() {
 
-                            _this.delete(_this.insertalScope, {
-                                id: item.id
-                            })
-                        },
-                        function onCancel() {
-                            return false
-                        }
+                        _this.delete(_this.insertalScope, {
+                            id: item.id
+                        })
+                    },
+                    function onCancel() {
+                        return false
+                    }
                 );
             }
         }
     });
 
     app.factory('rest', ['$resource', '$location', '$rootScope', 'ngProgressFactory', 'flashService', 'Flash', function($resource, $location, $rootScope, ngProgressFactory, flashService, Flash) {
-            $rootScope.progressbar = ngProgressFactory.createInstance();
-            return function($url) {
-                $rootScope.progressbar.start();
-                var token = $rootScope.globals.currentUser.token;
-                $url = ($url == null) ? $rootScope.url + '/:type' : $url;
-                return $resource($url, {
-                    type: ''
-                }, {
-                    get: {
-                        url: $url + "?:params",
-                        method: 'GET',
-                        headers: {
-                            'x-admin-authorization': token,
-                        },
-                        transformResponse: function(data) {
+        $rootScope.progressbar = ngProgressFactory.createInstance();
+        return function($url) {
+            $rootScope.progressbar.start();
+            var token = $rootScope.globals.currentUser.token;
+            $url = ($url == null) ? $rootScope.url + '/:type' : $url;
+            return $resource($url, {
+                type: ''
+            }, {
+                get: {
+                    url: $url + "?:params",
+                    method: 'GET',
+                    headers: {
+                        'x-admin-authorization': token,
+                    },
+                    transformResponse: function(data) {
+                        $rootScope.progressbar.complete();
+                        return angular.fromJson(data);
+                    },
+                    interceptor: {
+                        responseError: handError
+                    }
+                },
+                count: {
+                    url: $url + "/count",
+                    method: 'GET',
+                    headers: {
+                        'x-admin-authorization': token,
+                    },
+                    transformResponse: function(data) {
+                        $rootScope.progressbar.complete();
+                        return angular.fromJson(data);
+                    },
+                    interceptor: {
+                        responseError: handError
+                    }
+                },
+                contents: {
+                    url: $url + "/:id/contents?:params",
+                    method: 'GET',
+                    headers: {
+                        'x-admin-authorization': token,
+                    },
+                    transformResponse: function(data) {
+                        $rootScope.progressbar.complete();
+                        return angular.fromJson(data);
+                    },
+                    interceptor: {
+                        responseError: handError
+                    }
+                },
+                resources: {
+                    url: $url + "/:id/resources?:params",
+                    method: 'GET',
+                    headers: {
+                        'x-admin-authorization': token,
+                    },
+                    transformResponse: function(data) {
+                        $rootScope.progressbar.complete();
+                        return angular.fromJson(data);
+                    },
+                    interceptor: {
+                        responseError: handError
+                    }
+                },
+                getArray: {
+                    url: $url + "/:id/:asociate",
+                    method: 'GET',
+                    headers: {
+                        'x-admin-authorization': token,
+                    },
+                    transformResponse: function(data) {
+                        $rootScope.progressbar.complete();
+                        var json = JSON.parse(data);
+                        return json.data;
+                    },
+                    isArray: true,
+                    interceptor: {
+                        responseError: handError
+                    }
+                },
+                findOne: {
+                    url: $url + "/:id?:params",
+                    method: 'GET',
+                    headers: {
+                        'x-admin-authorization': token,
+                    },
+                    transformResponse: function(data) {
+                        if (data) {
+                            $rootScope.progressbar.complete();
+                            var json = JSON.parse(data)
+                            return angular.fromJson(json.data);
+                        } else {
+                            $rootScope.progressbar.complete();
+                        }
+                    },
+                    interceptor: {
+                        responseError: handError
+                    }
+                },
+                'save': {
+                    url: $url,
+                    method: 'POST',
+                    headers: {
+                        'x-admin-authorization': token,
+                    },
+                    interceptor: {
+                        responseError: handError
+                    },
+                    transformResponse: function(data) {
+                        if (data) {
+                            if (!!JSON.parse(data).message) {
+                                flashService.showSuccess(JSON.parse(data).message);
+                            }
                             $rootScope.progressbar.complete();
                             return angular.fromJson(data);
-                        },
-                        interceptor: {
-                            responseError: handError
-                        }
-                    },
-                    count: {
-                        url: $url + "/count",
-                        method: 'GET',
-                        headers: {
-                            'x-admin-authorization': token,
-                        },
-                        transformResponse: function(data) {
+                        } else {
                             $rootScope.progressbar.complete();
-                            return angular.fromJson(data);
-                        },
-                        interceptor: {
-                            responseError: handError
                         }
+                    }
+                },
+                'saveWithData': {
+                    url: $url,
+                    method: 'POST',
+                    headers: {
+                        'x-admin-authorization': token,
+                        'Content-Type': undefined
                     },
-                    contents: {
-                        url: $url + "/:id/contents?:params",
-                        method: 'GET',
-                        headers: {
-                            'x-admin-authorization': token,
-                        },
-                        transformResponse: function(data) {
-                            $rootScope.progressbar.complete();
-                            return angular.fromJson(data);
-                        },
-                        interceptor: {
-                            responseError: handError
-                        }
-                    },
-                    resources: {
-                        url: $url + "/:id/resources?:params",
-                        method: 'GET',
-                        headers: {
-                            'x-admin-authorization': token,
-                        },
-                        transformResponse: function(data) {
-                            $rootScope.progressbar.complete();
-                            return angular.fromJson(data);
-                        },
-                        interceptor: {
-                            responseError: handError
-                        }
-                    },
-                    getArray: {
-                        url: $url + "/:id/:asociate",
-                        method: 'GET',
-                        headers: {
-                            'x-admin-authorization': token,
-                        },
-                        transformResponse: function(data) {
-                            $rootScope.progressbar.complete();
-                            var json = JSON.parse(data);
-                            return json.data;
-                        },
-                        isArray: true,
-                        interceptor: {
-                            responseError: handError
-                        }
-                    },
-                    findOne: {
-                        url: $url + "/:id?:params",
-                        method: 'GET',
-                        headers: {
-                            'x-admin-authorization': token,
-                        },
-                        transformResponse: function(data) {
-                            if (data) {
-                                $rootScope.progressbar.complete();
-                                var json = JSON.parse(data)
-                                return angular.fromJson(json.data);
-                            } else {
-                                $rootScope.progressbar.complete();
-                            }
-                        },
-                        interceptor: {
-                            responseError: handError
-                        }
-                    },
-                    'save': {
-                        url: $url,
-                        method: 'POST',
-                        headers: {
-                            'x-admin-authorization': token,
-                        },
-                        interceptor: {
-                            responseError: handError
-                        },
-                        transformResponse: function(data) {
-                            if (data) {
-                                if (!!JSON.parse(data).message) {
-                                    flashService.showSuccess(JSON.parse(data).message);
-                                }
-                                $rootScope.progressbar.complete();
-                                return angular.fromJson(data);
-                            } else {
-                                $rootScope.progressbar.complete();
-                            }
-                        }
-                    },
-                    'saveWithData': {
-                        url: $url,
-                        method: 'POST',
-                        headers: {
-                            'x-admin-authorization': token,
-                            'Content-Type': undefined
-                        },
-                        transformRequest: function(data, headersGetter) {
-                            // Here we set the Content-Type header to null.
-                            var headers = headersGetter();
-                            headers['Content-Type'] = undefined;
+                    transformRequest: function(data, headersGetter) {
+                        // Here we set the Content-Type header to null.
+                        var headers = headersGetter();
+                        headers['Content-Type'] = undefined;
 
-                            // And here begins the logic which could be used somewhere else
-                            // as noted above.
-                            if (data == undefined) {
-                                return data;
+                        // And here begins the logic which could be used somewhere else
+                        // as noted above.
+                        if (data == undefined) {
+                            return data;
+                        }
+
+                        var fd = new FormData();
+
+                        var createKey = function(_keys_, currentKey) {
+                            var keys = angular.copy(_keys_);
+                            keys.push(currentKey);
+                            formKey = keys.shift()
+
+                            if (keys.length) {
+                                formKey += "[" + keys.join("][") + "]"
                             }
 
-                            var fd = new FormData();
+                            return formKey;
+                        }
 
-                            var createKey = function(_keys_, currentKey) {
-                                var keys = angular.copy(_keys_);
-                                keys.push(currentKey);
-                                formKey = keys.shift()
+                        var addToFd = function(object, keys) {
+                            angular.forEach(object, function(value, key) {
+                                var formKey = createKey(keys, key);
 
-                                if (keys.length) {
-                                    formKey += "[" + keys.join("][") + "]"
-                                }
-
-                                return formKey;
-                            }
-
-                            var addToFd = function(object, keys) {
-                                angular.forEach(object, function(value, key) {
-                                    var formKey = createKey(keys, key);
-
-                                    if (value instanceof File) {
-                                        fd.append(formKey, value);
-                                    } else if (value instanceof FileList) {
-                                        if (value.length == 1) {
-                                            fd.append(formKey, value[0]);
-                                        } else {
-                                            angular.forEach(value, function(file, index) {
-                                                fd.append(formKey + '[' + index + ']', file);
-                                            });
-                                        }
-                                    } else if (value && (typeof value == 'object' || typeof value == 'array')) {
-                                        var _keys = angular.copy(keys);
-                                        _keys.push(key)
-                                        addToFd(value, _keys);
+                                if (value instanceof File) {
+                                    fd.append(formKey, value);
+                                } else if (value instanceof FileList) {
+                                    if (value.length == 1) {
+                                        fd.append(formKey, value[0]);
                                     } else {
-                                        fd.append(formKey, value);
+                                        angular.forEach(value, function(file, index) {
+                                            fd.append(formKey + '[' + index + ']', file);
+                                        });
                                     }
-                                });
-                            }
-
-                            addToFd(data, []);
-
-                            return fd;
-                        },
-                        interceptor: {
-                            responseError: handError
-                        },
-                        transformResponse: function(data) {
-                            console.log(data);
-                        }
-                    },
-                    'delete': {
-                        url: $url + "/:id",
-                        method: 'DELETE',
-                        headers: {
-                            'x-admin-authorization': token,
-                        },
-                        interceptor: {
-                            responseError: handError
-                        },
-                        transformResponse: function(data) {
-                            $rootScope.progressbar.complete();
-
-                        }
-                    },
-                    'update': {
-                        url: $url + "/:id",
-                        method: 'PATCH',
-                        headers: {
-                            'x-admin-authorization': token,
-                        },
-                        interceptor: {
-                            responseError: handError
-                        },
-                        transformResponse: function(data) {
-                            if (data) {
-                                if (!!JSON.parse(data).message) {
-                                    flashService.showSuccess(JSON.parse(data).message);
+                                } else if (value && (typeof value == 'object' || typeof value == 'array')) {
+                                    var _keys = angular.copy(keys);
+                                    _keys.push(key)
+                                    addToFd(value, _keys);
+                                } else {
+                                    fd.append(formKey, value);
                                 }
-                                $rootScope.progressbar.complete();
-                                return angular.fromJson(data);
-                            } else {
-                                $rootScope.progressbar.complete();
+                            });
+                        }
+
+                        addToFd(data, []);
+
+                        return fd;
+                    },
+                    interceptor: {
+                        responseError: handError
+                    },
+                    transformResponse: function(data) {
+                        console.log(data);
+                    }
+                },
+                'delete': {
+                    url: $url + "/:id",
+                    method: 'DELETE',
+                    headers: {
+                        'x-admin-authorization': token,
+                    },
+                    interceptor: {
+                        responseError: handError
+                    },
+                    transformResponse: function(data) {
+                        $rootScope.progressbar.complete();
+
+                    }
+                },
+                'update': {
+                    url: $url + "/:id",
+                    method: 'PATCH',
+                    headers: {
+                        'x-admin-authorization': token,
+                    },
+                    interceptor: {
+                        responseError: handError
+                    },
+                    transformResponse: function(data) {
+                        if (data) {
+                            if (!!JSON.parse(data).message) {
+                                flashService.showSuccess(JSON.parse(data).message);
                             }
+                            $rootScope.progressbar.complete();
+                            return angular.fromJson(data);
+                        } else {
+                            $rootScope.progressbar.complete();
                         }
                     }
-                });
-            }
-
-
-            function handError(e) {
-                params = JSON.stringify(e.data) || " "
-                if (!!e.data) {
-                    if (e.data.code == "E_VALIDATION") {
-                        params = validationErrors(e.data);
-                    }
                 }
+            });
+        }
 
-                //flashService.showError(" Route: <a target='_blank' href='"+e.config.url+"'>"+e.config.url+"</a> <br>"+params);
-            }
 
-            function validationErrors(data) {
-                var data = data.data;
-                var returntext = "";
-                for (d in data) {
-                    for (r in data[d]) {
-                        returntext = "<b>SERVER VALIDATIONS: </b> <br><p>Rule: " + data[d][r].rule + " <br>Message: " + data[d][r].message + " </p>";
-                    }
+        function handError(e) {
+            params = JSON.stringify(e.data) || " "
+            if (!!e.data) {
+                if (e.data.code == "E_VALIDATION") {
+                    params = validationErrors(e.data);
                 }
-
-                return returntext
             }
-        }]);
+
+            //flashService.showError(" Route: <a target='_blank' href='"+e.config.url+"'>"+e.config.url+"</a> <br>"+params);
+        }
+
+        function validationErrors(data) {
+            var data = data.data;
+            var returntext = "";
+            for (d in data) {
+                for (r in data[d]) {
+                    returntext = "<b>SERVER VALIDATIONS: </b> <br><p>Rule: " + data[d][r].rule + " <br>Message: " + data[d][r].message + " </p>";
+                }
+            }
+
+            return returntext
+        }
+    }]);
 })();
 
 
