@@ -120,6 +120,8 @@
             },
             link: function(scope, element, attrs, rootScope) {
 
+                var token = $cookieStore.get('globals').currentUser.token;
+
                 if (!!attrs.create) {} else {
                     attrs.create = false;
                 }
@@ -141,7 +143,7 @@
                                 var name = item.name;
                                 var selectize = selectizes[0].selectize;
 
-                                var token = $cookieStore.get('globals').currentUser.token;
+                                
                                 $.ajax({
                                     headers: {
                                         'x-admin-authorization': token,
@@ -180,8 +182,6 @@
                     load: function(query, callback) {
                         if (!query.length)
                             return callback();
-
-                        var token = $cookieStore.get('globals').currentUser.token;
 
                         $.ajax({
                             headers: {
