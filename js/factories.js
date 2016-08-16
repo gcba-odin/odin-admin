@@ -130,7 +130,7 @@
                         url: $url + "?:params",
                         method: 'GET',
                         headers: {
-                            'Authorization': 'JWT ' + token
+                            'x-admin-authorization': token,
                         },
                         transformResponse: function(data) {
                             $rootScope.progressbar.complete();
@@ -144,7 +144,7 @@
                         url: $url + "/count",
                         method: 'GET',
                         headers: {
-                            'Authorization': 'JWT ' + token
+                            'x-admin-authorization': token,
                         },
                         transformResponse: function(data) {
                             $rootScope.progressbar.complete();
@@ -158,7 +158,7 @@
                         url: $url + "/:id/contents?:params",
                         method: 'GET',
                         headers: {
-                            'Authorization': 'JWT ' + token
+                            'x-admin-authorization': token,
                         },
                         transformResponse: function(data) {
                             $rootScope.progressbar.complete();
@@ -172,7 +172,7 @@
                         url: $url + "/:id/resources?:params",
                         method: 'GET',
                         headers: {
-                            'Authorization': 'JWT ' + token
+                            'x-admin-authorization': token,
                         },
                         transformResponse: function(data) {
                             $rootScope.progressbar.complete();
@@ -186,7 +186,7 @@
                         url: $url + "/:id/:asociate",
                         method: 'GET',
                         headers: {
-                            'Authorization': 'JWT ' + token
+                            'x-admin-authorization': token,
                         },
                         transformResponse: function(data) {
                             $rootScope.progressbar.complete();
@@ -202,7 +202,7 @@
                         url: $url + "/:id?:params",
                         method: 'GET',
                         headers: {
-                            'Authorization': 'JWT ' + token
+                            'x-admin-authorization': token,
                         },
                         transformResponse: function(data) {
                             if (data) {
@@ -221,7 +221,7 @@
                         url: $url,
                         method: 'POST',
                         headers: {
-                            'Authorization': 'JWT ' + token
+                            'x-admin-authorization': token,
                         },
                         interceptor: {
                             responseError: handError
@@ -242,7 +242,7 @@
                         url: $url,
                         method: 'POST',
                         headers: {
-                            'Authorization': 'JWT ' + token,
+                            'x-admin-authorization': token,
                             'Content-Type': undefined
                         },
                         transformRequest: function(data, headersGetter) {
@@ -309,7 +309,7 @@
                         url: $url + "/:id",
                         method: 'DELETE',
                         headers: {
-                            'Authorization': 'JWT ' + token
+                            'x-admin-authorization': token,
                         },
                         interceptor: {
                             responseError: handError
@@ -323,7 +323,7 @@
                         url: $url + "/:id",
                         method: 'PATCH',
                         headers: {
-                            'Authorization': 'JWT ' + token
+                            'x-admin-authorization': token,
                         },
                         interceptor: {
                             responseError: handError
