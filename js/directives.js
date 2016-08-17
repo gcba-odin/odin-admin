@@ -146,7 +146,7 @@
                                 
                                 $.ajax({
                                     headers: {
-                                        'Authorization': token_auth,
+                                        'Authorization': 'Bearer ' + token_auth,
                                         'x-admin-authorization': token,
                                     },
                                     url: scope.$root.url + "/tags",
@@ -186,7 +186,7 @@
 
                         $.ajax({
                             headers: {
-                                'Authorization': token_auth,
+                                'Authorization': 'Bearer ' + token_auth,
                                 'x-admin-authorization': token,
                             },
                             url: scope.$root.url + '/' + attrs.modelname + '?' + attrs.key + '=' + encodeURIComponent(query), // + '"}}&rand=' + Math.random(),
@@ -275,7 +275,7 @@
 
                 $.ajax({
                     headers: {
-                        'Authorization': 'Bearer' + token_auth,
+                        'Authorization': 'Bearer ' + token_auth,
                         'x-admin-authorization': token,
                     },
                     url: scope.$root.url + '/' + attrs.modelname,
