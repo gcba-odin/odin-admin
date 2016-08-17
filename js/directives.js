@@ -119,10 +119,9 @@
                 modelValue: '@ngModel'
             },
             link: function(scope, element, attrs, rootScope) {
-                console.log($http.defaults.headers);
-                console.log($cookieStore.get('globals'));
                 var token = $cookieStore.get('globals').currentUser.token;
-console.log(token);
+                var token_auth = $cookieStore.get('globals').currentConsumer.token;
+                
                 if (!!attrs.create) {} else {
                     attrs.create = false;
                 }
@@ -147,6 +146,7 @@ console.log(token);
                                 
                                 $.ajax({
                                     headers: {
+                                        'Authorization': token_auth,
                                         'x-admin-authorization': token,
                                     },
                                     url: scope.$root.url + "/tags",
@@ -186,6 +186,7 @@ console.log(token);
 
                         $.ajax({
                             headers: {
+                                'Authorization': token_auth,
                                 'x-admin-authorization': token,
                             },
                             url: scope.$root.url + '/' + attrs.modelname + '?' + attrs.key + '=' + encodeURIComponent(query), // + '"}}&rand=' + Math.random(),
@@ -268,12 +269,13 @@ console.log(token);
                     id: '',
                     name: 'Seleccione una opción'
                 }];
-            console.log($http.defaults.headers);
-            console.log($cookieStore.get('globals'));
+
                 var token = $cookieStore.get('globals').currentUser.token;
-console.log(token);
+                var token_auth = $cookieStore.get('globals').currentConsumer.token;
+
                 $.ajax({
                     headers: {
+                        'Authorization': 'Bearer' + token_auth,
                         'x-admin-authorization': token,
                     },
                     url: scope.$root.url + '/' + attrs.modelname,
