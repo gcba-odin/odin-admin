@@ -179,7 +179,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
     }
 
     $scope.beforeChange = function($files) {
-        console.log($files[0]);
+        
         $scope.fileModel.name = $files[0].name;
         //$scope.model.name = $scope.fileModel.name;
         var type = $files[0].name.split('.').pop();
@@ -191,9 +191,16 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             $scope.fileModel.type = 'fa-file-pdf-o';
         } else if (type == "rar" || type == "zip") {
             $scope.fileModel.type = 'fa-file-archive-o';
+            if (type == "rar") {
+                $files[0].type = "application/x-rar-compressed";
+            }
+        } else if (type == "shp") {
+            $scope.fileModel.type = 'fa-file-text-o';
+            $files[0].type = "application/octet-stream";
         } else {
             $scope.fileModel.type = 'fa-file-text-o';
         }
+        console.log($files[0]);
     }
 
     $scope.status_default = true;
