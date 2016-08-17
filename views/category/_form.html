@@ -1,6 +1,6 @@
 <!-- Input name -->
 <div class="form-group">
-    <label for="name" class="col-sm-2 control-label">{{ 'NAME' | translate }}</label>
+    <label for="name" class="col-sm-2 control-label">* {{ 'NAME' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.name.$touched && form.name.$invalid }">
         <input type="text" ng-model="model.name" name="name" class="form-control" id="name" placeholder="{{ 'PLACE' | translate }} {{ 'NAME' | translate }} {{ 'HERE' | translate }}" required />
         <div class="help-block" ng-messages="form.name.$error" ng-if="form.name.$touched">
@@ -53,7 +53,7 @@
 <!-- end FILE -->
 <!-- Input DESCRIPTION -->
 <div class="form-group">
-    <label for="description" class="col-sm-2 control-label">{{ 'DESCRIPTION' | translate }}</label>
+    <label for="description" class="col-sm-2 control-label">* {{ 'DESCRIPTION' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.description.$touched && form.description.$invalid }">
         <textarea class="form-control" id="description" ready="onReady()" ckeditor="options" ng-model="model.description" name="description" required></textarea>
         <div class="help-block" ng-messages="form.description.$error" ng-if="form.description.$touched">

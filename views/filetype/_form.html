@@ -1,6 +1,6 @@
 <!-- Input name -->
 <div class="form-group">
-    <label for="title" class="col-sm-2 control-label">{{ 'NAME' | translate }}</label>
+    <label for="title" class="col-sm-2 control-label">* {{ 'NAME' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.name.$touched && form.name.$invalid }">
         <input type="text" ng-model="model.name" name="name" class="form-control" id="title" placeholder="{{ 'PLACE' | translate }} {{ 'NAME' | translate }} {{ 'HERE' | translate }}" required />
         <div class="help-block" ng-messages="form.name.$error" ng-if="form.name.$touched">
@@ -10,7 +10,7 @@
 </div>
 <!-- end Input username -->
 <div class="form-group">
-    <label for="mimetype" class="col-sm-2 control-label">{{ 'MIMETYPE' | translate }}</label>
+    <label for="mimetype" class="col-sm-2 control-label">* {{ 'MIMETYPE' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.mimetypes.$touched && form.mimetypes.$invalid }">
         <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" name="mimetype" id="mimetype" ng-model="model.mimetype" class="selectize-input items required full has-options has-items" required>
             <option value="">Seleccione una opción</option>

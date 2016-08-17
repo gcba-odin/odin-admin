@@ -1,6 +1,6 @@
 <!-- Input name -->
 <div class="form-group">
-    <label for="name" class="col-sm-2 control-label">{{ 'NAME' | translate }}</label>
+    <label for="name" class="col-sm-2 control-label">* {{ 'NAME' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.name.$touched && form.name.$invalid }">
         <input type="text" ng-model="model.name" name="name" class="form-control" id="name" placeholder="{{ 'PLACE' | translate }} {{ 'NAME' | translate }} {{ 'HERE' | translate }}" required />
         <div class="help-block" ng-messages="form.name.$error" ng-if="form.name.$touched">
@@ -12,7 +12,7 @@
 
 <!-- Input Description -->
 <div class="form-group">
-    <label for="description" class="col-sm-2 control-label"> {{ 'DESCRIPTION' | translate }}</label>
+    <label for="description" class="col-sm-2 control-label">* {{ 'DESCRIPTION' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.description.$touched && form.description.$invalid }">
 
         <textarea id="description" class="form-control" ckeditor="options" ng-model="model.description" name="description" required></textarea>
@@ -29,7 +29,7 @@
     <label for="type" class="col-sm-2 control-label"> {{ 'CHART_TYPES' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.type.$touched && form.type.$invalid }">
 
-        <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="type" data-model="{{model.type}}" name="type" id="type" ng-model="model.type" class="selectize-input items required full has-options has-items" required>
+        <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="type" data-model="{{model.type}}" name="type" id="type" ng-model="model.type" class="selectize-input items required full has-options has-items"  ng-required="!model.link">
             <option value="">Seleccione una opción</option>
             <option value="bar">Barras</option>
             <option value="pie">Tortas</option>
@@ -60,7 +60,7 @@
 <div class="form-group">
     <label for="link" class="col-sm-2 control-label">{{ 'URL' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.link.$touched && form.link.$invalid }">
-        <input type="text" ng-model="model.link" name="name" class="form-control" id="link" placeholder="{{ 'PLACE' | translate }} {{ 'URL' | translate }} {{ 'HERE' | translate }}" required />
+        <input type="text" ng-model="model.link" name="name" class="form-control" id="link" placeholder="{{ 'PLACE' | translate }} {{ 'URL' | translate }} {{ 'HERE' | translate }}" ng-required="!model.type" />
         <div class="help-block" ng-messages="form.link.$error" ng-if="form.link.$touched">
             <div ng-messages-include="views/messages.html"></div>
         </div>

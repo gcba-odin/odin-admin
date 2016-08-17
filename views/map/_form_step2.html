@@ -1,6 +1,6 @@
 <!-- Input latitude -->
 <div class="form-group">
-    <label for="latitudeKey" class="col-sm-2 control-label">{{ 'LATITUDE' | translate }}</label>
+    <label for="latitudeKey" class="col-sm-2 control-label">* {{ 'LATITUDE' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form2.latitudeKey.$touched && form2.latitudeKey.$invalid }">
         <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" name="latitudeKey" id="latitudeKey" ng-model="model.latitudeKey" class="selectize-input items required full has-options has-items" required>
             <option value="">Seleccione una opción</option>
@@ -16,7 +16,7 @@
 
 <!-- Input longitude -->
 <div class="form-group">
-    <label for="longitudeKey" class="col-sm-2 control-label">{{ 'LONGITUDE' | translate }}</label>
+    <label for="longitudeKey" class="col-sm-2 control-label">* {{ 'LONGITUDE' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form2.longitudeKey.$touched && form2.longitudeKey.$invalid }">
         <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" name="longitudeKey" id="longitudeKey" ng-model="model.longitudeKey" class="selectize-input items required full has-options has-items" required>
             <option value="">Seleccione una opción</option>

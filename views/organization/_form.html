@@ -1,6 +1,6 @@
 <!-- Input name -->
 <div class="form-group">
-    <label for="name" class="col-sm-2 control-label">{{ 'NAME' | translate }}</label>
+    <label for="name" class="col-sm-2 control-label">* {{ 'NAME' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.name.$touched && form.name.$invalid }">
         <input type="text" ng-model="model.name" name="name" class="form-control" id="name" placeholder="{{ 'PLACE' | translate }} {{ 'NAME' | translate }} {{ 'HERE' | translate }}" required />
         <div class="help-block" ng-messages="form.name.$error" ng-if="form.name.$touched">
@@ -12,7 +12,7 @@
 
 <!-- Input Description -->
 <div class="form-group">
-    <label for="description" class="col-sm-2 control-label">{{ 'DESCRIPTION' | translate }}</label>
+    <label for="description" class="col-sm-2 control-label">* {{ 'DESCRIPTION' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.description.$touched && form.description.$invalid }">
         <textarea class="form-control"  ckeditor="options" ng-model="model.description" name="description"></textarea>
         <div class="help-block" ng-messages="form.description.$error" ng-if="form.description.$touched">
@@ -24,7 +24,7 @@
 
 <!-- Input Description -->
 <div class="form-group">
-    <label for="address" class="col-sm-2 control-label">{{ 'ADDRESS' | translate }}</label>
+    <label for="address" class="col-sm-2 control-label">* {{ 'ADDRESS' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.address.$touched && form.address.$invalid }">
         <input type="text" ng-model="model.address" name="address" class="form-control" id="address" placeholder="{{ 'PLACE' | translate }} {{ 'ADDRESS' | translate }} {{ 'HERE' | translate }}" required />
         <div class="help-block" ng-messages="form.address.$error" ng-if="form.address.$touched">

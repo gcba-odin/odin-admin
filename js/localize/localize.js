@@ -161,7 +161,8 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
     'BASEMAP': 'Mapa base',
     'ELEMENT': 'Elemento',
     'CHART_SUBTYPE': 'Lógica',
-    'LATEST_UPDATES': 'Últimas actualizaciones'
+    'LATEST_UPDATES': 'Últimas actualizaciones',
+    'UPDATED_VIEW': 'Mostrar en actualizaciones'
   });
   console.log($rootScope);
   $translateProvider.preferredLanguage('es');

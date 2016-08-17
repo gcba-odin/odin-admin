@@ -24,7 +24,7 @@ end Input uploadFile -->
 
 <!-- Input name -->
 <div class="form-group">
-    <label for="name" class="col-sm-2 control-label"> {{ 'NAME' | translate }}</label>
+    <label for="name" class="col-sm-2 control-label">* {{ 'NAME' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.name.$touched && form.name.$invalid }">
         <input type="text" id="name" ng-model="model.name" name="name" class="form-control" id="title" placeholder="{{ 'PLACE' | translate }} {{ 'NAME' | translate }} {{ 'HERE' | translate }}" />
         <div class="help-block" ng-messages="form.name.$error" ng-if="form.name.$touched">
@@ -36,7 +36,7 @@ end Input uploadFile -->
 
 <!-- Input Description -->
 <div class="form-group">
-    <label for="description" class="col-sm-2 control-label"> {{ 'DESCRIPTION' | translate }}</label>
+    <label for="description" class="col-sm-2 control-label">* {{ 'DESCRIPTION' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.description.$touched && form.description.$invalid }">
 
         <textarea id="description" class="form-control" ckeditor="options" ng-model="model.description" name="description" required></textarea>
@@ -50,7 +50,7 @@ end Input uploadFile -->
 
 <!-- Input dataset -->
 <div class="form-group">
-    <label for="dataset" class="col-sm-2 control-label"> {{ 'DATASET' | translate }}</label>
+    <label for="dataset" class="col-sm-2 control-label">* {{ 'DATASET' | translate }}</label>
     <!--<div class="col-sm-10" ng-if="dataset_disabled">
         <span>{{model.dataset.name}}</span>
     </div>-->
@@ -67,7 +67,7 @@ end Input uploadFile -->
 
 <!-- Input status -->
 <div class="form-group" ng-if="!status_default">
-    <label for="status" class="col-sm-2 control-label"> {{ 'STATUS' | translate }}</label>
+    <label for="status" class="col-sm-2 control-label">* {{ 'STATUS' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.status.$touched && form.status.$invalid }">
 
 
@@ -84,7 +84,7 @@ end Input uploadFile -->
 
 <!-- Input organization -->
 <div class="form-group">
-    <label for="organization" class="col-sm-2 control-label"> {{ 'ORGANIZATION' | translate }}</label>
+    <label for="organization" class="col-sm-2 control-label">* {{ 'ORGANIZATION' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.organization.$touched && form.organization.$invalid }">
         <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="organizations" data-model="{{model.organization}}" select-two-ajax name="organization" id="organization" ng-model="model.organization" class="selectize-width" required>
         </select>
@@ -98,7 +98,7 @@ end Input uploadFile -->
 
 <!-- Input updateFrequency -->
 <div class="form-group">
-    <label for="updateFrequency" class="col-sm-2 control-label"> {{ 'FREQUENCY' | translate }}</label>
+    <label for="updateFrequency" class="col-sm-2 control-label">* {{ 'FREQUENCY' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.updateFrequency.$touched && form.updateFrequency.$invalid }">
 
         <select placeholder="{{ 'SELECT_ONE' | translate }}" class="selectize-input items required full has-options has-items" data-key="name" data-modelname="updatefrequencies" data-model="{{model.updateFrequency}}" select-static-ajax name="frecuency" id="frecuency"
@@ -114,7 +114,7 @@ end Input uploadFile -->
 
 <!-- Input owner -->
 <div class="form-group">
-    <label for="owner" class="col-sm-2 control-label"> {{ 'OWNER' | translate }}</label>
+    <label for="owner" class="col-sm-2 control-label">* {{ 'OWNER' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.owner.$touched && form.owner.$invalid }">
         <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="username" data-modelname="users" data-model="{{model.owner}}" select-two-ajax name="owner" id="owner" ng-model="model.owner" class="selectize-width" required>
         </select>
@@ -168,7 +168,7 @@ end Input uploadFile -->
 
 <!-- Input Updated -->
 <div class="form-group">
-    <label class="col-sm-2 control-label">* {{ 'UPDATED' | translate }}</label>
+    <label class="col-sm-2 control-label">* {{ 'UPDATED_VIEW' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.updated.$touched && form.updated.$invalid }">
         <div>
             <label class="btn btn-default" ng-class="activeClass(model.updated, 1)">
