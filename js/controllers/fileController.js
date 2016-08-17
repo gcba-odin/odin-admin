@@ -192,6 +192,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
         } else if (type == "rar" || type == "zip") {
             $scope.fileModel.type = 'fa-file-archive-o';
             if (type == "rar") {
+                console.log('rar');
                 $files[0].type = "application/x-rar-compressed";
             }
         } else if (type == "shp") {
