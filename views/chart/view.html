@@ -31,7 +31,7 @@
                                 <td class="detail-bold">{{ 'CREATED_AT' | translate }}</td>
                                 <td>{{model.createdAt| date:'d/M/yy H:mm'}}</td>
                             </tr>
-                            <tr ng-if="model.updatedAt">
+                            <tr ng-if="model.publishedAt">
                                 <td class="detail-bold">{{ 'PUBLISHED_AT' | translate }}</td>
                                 <td>{{model.publishedAt| date:'MMM d, y h:mm:ss a' }}</td>
                             </tr>
@@ -49,17 +49,17 @@
                             </tr>
                             <tr ng-if="model.type">
                                 <td class="detail-bold">{{ 'TYPE' | translate }}</td>
-                                <td>{{model.type.name}}</td>
+                                <td>{{model.type | translate}}</td>
                             </tr>
 
                             <tr ng-if="model.dataType">
                                 <td class="detail-bold">{{ 'CHART_SUBTYPE' | translate }}</td>
                                 <td>{{model.dataType}}</td>
                             </tr>
-                            <tr ng-repeat="(key, val) in model.optionals">
+                            <!--<tr ng-repeat="(key, val) in model.optionals">
                                 <td class="detail-bold">{{key}}</td>
                                 <td>{{val}}</td>
-                            </tr>
+                            </tr>-->
                         </table>
                     </div>
                     <!-- /.box-body -->

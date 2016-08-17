@@ -17,7 +17,7 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
     'UNPUBLISH': 'Despublicar',
     'NEW_RESOURCES': 'Nuevo recurso',
     'PUBLISH': 'Publicar',
-    'PUBLISHED_AT': 'Publicado en',
+    'PUBLISHED_AT': 'Fecha de publicación',
     'NO_VISIBLE': 'Visible',
     'VISIBLE': 'No visible',
     'MANDATARY': '* Este campo es obligatorio',
@@ -31,10 +31,10 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
     'A': 'una',
     'DO_THIS_ACTION': '¿Estas seguro de hacer esta acción?',
     'INACTIVE': 'Inactivo',
-    'CREATED_AT': 'Creado en',
+    'CREATED_AT': 'Fecha de creación',
     'SIGN_OUT': 'Salir',
     'USERS': 'Usuarios',
-    'UPDATED_AT': 'Última actualicación',
+    'UPDATED_AT': 'Fecha de actualización',
     'FREQUENCIES': 'Frecuencias de actualización',
     'LICENCE_BY_DEFAULT': 'Licecia',
     'VISIBILITY_BY_DEFAULT': 'Visibilidad',
@@ -165,6 +165,9 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
     'UPDATED_VIEW': 'Mostrar en actualizaciones',
     'PREVIEW_OF': 'Previsualización de',
     'PREVIEW': 'Previsualizar',
+    'bar': 'Barra',
+    'line': 'Línea',
+    'pie': 'Torta',
   });
   console.log($rootScope);
   $translateProvider.preferredLanguage('es');
