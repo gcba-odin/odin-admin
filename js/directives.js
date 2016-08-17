@@ -112,13 +112,14 @@
 
 
 
-    app.directive('selectTwoAjax', ['$timeout', '$parse', '$cookieStore', function($timeout, $parse, $cookieStore, $scope) {
+    app.directive('selectTwoAjax', ['$timeout', '$parse', '$cookieStore', '$http', function($timeout, $parse, $cookieStore, $http, $scope) {
         return {
             restrict: 'A',
             scope: {
                 modelValue: '@ngModel'
             },
             link: function(scope, element, attrs, rootScope) {
+                console.log($http.defaults.headers);
                 console.log($cookieStore.get('globals'));
                 var token = $cookieStore.get('globals').currentUser.token;
 console.log(token);
@@ -267,6 +268,7 @@ console.log(token);
                     id: '',
                     name: 'Seleccione una opción'
                 }];
+            console.log($http.defaults.headers);
             console.log($cookieStore.get('globals'));
                 var token = $cookieStore.get('globals').currentUser.token;
 console.log(token);
