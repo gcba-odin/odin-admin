@@ -193,7 +193,9 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             $scope.fileModel.type = 'fa-file-archive-o';
             if (type == "rar") {
                 console.log('rar');
+                console.log($files[0].type);
                 $files[0].type = "application/x-rar-compressed";
+                console.log($files[0].type);
             }
         } else if (type == "shp") {
             $scope.fileModel.type = 'fa-file-text-o';
