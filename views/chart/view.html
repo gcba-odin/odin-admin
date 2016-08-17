@@ -43,9 +43,9 @@
                                 <td class="detail-bold">{{ 'NOTES' | translate }}</td>
                                 <td ng-bind-html="getHtml(model.notes)"></td>
                             </tr>
-                            <tr ng-if="model.url">
-                                <td class="detail-bold">{{ 'URL' | translate }}</td>
-                                <td><a target="_blank" ng-href="{{model.url}}">{{model.url}}</a></td>
+                            <tr ng-if="model.link">
+                                <td class="detail-bold">{{ 'LINK' | translate }}</td>
+                                <td><a target="_blank" ng-href="{{model.link}}">{{model.link}}</a></td>
                             </tr>
                             <tr ng-if="model.type">
                                 <td class="detail-bold">{{ 'TYPE' | translate }}</td>
