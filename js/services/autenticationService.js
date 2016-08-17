@@ -25,8 +25,7 @@
                     callback(response);
                 })
                 .error(function(response) {
-                    Alertify.alert('El usuario y/o la contraseña son inválidos.');
-                    //alert(response.message);
+                    alert('El usuario y/o la contraseña son inválidos.');
 
                 });
 

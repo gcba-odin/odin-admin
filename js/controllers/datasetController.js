@@ -168,7 +168,7 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
 
 }
 
-function DatasetCreateController($scope, rest, model, Flash, $location, modelService, flashService, usSpinnerService) {
+function DatasetCreateController($scope, rest, model, Flash, $location, modelService, flashService, usSpinnerService, Alertify) {
     modelService.initService("Dataset", "datasets", $scope);
 
     $scope.tagsmodel = rest().get({
@@ -215,6 +215,7 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
+                Alertify.alert('Ha ocurrido un error al crear el dataset.');
             });
         }
     };
@@ -245,7 +246,7 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
 
 }
 
-function DatasetEditController($scope, Flash, rest, $routeParams, model, $location, modelService, usSpinnerService, configs) {
+function DatasetEditController($scope, Flash, rest, $routeParams, model, $location, modelService, usSpinnerService, configs, Alertify) {
 
     modelService.initService("Dataset", "datasets", $scope);
 
@@ -322,6 +323,7 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
+                Alertify.alert('Ha ocurrido un error al crear el dataset.');
             });
         }
     };
