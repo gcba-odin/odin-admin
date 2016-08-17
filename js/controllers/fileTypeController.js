@@ -42,7 +42,7 @@ function FileTypeViewController($scope, Flash, rest, $routeParams, $location, mo
 function FileTypeCreateController($scope, $http, rest, model, Flash, $location, modelService, Alertify, usSpinnerService) {
     modelService.initService("File Type", "filetypes", $scope);
 
-    $http.get('/config/mimetypes.json').success(function(data) {
+    $http.get('config/mimetypes.json').success(function(data) {
         console.log(data);
         $scope.mimetypes = Object.keys(data);
     });
