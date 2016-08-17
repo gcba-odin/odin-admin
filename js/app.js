@@ -331,7 +331,7 @@
     app.run(run);
 
     function run($rootScope, $location, $cookieStore, $http) {
-        $rootScope.url = 'http://40.121.80.86/api';
+        $rootScope.url = 'http://104.208.247.131/api';
         // keep user logged in after page refresh
 
     }
