@@ -168,6 +168,8 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
     'bar': 'Barra',
     'line': 'Línea',
     'pie': 'Torta',
+    'qualitative': 'Cualitativo',
+    'quantitative': 'Cuantitativo',
   });
   console.log($rootScope);
   $translateProvider.preferredLanguage('es');
