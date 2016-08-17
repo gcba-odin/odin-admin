@@ -162,7 +162,9 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
     'ELEMENT': 'Elemento',
     'CHART_SUBTYPE': 'Lógica',
     'LATEST_UPDATES': 'Últimas actualizaciones',
-    'UPDATED_VIEW': 'Mostrar en actualizaciones'
+    'UPDATED_VIEW': 'Mostrar en actualizaciones',
+    'PREVIEW_OF': 'Previsualización de',
+    'PREVIEW': 'Previsualizar',
   });
   console.log($rootScope);
   $translateProvider.preferredLanguage('es');

@@ -34,6 +34,24 @@ function ChartViewController($scope, modelService, $routeParams, rest, $location
     $scope.model = rest().findOne({
         id: $routeParams.id,
         type: $scope.type
+    });
+
+    $scope.edit = function(model) {
+        var url = '/' + $scope.type + '/' + model.id + "/edit";
+        $location.path(url);
+    };
+
+    $scope.getHtml = function(html) {
+        return $sce.trustAsHtml(html);
+    };
+}
+
+function ChartPreviewController($scope, modelService, $routeParams, rest, $location, $sce) {
+    modelService.initService("Chart", "charts", $scope);
+
+    $scope.model = rest().findOne({
+        id: $routeParams.id,
+        type: $scope.type
     }, function() {
         $scope.model.link = $sce.trustAsResourceUrl($scope.model.link);
         $scope.model.charttype = 'chart-' + $scope.model.type;

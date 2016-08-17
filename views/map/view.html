@@ -1,35 +1,87 @@
 <header-home></header-home>
 <div class="content-wrapper">
-      <breadcrumbs data-type="{{ 'VIEW' | translate }}" data-model-name="{{ 'MAPS' | translate }}" data-model="{{type}}"></breadcrumbs>
+    <breadcrumbs data-type="{{ 'VIEW' | translate }}" data-model-name="{{ 'MAPS' | translate }}" data-model="{{type}}"></breadcrumbs>
     <!-- Main content -->
     <section class="content">
         <div class="row">
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                      <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} {{ model.name }}</h3>
+                        <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} {{ model.name}}</h3>
                     </div>
                     <div class="box-body table-responsive no-padding">
-                        <leaflet ng-if="!model.link" lf-center="center" id="mapid" geojson="geojson" tiles="tiles"></leaflet>
-                        <iframe id="iframeDiv" ng-src="{{ model.link }}" ng-if="model.link"></iframe>
+                        <table class="table usertable">
+                            <tr ng-if="model.name">
+                                <td class="detail-bold">{{ 'NAME' | translate }}</td>
+                                <td>{{model.name}}</td>
+                            </tr>
+                            <tr ng-if="model.description">
+                                <td class="detail-bold">{{ 'DESCRIPTION' | translate }}</td>
+                                <td ng-bind-html="getHtml(model.description)"></td>
+                            </tr>
+                            <!--<tr ng-if="model.status">
+                                 <td class="detail-bold">{{ 'STATUS' | translate }}</td>
+                                 <td>{{model.status.name}}</td>
+                             </tr>-->
+                            <tr ng-if="model.createdBy">
+                                <td class="detail-bold">{{ 'CREATED_BY' | translate }} </td>
+                                <td><a ng-href="#/users/{{model.createdBy.id}}/view">{{model.createdBy.username}}</a></td>
+                            </tr>
+                            <tr ng-if="model.createdAt">
+                                <td class="detail-bold">{{ 'CREATED_AT' | translate }}</td>
+                                <td>{{model.createdAt| date:'d/M/yy H:mm'}}</td>
+                            </tr>
+                            <tr ng-if="model.updatedAt">
+                                <td class="detail-bold">{{ 'PUBLISHED_AT' | translate }}</td>
+                                <td>{{model.publishedAt| date:'MMM d, y h:mm:ss a' }}</td>
+                            </tr>
+                            <tr ng-if="model.updatedAt">
+                                <td class="detail-bold">{{ 'UPDATED_AT' | translate }}</td>
+                                <td>{{model.updatedAt| date:'MMM d, y h:mm:ss a'}}</td>
+                            </tr>
+                            <tr ng-if="model.notes">
+                                <td class="detail-bold">{{ 'NOTES' | translate }}</td>
+                                <td ng-bind-html="getHtml(model.notes)"></td>
+                            </tr>
+                            <tr ng-if="model.link">
+                                <td class="detail-bold">{{ 'LINK' | translate }}</td>
+                                <td><a target="_blank" ng-href="{{model.link}}">{{model.link}}</a></td>
+                            </tr>
+                            <tr ng-if="model.basemap">
+                                <td class="detail-bold">{{ 'BASEMAP' | translate }}</td>
+                                <td>{{model.basemap.name}}</td>
+                            </tr>
+
+                            <tr ng-if="model.latitudeKey">
+                                <td class="detail-bold">{{ 'LATITUDE' | translate }}</td>
+                                <td>{{model.latitudeKey}}</td>
+                            </tr>
+                            <tr ng-if="model.longitudeKey">
+                                <td class="detail-bold">{{ 'LONGITUDE' | translate }}</td>
+                                <td>{{model.longitudeKey}}</td>
+                            </tr>
+                            <tr ng-repeat="(key, val) in model.optionals">
+                                <td class="detail-bold">{{key}}</td>
+                                <td>{{val}}</td>
+                            </tr>
+                        </table>
                     </div>
                     <!-- /.box-body -->
+
                     <div class="box-footer">
+                        <button back-button class="btn btn-default pull-left">
+                            {{ 'BACK' | translate }}
+                        </button>
                         <div class="pull-right">
-                          <button class="btn btn-primary" ng-click="edit(model)">{{ 'EDIT' | translate }}</button>
-                      </div>
+                            <a class="btn btn-danger" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)">{{ 'DELETE' | translate }}</a>
+                            <button type="submit" class="btn btn-primary" ng-click="edit(model)">{{ 'EDIT' | translate }}</button>
+                            <a class="btn btn-success" target="_blank" ng-href="#/maps/preview/{{ model.id}}">{{ 'PREVIEW' | translate }}</a>
+                        </div>
                     </div>
                 </div>
 
             </div>
         </div>
     </section>
-    <!--  Main content-->
 </div>
-
-<style media="screen">
-  #mapid{
-    height:480px;
-  }
-</style>
 <footer-home></footer-home>

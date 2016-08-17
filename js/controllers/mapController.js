@@ -31,6 +31,24 @@ function MapListController($scope, modelService) {
 function MapViewController($scope, modelService, $routeParams, rest, $location, $sce) {
     modelService.initService("Map", "maps", $scope);
 
+    $scope.model = rest().findOne({
+        id: $routeParams.id,
+        type: $scope.type
+    });
+
+    $scope.edit = function(model) {
+        var url = '/' + $scope.type + '/' + model.id + "/edit";
+        $location.path(url);
+    };
+
+    $scope.getHtml = function(html) {
+        return $sce.trustAsHtml(html);
+    };
+}
+
+function MapPreviewController($scope, modelService, $routeParams, rest, $location, $sce) {
+    modelService.initService("Map", "maps", $scope);
+
     //modelService.findOne($routeParams, $scope);
 
     $scope.tiles = {
