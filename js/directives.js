@@ -119,9 +119,9 @@
                 modelValue: '@ngModel'
             },
             link: function(scope, element, attrs, rootScope) {
-
+                console.log($cookieStore.get('globals'));
                 var token = $cookieStore.get('globals').currentUser.token;
-
+console.log(token);
                 if (!!attrs.create) {} else {
                     attrs.create = false;
                 }
@@ -267,9 +267,9 @@
                     id: '',
                     name: 'Seleccione una opción'
                 }];
-
+            console.log($cookieStore.get('globals'));
                 var token = $cookieStore.get('globals').currentUser.token;
-
+console.log(token);
                 $.ajax({
                     headers: {
                         'x-admin-authorization': token,
