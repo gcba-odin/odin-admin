@@ -43,7 +43,6 @@ function FileTypeCreateController($scope, $http, rest, model, Flash, $location, 
     modelService.initService("File Type", "filetypes", $scope);
 
     $http.get('config/mimetypes.json').success(function(data) {
-        console.log(data);
         $scope.mimetypes = Object.keys(data);
     });
     $scope.model = new model();
@@ -71,7 +70,7 @@ function FileTypeCreateController($scope, $http, rest, model, Flash, $location, 
 function FileTypeEditController($scope, $http, Flash, rest, $routeParams, model, $location, modelService, Alertify, usSpinnerService) {
     modelService.initService("File Type", "filetypes", $scope);
 
-    $http.get('/config/mimetypes.json').success(function(data) {
+    $http.get('config/mimetypes.json').success(function(data) {
         $scope.mimetypes = Object.keys(data);
     });
 
