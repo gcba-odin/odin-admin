@@ -28,10 +28,10 @@
                                 <td class="detail-bold">{{ 'IMAGE' | translate }}</td>
                                 <td><div class="category-image" svg-img="model.id"></div></td>
                             </tr> 
-                            <tr>
+                            <!--<tr>
                                 <td class="detail-bold">{{ 'STATE' | translate }}</td>
                                 <td><span class="label label-default" >{{model.active ? 'Activo' : 'Inactivo'}}</span></td>
-                            </tr>
+                            </tr>-->
                             <tr ng-if="model.createdBy">
                                 <td class="detail-bold">{{ 'CREATED_BY' | translate }}</td>
                                 <td><a ng-href="#/users/{{model.createdBy.id}}/view">{{model.createdBy.username}}</a></td>
