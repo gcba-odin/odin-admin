@@ -56,8 +56,6 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
     $scope.model = rest().findOne({
         id: $routeParams.id,
         type: $scope.type
-    }, function() {
-        $scope.model.url_img = $sce.trustAsResourceUrl($rootScope.url + '/categories/' + $scope.model.id + '/image?no-cache='+ + new Date().getTime());
     });
 }
 

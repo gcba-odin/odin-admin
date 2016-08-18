@@ -293,3 +293,8 @@ div.form-group div.has-error p {
 .selectize-input > * {
     display: block;
 }
+
+.category-image svg{
+    width: 80px;
+    height: 80px;
+}
