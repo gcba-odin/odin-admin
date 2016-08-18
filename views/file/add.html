@@ -145,8 +145,8 @@
                         <button class="btn btn-default pull-left" ng-click="checkstep(stepactive - 1)" ng-disabled="stepactive==0" ng-if="dataset_disabled=='enabled'">
         {{ 'BACK' | translate }}
     </button>
-                        <button ng-if="stepactive != 2" type="submit" class="btn btn-primary pull-right" ng-click="checkstep(stepactive + 1)" ng-disabled="(!fileModel.name) || (form.$invalid && stepactive == 1) || (stepactive == 2)">{{ 'NEXT' | translate }}</button>
-                        <button ng-if="stepactive == 2 && unsave" type="submit" class="btn btn-primary pull-right" ng-click="add(model)" ng-disabled="form.$invalid">{{ 'SAVE' | translate }}</button>
+                        <button ng-if="stepactive != 2" type="submit" class="btn btn-primary pull-right" ng-click="checkstep(stepactive + 1)" ng-disabled="(!fileModel.name) || (filter && form.$invalid && stepactive == 1) || (stepactive == 2)">{{ 'NEXT' | translate }}</button>
+                        <button ng-if="stepactive == 2 && unsave" type="submit" class="btn btn-primary pull-right" ng-click="add(model)" ng-disabled="filter && form.$invalid">{{ 'SAVE' | translate }}</button>
 
                     </div>
                 </div>

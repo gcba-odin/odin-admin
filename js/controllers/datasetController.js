@@ -215,7 +215,12 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                Alertify.alert('Ha ocurrido un error al crear el dataset.');
+                if(error.data.links && error.data.links.name) {
+                    Alertify.alert('El nombre de dataset ya existe.');
+                } else {
+                    Alertify.alert('Ha ocurrido un error al crear el dataset.');
+                }
+                
             });
         }
     };
@@ -323,7 +328,11 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                Alertify.alert('Ha ocurrido un error al crear el dataset.');
+                if(error.data.links && error.data.links.name) {
+                    Alertify.alert('El nombre de dataset ya existe.');
+                } else {
+                    Alertify.alert('Ha ocurrido un error al editar el dataset.');
+                }
             });
         }
     };

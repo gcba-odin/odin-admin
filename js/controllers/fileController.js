@@ -178,8 +178,11 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
         $scope.fileModel.type = "";
     }
 
+    $scope.filter = true;
+    var hard_file = null;
+
     $scope.beforeChange = function($files) {
-        
+        $scope.filter = true;
         $scope.fileModel.name = $files[0].name;
         //$scope.model.name = $scope.fileModel.name;
         var type = $files[0].name.split('.').pop();
@@ -192,18 +195,16 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
         } else if (type == "rar" || type == "zip") {
             $scope.fileModel.type = 'fa-file-archive-o';
             if (type == "rar") {
-                console.log('rar');
-                console.log($files[0].type);
-                $files[0].type = "application/x-rar-compressed";
-                console.log($files[0].type);
+                $scope.filter = false;
+                hard_file = $files[0];
             }
         } else if (type == "shp") {
+            $scope.filter = false;
+            hard_file = $files[0];
             $scope.fileModel.type = 'fa-file-text-o';
-            $files[0].type = "application/octet-stream";
         } else {
             $scope.fileModel.type = 'fa-file-text-o';
         }
-        console.log($files[0]);
     }
 
     $scope.status_default = true;
@@ -229,12 +230,12 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
 
     $scope.fileModel = []
     $scope.checkstep = function(step) {
-        if ($scope.model.uploadFile == null && step == 1 && $scope.fileModel.name)
+        if ($scope.model.uploadFile == null && step == 1 && $scope.fileModel.name && $scope.filter)
         {
             $scope.clearUpload();
             Alertify.alert('Archivo no permitido.');
         } else {
-            if (($scope.fileModel.name && step == 1 && $scope.model.uploadFile != null) || ($scope.fileModel.name && step == 2 && $scope.form.$valid && $scope.model.uploadFile != null) || step == 0) {
+            if (($scope.fileModel.name && step == 1 && ($scope.model.uploadFile != null || hard_file != null)) || ($scope.fileModel.name && step == 2 && $scope.form.$valid && ($scope.model.uploadFile != null || hard_file != null)) || step == 0) {
 
                 if (step == 0) {
                     $scope.steps[0] = "active";
@@ -254,7 +255,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
         }
     }
     $scope.step = function(step) {
-        if (($scope.fileModel.name && step == 1) || ($scope.fileModel.name && step == 2) || step == 0 && ($scope.model.uploadFile != null)) {
+        if (($scope.fileModel.name && step == 1) || ($scope.fileModel.name && step == 2) || step == 0 && ($scope.model.uploadFile != null || hard_file != null)) {
             var step = $scope.steps[step];
             if (step == "undone") {
                 return "undone";
@@ -291,6 +292,10 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             cont++;
         }
 
+        if (hard_file != null) {
+            $scope.model.uploadFile = hard_file;
+        }
+
         var data = {
             'name': $scope.model.name, //.replace(/\.[^/.]+$/, ""), //removes file extension from name
             //'status': $scope.model.status,
@@ -324,10 +329,15 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
         }).then(function(resp) {
             usSpinnerService.stop('spinner');
             $location.url('/files/' + resp.data.data.id + '/view');
-        }, function(resp) {
+        }, function(error) {
             usSpinnerService.stop('spinner');
             // alert(resp.status);
             $scope.unsave = false;
+            if(error.data.links && error.data.links.name) {
+                    Alertify.alert('El nombre del archivo ya existe.');
+                } else {
+                    Alertify.alert('Ha ocurrido un error al crear el archivo.');
+                }
         }, function(evt) {
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
             $scope.uploadImageProgress = progressPercentage;
@@ -376,7 +386,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
 
 }
 
-function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model, $location, modelService, $sce, Upload, usSpinnerService) {
+function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model, $location, modelService, $sce, Upload, usSpinnerService, Alertify) {
     modelService.initService("File", "files", $scope);
     $scope.model = new model();
 
@@ -390,6 +400,8 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
     $scope.stepactive = 0;
 
     $scope.mostrar = false;
+    var hard_file = null;
+    $scope.filter = true;
 
     $scope.fileModel = [];
 
@@ -399,31 +411,61 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
     }
 
     $scope.beforeChange = function($files) {
+        $scope.mostrar = false;
+        $scope.filter = true;
         $scope.fileModel.name = $files[0].name;
+        //$scope.model.name = $scope.fileModel.name;
+        var type = $files[0].name.split('.').pop();
+        if (type == "doc" || type == "docx") {
+            $scope.fileModel.type = 'fa-file-word-o';
+        } else if (type == "xlsx" || type == "xls") {
+            $scope.fileModel.type = 'fa-file-excel-o';
+        } else if (type == "pdf") {
+            $scope.fileModel.type = 'fa-file-pdf-o';
+        } else if (type == "rar" || type == "zip") {
+            $scope.fileModel.type = 'fa-file-archive-o';
+            if (type == "rar") {
+                $scope.filter = false;
+                hard_file = $files[0];
+            }
+        } else if (type == "shp") {
+            $scope.filter = false;
+            hard_file = $files[0];
+            $scope.fileModel.type = 'fa-file-text-o';
+        } else {
+            $scope.fileModel.type = 'fa-file-text-o';
+        }
         $scope.mostrar = true;
-    };
+    }
 
     $scope.checkstep = function(step) {
+        console.log($scope.model.uploadFile);
+        if ($scope.model.uploadFile == null && step == 1 && $scope.fileModel.name && $scope.filter && $scope.mostrar)
+        {
+            $scope.clearUpload();
+            Alertify.alert('Archivo no permitido.');
+        } else {
+            if (($scope.fileModel.name && step == 1 && ((!$scope.mostrar) || ($scope.mostrar && ($scope.model.uploadFile != null || hard_file != null)))) || ($scope.fileModel.name && step == 2 && ((!$scope.mostrar) || ($scope.mostrar && ($scope.model.uploadFile != null || hard_file != null)))) || step == 0) {
 
-        if (($scope.fileModel.name && step == 1) || ($scope.fileModel.name && step == 2) || (step == 0)) {
-            if (step == 0) {
-                $scope.steps[0] = "active";
-                $scope.steps[1] = "undone";
-                $scope.steps[2] = "undone";
-            } else if (step == 1) {
-                $scope.steps[0] = "done";
-                $scope.steps[1] = "active";
-                $scope.steps[2] = "undone";
-            } else {
-                $scope.steps[0] = "done";
-                $scope.steps[1] = "done";
-                $scope.steps[2] = "active";
+                if (step == 0) {
+                    $scope.steps[0] = "active";
+                    $scope.steps[1] = "undone";
+                    $scope.steps[2] = "undone";
+                } else if (step == 1) {
+                    $scope.steps[0] = "done";
+                    $scope.steps[1] = "active";
+                    $scope.steps[2] = "undone";
+                } else {
+                    $scope.steps[0] = "done";
+                    $scope.steps[1] = "done";
+                    $scope.steps[2] = "active";
+                }
+                $scope.stepactive = step;
             }
-            $scope.stepactive = step;
         }
     }
     $scope.step = function(step) {
-        if (($scope.fileModel.name && step == 1) || ($scope.fileModel.name && step == 2) || step == 0) {
+        if (($scope.fileModel.name && step == 1) || ($scope.fileModel.name && step == 2) || step == 0 && ((!$scope.mostrar) || ($scope.mostrar && ($scope.model.uploadFile != null || hard_file != null)))) {
             var step = $scope.steps[step];
             if (step == "undone") {
                 return "undone";
@@ -436,6 +478,40 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
         }
 
     }
+
+//    $scope.checkstep = function(step) {
+//
+//        if (($scope.fileModel.name && step == 1) || ($scope.fileModel.name && step == 2) || (step == 0)) {
+//            if (step == 0) {
+//                $scope.steps[0] = "active";
+//                $scope.steps[1] = "undone";
+//                $scope.steps[2] = "undone";
+//            } else if (step == 1) {
+//                $scope.steps[0] = "done";
+//                $scope.steps[1] = "active";
+//                $scope.steps[2] = "undone";
+//            } else {
+//                $scope.steps[0] = "done";
+//                $scope.steps[1] = "done";
+//                $scope.steps[2] = "active";
+//            }
+//            $scope.stepactive = step;
+//        }
+//    }
+//    $scope.step = function(step) {
+//        if (($scope.fileModel.name && step == 1) || ($scope.fileModel.name && step == 2) || step == 0) {
+//            var step = $scope.steps[step];
+//            if (step == "undone") {
+//                return "undone";
+//            } else if (step == "done") {
+//                return "done";
+//            } else {
+//                return "active";
+//
+//            }
+//        }
+//
+//    }
     $scope.getHtml = function(html) {
         return $sce.trustAsHtml(html);
     };
@@ -467,7 +543,11 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
         }
 
         if ($scope.model.uploadFile != null) {
-            data.uploadFile = $scope.model.uploadFile;
+            if (hard_file != null) {
+                data.uploadFile = hard_file;
+            } else {
+                data.uploadFile = $scope.model.uploadFile;
+            }
         }
 
         var param = {
@@ -486,26 +566,31 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
             }).then(function(resp) {
                 usSpinnerService.stop('spinner');
                 $location.url('/files/' + resp.data.data.id + '/view');
-            }, function(resp) {
+            }, function(error) {
                 usSpinnerService.stop('spinner');
                 // alert(resp.status);
                 $scope.unsave = false;
+                if(error.data.links && error.data.links.name) {
+                    Alertify.alert('El nombre de dataset ya existe.');
+                } else {
+                    Alertify.alert('Ha ocurrido un error al crear el dataset.');
+                }
             }, function(evt) {
                 var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                 $scope.uploadImageProgress = progressPercentage;
                 $scope.unsave = false;
                 usSpinnerService.stop('spinner');
             });
-            rest().update({
-                type: $scope.type,
-                id: $scope.model.id
-            }, data, function(resp) {
-                usSpinnerService.stop('spinner');
-                var url = '/' + $scope.type;
-                $location.path(url);
-            }, function(error) {
-                usSpinnerService.stop('spinner');
-            });
+//            rest().update({
+//                type: $scope.type,
+//                id: $scope.model.id
+//            }, data, function(resp) {
+//                usSpinnerService.stop('spinner');
+//                var url = '/' + $scope.type;
+//                $location.path(url);
+//            }, function(error) {
+//                usSpinnerService.stop('spinner');
+//            });
         }
 
 
@@ -569,4 +654,18 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
     }
 
     $scope.load();
+    
+    var loadFileTypes = function() {
+        var fileTypes = rest().get({
+            type: 'fileTypes'
+        }, function() {
+            $scope.fileTypes = [];
+            angular.forEach(fileTypes.data, function(element) {
+                $scope.fileTypes.push(element.mimetype);
+            });
+            $scope.fileTypes = $scope.fileTypes.toString();
+        });
+    };
+
+    loadFileTypes();
 }
