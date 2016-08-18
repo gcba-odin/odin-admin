@@ -35,7 +35,7 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
 
 }
 
-function CategoryViewController($scope, Flash, rest, $routeParams, $location, $sce, modelService) {
+function CategoryViewController($scope, Flash, rest, $routeParams, $location, $sce, modelService, $rootScope) {
     modelService.initService("Category", "categories", $scope);
 
     $scope.edit = function(model) {
@@ -56,6 +56,8 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
     $scope.model = rest().findOne({
         id: $routeParams.id,
         type: $scope.type
+    }, function() {
+        $scope.model.url_img = $sce.trustAsResourceUrl($rootScope.url + '/categories/' + $scope.model.id + '/image?no-cache='+ + new Date().getTime());
     });
 }
 

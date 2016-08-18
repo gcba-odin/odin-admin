@@ -24,10 +24,9 @@
                                 <td class="detail-bold">{{ 'COLOR' | translate }}</td>
                                 <td style="max-width: 50px;"><color-picker ng-model="model.color" options="options_color"></color-picker></td>
                             </tr> 
-
-                            <tr ng-if="model.image">
+                            <tr ng-if="model.url_img">
                                 <td class="detail-bold">{{ 'IMAGE' | translate }}</td>
-                                <td><img style="width: 80px;" ng-src="{{ model.image}}"></td>
+                                <td><img style="width: 80px;" src="{{model.url_img}}"></td>
                             </tr> 
                             <tr>
                                 <td class="detail-bold">{{ 'STATE' | translate }}</td>
