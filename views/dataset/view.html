@@ -45,7 +45,7 @@
                                 <td class="detail-bold">{{ 'CREATED_AT' | translate }}</td>
                                 <td>{{model.createdAt| date:'MMM d, y h:mm:ss a'}}</td>
                             </tr>
-                            <tr ng-if="model.updatedAt">
+                            <tr ng-if="model.publishedAt">
                                 <td class="detail-bold">{{ 'PUBLISHED_AT' | translate }}</td>
                                 <td>{{model.publishedAt| date:'MMM d, y h:mm:ss a' }}</td>
                             </tr>
