@@ -15,6 +15,18 @@
                                 <td class="detail-bold">{{ 'NAME' | translate }}</td>
                                 <td>{{model.name}}</td>
                             </tr>
+                            <tr ng-if="model.createdBy">
+                                <td class="detail-bold">{{ 'CREATED_BY' | translate }} </td>
+                                <td><a ng-href="#/users/{{model.createdBy.id}}/view">{{model.createdBy.username}}</a></td>
+                            </tr>
+                            <tr ng-if="model.createdAt">
+                                <td class="detail-bold">{{ 'CREATED_AT' | translate }}</td>
+                                <td>{{model.createdAt| date:'d/M/yy H:mm'}}</td>
+                            </tr>
+                            <tr ng-if="model.updatedAt">
+                                <td class="detail-bold">{{ 'UPDATED_AT' | translate }}</td>
+                                <td>{{model.updatedAt| date:'MMM d, y h:mm:ss a'}}</td>
+                            </tr>
                         </table>
                     </div>
                     <!-- /.box-body -->

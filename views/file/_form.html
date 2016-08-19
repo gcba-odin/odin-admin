@@ -71,7 +71,7 @@ end Input uploadFile -->
     <div class="col-sm-10" ng-class="{ 'has-error': form.status.$touched && form.status.$invalid }">
 
 
-        <select placeholder="{{ 'SELECT_ONE' | translate }}" class="selectize-input items required full has-options has-items" data-key="name" data-modelname="statuses" data-opt="{{ options.data}}" data-model="{{model.status}}" select-static-ajax name="status"
+        <select placeholder="{{ 'SELECT_ONE' | translate }}" class="selectize-input items required full has-options has-items" data-key="name" data-revision="status" data-modelname="statuses" data-opt="{{ options.data}}" data-model="{{model.status}}" select-static-ajax name="status"
                 id="status" ng-model="model.status" class="selectize-width" required>
         </select>
 
@@ -101,7 +101,7 @@ end Input uploadFile -->
     <label for="updateFrequency" class="col-sm-2 control-label">* {{ 'FREQUENCY' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.updateFrequency.$touched && form.updateFrequency.$invalid }">
 
-        <select placeholder="{{ 'SELECT_ONE' | translate }}" class="selectize-input items required full has-options has-items" data-key="name" data-modelname="updatefrequencies" data-model="{{model.updateFrequency}}" select-static-ajax name="frecuency" id="frecuency"
+        <select placeholder="{{ 'SELECT_ONE' | translate }}" class="selectize-input items required full has-options has-items" data-key="name" data-revision="updateFrequency" data-modelname="updatefrequencies" data-model="{{model.updateFrequency}}" select-static-ajax name="frecuency" id="frecuency"
                 ng-model="model.updateFrequency" class="selectize-width" required>
         </select>
 

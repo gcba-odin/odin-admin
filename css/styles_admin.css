@@ -248,7 +248,7 @@ div.form-group div.has-error p {
 }
 
 .chat {
-    padding: 50px 20px 5px 10px;
+    padding: 3em 1em 1em 0em !important;
 }
 
 #chat-box .item {
@@ -297,4 +297,47 @@ div.form-group div.has-error p {
 .category-image svg{
     width: 80px;
     height: 80px;
+}
+
+.steps li.active a, .steps li.active p{
+    background: #ff386a;
+    opacity: 1;
+    color: white;
+}
+
+.steps li.active a:after, .steps li.active p:after {
+    border-left: 12px solid #ff386a;
+}
+
+.steps li a, .steps li p{
+    background-color: #ff386a;
+    opacity: .4;
+    color: white
+}
+
+.steps li a:before, .steps li p:before{
+         border-left: 0; 
+}
+
+div.panel-heading {
+    background: -moz-linear-gradient(0deg, rgba(255, 182, 0, 1) 0%, rgba(255, 56, 106, 1) 100%);
+    /* ff3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(255, 182, 0, 1)), color-stop(100%, rgba(255, 56, 106, 1)));
+    /* safari4+,chrome */
+    background: -webkit-linear-gradient(0deg, rgba(255, 182, 0, 1) 0%, rgba(255, 56, 106, 1) 100%);
+    /* safari5.1+,chrome10+ */
+    background: -o-linear-gradient(0deg, rgba(255, 182, 0, 1) 0%, rgba(255, 56, 106, 1) 100%);
+    /* opera 11.10+ */
+    background: -ms-linear-gradient(0deg, rgba(255, 182, 0, 1) 0%, rgba(255, 56, 106, 1) 100%);
+    /* ie10+ */
+    background: linear-gradient(90deg, rgba(255, 182, 0, 1) 0%, rgba(255, 56, 106, 1) 100%);
+    /* w3c */
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#ffb600', endColorstr='#ff386a', GradientType=1);
+    //background-color: #ff386a !important;
+    color: white !important;
+}
+
+
+.add-image-button{
+    background-color: #ff386a;
 }

@@ -35,10 +35,10 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h1>{{ 'FILES' | translate }}</h1>
-                                        <div ngf-select ng-model="model.uploadFile" name="uploadFile" ngf-pattern="'{{fileTypes}}'"
-                                        ngf-accept="'{{fileTypes}}'" 
-                                        ngf-max-size="2000MB" ngf-min-height="100"
-                                        ngf-resize="{width: 100, height: 100}"   ngf-before-model-change="beforeChange($files)"><i class="fa fa-plus add-image-button" aria-hidden="true"></i></div>
+                                    <div ngf-select ng-model="model.uploadFile" name="uploadFile" ngf-pattern="'{{fileTypes}}'"
+                                         ngf-accept="'{{fileTypes}}'" 
+                                         ngf-max-size="2000MB" ngf-min-height="100"
+                                         ngf-resize="{width: 100, height: 100}"   ngf-before-model-change="beforeChange($files)"><i class="fa fa-plus add-image-button" aria-hidden="true"></i></div>
                                 </div>
                                 <div class="panel-body docuemnts-upload">
                                     <div class="row" ng-if="fileModel.name" >
@@ -71,80 +71,75 @@
                                 <div class="box-header with-border">
                                     <h3 class="box-title">{{ 'DETAILS_FOR' | translate }}</b></h3>
                                 </div>
-                                <div class="progress" ng-if="stepactive == 2">
-                                    <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="{{uploadImageProgress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{uploadImageProgress}}%">
-                                        {{uploadImageProgress}}% {{ 'COMPLETE' | translate }}
+                                <div class="box-body table-responsive no-padding">
+                                    <div class="progress" ng-if="stepactive == 2">
+                                        <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="{{uploadImageProgress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{uploadImageProgress}}%">
+                                            {{uploadImageProgress}}% {{ 'COMPLETE' | translate }}
+                                        </div>
                                     </div>
+                                    <table class="table usertable">
+                                        <tr ng-if="model.name">
+                                            <td class="detail-bold">{{ 'NAME' | translate }}</td>
+                                            <td>{{model.name}}</td>
+                                        </tr>
+                                        <tr ng-if="model.description">
+                                            <td class="detail-bold">{{ 'DESCRIPTION' | translate }}</td>
+                                            <td ng-bind-html="getHtml(model.description)"></td>
+                                        </tr>
+                                        <tr ng-if="model.dataset">
+                                            <td class="detail-bold">{{ 'DATASET' | translate }}</td>
+                                            <td>{{model.dataset.name| selectFilterArray:'dataset'}}</td>
+                                        </tr>
+                                        <tr ng-if="model.status">
+                                            <td class="detail-bold">{{ 'STATUS' | translate }}</td>
+                                            <td>{{model.status| selectFilterArray:'status'}}</td>
+                                        </tr>
+                                        <tr ng-if="model.organization">
+                                            <td class="detail-bold">{{ 'ORGANIZATION' | translate }}</td>
+                                            <td>{{model.organization.name| selectFilterArray:'organization'}}</td>
+                                        </tr>
+                                        <tr ng-if="model.updateFrequency">
+                                            <td class="detail-bold">{{ 'FREQUENCY' | translate }}</td>
+                                            <td>{{model.updateFrequency| selectFilterArray:'frecuency'}}</td>
+                                        </tr>
+                                        <tr ng-if="model.owner">
+                                            <td class="detail-bold">{{ 'OWNER' | translate }}</td>
+                                            <td>{{model.owner| selectFilterArray:'owner'}}</td>
+                                        </tr>
+                                        <tr ng-if="model.notes">
+                                            <td class="detail-bold">{{ 'NOTES' | translate }}</td>
+                                            <td ng-bind-html="getHtml(model.notes)"></td>
+                                        </tr>
+                                        <tr ng-if="model.type">
+                                            <td class="detail-bold">{{ 'TYPE' | translate }}</td>
+                                            <td>{{model.type.name| selectFilterArray:'type'}}</td>
+                                        </tr>
+                                        <tr ng-if="model.gatheringDate">
+                                            <td class="detail-bold">{{ 'GATHERING_DATE' | translate }}</td>
+                                            <td>{{model.gatheringDate| date:'MMM d, y' : 'UTC' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="detail-bold">{{ 'UPDATED_VIEW' | translate }}</td>
+                                            <td><span class="label label-default" >{{model.updated ? 'Si' : 'No'}}</span></td>
+                                        </tr>
+                                        <tr ng-repeat="item in model.items">
+                                            <td class="detail-bold">{{item.field1}}</td>
+                                            <td>{{item.field2}}</td>
+                                        </tr>
+
+                                    </table>
                                 </div>
-                                <table class="table usertable">
-                                    <tr ng-if="model.name">
-                                        <td>{{ 'NAME' | translate }}</td>
-                                        <td>{{model.name}}</td>
-                                    </tr>
-
-                                    <tr ng-if="model.type">
-                                        <td>{{ 'TYPE' | translate }}</td>
-                                        <td>{{model.type.name | selectFilterArray:'type'}}</td>
-                                    </tr>
-                                    <tr ng-if="model.status">
-                                        <td>{{ 'STATUS' | translate }}</td>
-                                        <td>{{model.status | selectFilterArray:'status'}}</td>
-                                    </tr>
-                                    <tr ng-if="model.organization">
-                                        <td>{{ 'ORGANIZATION' | translate }}</td>
-                                        <td>{{model.organization.name | selectFilterArray:'organization'}}</td>
-                                    </tr>
-
-                                    <tr ng-if="model.dataset">
-                                        <td>{{ 'DATASET' | translate }}</td>
-                                        <td>{{model.dataset.name | selectFilterArray:'dataset'}}</td>
-                                    </tr>
-                                    <tr ng-if="model.createdBy">
-                                        <td>{{ 'CREATED_BY' | translate }}</td>
-                                        <td>{{model.createdBy.username}}</td>
-                                    </tr>
-                                    <tr ng-if="model.description">
-                                        <td>{{ 'DESCRIPTION' | translate }}</td>
-                                        <td ng-bind-html="getHtml(model.description)"></td>
-                                    </tr>
-
-                                    <tr ng-if="model.notes">
-                                        <td>{{ 'NOTES' | translate }}</td>
-                                        <td ng-bind-html="getHtml(model.notes)"></td>
-                                    </tr>
-                                    <tr ng-if="model.url">
-                                        <td>{{ 'URL' | translate }}</td>
-                                        <td><a target="_blank" ng-href="{{model.url}}">{{model.url}}</a></td>
-                                    </tr>
-                                    <tr ng-if="model.visibility">
-                                        <td>{{ 'VISIVILITY' | translate }}</td>
-                                        <td>{{model.visibility}}</td>
-                                    </tr>
-                                    <tr ng-if="model.updateFrequency">
-                                        <td>{{ 'FREQUENCY' | translate }}</td>
-                                        <td>{{model.updateFrequency | selectFilterArray:'frecuency'}}</td>
-                                    </tr>
-                                    <tr ng-if="model.tags">
-                                        <td>{{ 'TAGS' | translate }}</td>
-                                        <td>{{model.tags | selectFilterArray:'tags'}}</td>
-                                    </tr>
-                                    <tr ng-if="model.owner">
-                                        <td>{{ 'OWNER' | translate }}</td>
-                                        <td>{{model.owner | selectFilterArray:'owner'}}</td>
-                                    </tr>
-                                </table>
-
                             </div>
 
                         </div>
                     </div>
                     <div class="box-footer">
-                        <button class="btn btn-default pull-left" back-button ng-if="dataset_disabled=='disabled'">
-        {{ 'BACK' | translate }}
-    </button>
-                        <button class="btn btn-default pull-left" ng-click="checkstep(stepactive - 1)" ng-disabled="stepactive==0" ng-if="dataset_disabled=='enabled'">
-        {{ 'BACK' | translate }}
-    </button>
+                        <button class="btn btn-default pull-left" back-button ng-if="dataset_disabled == 'disabled'">
+                            {{ 'BACK' | translate }}
+                        </button>
+                        <button class="btn btn-default pull-left" ng-click="checkstep(stepactive - 1)" ng-disabled="stepactive == 0" ng-if="dataset_disabled == 'enabled'">
+                            {{ 'BACK' | translate }}
+                        </button>
                         <button ng-if="stepactive != 2" type="submit" class="btn btn-primary pull-right" ng-click="checkstep(stepactive + 1)" ng-disabled="(!fileModel.name) || (filter && form.$invalid && stepactive == 1) || (stepactive == 2)">{{ 'NEXT' | translate }}</button>
                         <button ng-if="stepactive == 2 && unsave" type="submit" class="btn btn-primary pull-right" ng-click="add(model)" ng-disabled="filter && form.$invalid">{{ 'SAVE' | translate }}</button>
 
@@ -154,9 +149,9 @@
     </section>
     <!--  Main content-->
 
-    </div>
+</div>
 
 
 
 
-    <footer-home></footer-home>
+<footer-home></footer-home>
