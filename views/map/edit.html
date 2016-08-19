@@ -50,29 +50,39 @@
                                 <div class="box-header with-border">
                                     <h3 class="box-title">{{ 'DETAILS_FOR' | translate }}</h3>
                                 </div>
-                                <table class="table usertable">
-                                    <tr ng-if="model.name">
-                                        <td>{{ 'NAME' | translate }}</td>
-                                        <td>{{model.name}}</td>
-                                    </tr>
-                                    <tr ng-if="model.description">
-                                        <td>{{ 'DESCRIPTION' | translate }}</td>
-                                        <td ng-bind-html="getHtml(model.description)"></td>
-                                    </tr>
-                                    <tr ng-if="model.notes">
-                                        <td>{{ 'NOTES' | translate }}</td>
-                                        <td ng-bind-html="getHtml(model.notes)"></td>
-                                    </tr>
-                                    <tr ng-if="model.basemap">
-                                        <td>{{ 'BASE_MAP' | translate }}</td>
-                                        <td ng-bind-html="getHtml(model.basemap)"></td>
-                                    </tr>
-                                    <tr ng-if="model.link">
-                                        <td>{{ 'URL' | translate }}</td>
-                                        <td><a target="_blank" ng-href="{{model.link}}">{{model.link}}</a></td>
-                                    </tr>
-                                </table>
-
+                                <div class="box-body table-responsive no-padding">
+                                    <table class="table usertable">
+                                        <tr ng-if="model.name">
+                                            <td class="detail-bold">{{ 'NAME' | translate }}</td>
+                                            <td>{{model.name}}</td>
+                                        </tr>
+                                        <tr ng-if="model.description">
+                                            <td class="detail-bold">{{ 'DESCRIPTION' | translate }}</td>
+                                            <td ng-bind-html="getHtml(model.description)"></td>
+                                        </tr>
+                                        <tr ng-if="model.link">
+                                            <td class="detail-bold">{{ 'LINK' | translate }}</td>
+                                            <td><a target="_blank" ng-href="{{model.link}}">{{model.link}}</a></td>
+                                        </tr>
+                                        <tr ng-if="model.basemap && !model.link">
+                                            <td class="detail-bold">{{ 'BASE_MAP' | translate }}</td>
+                                            <td>{{model.basemap| selectFilterArray:'basemap'}}</td>
+                                        </tr>
+                                        <tr ng-if="model.latitudeKey && !model.link">
+                                            <td class="detail-bold">{{ 'LATITUDE' | translate }}</td>
+                                            <td>{{model.latitudeKey}}</td>
+                                        </tr>
+                                        <tr ng-if="model.longitudeKey && !model.link">
+                                            <td class="detail-bold">{{ 'LONGITUDE' | translate }}</td>
+                                            <td>{{model.longitudeKey}}</td>
+                                        </tr>
+                                        <tr ng-repeat="item in model.items" ng-if="!model.link">
+                                            <td class="detail-bold">{{ 'PROPERTY' | translate }} {{increment($index)}}</td>
+                                            <td>{{item.field2}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <!-- /.box-body -->
                             </div>
 
                         </div>

@@ -53,24 +53,36 @@
                                 <div class="box-body table-responsive no-padding">
                                     <table class="table usertable">
                                         <tr ng-if="model.name">
-                                            <td>{{ 'NAME' | translate }}</td>
+                                            <td class="detail-bold">{{ 'NAME' | translate }}</td>
                                             <td>{{model.name}}</td>
                                         </tr>
                                         <tr ng-if="model.description">
-                                            <td>{{ 'DESCRIPTION' | translate }}</td>
+                                            <td class="detail-bold">{{ 'DESCRIPTION' | translate }}</td>
                                             <td ng-bind-html="getHtml(model.description)"></td>
                                         </tr>
                                         <tr ng-if="model.notes">
-                                            <td>{{ 'NOTES' | translate }}</td>
+                                            <td class="detail-bold">{{ 'NOTES' | translate }}</td>
                                             <td ng-bind-html="getHtml(model.notes)"></td>
                                         </tr>
-                                        <tr ng-if="model.type">
-                                            <td>{{ 'CHART_TYPE' | translate }}</td>
-                                            <td>{{ model.type | translate}}</td>
-                                        </tr>
                                         <tr ng-if="model.link">
-                                            <td>{{ 'URL' | translate }}</td>
+                                            <td class="detail-bold">{{ 'LINK' | translate }}</td>
                                             <td><a target="_blank" ng-href="{{model.link}}">{{model.link}}</a></td>
+                                        </tr>
+                                        <tr ng-if="model.type && !model.link">
+                                            <td class="detail-bold">{{ 'TYPE' | translate }}</td>
+                                            <td>{{model.type| translate}}</td>
+                                        </tr>
+                                        <tr ng-if="model.dataType && !model.link">
+                                            <td class="detail-bold">{{ 'CHART_SUBTYPE' | translate }}</td>
+                                            <td>{{model.dataType| translate}}</td>
+                                        </tr>
+                                        <tr ng-if="model.dataType && model.items[0].field2 && model.items[0].field2 != '' && !model.link">
+                                            <td class="detail-bold">{{ 'ELEMENT' | translate }}</td>
+                                            <td>{{model.items[0].field2}}</td>
+                                        </tr>
+                                        <tr ng-if="model.dataType && model.items[1].field2 && model.items[1].field2 != '' && !model.link">
+                                            <td class="detail-bold">{{ 'ELEMENT' | translate }}</td>
+                                            <td>{{model.items[1].field2}}</td>
                                         </tr>
                                     </table>
                                 </div>
