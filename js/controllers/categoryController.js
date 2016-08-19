@@ -101,8 +101,13 @@ function CategoryCreateController($scope, rest, model, Flash, $location, $rootSc
                 usSpinnerService.stop('spinner');
                 Alertify.success('Se ha creado la categoría con éxito');
                 $location.url('/categories/' + resp.data.data.id + '/view');
-            }, function(resp) {
+            }, function(error) {
                 usSpinnerService.stop('spinner');
+                if(error.data.links && error.data.links.name) {
+                    Alertify.alert('El nombre de la categoría ya existe.');
+                } else {
+                    Alertify.alert('Ha ocurrido un error al crear la categoría.');
+                }
                 // alert(resp.status);
             }, function(evt) {
                 usSpinnerService.stop('spinner');
@@ -213,8 +218,13 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
                 usSpinnerService.stop('spinner');
                 Alertify.success('Se ha editado la categoría con éxito');
                 $location.url('/categories/' + resp.data.data.id + '/view');
-            }, function(resp) {
+            }, function(error) {
                 usSpinnerService.stop('spinner');
+                if(error.data.links && error.data.links.name) {
+                    Alertify.alert('El nombre de la categoría ya existe.');
+                } else {
+                    Alertify.alert('Ha ocurrido un error al editar la categoría.');
+                }
                 // alert(resp.status);
             }, function(evt) {
                 usSpinnerService.stop('spinner');

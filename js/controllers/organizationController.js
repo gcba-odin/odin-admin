@@ -65,7 +65,7 @@ function OrganizationViewController($scope, Flash, rest, $routeParams, $location
     };
 }
 
-function OrganizationCreateController($scope, rest, model, Flash, $location, modelService, usSpinnerService) {
+function OrganizationCreateController($scope, rest, model, Flash, $location, modelService, usSpinnerService, Alertify) {
     modelService.initService("Organization", "organizations", $scope);
 
 
@@ -81,6 +81,11 @@ function OrganizationCreateController($scope, rest, model, Flash, $location, mod
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
+                if(error.data.links && error.data.links.name) {
+                    Alertify.alert('El nombre de la organización ya existe.');
+                } else {
+                    Alertify.alert('Ha ocurrido un error al crear la organización.');
+                }
             });
         }
     };
@@ -94,7 +99,7 @@ function OrganizationCreateController($scope, rest, model, Flash, $location, mod
     };
 }
 
-function OrganizationEditController($scope, Flash, rest, $routeParams, model, $location, modelService, usSpinnerService) {
+function OrganizationEditController($scope, Flash, rest, $routeParams, model, $location, modelService, usSpinnerService, Alertify) {
 
     $scope.editorOptions = {
         language: 'es',
@@ -116,6 +121,11 @@ function OrganizationEditController($scope, Flash, rest, $routeParams, model, $l
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
+                if(error.data.links && error.data.links.name) {
+                    Alertify.alert('El nombre de la organización ya existe.');
+                } else {
+                    Alertify.alert('Ha ocurrido un error al editar la organización.');
+                }
             });
         }
     };
