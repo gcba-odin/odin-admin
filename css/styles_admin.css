@@ -372,3 +372,7 @@ div.panel-heading {
     border-color: #ff386a;
     color: #ffffff;
 }
+
+.btn-activate{
+    width: 100px;
+}
