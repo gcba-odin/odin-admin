@@ -8,6 +8,8 @@
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} {{ model.name}}</h3>
+                        <button ng-click="unPublish()" ng-if="model.status.id == statuses.published" class="pull-right btn btn-warning">{{ 'UNPUBLISH' | translate }}</button>
+                        <button ng-click="publish()" ng-if="model.status.id !== statuses.published" class="pull-right btn btn-success">{{ 'PUBLISH' | translate }}</button> 
                     </div>
                     <div class="box-body table-responsive no-padding">
                         <table class="table usertable">

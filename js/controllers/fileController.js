@@ -520,6 +520,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
     $scope.update = function(isValid) {
         usSpinnerService.spin('spinner');
 
+        $scope.model.optionals = {};
         angular.forEach($scope.model.items, function(element) {
             $scope.model.optionals[element.field1] = element.field2;
         });
