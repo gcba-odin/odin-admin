@@ -331,7 +331,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             usSpinnerService.stop('spinner');
             // alert(resp.status);
             $scope.unsave = false;
-            if (error.data.links && error.data.links.name) {
+            if (error.data && error.data.name) {
                 Alertify.alert('El nombre del archivo ya existe.');
             } else {
                 Alertify.alert('Ha ocurrido un error al crear el archivo.');
@@ -568,7 +568,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
                 usSpinnerService.stop('spinner');
                 // alert(resp.status);
                 $scope.unsave = false;
-                if (error.data.links && error.data.links.name) {
+                if (error.data && error.data.name) {
                     Alertify.alert('El nombre de dataset ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al crear el dataset.');

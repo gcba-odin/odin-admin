@@ -10,12 +10,13 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
 
     modelService.initService("Category", "categories", $scope);
 
-    $scope.confirmDelete = function(item) {
+    $scope.inactiveModel = function(item) {
         modelService.confirmDelete(item);
     }
 
-    $scope.deleteModel = function(model) {
-        modelService.delete($scope, model);
+    $scope.activeModel = function(model) {
+        //modelService.delete($scope, model);
+        modelService.restore($scope, model);
     };
 
     $scope.edit = function(model) {
@@ -103,7 +104,7 @@ function CategoryCreateController($scope, rest, model, Flash, $location, $rootSc
                 $location.url('/categories/' + resp.data.data.id + '/view');
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if(error.data.links && error.data.links.name) {
+                if(error.data && error.data.name) {
                     Alertify.alert('El nombre de la categoría ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al crear la categoría.');
@@ -220,7 +221,7 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
                 $location.url('/categories/' + resp.data.data.id + '/view');
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if(error.data.links && error.data.links.name) {
+                if(error.data && error.data.name) {
                     Alertify.alert('El nombre de la categoría ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al editar la categoría.');

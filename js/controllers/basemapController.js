@@ -68,7 +68,7 @@ function BasemapCreateController($scope, modelService, rest, $location, model, $
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if(error.data.links && error.data.links.name) {
+                if(error.data && error.data.name) {
                     Alertify.alert('El nombre del basemap ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al crear el basemap.');
@@ -110,7 +110,7 @@ function BasemapEditController($scope, modelService, $routeParams, $sce, rest, $
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if(error.data.links && error.data.links.name) {
+                if(error.data && error.data.name) {
                     Alertify.alert('El nombre del basemap ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al editar el basemap.');

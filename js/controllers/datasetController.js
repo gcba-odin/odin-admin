@@ -6,7 +6,7 @@ app.factory('model', function($resource) {
 
 
 
-function DatasetListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService) {
+function DatasetListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, $routeParams) {
 
 
     modelService.initService("Dataset", "datasets", $scope);
@@ -216,7 +216,7 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if (error.data.links && error.data.links.name) {
+                if (error.data && error.data.name) {
                     Alertify.alert('El nombre de dataset ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al crear el dataset.');
@@ -329,7 +329,7 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if (error.data.links && error.data.links.name) {
+                if (error.data && error.data.name) {
                     Alertify.alert('El nombre de dataset ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al editar el dataset.');

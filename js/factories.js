@@ -77,6 +77,17 @@
                     });
                 });
             },
+            restore: function(scope, model) {
+                rest().restore({
+                    type: scope.type,
+                    id: model.id
+                }, function(resp) {
+                    scope.data = rest().get({
+                        type: scope.type,
+                        params: "orderBy=createdAt&sort=DESC"
+                    });
+                });
+            },
             view: function(scope, model) {
                 var url = '/' + scope.type + '/' + model.id + "/view";
                 $location.path(url);
@@ -308,6 +319,20 @@
                     'delete': {
                         url: $url + "/:id",
                         method: 'DELETE',
+                        headers: {
+                            'x-admin-authorization': token,
+                        },
+                        interceptor: {
+                            responseError: handError
+                        },
+                        transformResponse: function(data) {
+                            $rootScope.progressbar.complete();
+
+                        }
+                    },
+                    'restore': {
+                        url: $url + "/:id/restore",
+                        method: 'POST',
                         headers: {
                             'x-admin-authorization': token,
                         },
