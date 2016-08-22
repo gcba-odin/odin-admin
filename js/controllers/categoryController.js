@@ -14,9 +14,8 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
         modelService.confirmDelete(item);
     }
 
-    $scope.activeModel = function(model) {
-        //modelService.delete($scope, model);
-        modelService.restore($scope, model);
+    $scope.activeModel = function(item) {
+        modelService.restore($scope, item);
     };
 
     $scope.edit = function(model) {

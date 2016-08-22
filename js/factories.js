@@ -77,7 +77,8 @@
                     });
                 });
             },
-            restore: function(scope, model) {
+            restore: function(scope, item) {
+                var model = item.target.dataset;
                 rest().restore({
                     type: scope.type,
                     id: model.id
