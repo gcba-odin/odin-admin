@@ -532,7 +532,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
             'organization': $scope.model.organization,
             'dataset': $scope.model.dataset,
             'description': $scope.model.description,
-            'optionals': $scope.model.optionals,
+            'optionals': Upload.json($scope.model.optionals),
             'notes': $scope.model.notes,
             // 'url': $scope.model.url,
             //'visible': $scope.model.visible,
