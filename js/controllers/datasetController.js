@@ -116,7 +116,7 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
         rest().publish({
             type: $scope.type,
             id: $scope.model.id
-        }, function(resp) {
+        }, {}, function(resp) {
             loadModel();
             //var url = '/' + $scope.type;
             // $location.path(url);
@@ -132,7 +132,7 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
                     rest().unpublish({
                         type: $scope.type,
                         id: $scope.model.id
-                    }, function(resp) {
+                    }, {}, function(resp) {
                         loadModel();
                         //var url = '/' + $scope.type;
                         // $location.path(url);

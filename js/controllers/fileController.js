@@ -89,9 +89,9 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
         usSpinnerService.spin('spinner');
 
         rest().publish({
+            id: $routeParams.id,
             type: $scope.type,
-            id: $scope.model.id
-        }, function(resp) {
+        }, {}, function(resp) {
             usSpinnerService.stop('spinner');
             loadModel();
             //var url = '/' + $scope.type;
@@ -105,11 +105,11 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
         Alertify.confirm('¿Está seguro que quiere despublicar este archivo?').then(
                 function onOk() {
                     usSpinnerService.spin('spinner');
-                    
+
                     rest().unpublish({
                         type: $scope.type,
                         id: $scope.model.id
-                    }, function(resp) {
+                    }, {}, function(resp) {
                         usSpinnerService.stop('spinner');
                         loadModel();
                         //var url = '/' + $scope.type;

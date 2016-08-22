@@ -56,7 +56,7 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
         rest().publish({
             type: $scope.type,
             id: $scope.model.id
-        }, function(resp) {
+        }, {}, function(resp) {
             loadModel();
             //var url = '/' + $scope.type;
             // $location.path(url);
@@ -72,7 +72,7 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
                     rest().unpublish({
                         type: $scope.type,
                         id: $scope.model.id
-                    }, function(resp) {
+                    }, {}, function(resp) {
                         loadModel();
                         //var url = '/' + $scope.type;
                         // $location.path(url);
