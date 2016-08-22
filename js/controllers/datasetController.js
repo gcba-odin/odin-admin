@@ -1,6 +1,6 @@
 var app = angular.module('odin.DatasetControllers', ["ngSanitize"]);
 
-app.factory('model', function ($resource) {
+app.factory('model', function($resource) {
     return $resource();
 });
 
@@ -31,7 +31,7 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
             multiple: false
         }];
 
-    $scope.confirmDelete = function (item) {
+    $scope.confirmDelete = function(item) {
         Alertify.confirm('¿Está seguro que quiere borrar este dataset?<br> Al hacerlo, se borrarán todos los recursos asociados').then(
                 function onOk() {
                     $scope.deleteModel(item);
@@ -42,15 +42,15 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
         );
     };
 
-    $scope.deleteModel = function (model) {
+    $scope.deleteModel = function(model) {
         modelService.delete($scope, model);
     };
 
-    $scope.edit = function (model) {
+    $scope.edit = function(model) {
         modelService.edit($scope, model);
     }
 
-    $scope.view = function (model) {
+    $scope.view = function(model) {
         modelService.view($scope, model);
     }
 
@@ -61,12 +61,12 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
 
     modelService.initService("Dataset", "datasets", $scope);
 
-    var loadModel = function () {
+    var loadModel = function() {
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type,
             params: "include=tags,files,categories"
-        }, function () {
+        }, function() {
             var tags = [];
             for (var i = 0; i < $scope.model.tags.length; i++) {
                 tags.push('<span class="label label-primary">' + $scope.model.tags[i].name + '</span>')
@@ -93,16 +93,16 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
         });
     };
 
-    $scope.edit = function (model) {
+    $scope.edit = function(model) {
         modelService.edit($scope, model);
 
     }
-    $scope.getHtml = function (html) {
+    $scope.getHtml = function(html) {
         return $sce.trustAsHtml(html);
     };
 
-    app.filter('html', function ($sce) {
-        return function (val) {
+    app.filter('html', function($sce) {
+        return function(val) {
             return $sce.trustAsHtml(val);
         };
     });
@@ -110,18 +110,13 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
     //factory configs 
     configs.statuses($scope);
 
-    var update = function () {
+    $scope.publish = function() {
         usSpinnerService.spin('spinner');
-        $scope.tempData = {
-            id: $scope.model.id,
-            publishedAt: $scope.model.publishedAt,
-            status: $scope.model.status
-        };
 
-        rest().update({
+        rest().publish({
             type: $scope.type,
-            id: $scope.tempData.id
-        }, $scope.tempData, function (resp) {
+            id: $scope.model.id
+        }, function(resp) {
             loadModel();
             //var url = '/' + $scope.type;
             // $location.path(url);
@@ -129,19 +124,20 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
         usSpinnerService.stop('spinner');
     };
 
-    $scope.publish = function () {
-        $scope.model.publishedAt = new Date().toISOString().slice(0, 19).replace('T', ' ');
-        $scope.model.status = $scope.statuses.published;
-
-        update();
-    };
-
-    $scope.unPublish = function () {
+    $scope.unPublish = function() {
         Alertify.confirm('¿Está seguro que quiere despublicar este dataset?').then(
                 function onOk() {
-                    $scope.model.publishedAt = null;
-                    $scope.model.status = $scope.statuses.unpublished;
-                    update();
+                    usSpinnerService.spin('spinner');
+
+                    rest().unpublish({
+                        type: $scope.type,
+                        id: $scope.model.id
+                    }, function(resp) {
+                        loadModel();
+                        //var url = '/' + $scope.type;
+                        // $location.path(url);
+                    });
+                    usSpinnerService.stop('spinner');
                 },
                 function onCancel() {
                     return false;
@@ -149,17 +145,17 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
         );
     };
 
-    $scope.deleteResource = function (id, type) {
+    $scope.deleteResource = function(id, type) {
         Alertify.confirm('¿Está seguro que quiere borrar este recurso?').then(
                 function onOk() {
                     usSpinnerService.spin('spinner');
                     rest().delete({
                         type: type,
                         id: id
-                    }, function (resp) {
+                    }, function(resp) {
                         usSpinnerService.stop('spinner');
                         $window.location.reload();
-                    }, function (error) {
+                    }, function(error) {
                         usSpinnerService.stop('spinner');
                     });
                 },
@@ -190,7 +186,7 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
 
     $scope.model = new model();
     $scope.model.items = [];
-    $scope.add = function (isValid) {
+    $scope.add = function(isValid) {
         usSpinnerService.spin('spinner');
         for (obj in $scope.model) {
             if (obj.indexOf("optional") != -1) {
@@ -214,11 +210,11 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
         if (isValid) {
             rest().save({
                 type: $scope.type
-            }, $scope.model, function (resp) {
+            }, $scope.model, function(resp) {
                 usSpinnerService.stop('spinner');
                 var url = '/' + $scope.type + '/' + resp.data.id + '/view';
                 $location.path(url);
-            }, function (error) {
+            }, function(error) {
                 usSpinnerService.stop('spinner');
                 if (error.data.links && error.data.links.name) {
                     Alertify.alert('El nombre de dataset ya existe.');
@@ -232,7 +228,7 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
 
     $scope.inputs = [];
     var i = 0;
-    $scope.addInput = function () {
+    $scope.addInput = function() {
         if ($scope.model.items.length < 10) {
             var newItemNo = $scope.model.items.length + 1;
             $scope.model.items.push({
@@ -241,15 +237,15 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
         }
 
     }
-    $scope.deleteIndexInput = function (index, field) {
+    $scope.deleteIndexInput = function(index, field) {
         $scope.model.items.splice(index, 1);
     }
 
-    $scope.increment = function (a) {
+    $scope.increment = function(a) {
         return a + 1;
     }
 
-    $scope.itemName = function (a) {
+    $scope.itemName = function(a) {
         return "optional" + (parseInt(a) + 1);
     }
 
@@ -271,15 +267,15 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
     //factory configs 
     configs.statuses($scope);
 
-    $scope.publish = function () {
+    $scope.publish = function() {
         $scope.model.publishedAt = new Date().toISOString().slice(0, 19).replace('T', ' ');
         $scope.model.status = $scope.statuses.published;
     }
-    $scope.unPublish = function () {
+    $scope.unPublish = function() {
         $scope.model.publishedAt = "";
         $scope.model.status = $scope.statuses.unpublished;
     }
-    $scope.update = function (isValid) {
+    $scope.update = function(isValid) {
         usSpinnerService.spin('spinner');
 
         for (obj in $scope.model) {
@@ -302,7 +298,7 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
 
         $scope.tempData.items = optionsTemp;
         $scope.tempData.optionals = {};
-        angular.forEach($scope.tempData.items, function (element) {
+        angular.forEach($scope.tempData.items, function(element) {
             $scope.tempData.optionals[element.clave] = element.valor;
         });
 
@@ -316,7 +312,7 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
 
         // reformatArray transforms an array of objects into an array of ids
         function reformatArray(originalArray) {
-            var reformattedArray = originalArray.map(function (obj) {
+            var reformattedArray = originalArray.map(function(obj) {
                 return obj.id;
                 // rObj[obj.id] = obj.value;
             });
@@ -327,11 +323,11 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
             rest().update({
                 type: $scope.type,
                 id: $scope.tempData.id
-            }, $scope.tempData, function (resp) {
+            }, $scope.tempData, function(resp) {
                 usSpinnerService.stop('spinner');
                 var url = '/' + $scope.type + '/' + $scope.tempData.id + '/view';
                 $location.path(url);
-            }, function (error) {
+            }, function(error) {
                 usSpinnerService.stop('spinner');
                 if (error.data.links && error.data.links.name) {
                     Alertify.alert('El nombre de dataset ya existe.');
@@ -342,20 +338,20 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
         }
     };
 
-    $scope.load = function () {
+    $scope.load = function() {
         $scope.tagsmodel = rest().get({
             type: "tags",
             params: "orderBy=name&sort=DESC"
-        }, function () {
+        }, function() {
             $scope.model = rest().findOne({
                 id: $routeParams.id,
                 type: $scope.type,
                 params: "include=tags,files,categories"
-            }, function () {
+            }, function() {
                 $scope.model.status = $scope.model.status.id;
                 $scope.model.items = [];
                 $scope.publishAt = $scope.model.publishAt;
-                angular.forEach($scope.model.optionals, function (val, key) {
+                angular.forEach($scope.model.optionals, function(val, key) {
                     $scope.model.items.push({
                         field1: key,
                         field2: val,
@@ -394,7 +390,7 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
 
     $scope.inputs = [];
     var i = 0;
-    $scope.addInput = function () {
+    $scope.addInput = function() {
         if ($scope.model.items.length < 10) {
             var newItemNo = $scope.model.items.length + 1;
             $scope.model.items.push({
@@ -403,15 +399,15 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
         }
 
     }
-    $scope.deleteIndexInput = function (index, field) {
+    $scope.deleteIndexInput = function(index, field) {
         $scope.model.items.splice(index, 1);
     }
 
-    $scope.increment = function (a) {
+    $scope.increment = function(a) {
         return a + 1;
     }
 
-    $scope.itemName = function (a) {
+    $scope.itemName = function(a) {
         return "optional" + (parseInt(a) + 1);
     }
     $scope.load();

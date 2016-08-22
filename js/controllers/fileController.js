@@ -82,18 +82,16 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
         modelService.edit($scope, model);
     };
 
-    var update = function() {
-        usSpinnerService.spin('spinner');
-        $scope.tempData = {
-            id: $scope.model.id,
-            publishedAt: $scope.model.publishedAt,
-            status: $scope.model.status
-        };
+    //factory configs 
+    configs.statuses($scope);
 
-        rest().update({
+    $scope.publish = function() {
+        usSpinnerService.spin('spinner');
+
+        rest().publish({
             type: $scope.type,
-            id: $scope.tempData.id
-        }, $scope.tempData, function(resp) {
+            id: $scope.model.id
+        }, function(resp) {
             usSpinnerService.stop('spinner');
             loadModel();
             //var url = '/' + $scope.type;
@@ -103,22 +101,22 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
         });
     };
 
-    //factory configs 
-    configs.statuses($scope);
-
-    $scope.publish = function() {
-        $scope.model.publishedAt = new Date().toISOString().slice(0, 19).replace('T', ' ');
-        $scope.model.status = $scope.statuses.published;
-
-        update();
-    };
-
     $scope.unPublish = function() {
         Alertify.confirm('¿Está seguro que quiere despublicar este archivo?').then(
                 function onOk() {
-                    $scope.model.publishedAt = null;
-                    $scope.model.status = $scope.statuses.unpublished;
-                    update();
+                    usSpinnerService.spin('spinner');
+                    
+                    rest().unpublish({
+                        type: $scope.type,
+                        id: $scope.model.id
+                    }, function(resp) {
+                        usSpinnerService.stop('spinner');
+                        loadModel();
+                        //var url = '/' + $scope.type;
+                        // $location.path(url);
+                    }, function(error) {
+                        usSpinnerService.stop('spinner');
+                    });
                 },
                 function onCancel() {
                     return false;
@@ -333,11 +331,11 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             usSpinnerService.stop('spinner');
             // alert(resp.status);
             $scope.unsave = false;
-            if(error.data.links && error.data.links.name) {
-                    Alertify.alert('El nombre del archivo ya existe.');
-                } else {
-                    Alertify.alert('Ha ocurrido un error al crear el archivo.');
-                }
+            if (error.data.links && error.data.links.name) {
+                Alertify.alert('El nombre del archivo ya existe.');
+            } else {
+                Alertify.alert('Ha ocurrido un error al crear el archivo.');
+            }
         }, function(evt) {
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
             $scope.uploadImageProgress = progressPercentage;
@@ -571,7 +569,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
                 usSpinnerService.stop('spinner');
                 // alert(resp.status);
                 $scope.unsave = false;
-                if(error.data.links && error.data.links.name) {
+                if (error.data.links && error.data.links.name) {
                     Alertify.alert('El nombre de dataset ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al crear el dataset.');
@@ -655,7 +653,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
     }
 
     $scope.load();
-    
+
     var loadFileTypes = function() {
         var fileTypes = rest().get({
             type: 'fileTypes'

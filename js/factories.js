@@ -319,6 +319,34 @@
 
                         }
                     },
+                    publish: {
+                        url: $url + "/:id/publish",
+                        method: 'PATCH',
+                        headers: {
+                            'x-admin-authorization': token,
+                        },
+                        transformResponse: function(data) {
+                            $rootScope.progressbar.complete();
+                            return angular.fromJson(data);
+                        },
+                        interceptor: {
+                            responseError: handError
+                        }
+                    },
+                    unpublish: {
+                        url: $url + "/:id/unpublish",
+                        method: 'PATCH',
+                        headers: {
+                            'x-admin-authorization': token,
+                        },
+                        transformResponse: function(data) {
+                            $rootScope.progressbar.complete();
+                            return angular.fromJson(data);
+                        },
+                        interceptor: {
+                            responseError: handError
+                        }
+                    },
                     'update': {
                         url: $url + "/:id",
                         method: 'PATCH',
