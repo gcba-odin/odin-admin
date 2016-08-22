@@ -171,11 +171,9 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
     'qualitative': 'Cualitativo',
     'quantitative': 'Cuantitativo',
   });
-  console.log($rootScope);
   $translateProvider.preferredLanguage('es');
 }]);
 
 app.controller("localizeController", function($scope) {
-  console.log($scope)
 
 });

@@ -45,6 +45,7 @@ function FileTypeCreateController($scope, $http, rest, model, Flash, $location, 
     $http.get('config/mimetypes.json').success(function(data) {
         $scope.mimetypes = Object.keys(data);
     });
+
     $scope.model = new model();
     $scope.add = function(isValid) {
         usSpinnerService.spin('spinner');

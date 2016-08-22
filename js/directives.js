@@ -91,8 +91,6 @@
                                 setTimeout(function() {
                                     selectize.setValue(json);
                                 }, 700);
-
-
                             }
                         })
                     });
@@ -109,16 +107,15 @@
                             create: false,
                             placeholder: attrs.placeholder
                         })[0].selectize;
+                        selectize.removeOption('? object:null ?');
+                        selectize.removeOption('? undefined:undefined ?');
                     }, 1000);
-
                 }
 
             };
         }]);
 
-
-
-    app.directive('selectTwoAjax', ['$timeout', '$parse', '$cookieStore', '$http', function($timeout, $parse, $cookieStore, $http, $scope) {
+    app.directive('selectTwoAjax', ['$timeout', '$parse', '$cookieStore', '$http', function($timeout, $parse, $cookieStore, $http, $scope, $rootScope) {
             return {
                 restrict: 'A',
                 scope: {

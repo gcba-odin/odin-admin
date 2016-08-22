@@ -294,6 +294,7 @@ div.form-group div.has-error p {
     display: block;
 }
 
+
 .category-image svg{
     width: 80px;
     height: 80px;
@@ -349,4 +350,8 @@ div.panel-heading {
 
 .searchList .searchButton{
     padding-top: 1.7em;
+}
+#mimetype_select .selectize-control .selectize-input > * {
+    display: inline-block;
+
 }

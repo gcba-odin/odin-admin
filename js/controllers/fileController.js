@@ -437,7 +437,6 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
     }
 
     $scope.checkstep = function(step) {
-        console.log($scope.model.uploadFile);
         if ($scope.model.uploadFile == null && step == 1 && $scope.fileModel.name && $scope.filter && $scope.mostrar)
         {
             $scope.clearUpload();
