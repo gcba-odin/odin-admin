@@ -81,7 +81,7 @@
                 rest().restore({
                     type: scope.type,
                     id: model.id
-                }, function(resp) {
+                }, {}, function(resp) {
                     scope.data = rest().get({
                         type: scope.type,
                         params: "orderBy=createdAt&sort=DESC"
