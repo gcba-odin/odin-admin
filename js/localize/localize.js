@@ -170,6 +170,8 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
     'pie': 'Torta',
     'qualitative': 'Cualitativo',
     'quantitative': 'Cuantitativo',
+    'ACTIVATE': 'Activar',
+    'INACTIVATE': 'Desactivar'
   });
   $translateProvider.preferredLanguage('es');
 }]);
