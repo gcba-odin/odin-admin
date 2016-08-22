@@ -293,3 +293,7 @@ div.form-group div.has-error p {
 .selectize-input > * {
     display: block;
 }
+
+#mimetype_select .selectize-control .selectize-input > * {
+    display: inline-block;
+}

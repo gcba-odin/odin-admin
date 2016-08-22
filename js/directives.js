@@ -94,6 +94,7 @@
             }
         };
     }]);
+
     app.directive('selectTwo', ['$parse', function($parse, $scope) {
         return {
             restrict: 'A',
@@ -103,14 +104,14 @@
                         create: false,
                         placeholder: attrs.placeholder
                     })[0].selectize;
+                    selectize.removeOption('? object:null ?');
+                    selectize.removeOption('? undefined:undefined ?');
                 }, 1000);
 
             }
 
         };
     }]);
-
-
 
     app.directive('selectTwoAjax', ['$parse', '$timeout', function($timeout, $parse, $scope, $rootScope) {
         return {
