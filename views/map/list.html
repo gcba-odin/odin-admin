@@ -23,9 +23,7 @@
                                 </tr>
                                 <tr ng-repeat="model in data.data">
                                     <td>{{model.name}}</td>
-                                    <td>
-                                        <span class="label label-default" ng-class="activeClass(model.active)">{{model.deletedAt ? 'Inactivo' : 'Activo'}}</span>
-                                    </td>
+                                    <td>{{model.status.name}}</td>
                                     <td class="text-center table-btn">
                                         <a class="btn btn-primary" ng-click="view({id: model.id})">{{ 'VIEW' | translate }}</a>
                                         <a class="btn btn-info" ng-click="edit({id: model.id})">{{ 'EDIT' | translate }}</a>
