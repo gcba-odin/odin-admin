@@ -355,3 +355,20 @@ div.panel-heading {
     display: inline-block;
 
 }
+
+.alertify-button-cancel, .alertify-button-cancel:active{
+    background-color: #FFFFFF;
+    border-color: #ffb600;
+    color: #ffb600;
+}
+.alertify-button-cancel:hover, .alertify-button-cancel:focus {
+    border-color: #ff386a;
+    background-color: #FFFFFF;
+    color: #ff386a;
+}
+
+.alertify-button-ok, .alertify-button-ok:hover, .alertify-button-ok:focus, .alertify-button-ok:active{
+    background-color: #ff386a !important;
+    border-color: #ff386a;
+    color: #ffffff;
+}
