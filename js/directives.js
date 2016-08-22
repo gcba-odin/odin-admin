@@ -25,7 +25,13 @@
                     }
                     $scope.q += 'condition=AND'
                     modelService.search($scope);
-                }
+                };
+
+                $scope.clearSearch = function() {
+                    $scope.q = "&condition=AND"
+                    $scope.searchModel = {};
+                    modelService.search($scope);
+                };
             },
             link: function(scope, element, attrs) {
                 scope.dropdowns = $parse(attrs.filters)();
@@ -126,7 +132,8 @@
                     } else {
                         attrs.create = false;
                     }
-                    var selectizes = $(element).selectize({
+
+                    var data_selectize = {
                         valueField: 'id',
                         labelField: attrs.key,
                         searchField: attrs.key,
@@ -200,7 +207,13 @@
                                 }
                             });
                         }
-                    });
+                    };
+
+                    if (attrs.multiple) {
+                        data_selectize.plugins = ['remove_button'];
+                    }
+
+                    var selectizes = $(element).selectize(data_selectize);
 
                     attrs.$observe("model", function(newValue) {
                         if (!!newValue) {

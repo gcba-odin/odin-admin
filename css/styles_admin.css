@@ -316,7 +316,7 @@ div.form-group div.has-error p {
 }
 
 .steps li a:before, .steps li p:before{
-         border-left: 0; 
+    border-left: 0; 
 }
 
 div.panel-heading {
@@ -340,4 +340,13 @@ div.panel-heading {
 
 .add-image-button{
     background-color: #ff386a;
+}
+
+.searchList .row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.searchList .searchButton{
+    padding-top: 1.7em;
 }
