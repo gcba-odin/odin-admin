@@ -112,10 +112,18 @@ function OrganizationEditController($scope, Flash, rest, $routeParams, model, $l
     $scope.update = function (isValid) {
         usSpinnerService.spin('spinner');
         if (isValid) {
+            
+            $scope.tempData = {
+                address: $scope.model.address,
+                description: $scope.model.description,
+                name: $scope.model.name
+            };
+            
+            //console.log($scope.model);
             rest().update({
                 type: $scope.type,
                 id: $scope.model.id
-            }, $scope.model, function (resp) {
+            }, $scope.tempData, function (resp) {
                 usSpinnerService.stop('spinner');
                 var url = '/' + $scope.type;
                 $location.path(url);
