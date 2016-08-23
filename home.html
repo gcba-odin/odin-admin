@@ -80,7 +80,7 @@
         <div class="item" ng-repeat="log in logs.data">
           <!--<img class="online" alt="user image"  ng-src="http://www.gravatar.com/avatar/{{log.user.email | md5}}fs=150"/>-->
           <p class="message">
-            <a class="name">
+            <a class="name" ng-href="#/users/{{log.user.id}}/view">
               <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> {{log.createdAt | date: "MMM d, y h:mm:ss a"}}</small> {{log.user.username}}
             </a>
             <span class="label label-default" ng-class="setClassLog(log.action)">{{log.action+'D'  | uppercase | translate | capitalize}}</span> {{log.target | uppercase| translate | generalize | translate}}
