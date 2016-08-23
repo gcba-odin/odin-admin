@@ -103,7 +103,7 @@ function CategoryCreateController($scope, rest, model, Flash, $location, $rootSc
                 $location.url('/categories/' + resp.data.data.id + '/view');
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if(error.data && error.data.name) {
+                if(error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre de la categoría ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al crear la categoría.');
@@ -220,7 +220,7 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
                 $location.url('/categories/' + resp.data.data.id + '/view');
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if(error.data && error.data.name) {
+                if(error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre de la categoría ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al editar la categoría.');

@@ -22,13 +22,13 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
             model: 'users',
             key: 'username',
             modelInput: 'owner',
-            multiple: false
+            multiple: true
         }, {
             name: 'Categoria',
             model: 'categories',
             key: 'name',
             modelInput: 'categories',
-            multiple: false
+            multiple: true
         }];
 
     $scope.confirmDelete = function(item) {
@@ -216,7 +216,7 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if (error.data && error.data.name) {
+                if(error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre de dataset ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al crear el dataset.');
@@ -329,7 +329,7 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if (error.data && error.data.name) {
+                if(error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre de dataset ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al editar el dataset.');

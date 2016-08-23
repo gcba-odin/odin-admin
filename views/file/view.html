@@ -133,9 +133,9 @@
                         <thead>
                         <th>{{ 'RESOURCE' | translate }}</th>
                         <th>{{ 'TYPE' | translate }}</th>
-                        <th>{{ 'VIEW' | translate }}</th>
-                        <th>{{ 'EDIT' | translate }}</th>
-                        <th>{{ 'DELETE' | translate }}</th>
+                        <th class="text-center">{{ 'ACTIONS' | translate }}</th>
+                        <!--<th>{{ 'EDIT' | translate }}</th>
+                        <th>{{ 'DELETE' | translate }}</th>-->
                         </thead>
                         <tbody>
                             <tr ng-repeat="map in model.resources.data.maps">
@@ -145,14 +145,14 @@
                                 <td>
                                     <span>{{'MAP'| translate }}</span>
                                 </td>
-                                <td>
+                                <td class="text-center table-btn">
                                     <a target="_blank" class="btn btn-primary" ng-href="#/maps/{{map.id}}/view">{{ 'VIEW' | translate }}</a>
-                                </td>
-                                <td>
+                                <!--</td>
+                                <td>-->
                                     <a target="_blank" class="btn btn-primary" ng-href="#/maps/{{map.id}}/edit">{{ 'EDIT' | translate }}</a>
-                                </td>
-                                <td>
-                                    <a class="btn btn-danger" ng-click="deleteResource(map.id, 'maps')">{{ 'DELETE' | translate }}</a>
+                                <!--</td>
+                                <td>-->
+                                    <a class="btn btn-primary" ng-click="deleteResource(map.id, 'maps')">{{ 'DELETE' | translate }}</a>
                                 </td>
                             </tr>
                             <tr ng-repeat="chart in model.resources.data.charts">
@@ -162,14 +162,14 @@
                                 <td>
                                     <span>{{'CHART'| translate }}</span>
                                 </td>
-                                <td>
+                                <td class="text-center table-btn">
                                     <a target="_blank" class="btn btn-primary" ng-href="#/charts/{{chart.id}}/view">{{ 'VIEW' | translate }}</a>
-                                </td>
-                                <td>
+                                <!--</td>
+                                <td>-->
                                     <a target="_blank" class="btn btn-primary" ng-href="#/charts/{{chart.id}}/edit">{{ 'EDIT' | translate }}</a>
-                                </td>
-                                <td>
-                                    <a class="btn btn-danger" ng-click="deleteResource(chart.id, 'charts')">{{ 'DELETE' | translate }}</a>
+                                <!--</td>
+                                <td>-->
+                                    <a class="btn btn-primary" ng-click="deleteResource(chart.id, 'charts')">{{ 'DELETE' | translate }}</a>
                                 </td>
                             </tr>
 

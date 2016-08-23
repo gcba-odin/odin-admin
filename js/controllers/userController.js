@@ -62,7 +62,7 @@ function UserCreateController($scope, rest, model, Flash, $location, modelServic
 
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if(error.data && error.data.username) {
+                if(error.data.data && error.data.data.username) {
                     Alertify.alert('El usuario ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al crear el usuario.');
@@ -89,7 +89,7 @@ function UserEditController($scope, Flash, rest, $routeParams, model, $location,
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if(error.data && error.data.username) {
+                if(error.data.data && error.data.data.username) {
                     Alertify.alert('El usuario ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al editar el usuario.');

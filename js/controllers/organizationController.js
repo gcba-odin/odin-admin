@@ -81,7 +81,7 @@ function OrganizationCreateController($scope, rest, model, Flash, $location, mod
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if(error.data && error.data.links) {
+                if(error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre de la organización ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al crear la organización.');
@@ -121,7 +121,7 @@ function OrganizationEditController($scope, Flash, rest, $routeParams, model, $l
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if(error.data && error.data.name) {
+                if(error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre de la organización ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al editar la organización.');

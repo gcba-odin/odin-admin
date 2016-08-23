@@ -376,3 +376,11 @@ div.panel-heading {
 .btn-activate{
     width: 100px;
 }
+
+.content-wrapper .inner h3{
+    color:#777;
+}
+
+.form-control:focus{
+    border-color: #ffb600;
+}
