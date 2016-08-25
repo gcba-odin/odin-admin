@@ -284,7 +284,13 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
             }, $scope.model, function(resp) {
                 usSpinnerService.stop('spinner');
 
-                Alertify.alert('El mapa se generó correctamente.<br><br><strong>Detalle:</strong><br><br>Del total de datos procesados, ' + resp.data.correct + ' se registraron correctamente y ' + resp.data.incorrect + ' tuvieron error.');
+                var alert_text = 'El mapa se generó correctamente.';
+                
+                if(!!$scope.model.link) {
+                    alert_text += "<br><br><strong>Detalle:</strong><br><br>Del total de datos procesados, " + resp.data.correct + " se registraron correctamente y " + resp.data.incorrect + " tuvieron error.";
+                }
+                
+                Alertify.alert(alert_text);
                 if (resp.data.id) {
                     var url = '/' + $scope.type + '/' + resp.data.id + '/view';
                 } else {
@@ -459,7 +465,14 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
             }, $scope.model, function(resp) {
                 usSpinnerService.stop('spinner');
 
-                Alertify.alert('El mapa se generó correctamente.<br><br><strong>Detalle:</strong><br><br>Del total de datos procesados, ' + resp.data.correct + ' se registraron correctamente y ' + resp.data.incorrect + ' tuvieron error.');
+                var alert_text = 'El mapa se generó correctamente.';
+                
+                if(!!$scope.model.link) {
+                    alert_text += "<br><br><strong>Detalle:</strong><br><br>Del total de datos procesados, " + resp.data.correct + " se registraron correctamente y " + resp.data.incorrect + " tuvieron error.";
+                }
+                
+                Alertify.alert(alert_text);
+                //Alertify.alert('El mapa se generó correctamente.<br><br><strong>Detalle:</strong><br><br>Del total de datos procesados, ' + resp.data.correct + ' se registraron correctamente y ' + resp.data.incorrect + ' tuvieron error.');
                 if (resp.data.id) {
                     var url = '/' + $scope.type + '/' + resp.data.id + '/view';
                 } else {
