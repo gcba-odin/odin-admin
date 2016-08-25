@@ -192,10 +192,10 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             $scope.fileModel.type = 'fa-file-pdf-o';
         } else if (type == "rar" || type == "zip") {
             $scope.fileModel.type = 'fa-file-archive-o';
-            if (type == "rar") {
+            //if (type == "rar") {
                 $scope.filter = false;
                 hard_file = $files[0];
-            }
+            //}
         } else if (type == "shp") {
             $scope.filter = false;
             hard_file = $files[0];
@@ -422,10 +422,10 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
             $scope.fileModel.type = 'fa-file-pdf-o';
         } else if (type == "rar" || type == "zip") {
             $scope.fileModel.type = 'fa-file-archive-o';
-            if (type == "rar") {
+            //if (type == "rar") {
                 $scope.filter = false;
                 hard_file = $files[0];
-            }
+            //}
         } else if (type == "shp") {
             $scope.filter = false;
             hard_file = $files[0];
@@ -569,9 +569,9 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
                 // alert(resp.status);
                 $scope.unsave = false;
                 if(error.data.data && error.data.data.name) {
-                    Alertify.alert('El nombre de dataset ya existe.');
+                    Alertify.alert('El nombre del archivo ya existe.');
                 } else {
-                    Alertify.alert('Ha ocurrido un error al crear el dataset.');
+                    Alertify.alert('Ha ocurrido un error al crear el archivo.');
                 }
             }, function(evt) {
                 var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
