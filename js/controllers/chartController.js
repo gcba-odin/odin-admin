@@ -37,6 +37,10 @@ function ChartViewController($scope, modelService, $routeParams, rest, $location
             type: $scope.type
         });
     };
+    
+    $scope.confirmDelete = function(item) {
+        modelService.confirmDelete(item);
+    };
 
     $scope.edit = function(model) {
         var url = '/' + $scope.type + '/' + model.id + "/edit";
