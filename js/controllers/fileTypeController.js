@@ -91,7 +91,7 @@ function FileTypeEditController($scope, $http, Flash, rest, $routeParams, model,
                 if(error.data.data && error.data.data.name) {
                     Alertify.alert('El tipo de archivo que quiere guardar ya existe.');
                 } else {
-                    Alertify.alert('Hubo un error al crear el tipo de archivo.');
+                    Alertify.alert('Hubo un error al editar el tipo de archivo.');
                 }
             });
         }

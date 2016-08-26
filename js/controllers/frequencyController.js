@@ -94,7 +94,7 @@ function updateFrequencyEditController($scope, Flash, rest, $routeParams, model,
                 if(error.data.data && error.data.data.name) {
                     Alertify.alert('La frequencia que quiere guardar ya existe.');
                 } else {
-                    Alertify.alert('Hubo un error al crear la frecuencia.');
+                    Alertify.alert('Hubo un error al editar la frecuencia.');
                 }
             });
         }

@@ -37,7 +37,7 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
             type: $scope.type
         });
     };
-    
+
     $scope.confirmDelete = function(item) {
         modelService.confirmDelete(item);
     };
@@ -284,12 +284,18 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
             }, $scope.model, function(resp) {
                 usSpinnerService.stop('spinner');
 
-                var alert_text = 'El mapa se generó correctamente.';
+                var alert_text = 'El mapa se generó ';
                 
-                if(!!$scope.model.link) {
+                if (!!resp.data.incorrect && resp.data.incorrect > 0) {
+                    alert_text += 'con errores.';
+                } else {
+                    alert_text += 'correctamente.';
+                }
+
+                if (!$scope.model.link) {
                     alert_text += "<br><br><strong>Detalle:</strong><br><br>Del total de datos procesados, " + resp.data.correct + " se registraron correctamente y " + resp.data.incorrect + " tuvieron error.";
                 }
-                
+
                 Alertify.alert(alert_text);
                 if (resp.data.id) {
                     var url = '/' + $scope.type + '/' + resp.data.id + '/view';
@@ -299,7 +305,7 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if(error.data.data && error.data.data.name) {
+                if (error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre del mapa ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al crear el mapa.');
@@ -465,12 +471,18 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
             }, $scope.model, function(resp) {
                 usSpinnerService.stop('spinner');
 
-                var alert_text = 'El mapa se generó correctamente.';
-                
-                if(!!$scope.model.link) {
+                var alert_text = 'El mapa se editó ';
+
+                if (!!resp.data.incorrect && resp.data.incorrect > 0) {
+                    alert_text += 'con errores.';
+                } else {
+                    alert_text += 'correctamente.';
+                }
+
+                if (!$scope.model.link) {
                     alert_text += "<br><br><strong>Detalle:</strong><br><br>Del total de datos procesados, " + resp.data.correct + " se registraron correctamente y " + resp.data.incorrect + " tuvieron error.";
                 }
-                
+
                 Alertify.alert(alert_text);
                 //Alertify.alert('El mapa se generó correctamente.<br><br><strong>Detalle:</strong><br><br>Del total de datos procesados, ' + resp.data.correct + ' se registraron correctamente y ' + resp.data.incorrect + ' tuvieron error.');
                 if (resp.data.id) {
@@ -482,7 +494,7 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
 
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if(error.data.data && error.data.data.name) {
+                if (error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre del mapa ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al editar el mapa.');

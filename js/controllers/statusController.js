@@ -85,7 +85,7 @@ function StatusEditController($scope, Flash, rest, $routeParams, model, $locatio
                 if(error.data.data && error.data.data.name) {
                     Alertify.alert('El estado que quiere guardar ya existe.');
                 } else {
-                    Alertify.alert('Hubo un error al crear el estado.');
+                    Alertify.alert('Hubo un error al editar el estado.');
                 }
             });
         }
