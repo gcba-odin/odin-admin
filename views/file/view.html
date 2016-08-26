@@ -38,7 +38,7 @@
                             </tr>
                             <tr ng-if="model.dataset">
                                 <td class="detail-bold">{{ 'DATASET' | translate }}</td>
-                                <td>{{model.dataset.name}}</td>
+                                <td><a ng-href="#/datasets/{{model.dataset.id}}/view">{{model.dataset.name}}</a></td>
                             </tr>
                             <tr ng-if="model.status">
                                 <td class="detail-bold">{{ 'STATUS' | translate }}</td>
