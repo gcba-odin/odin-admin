@@ -352,7 +352,7 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
 function MapEditController($scope, modelService, $routeParams, $sce, rest, $location, model, Alertify, usSpinnerService) {
     modelService.initService("Map", "maps", $scope);
     $scope.model = new model();
-
+    $scope.model.items = [];
     $scope.steps = [];
     $scope.steps[0] = "active";
     $scope.steps[1] = "undone";
@@ -513,7 +513,9 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
             id: $routeParams.id,
             type: $scope.type,
         }, function() {
-            $scope.model.basemap = $scope.model.basemap.id;
+            if(!!$scope.model.basemap.id) {
+                $scope.model.basemap = $scope.model.basemap.id;
+            }
             url_map = $scope.model.link;
             $scope.file_disabled = 'enabled';
             if (!angular.isUndefined($scope.model.file)) {
