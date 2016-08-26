@@ -513,7 +513,7 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
             id: $routeParams.id,
             type: $scope.type,
         }, function() {
-            if(!!$scope.model.basemap.id) {
+            if(!!$scope.model.basemap) {
                 $scope.model.basemap = $scope.model.basemap.id;
             }
             url_map = $scope.model.link;
@@ -538,7 +538,7 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
             $scope.model.items = [];
 
             var counter = 0;
-            if (!!$scope.model.geojson.features[0]) {
+            if (!!$scope.model.geojson && !!$scope.model.geojson.features[0]) {
                 var valores = Object.keys($scope.model.geojson.features[0].properties);
                 angular.forEach(valores, function(value, key) {
                     $scope.model.items.push({
