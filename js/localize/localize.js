@@ -171,7 +171,10 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
     'qualitative': 'Cualitativo',
     'quantitative': 'Cuantitativo',
     'ACTIVATE': 'Activar',
-    'INACTIVATE': 'Desactivar'
+    'INACTIVATE': 'Desactivar',
+    'IMPORTER': 'Importador',
+    'IMPORT': 'Importar',
+    'CKAN_IMPORTER': 'Importador CKAN'
   });
   $translateProvider.preferredLanguage('es');
 }]);
