@@ -1,0 +1,23 @@
+{
+  "name": "odin-admin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "config.js",
+  "dependencies": {
+    "ckan": "^0.2.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gcba-odin/odin-admin.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gcba-odin/odin-admin/issues"
+  },
+  "homepage": "https://github.com/gcba-odin/odin-admin#readme"
+}

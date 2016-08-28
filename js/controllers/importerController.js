@@ -4,8 +4,6 @@ app.factory('model', function($resource) {
     return $resource();
 });
 
-
-
 function ImporterListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService) {
 
     modelService.initService("User", "users", $scope);
@@ -40,32 +38,43 @@ function ImporterViewController($scope, Flash, rest, $routeParams, $location, mo
     }
 }
 
-function ImporterCreateController($scope, rest, model, Flash, $location, modelService, usSpinnerService, Alertify) {
-    console.log("ENTRA", $scope.type);
-    modelService.initService("User", "users", $scope);
+function ImporterCreateController($scope, $location, usSpinnerService, Alertify, CkanImporterService, rest) {
 
-    $scope.model = new model();
     $scope.add = function(isValid) {
         usSpinnerService.spin('spinner');
         if (isValid) {
-            rest().save({
-                type: $scope.type
-            }, $scope.model, function(resp) {
-                usSpinnerService.stop('spinner');
-                Alertify.alert('El usuario se ha creado exitosamente.');
-                var url = '/' + $scope.type + '/';
-                $location.path(url);
-
-            }, function(error) {
-                usSpinnerService.stop('spinner');
-                if (error.data && error.data.username) {
-                    Alertify.alert('El usuario ya existe.');
-                } else {
-                    Alertify.alert('Ha ocurrido un error al crear el usuario.');
-                }
-            });
+            CkanImporterService.Import(rest);
         }
-    };
+    }
+
+
+
+
+
+    // modelService.initService("User", "users", $scope);
+
+    // $scope.model = new model();
+    // $scope.add = function(isValid) {
+    //     usSpinnerService.spin('spinner');
+    //     if (isValid) {
+    //         rest().save({
+    //             type: $scope.type
+    //         }, $scope.model, function(resp) {
+    //             usSpinnerService.stop('spinner');
+    //             Alertify.alert('El usuario se ha creado exitosamente.');
+    //             var url = '/' + $scope.type + '/';
+    //             $location.path(url);
+
+    //         }, function(error) {
+    //             usSpinnerService.stop('spinner');
+    //             if (error.data && error.data.username) {
+    //                 Alertify.alert('El usuario ya existe.');
+    //             } else {
+    //                 Alertify.alert('Ha ocurrido un error al crear el usuario.');
+    //             }
+    //         });
+    //     }
+    // };
 }
 
 function ImporterEditController($scope, Flash, rest, $routeParams, model, $location, modelService, usSpinnerService, Alertify) {
