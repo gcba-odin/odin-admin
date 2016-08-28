@@ -22,7 +22,7 @@
             restClient = rest;
 
             // Categories
-            // importCategories();
+            importCategories();
 
             // Tags
             importTags();
@@ -57,31 +57,30 @@
             // });
         }
 
+        // http://data.buenosaires.gob.ar/api/3/action/group_list?q=
         function importCategories() {
-
             client.action('group_list', {}, function(err, result) {
                 if (err) {
                     console.log("ERROR CATEGORIES: ", err);
                 } else {
-                    // console.log("CATEGORIES: ", result);
                     var categoriesName = result.result;
-
-                    // var i = 0;
                     categoriesName.forEach(function(categoryName) {
                         client.action('group_show', { id: categoryName }, function(err, result) {
                             if (!err) {
                                 var category = result.result;
                                 var data = {
                                     'name': category.title,
-                                    'description': category.description
-                                        // 'color': $scope.model.color,
-                                        // 'uploadImage': $scope.model.uploadImage,
+                                    'description': category.description,
+                                    'active': category.state == 'active' ? true : false
                                 };
-                                importCategory(data /*, i*/ );
-                                // i = i + 1;
+                                importCategory(data);
+                            } else {
+                                console.log("ERROR CATEGORY: ", err);
                             }
                         });
                     });
+                    
+                    console.log("importCategories terminado");
                 }
             });
         }
@@ -92,10 +91,7 @@
                 if (err) {
                     console.log("ERROR TAGS: ", err);
                 } else {
-                    // console.log("TAGS: ", result);
                     var tagsName = result.result;
-
-                    // var i = 0;
                     tagsName.forEach(function(tagName) {
                         client.action('tag_show', { id: tagName }, function(err, result) {
                             if (!err) {
@@ -103,10 +99,9 @@
                                 var data = {
                                     'name': tag.name
                                 };
-                                importTag(data /*, i*/ );
-                                // i = i + 1;
+                                importTag(data);
                             } else {
-                                console.log("ERROR TAGS: ", err);
+                                console.log("ERROR TAG: ", err);
                             }
                         });
                     });
@@ -116,21 +111,24 @@
             });
         }
 
-        function importCategory(data) {
-            var model = {
-                modelName: "Tag",
-                type: "tags",
-                name: data.name
-            }
+        http: //data.buenosaires.gob.ar/api/3/action/group_show?id=categoryName
+            function importCategory(data) {
+                var model = {
+                    modelName: "Category",
+                    type: "categories",
+                    name: data.name,
+                    description: data.description,
+                    active: data.active
+                }
 
-            restClient().save({
-                type: model.type
-            }, model, function(resp) {
-                console.log("OK", resp);
-            }, function(error) {
-                console.log("ERROR", error);
-            });
-        }
+                restClient().save({
+                    type: model.type
+                }, model, function(resp) {
+                    console.log("OK", resp);
+                }, function(error) {
+                    console.log("ERROR", error);
+                });
+            }
 
         // http://data.buenosaires.gob.ar/api/3/action/tag_show?id=tagName
         function importTag(data) {
