@@ -389,3 +389,17 @@ div.panel-heading {
     border-color: #ffb600;
     background-color: #ffb600;
 }
+
+.pagination > .active > a{
+    background-color: #FF386a;
+    border-color: #FF386a;
+}
+
+.pagination > li > a{
+    color: #FF386a;
+}
+
+.pagination > .active > a:focus, .pagination > .active > a:hover{
+    background-color: #FFb600;
+    border-color: #FFb600;
+}

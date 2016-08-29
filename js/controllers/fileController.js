@@ -551,7 +551,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
         var param = {
             gatheringDate: null
         };
-        if ($scope.model.gatheringDate && $scope.model.gatheringDate != "") {
+        if (!!$scope.model.gatheringDate) {
             param.gatheringDate = $scope.model.gatheringDate.toISOString().slice(0, 10);//.toISOString().slice(0, 10), //new Date().toISOString().slice(0, 19).replace('T', ' ');
         }
 
@@ -600,9 +600,15 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
             type: $scope.type,
             //params: "include=tags"
         }, function() {
-            $scope.model.updateFrequency = $scope.model.updateFrequency.id;
-            $scope.model.status = $scope.model.status.id;
-            $scope.model.gatheringDate = $scope.model.gatheringDate ? moment($scope.model.gatheringDate).utc() : '';
+            if(!!$scope.model.updateFrequency) {
+                $scope.model.updateFrequency = $scope.model.updateFrequency.id;
+            }
+            if(!!$scope.model.status) {
+                $scope.model.status = $scope.model.status.id;
+            }
+            if(!!$scope.model.gatheringDate) {
+                $scope.model.gatheringDate = $scope.model.gatheringDate ? moment($scope.model.gatheringDate).utc() : '';
+            }
 
             $scope.model.items = [];
             angular.forEach($scope.model.optionals, function(val, key) {

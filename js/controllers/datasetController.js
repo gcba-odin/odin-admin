@@ -54,7 +54,17 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
         modelService.view($scope, model);
     }
 
+    $scope.limit = 20;
+
+    $scope.q = "&skip=0&limit=" + $scope.limit;
+
     modelService.loadAll($scope);
+
+    $scope.paging = function(event, page, pageSize, total) {
+        var skip = (page - 1) * $scope.limit;
+        $scope.q = "&skip=" + skip + "&limit=" + $scope.limit;
+        modelService.loadAll($scope);
+    };
 }
 
 function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sce, modelService, Alertify, usSpinnerService, $window, configs) {
@@ -348,7 +358,9 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
                 type: $scope.type,
                 params: "include=tags,files,categories"
             }, function() {
-                $scope.model.status = $scope.model.status.id;
+                if(!!$scope.model.status) {
+                    $scope.model.status = $scope.model.status.id;
+                }
                 $scope.model.items = [];
                 $scope.publishAt = $scope.model.publishAt;
                 angular.forEach($scope.model.optionals, function(val, key) {
