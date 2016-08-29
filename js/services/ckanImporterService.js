@@ -2,148 +2,231 @@
     var app = angular.module('ckan-importer-service', []);
 
     app.factory('CkanImporterService', CkanImporterService);
-    // app.factory('model', function($resource) {
-    //     return $resource();
-    // });
 
-    CkanImporterService.$inject = ['$http', '$cookieStore', '$rootScope', '$timeout'];
+    CkanImporterService.$inject = ['$http', '$cookieStore', '$rootScope', '$timeout', 'rest'];
 
     function CkanImporterService($http, $cookieStore, $rootScope, $timeout, $scope, CkanImporterService, Alertify, rest) {
-        var client = new CKAN.Client('http://data.buenosaires.gob.ar');
-        var restClient = rest;
         var service = {};
         service.Import = Import;
-        service.restClient = null;
+
+        var client = new CKAN.Client('http://data.buenosaires.gob.ar');
+        var restClient = rest;
+        var categories = [];
+        var tags = [];
+        var tagsLimit = 0;
+        var defaults = {
+            owner: null,
+            status: null,
+            freq: null
+        };
 
         return service;
 
-        function Import(rest) {
-            console.log("ENTRA IMPORT");
+        function Import(rest, owner, status, freq) {
             restClient = rest;
+            defaults.owner = owner;
+            defaults.status = status;
+            defaults.freq = freq;
 
-            // Categories
-            importCategories();
-
-            // Tags
-            importTags();
-
-            // // Datasets
-            // client.action('package_list', {}, function(err, result) {
-            //     if (err) {
-            //         console.log("ERROR DATASETS: ", err);
-            //     } else {
-            //         console.log("DATASETS: ", result);
-
-            //         // Dataset
-            //         result.result.forEach(function(dataset) {
-            //             client.action('package_show', { id: dataset }, function(err, result) {
-            //                 if (err) {
-            //                     console.log("ERROR DATASET: ", err);
-            //                 } else {
-            //                     console.log("DATASET ", dataset, result);
-            //                 }
-            //             });
-
-            //             // Resources
-            //             client.action('resource_search', { query: 'name: ' + dataset }, function(err, result) {
-            //                 if (err) {
-            //                     console.log("ERROR RESOURCES: ", err);
-            //                 } else {
-            //                     console.log("RESOURCES: ", result);
-            //                 }
-            //             });
-            //         });
-            //     }
-            // });
+            async.waterfall([
+                function(callback) {
+                    console.log("1) getCategoryNames");
+                    getCategoryNames(callback);
+                },
+                function(categoryNames, callback) {
+                    console.log("2) importCategories");
+                    importCategories(categoryNames, callback);
+                },
+                function(callback) {
+                    result = restClient().get({
+                        type: "categories",
+                        params: "orderBy=name&sort=DESC"
+                    }, function() {
+                        categories = result.data;
+                        console.log("3) Categories", categories);
+                        callback();
+                    });
+                },
+                function(callback) {
+                    console.log("4) getTagNames");
+                    getTagNames(callback);
+                },
+                function(tagNames, callback) {
+                    console.log("5) importTags");
+                    importTags(tagNames, callback);
+                },
+                function(callback) {
+                    result = restClient().get({
+                        type: "tags",
+                        params: "limit="+tagsLimit * 2+"&orderBy=name&sort=DESC"
+                    }, function() {
+                        tags = result.data;
+                        console.log("6) Tags", tags);
+                        callback();
+                    });
+                },
+                function(callback) {
+                    console.log("7) getDatasetNames");
+                    getDatasetNames(callback);
+                },
+                function(datasetNames, callback) {
+                    console.log("8) importDatasets");
+                    importDatasets(datasetNames, callback);
+                },
+            ]);
         }
 
-        // http://data.buenosaires.gob.ar/api/3/action/group_list?q=
-        function importCategories() {
+        function getCategoryNames(callback) {
+            // http://data.buenosaires.gob.ar/api/3/action/group_list?q=
             client.action('group_list', {}, function(err, result) {
                 if (err) {
-                    console.log("ERROR CATEGORIES: ", err);
+                    console.log("ERROR getCategoryNames: ", err);
                 } else {
-                    var categoriesName = result.result;
-                    categoriesName.forEach(function(categoryName) {
-                        client.action('group_show', { id: categoryName }, function(err, result) {
-                            if (!err) {
-                                var category = result.result;
-                                var data = {
-                                    'name': category.title,
-                                    'description': category.description,
-                                    'active': category.state == 'active' ? true : false
-                                };
-                                importCategory(data);
-                            } else {
-                                console.log("ERROR CATEGORY: ", err);
-                            }
-                        });
-                    });
-                    
-                    console.log("importCategories terminado");
+                    callback(null, result.result);
                 }
             });
         }
 
-        // http://data.buenosaires.gob.ar/api/3/action/tag_list?q=
-        function importTags() {
+        function getTagNames(callback) {
+            // http://data.buenosaires.gob.ar/api/3/action/tag_list?q=
             client.action('tag_list', {}, function(err, result) {
                 if (err) {
-                    console.log("ERROR TAGS: ", err);
+                    console.log("ERROR getTagNames: ", err);
                 } else {
-                    var tagsName = result.result;
-                    tagsName.forEach(function(tagName) {
-                        client.action('tag_show', { id: tagName }, function(err, result) {
-                            if (!err) {
-                                var tag = result.result;
-                                var data = {
-                                    'name': tag.name
-                                };
-                                importTag(data);
-                            } else {
-                                console.log("ERROR TAG: ", err);
-                            }
-                        });
-                    });
-
-                    console.log("importTags terminado");
+                    tagsLimit = result.result.length;
+                    callback(null, result.result);
                 }
             });
         }
 
-        http: //data.buenosaires.gob.ar/api/3/action/group_show?id=categoryName
-            function importCategory(data) {
-                var model = {
-                    modelName: "Category",
-                    type: "categories",
-                    name: data.name,
-                    description: data.description,
-                    active: data.active
+        function getDatasetNames(callback) {
+            // http://data.buenosaires.gob.ar/api/3/action/package_list?q=
+            client.action('package_list', {}, function(err, result) {
+                if (err) {
+                    console.log("ERROR getDatasetNames: ", err);
+                } else {
+                    callback(null, result.result);
                 }
+            });
+        }
 
-                restClient().save({
-                    type: model.type
-                }, model, function(resp) {
-                    console.log("OK", resp);
-                }, function(error) {
-                    console.log("ERROR", error);
+        function importCategories(categoryNames, callbackFunc) {
+            // http://data.buenosaires.gob.ar/api/3/action/group_show?id=categoryName
+            async.eachSeries(categoryNames, function(categoryName, callback) {
+                client.action('group_show', { id: categoryName }, function(err, result) {
+                    if (!err) {
+                        var category = result.result;
+                        var model = {
+                            modelName: "Category",
+                            type: "categories",
+                            name: category.title,
+                            description: category.description,
+                            active: category.state == 'active' ? true : false
+                        }
+
+                        importModel(model, callback);
+                    } else {
+                        console.log("ERROR CATEGORY: ", err);
+                        callback(err);
+                    }
                 });
-            }
+            }, function(err) {
+                if (err) console.log("Error importando algunas categorías");
+                callbackFunc(null);
+            });
+            // callbackFunc(null); // Uncomment only for testing.
+        }
 
-        // http://data.buenosaires.gob.ar/api/3/action/tag_show?id=tagName
-        function importTag(data) {
-            var model = {
-                modelName: "Tag",
-                type: "tags",
-                name: data.name
-            }
+        function importTags(tagNames, callbackFunc) {
+            // http://data.buenosaires.gob.ar/api/3/action/tag_show?id=tagName
+            async.eachSeries(tagNames, function(tagName, callback) {
+                client.action('tag_show', { id: tagName }, function(err, result) {
+                    if (!err) {
+                        var tag = result.result;
+                        var model = {
+                            modelName: "Tag",
+                            type: "tags",
+                            name: tag.name
+                        };
 
+                        importModel(model, callback);
+                    } else {
+                        console.log("ERROR TAG: ", err);
+                        callback(err);
+                    }
+                });
+            }, function(err) {
+                if (err) console.log("Error importando algunos tags");
+                callbackFunc(null);
+            });
+            // callbackFunc(null); // Uncomment only for testing.
+        }
+
+        function importDatasets(datasetNames, callbackFunc) {
+            // http://data.buenosaires.gob.ar/api/3/action/package_show?id=datasetName
+            async.eachSeries(datasetNames, function(datasetName, callback) {
+                client.action('package_show', { id: datasetName }, function(err, result) {
+                    if (!err) {
+                        var dataset = result.result;
+
+                        var datasetCategories = dataset.groups;
+                        var categoryIds = [];
+                        datasetCategories.forEach(function(datasetCategory) {
+                            var categoryId = categories.filter(function(cat) {
+                                return cat.name.trim() === datasetCategory.title.trim();
+                            }).map(function(cat) {
+                                return cat.id;
+                            });
+                            categoryIds.push(categoryId);
+                        });
+                        categoryIds = categoryIds.join(",");
+
+                        var datasetTags = dataset.tags;
+                        var tagIds = [];
+                        datasetTags.forEach(function(datasetTag) {
+                            var tagId = tags.filter(function(tag) {
+                                return tag.name.trim() === datasetTag.name.trim();
+                            }).map(function(tag) {
+                                return tag.id;
+                            });
+                            tagIds.push(tagId);
+                        });
+                        tagIds = tagIds.join(",");
+
+                        var model = { //TODO optionals and resources?
+                            modelName: "Dataset",
+                            type: "datasets",
+                            name: dataset.title,
+                            description: dataset.notes,
+                            status: defaults.status,//TODO toma siempre borrador
+                            categories: categoryIds,
+                            owner: defaults.owner,
+                            tags: tagIds,
+                            starred: false,
+                            notes: dataset.notes
+                        };
+
+                        importModel(model, callback);
+                    } else {
+                        console.log("ERROR DATASET: ", err);
+                        callback(err);
+                    }
+                });
+            }, function(err) {
+                if (err) console.log("Error importando algunos datasets");
+                callbackFunc(null);
+            });
+        }
+
+        function importModel(model, callback) {
             restClient().save({
                 type: model.type
             }, model, function(resp) {
                 console.log("OK", resp);
+                callback();
             }, function(error) {
-                console.log("ERROR", error);
+                console.log(error.data.data.name[0].message);
+                callback();
             });
         }
     }
