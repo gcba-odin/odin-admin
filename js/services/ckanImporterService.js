@@ -3,30 +3,39 @@
 
     app.factory('CkanImporterService', CkanImporterService);
 
-    CkanImporterService.$inject = ['$http', '$cookieStore', '$rootScope', '$timeout', 'rest'];
+    CkanImporterService.$inject = ['$http', '$cookieStore', '$rootScope', '$timeout', 'rest', 'Upload'];
 
-    function CkanImporterService($http, $cookieStore, $rootScope, $timeout, $scope, CkanImporterService, Alertify, rest) {
+    function CkanImporterService($http, $cookieStore, $rootScope, $timeout, $scope, CkanImporterService, rest, Upload) {
         var service = {};
         service.Import = Import;
 
-        var client = new CKAN.Client('http://data.buenosaires.gob.ar');
+        var client = null;
         var restClient = rest;
-        var categories = [];
-        var tags = [];
-        var tagsLimit = 0;
-        var defaults = {
-            owner: null,
-            status: null,
-            freq: null
+        var uploadClient = Upload;
+        var global = {
+            categories: [],
+            tags: [],
+            datasets: [],
+            tagsLimit: 0,
+            datasetsLimit: 0,
+            datasetNames: []
         };
+        var defaults = {};
 
         return service;
 
-        function Import(rest, owner, status, freq) {
+        function Import(rest, Upload, def) {
             restClient = rest;
-            defaults.owner = owner;
-            defaults.status = status;
-            defaults.freq = freq;
+            uploadClient = Upload;
+            defaults = def;
+            client = new CKAN.Client(defaults.url);
+
+            // These two defaults could be decreased if you experience out of memory issues 
+            // or could be increased if your app needs to show many images on the page.
+            // Each image in ngf-src, ngf-background or ngf-thumbnail is stored and referenced as a blob url
+            // and will only be released if the max value of the followings is reached.
+            uploadClient.defaults.blobUrlsMaxMemory = 26214400 // default: 268435456 max total size of files stored in blob urls.
+            uploadClient.defaults.blobUrlsMaxQueueSize = 20 // default: 200 max number of blob urls stored by this application.
 
             async.waterfall([
                 function(callback) {
@@ -42,8 +51,8 @@
                         type: "categories",
                         params: "orderBy=name&sort=DESC"
                     }, function() {
-                        categories = result.data;
-                        console.log("3) Categories", categories);
+                        global.categories = result.data;
+                        console.log("3) Categories", global.categories);
                         callback();
                     });
                 },
@@ -58,10 +67,10 @@
                 function(callback) {
                     result = restClient().get({
                         type: "tags",
-                        params: "limit="+tagsLimit * 2+"&orderBy=name&sort=DESC"
+                        params: "limit=" + global.tagsLimit * 2 + "&orderBy=name&sort=DESC"
                     }, function() {
-                        tags = result.data;
-                        console.log("6) Tags", tags);
+                        global.tags = result.data;
+                        console.log("6) Tags", global.tags);
                         callback();
                     });
                 },
@@ -69,9 +78,23 @@
                     console.log("7) getDatasetNames");
                     getDatasetNames(callback);
                 },
-                function(datasetNames, callback) {
+                function(callback) {
                     console.log("8) importDatasets");
-                    importDatasets(datasetNames, callback);
+                    importDatasets(callback);
+                },
+                function(callback) {
+                    result = restClient().get({
+                        type: "datasets",
+                        params: "limit=" + global.datasetsLimit * 2 + "&orderBy=name&sort=DESC"
+                    }, function() {
+                        global.datasets = result.data;
+                        console.log("9) Datasets", global.datasets);
+                        callback();
+                    });
+                },
+                function(callback) {
+                    console.log("10) importResources");
+                    importResources(callback);
                 },
             ]);
         }
@@ -93,7 +116,7 @@
                 if (err) {
                     console.log("ERROR getTagNames: ", err);
                 } else {
-                    tagsLimit = result.result.length;
+                    global.tagsLimit = result.result.length;
                     callback(null, result.result);
                 }
             });
@@ -105,7 +128,9 @@
                 if (err) {
                     console.log("ERROR getDatasetNames: ", err);
                 } else {
-                    callback(null, result.result);
+                    global.datasetNames = result.result;
+                    global.datasetsLimit = result.result.length;
+                    callback(null);
                 }
             });
         }
@@ -119,8 +144,8 @@
                         var model = {
                             modelName: "Category",
                             type: "categories",
-                            name: category.title,
-                            description: category.description,
+                            name: category.title.trim(),
+                            description: category.description.trim(),
                             active: category.state == 'active' ? true : false
                         }
 
@@ -134,7 +159,6 @@
                 if (err) console.log("Error importando algunas categorías");
                 callbackFunc(null);
             });
-            // callbackFunc(null); // Uncomment only for testing.
         }
 
         function importTags(tagNames, callbackFunc) {
@@ -146,7 +170,7 @@
                         var model = {
                             modelName: "Tag",
                             type: "tags",
-                            name: tag.name
+                            name: tag.name.trim()
                         };
 
                         importModel(model, callback);
@@ -159,12 +183,11 @@
                 if (err) console.log("Error importando algunos tags");
                 callbackFunc(null);
             });
-            // callbackFunc(null); // Uncomment only for testing.
         }
 
-        function importDatasets(datasetNames, callbackFunc) {
+        function importDatasets(callbackFunc) {
             // http://data.buenosaires.gob.ar/api/3/action/package_show?id=datasetName
-            async.eachSeries(datasetNames, function(datasetName, callback) {
+            async.eachSeries(global.datasetNames, function(datasetName, callback) {
                 client.action('package_show', { id: datasetName }, function(err, result) {
                     if (!err) {
                         var dataset = result.result;
@@ -172,7 +195,7 @@
                         var datasetCategories = dataset.groups;
                         var categoryIds = [];
                         datasetCategories.forEach(function(datasetCategory) {
-                            var categoryId = categories.filter(function(cat) {
+                            var categoryId = global.categories.filter(function(cat) {
                                 return cat.name.trim() === datasetCategory.title.trim();
                             }).map(function(cat) {
                                 return cat.id;
@@ -184,7 +207,7 @@
                         var datasetTags = dataset.tags;
                         var tagIds = [];
                         datasetTags.forEach(function(datasetTag) {
-                            var tagId = tags.filter(function(tag) {
+                            var tagId = global.tags.filter(function(tag) {
                                 return tag.name.trim() === datasetTag.name.trim();
                             }).map(function(tag) {
                                 return tag.id;
@@ -193,18 +216,36 @@
                         });
                         tagIds = tagIds.join(",");
 
-                        var model = { //TODO optionals and resources?
+                        var datasetExtras = dataset.extras;
+                        var extras = {};
+                        var extrasItems = [];
+                        var extraCont = 1;
+                        datasetExtras.forEach(function(datasetOpt) {
+                            extras[datasetOpt.key] = datasetOpt.value;
+                            extrasItems.push({
+                                field1: datasetOpt.key,
+                                field2: datasetOpt.value,
+                                field: ""
+                            });
+                            extraCont++;
+                        });
+
+                        var model = {
                             modelName: "Dataset",
                             type: "datasets",
-                            name: dataset.title,
-                            description: dataset.notes,
-                            status: defaults.status,//TODO toma siempre borrador
-                            categories: categoryIds,
-                            owner: defaults.owner,
-                            tags: tagIds,
-                            starred: false,
-                            notes: dataset.notes
+                            name: dataset.title.trim(),
+                            description: dataset.notes.trim(),
+                            status: defaults.status.trim(),
+                            categories: categoryIds.trim(),
+                            owner: defaults.owner.trim(),
+                            tags: tagIds.trim(),
+                            optionals: extras,
+                            items: extrasItems
                         };
+
+                        for (var i = 1; i < extraCont; i++) {
+                            model["optional" + i] = "";
+                        }
 
                         importModel(model, callback);
                     } else {
@@ -218,6 +259,84 @@
             });
         }
 
+        function importResources(callbackFunc) {
+            // http://data.buenosaires.gob.ar/api/3/action/package_show?id=datasetName
+            async.eachSeries(global.datasetNames, function(datasetName, outerCallback) {
+
+                console.log('=== Processing dataset: ' + datasetName);
+                async.waterfall([
+                    function(callback) {
+                        client.action('package_show', { id: datasetName }, function(err, result) {
+                            if (!err) {
+                                var dataset = result.result;
+                                var datasetResources = dataset.resources;
+
+                                console.log('--- Getting datasetResources');
+                                callback(null, dataset, datasetResources);
+                            } else {
+                                console.log("ERROR RESOURCE: ", err);
+                                outerCallback(err);
+                            }
+                        });
+                    },
+                    function(dataset, datasetResources, callback) {
+                        // async.eachSeries(datasetResources, function(resource, callback2) {
+                        async.eachSeries(datasetResources, function(resource, outerCallback2) {
+                            console.log('--- Processing resource: ' + resource.name);
+
+                            async.waterfall([
+                                function(callback2) {
+                                    var datasetId = global.datasets.filter(function(dt) {
+                                        return dt.name.trim() === dataset.title.trim();
+                                    }).map(function(dt) {
+                                        return dt.id;
+                                    });
+
+                                    var model = {
+                                        modelName: "File",
+                                        type: "files",
+                                        name: resource.name.trim(),
+                                        description: resource.description.trim(),
+                                        type: resource.format.trim(),
+                                        updateFrequency: defaults.freq.trim(),
+                                        status: defaults.status.trim(),
+                                        organization: defaults.organization.trim(),
+                                        dataset: datasetId[0],
+                                        owner: defaults.owner.trim()
+                                    };
+
+                                    callback2(null, resource.url, model);
+                                },
+                                function(url, model, callback2) {
+                                    $http.get(resource.url).success(function(data) {
+                                        setModelType(model);
+                                        createFile(data, model);
+                                        uploadModel(model, callback2);
+                                    }).error(function(error) {
+                                        callback2();
+                                    });
+                                }
+                            ], function(err) {
+                                console.log('--- Finished resource: ' + resource.name);
+                                outerCallback2(err);
+                            })
+                        }, function(err) {
+                            console.log("--- Next resource");
+                            callback(err);
+                        });
+                    }
+                ], function(err) {
+                    console.log('=== Finished dataset: ' + datasetName);
+                    outerCallback(err);
+                });
+
+            }, function(err) {
+                if (err) console.log("Error importando algunos resources");
+                console.log("10) importResources --> TERMINADO");
+                callbackFunc(null);
+            });
+        }
+
         function importModel(model, callback) {
             restClient().save({
                 type: model.type
@@ -225,9 +344,65 @@
                 console.log("OK", resp);
                 callback();
             }, function(error) {
-                console.log(error.data.data.name[0].message);
+                try {
+                    console.log(error.data.data.name[0].message);
+                } catch (cerr) {
+                    console.log(error);
+                }
                 callback();
             });
+        }
+
+        function uploadModel(data, callback) {
+            var param = {
+                gatheringDate: null
+            };
+
+            uploadClient.upload({
+                url: $rootScope.url + "/files",
+                data: data,
+                params: param
+            }).then(function(resp) {
+                console.log("OK", resp);
+                callback();
+            }, function(error) {
+                try {
+                    console.log(error.data.data.name[0].message);
+                } catch (cerr) {
+                    console.log(error);
+                }
+                callback();
+            });
+        }
+
+        function setModelType(model) {
+            $scope.fileModel = [];
+            $scope.fileModel.name = model.name;
+            var type = model.type.toLowerCase();
+            if (type == "doc" || type == "docx") {
+                $scope.fileModel.type = 'fa-file-word-o';
+            } else if (type == "xlsx" || type == "xls") {
+                $scope.fileModel.type = 'fa-file-excel-o';
+            } else if (type == "pdf") {
+                $scope.fileModel.type = 'fa-file-pdf-o';
+            } else if (type == "rar" || type == "zip") {
+                $scope.fileModel.type = 'fa-file-archive-o';
+                if (type == "rar") {
+                    $scope.filter = false;
+                }
+            } else if (type == "shp") {
+                $scope.filter = false;
+                $scope.fileModel.type = 'fa-file-text-o';
+            } else {
+                $scope.fileModel.type = 'fa-file-text-o';
+            }
+        }
+
+        function createFile(data, model) {
+            var type = model.type.toLowerCase();
+            var file = new Blob([data], { type: $scope.fileModel.type });
+            file.name = model.name + "." + type;
+            model.uploadFile = file;
         }
     }
 

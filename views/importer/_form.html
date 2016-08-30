@@ -1,57 +1,69 @@
+<!-- Input name -->
+<div class="form-group">
+    <label for="title" class="col-sm-2 control-label">* {{ 'URL' | translate }}</label>
+    <div class="col-sm-10" ng-class="{ 'has-error': form.url.$touched && form.url.$invalid }">
+        <input type="text" ng-model="model.url" name="url" class="form-control" id="title" placeholder="{{ 'PLACE' | translate }} {{ 'URL' | translate }} {{ 'HERE' | translate }}" required />
+        <div class="help-block" ng-messages="form.url.$error" ng-if="form.url.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input name -->
 <!-- Input owner -->
 <div class="form-group">
     <label for="owner" class="col-sm-2 control-label">* {{ 'OWNER' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.owner.$touched && form.owner.$invalid }">
         <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="username" data-modelname="users" data-model="{{model.owner}}" select-two-ajax name="owner" id="owner" ng-model="model.owner" class="selectize-width" required>
         </select>
-
         <div class="help-block" ng-messages="form.owner.$error" ng-if="form.owner.$touched">
             <div ng-messages-include="views/messages.html"></div>
         </div>
     </div>
 </div>
 <!-- end Input owner -->
-
 <!-- Input status -->
 <div class="form-group" ng-if="!status_default">
     <label for="status" class="col-sm-2 control-label">* {{ 'STATUS' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.status.$touched && form.status.$invalid }">
-
-
-        <select placeholder="{{ 'SELECT_ONE' | translate }}" class="selectize-input items required full has-options has-items" data-key="name" data-revision="status" data-modelname="statuses" data-opt="{{ options.data}}" data-model="{{model.status}}" select-static-ajax name="status"
-                id="status" ng-model="model.status" class="selectize-width" required>
+        <select placeholder="{{ 'SELECT_ONE' | translate }}" class="selectize-input items required full has-options has-items" data-key="name" data-revision="status" data-modelname="statuses" data-opt="{{ options.data}}" data-model="{{model.status}}" select-static-ajax name="status" id="status" ng-model="model.status" class="selectize-width" required>
         </select>
-
         <div class="help-block" ng-messages="form.status.$error" ng-if="form.status.$touched">
             <div ng-messages-include="views/messages.html"></div>
         </div>
     </div>
 </div>
 <!-- end Input status -->
-
 <!-- Input updateFrequency -->
 <div class="form-group">
     <label for="updateFrequency" class="col-sm-2 control-label">* {{ 'FREQUENCY' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.updateFrequency.$touched && form.updateFrequency.$invalid }">
-
-        <select placeholder="{{ 'SELECT_ONE' | translate }}" class="selectize-input items required full has-options has-items" data-key="name" data-revision="updateFrequency" data-modelname="updatefrequencies" data-model="{{model.updateFrequency}}" select-static-ajax name="frecuency" id="frecuency"
-                ng-model="model.updateFrequency" class="selectize-width" required>
+        <select placeholder="{{ 'SELECT_ONE' | translate }}" class="selectize-input items required full has-options has-items" data-key="name" data-revision="updateFrequency" data-modelname="updatefrequencies" data-model="{{model.updateFrequency}}" select-static-ajax name="frecuency" id="frecuency" ng-model="model.updateFrequency" class="selectize-width" required>
         </select>
-
         <div class="help-block" ng-messages="form.updateFrequency.$error" ng-if="form.updateFrequency.$touched">
             <div ng-messages-include="views/messages.html"></div>
         </div>
     </div>
 </div>
 <!-- end Input updateFrequency -->
-
+<!-- Input organization -->
+<div class="form-group">
+    <label for="organization" class="col-sm-2 control-label">* {{ 'ORGANIZATION' | translate }}</label>
+    <div class="col-sm-10" ng-class="{ 'has-error': form.organization.$touched && form.organization.$invalid }">
+        <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="organizations" data-model="{{model.organization}}" select-two-ajax name="organization" id="organization" ng-model="model.organization" class="selectize-width" required>
+        </select>
+        <div class="help-block" ng-messages="form.organization.$error" ng-if="form.organization.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input organization -->
 <!-- Button save  -->
-<div class="box-footer"> 
+<div class="box-footer">
     <div class="col-sm-12">
         <button type="button" back-button class="btn btn-default pull-left">
             {{ 'BACK' | translate }}
         </button>
-        <input type="submit"  class="btn btn-primary pull-right" value="{{ 'IMPORT' | translate }}" ng-disabled="form.$invalid"/>
+        <input type="submit" class="btn btn-primary pull-right" value="{{ 'IMPORT' | translate }}" ng-disabled="form.$invalid" />
     </div>
-</div> 
+</div>
 <!-- end Button save -->
