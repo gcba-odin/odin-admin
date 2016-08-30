@@ -35,6 +35,10 @@ node_modules
 #IDEA
 .idea
 
+# Sublime
+*.sublime-project
+*.sublime-workspace
+
 # Local config file
 config.local.json
 
