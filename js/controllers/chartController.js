@@ -4,6 +4,20 @@ var app = angular.module('odin.chartsControllers', []);
 function ChartListController($scope, modelService) {
     modelService.initService("Chart", "charts", $scope);
 
+    $scope.filtersView = [{
+            name: 'Estado',
+            model: 'statuses',
+            key: 'name',
+            modelInput: 'status',
+            multiple: true
+        }, {
+            name: 'Autor',
+            model: 'users',
+            key: 'username',
+            modelInput: 'owner',
+            multiple: true
+        }];
+
     $scope.confirmDelete = function(item) {
         modelService.confirmDelete(item);
     };
@@ -24,7 +38,7 @@ function ChartListController($scope, modelService) {
         modelService.activeClass(activeClass);
 
     };
-    
+
     $scope.limit = 20;
 
     $scope.q = "&skip=0&limit=" + $scope.limit;
@@ -47,7 +61,7 @@ function ChartViewController($scope, modelService, $routeParams, rest, $location
             type: $scope.type
         });
     };
-    
+
     $scope.confirmDelete = function(item) {
         modelService.confirmDelete(item);
     };
@@ -256,7 +270,7 @@ function ChartCreateController($scope, modelService, rest, $location, model, $sc
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if(error.data.data && error.data.data.name) {
+                if (error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre del gráfico ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al crear el gráfico.');
@@ -390,7 +404,7 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if(error.data.data && error.data.data.name) {
+                if (error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre del gráfico ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al editar el gráfico.');
