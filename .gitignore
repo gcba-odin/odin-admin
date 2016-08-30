@@ -35,4 +35,8 @@ node_modules
 #IDEA
 .idea
 
+# Generated files
+dist/
+
+# OS Generated
 .DS_STORE
