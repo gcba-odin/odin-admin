@@ -10,11 +10,8 @@ gulp.task('watch', ['serve'], function() {
   //   'index.html'
   //   ], ['vendors-watch']);
 
-  // // Javascript and Templates
-  // gulp.watch([
-  //   'js/**/*.js',
-  //   'config.json'
-  //   ], ['javascript-watch']);
+  // Javascript
+  gulp.watch(gulp.paths.javascript, ['javascript-watch']);
 
   // // Style
   // gulp.watch([

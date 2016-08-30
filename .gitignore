@@ -35,7 +35,11 @@ node_modules
 #IDEA
 .idea
 
+# Local config file
+config.local.json
+
 # Generated files
+js/.config.js
 dist/
 
 # OS Generated
