@@ -18,7 +18,7 @@
                     <div class="box-body table-responsive no-padding">
                         <table class="table usertable">
                             <tr ng-if="model.name">
-                                <td class="detail-bold">{{ 'TITLE' | translate }}</td>
+                                <td class="detail-bold">{{ 'NAME' | translate }}</td>
                                 <td>{{model.name}}</td>
                             </tr>
                             <tr ng-if="model.description">
@@ -103,23 +103,23 @@
                     <table class="table">
                         <thead>
                             <th>{{ 'FILE' | translate }}</th>
-                            <th>{{ 'VIEW' | translate }}</th>
-                            <th>{{ 'EDIT' | translate }}</th>
-                            <th>{{ 'DELETE' | translate }}</th>
+                            <th class="text-center">{{ 'ACTIONS' | translate }}</th>
+                            <!--<th>{{ 'EDIT' | translate }}</th>
+                            <th>{{ 'DELETE' | translate }}</th>-->
                         </thead>
                         <tbody>
                             <tr ng-repeat="file in model.files">
                                 <td>
                                     <span>{{file.name}}</span>
                                 </td>
-                                <td>
-                                    <a class="btn btn-primary" ng-href="#/files/{{file.id}}/view">{{ 'VIEW' | translate }}</a>
-                                </td>
-                                <td>
+                                <td class="text-center table-btn">
+                                    <a target="_blank" class="btn btn-primary" ng-href="#/files/{{file.id}}/view">{{ 'VIEW' | translate }}</a>
+                                <!--</td>
+                                <td>-->
                                     <a target="_blank" class="btn btn-primary" ng-href="#/files/{{file.id}}/edit">{{ 'EDIT' | translate }}</a>
-                                </td>
-                                <td>
-                                    <a class="btn btn-danger" ng-click="deleteResource(file.id, 'files')">{{ 'DELETE' | translate }}</a>
+                                <!--</td>
+                                <td>-->
+                                    <a class="btn btn-primary" ng-click="deleteResource(file.id, 'files')">{{ 'DELETE' | translate }}</a>
                                 </td>
                             </tr>
 

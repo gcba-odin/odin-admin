@@ -56,7 +56,7 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
     'ADD_TAG': 'Crear etiqueta',
     'VIEW_TAGS': 'Ver etiquetas',
     'STATE': 'Estado',
-    'URL': 'Url',
+    'URL': 'URL',
     'TYPE': 'Tipo',
     'ADDRESS': 'Dirección',
     'ORGANIZATIONS': 'Organizaciones',

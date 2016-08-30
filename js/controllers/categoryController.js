@@ -17,6 +17,10 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
     $scope.activeModel = function(item) {
         modelService.restore($scope, item);
     };
+    
+    $scope.confirmDelete = function(item) {
+        modelService.confirmDelete(item);
+    };
 
     $scope.edit = function(model) {
         modelService.edit($scope, model);
@@ -26,11 +30,21 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
         modelService.view($scope, model);
     }
 
-    modelService.loadAll($scope);
-
     $scope.activeClass = function(activeClass) {
         modelService.activeClass(activeClass);
 
+    };
+    
+    $scope.limit = 20;
+
+    $scope.q = "&include=datasets&skip=0&limit=" + $scope.limit;
+
+    modelService.loadAll($scope);
+
+    $scope.paging = function(event, page, pageSize, total) {
+        var skip = (page - 1) * $scope.limit;
+        $scope.q = "&include=datasets&skip=" + skip + "&limit=" + $scope.limit;
+        modelService.loadAll($scope);
     };
 
 }
@@ -103,7 +117,7 @@ function CategoryCreateController($scope, rest, model, Flash, $location, $rootSc
                 $location.url('/categories/' + resp.data.data.id + '/view');
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if(error.data && error.data.name) {
+                if(error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre de la categoría ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al crear la categoría.');
@@ -220,7 +234,7 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
                 $location.url('/categories/' + resp.data.data.id + '/view');
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if(error.data && error.data.name) {
+                if(error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre de la categoría ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al editar la categoría.');

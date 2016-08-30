@@ -17,20 +17,31 @@
                         <table class="table table-hover">
                             <tbody><tr>
                                     <th>{{ 'NAME' | translate }}</th>
+                                    <th>{{ 'STATE' | translate }}</th>
                                     <th class="text-center">{{ 'ACTIONS' | translate }}</th>
                                 </tr>
                                 <tr ng-repeat="model in data.data">
                                     <td>{{model.name}}</td>
+                                    <td>
+                                        <span class="label label-default" ng-class="activeClass(model.deletedAt)">{{model.deletedAt ? 'Inactivo' : 'Activo'}}</span>
+                                    </td>
                                     <td class="text-center table-btn">
                                         <a class="btn btn-primary" ng-click="view({id: model.id})">{{ 'VIEW' | translate }}</a>
                                         <a class="btn btn-primary" ng-click="edit({id: model.id})">{{ 'EDIT' | translate }}</a>
-                                        <a class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)">{{ 'DELETE' | translate }}</a>
+                                        <!--<a class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)">{{ 'DELETE' | translate }}</a>-->
+                                        <a ng-if="model.deletedAt" class="btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="activeModel($event)">{{ 'ACTIVATE' | translate }}</a>
+                                        <a ng-if="!model.deletedAt" class="btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="inactiveModel($event)">{{ 'INACTIVATE' | translate }}</a>
+                                        <!--<a ng-if="!model.files.length && !model.users.length" class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)">{{ 'DELETE' | translate }}</a>-->
                                     </td>
                                 </tr>
 
                             </tbody></table>
                     </div>
                     <!-- /.box-body -->
+                    <paging class="text-center" page="data.meta.page" page-size="limit" total="data.meta.count"
+                            paging-action="paging('pageClick', page, pageSize, total)" 
+                            show-prev-next="true"
+                            show-first-last="true" hide-if-empty="true"></paging> 
                 </div>
                 <!-- /.box -->
             </div>

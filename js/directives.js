@@ -23,7 +23,7 @@
                             }
                         }
                     }
-                    $scope.q += 'condition=AND'
+                    $scope.q += 'condition=OR';
                     modelService.search($scope);
                 };
 

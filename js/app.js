@@ -349,8 +349,8 @@
     app.run(run);
 
     function run($rootScope, $location, $cookieStore, $http) {
-        $rootScope.url = 'http://40.121.80.86/api';
         // $rootScope.url = 'http://localhost:3000';
+        $rootScope.url = 'http://40.76.56.16/api';
         // keep user logged in after page refresh
 
     }

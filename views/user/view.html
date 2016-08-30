@@ -15,6 +15,10 @@
                             <!--<td></td>-->
                             <!--<td><img ng-src="http://www.gravatar.com/avatar/{{model.email | md5}}fs=150"/></td>-->
                             <!--</tr>-->
+                            <tr ng-if="model.username">
+                                <td class="detail-bold">{{ 'USER_NAME' | translate }}</td>
+                                <td>{{model.username}}</td>
+                            </tr>
                             <tr ng-if="model.firstName">
                                 <td class="detail-bold">{{ 'FIRST_NAME' | translate }}</td>
                                 <td>{{model.firstName}}</td>

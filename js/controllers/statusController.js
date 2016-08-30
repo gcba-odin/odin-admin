@@ -24,7 +24,17 @@ function StatusListController($scope, $location, rest, $rootScope, Flash, Alerti
         modelService.view($scope, model);
     }
 
+    $scope.limit = 20;
+
+    $scope.q = "&skip=0&limit=" + $scope.limit;
+
     modelService.loadAll($scope);
+
+    $scope.paging = function(event, page, pageSize, total) {
+        var skip = (page - 1) * $scope.limit;
+        $scope.q = "&skip=" + skip + "&limit=" + $scope.limit;
+        modelService.loadAll($scope);
+    };
 }
 
 function StatusViewController($scope, Flash, rest, $routeParams, $location, modelService) {
@@ -55,7 +65,7 @@ function StatusCreateController($scope, rest, model, Flash, $location, modelServ
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if (!!error.data.name[0]) {
+                if(error.data.data && error.data.data.name) {
                     Alertify.alert('El estado que quiere guardar ya existe.');
                 } else {
                     Alertify.alert('Hubo un error al crear el estado.');
@@ -82,10 +92,10 @@ function StatusEditController($scope, Flash, rest, $routeParams, model, $locatio
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if (!!error.data.name[0]) {
+                if(error.data.data && error.data.data.name) {
                     Alertify.alert('El estado que quiere guardar ya existe.');
                 } else {
-                    Alertify.alert('Hubo un error al crear el estado.');
+                    Alertify.alert('Hubo un error al editar el estado.');
                 }
             });
         }

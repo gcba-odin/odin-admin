@@ -404,6 +404,9 @@
                     if (e.data.code == "E_VALIDATION") {
                         params = validationErrors(e.data);
                     }
+                    if (e.data.code == "E_INTERNAL_SERVER_ERROR" && e.data.message == "jwt expired") {
+                        $location.path('login');
+                    }
                 }
                 var $http = $http || $injector.get("$http");
                 $http(e.config);

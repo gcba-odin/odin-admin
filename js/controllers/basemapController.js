@@ -4,12 +4,16 @@ var app = angular.module('odin.basemapsControllers', []);
 function BasemapListController($scope, modelService) {
     modelService.initService("Basemap", "basemaps", $scope);
 
+    $scope.inactiveModel = function(item) {
+        modelService.confirmDelete(item);
+    }
+
+    $scope.activeModel = function(item) {
+        modelService.restore($scope, item);
+    };
+    
     $scope.confirmDelete = function(item) {
         modelService.confirmDelete(item);
-    };
-
-    $scope.deleteModel = function(model) {
-        modelService.delete($scope, model);
     };
 
     $scope.edit = function(model) {
@@ -20,11 +24,21 @@ function BasemapListController($scope, modelService) {
         modelService.view($scope, model);
     };
 
-    modelService.loadAll($scope);
-
     $scope.activeClass = function(activeClass) {
         modelService.activeClass(activeClass);
 
+    };
+    
+    $scope.limit = 2;
+
+    $scope.q = "&include=maps&skip=0&limit=" + $scope.limit;
+
+    modelService.loadAll($scope);
+
+    $scope.paging = function(event, page, pageSize, total) {
+        var skip = (page - 1) * $scope.limit;
+        $scope.q = "&include=maps&skip=" + skip + "&limit=" + $scope.limit;
+        modelService.loadAll($scope);
     };
 }
 
@@ -68,7 +82,7 @@ function BasemapCreateController($scope, modelService, rest, $location, model, $
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if(error.data && error.data.name) {
+                if(error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre del basemap ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al crear el basemap.');
@@ -110,7 +124,7 @@ function BasemapEditController($scope, modelService, $routeParams, $sce, rest, $
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if(error.data && error.data.name) {
+                if(error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre del basemap ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al editar el basemap.');

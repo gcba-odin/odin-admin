@@ -20,11 +20,21 @@ function MapListController($scope, modelService) {
         modelService.view($scope, model);
     };
 
-    modelService.loadAll($scope);
-
     $scope.activeClass = function(activeClass) {
         modelService.activeClass(activeClass);
 
+    };
+    
+    $scope.limit = 20;
+
+    $scope.q = "&skip=0&limit=" + $scope.limit;
+
+    modelService.loadAll($scope);
+
+    $scope.paging = function(event, page, pageSize, total) {
+        var skip = (page - 1) * $scope.limit;
+        $scope.q = "&skip=" + skip + "&limit=" + $scope.limit;
+        modelService.loadAll($scope);
     };
 }
 
@@ -36,6 +46,10 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
             id: $routeParams.id,
             type: $scope.type
         });
+    };
+
+    $scope.confirmDelete = function(item) {
+        modelService.confirmDelete(item);
     };
 
     $scope.edit = function(model) {
@@ -280,7 +294,19 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
             }, $scope.model, function(resp) {
                 usSpinnerService.stop('spinner');
 
-                Alertify.alert('El mapa se generó correctamente.<br><br><strong>Detalle:</strong><br><br>Del total de datos procesados, ' + resp.data.correct + ' se registraron correctamente y ' + resp.data.incorrect + ' tuvieron error.');
+                var alert_text = 'El mapa se generó ';
+                
+                if (!!resp.data.incorrect && resp.data.incorrect > 0) {
+                    alert_text += 'con errores.';
+                } else {
+                    alert_text += 'correctamente.';
+                }
+
+                if (!$scope.model.link) {
+                    alert_text += "<br><br><strong>Detalle:</strong><br><br>Del total de datos procesados, " + resp.data.correct + " se registraron correctamente y " + resp.data.incorrect + " tuvieron error.";
+                }
+
+                Alertify.alert(alert_text);
                 if (resp.data.id) {
                     var url = '/' + $scope.type + '/' + resp.data.id + '/view';
                 } else {
@@ -289,7 +315,7 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if (error.data && error.data.name) {
+                if (error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre del mapa ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al crear el mapa.');
@@ -336,7 +362,7 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
 function MapEditController($scope, modelService, $routeParams, $sce, rest, $location, model, Alertify, usSpinnerService) {
     modelService.initService("Map", "maps", $scope);
     $scope.model = new model();
-
+    $scope.model.items = [];
     $scope.steps = [];
     $scope.steps[0] = "active";
     $scope.steps[1] = "undone";
@@ -455,7 +481,20 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
             }, $scope.model, function(resp) {
                 usSpinnerService.stop('spinner');
 
-                Alertify.alert('El mapa se generó correctamente.<br><br><strong>Detalle:</strong><br><br>Del total de datos procesados, ' + resp.data.correct + ' se registraron correctamente y ' + resp.data.incorrect + ' tuvieron error.');
+                var alert_text = 'El mapa se editó ';
+
+                if (!!resp.data.incorrect && resp.data.incorrect > 0) {
+                    alert_text += 'con errores.';
+                } else {
+                    alert_text += 'correctamente.';
+                }
+
+                if (!$scope.model.link) {
+                    alert_text += "<br><br><strong>Detalle:</strong><br><br>Del total de datos procesados, " + resp.data.correct + " se registraron correctamente y " + resp.data.incorrect + " tuvieron error.";
+                }
+
+                Alertify.alert(alert_text);
+                //Alertify.alert('El mapa se generó correctamente.<br><br><strong>Detalle:</strong><br><br>Del total de datos procesados, ' + resp.data.correct + ' se registraron correctamente y ' + resp.data.incorrect + ' tuvieron error.');
                 if (resp.data.id) {
                     var url = '/' + $scope.type + '/' + resp.data.id + '/view';
                 } else {
@@ -465,7 +504,7 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
 
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if (error.data && error.data.name) {
+                if (error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre del mapa ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al editar el mapa.');
@@ -484,7 +523,9 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
             id: $routeParams.id,
             type: $scope.type,
         }, function() {
-            $scope.model.basemap = $scope.model.basemap.id;
+            if(!!$scope.model.basemap) {
+                $scope.model.basemap = $scope.model.basemap.id;
+            }
             url_map = $scope.model.link;
             $scope.file_disabled = 'enabled';
             if (!angular.isUndefined($scope.model.file)) {
@@ -507,7 +548,7 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
             $scope.model.items = [];
 
             var counter = 0;
-            if (!!$scope.model.geojson.features[0]) {
+            if (!!$scope.model.geojson && !!$scope.model.geojson.features[0]) {
                 var valores = Object.keys($scope.model.geojson.features[0].properties);
                 angular.forEach(valores, function(value, key) {
                     $scope.model.items.push({

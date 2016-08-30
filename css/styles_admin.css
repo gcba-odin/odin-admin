@@ -376,3 +376,30 @@ div.panel-heading {
 .btn-activate{
     width: 100px;
 }
+
+.content-wrapper .inner h3{
+    color:#777;
+}
+
+.form-control:focus{
+    border-color: #ffb600;
+}
+
+.btn-primary.disabled.focus, .btn-primary.disabled:focus, .btn-primary.disabled:hover, .btn-primary[disabled].focus, .btn-primary[disabled]:focus, .btn-primary[disabled]:hover {
+    border-color: #ffb600;
+    background-color: #ffb600;
+}
+
+.pagination > .active > a{
+    background-color: #FF386a;
+    border-color: #FF386a;
+}
+
+.pagination > li > a{
+    color: #FF386a;
+}
+
+.pagination > .active > a:focus, .pagination > .active > a:hover{
+    background-color: #FFb600;
+    border-color: #FFb600;
+}

@@ -22,13 +22,13 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
             model: 'users',
             key: 'username',
             modelInput: 'owner',
-            multiple: false
+            multiple: true
         }, {
             name: 'Categoria',
             model: 'categories',
             key: 'name',
             modelInput: 'categories',
-            multiple: false
+            multiple: true
         }];
 
     $scope.confirmDelete = function(item) {
@@ -54,7 +54,17 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
         modelService.view($scope, model);
     }
 
+    $scope.limit = 20;
+
+    $scope.q = "&skip=0&limit=" + $scope.limit;
+
     modelService.loadAll($scope);
+
+    $scope.paging = function(event, page, pageSize, total) {
+        var skip = (page - 1) * $scope.limit;
+        $scope.q = "&skip=" + skip + "&limit=" + $scope.limit;
+        modelService.loadAll($scope);
+    };
 }
 
 function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sce, modelService, Alertify, usSpinnerService, $window, configs) {
@@ -216,7 +226,7 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if (error.data && error.data.name) {
+                if(error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre de dataset ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al crear el dataset.');
@@ -329,7 +339,7 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if (error.data && error.data.name) {
+                if(error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre de dataset ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al editar el dataset.');
@@ -348,7 +358,9 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
                 type: $scope.type,
                 params: "include=tags,files,categories"
             }, function() {
-                $scope.model.status = $scope.model.status.id;
+                if(!!$scope.model.status) {
+                    $scope.model.status = $scope.model.status.id;
+                }
                 $scope.model.items = [];
                 $scope.publishAt = $scope.model.publishAt;
                 angular.forEach($scope.model.optionals, function(val, key) {

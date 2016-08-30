@@ -49,12 +49,12 @@
                                 <td class="detail-bold">{{ 'LINK' | translate }}</td>
                                 <td><a target="_blank" ng-href="{{model.link}}">{{model.link}}</a></td>
                             </tr>
-                            <tr ng-if="model.type">
+                            <tr ng-if="model.type && !model.link">
                                 <td class="detail-bold">{{ 'TYPE' | translate }}</td>
                                 <td>{{model.type | translate}}</td>
                             </tr>
 
-                            <tr ng-if="model.dataType">
+                            <tr ng-if="model.dataType && !model.link">
                                 <td class="detail-bold">{{ 'CHART_SUBTYPE' | translate }}</td>
                                 <td>{{model.dataType | translate}}</td>
                             </tr>

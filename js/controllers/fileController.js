@@ -21,7 +21,7 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
             model: 'users',
             key: 'username',
             modelInput: 'owner',
-            multiple: false
+            multiple: true
         }];
     $scope.confirmDelete = function(item) {
         modelService.confirmDelete(item);
@@ -192,10 +192,10 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             $scope.fileModel.type = 'fa-file-pdf-o';
         } else if (type == "rar" || type == "zip") {
             $scope.fileModel.type = 'fa-file-archive-o';
-            if (type == "rar") {
-                $scope.filter = false;
-                hard_file = $files[0];
-            }
+            //if (type == "rar") {
+            $scope.filter = false;
+            hard_file = $files[0];
+            //}
         } else if (type == "shp") {
             $scope.filter = false;
             hard_file = $files[0];
@@ -331,7 +331,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             usSpinnerService.stop('spinner');
             // alert(resp.status);
             $scope.unsave = false;
-            if (error.data && error.data.name) {
+            if (error.data.data && error.data.data.name) {
                 Alertify.alert('El nombre del archivo ya existe.');
             } else {
                 Alertify.alert('Ha ocurrido un error al crear el archivo.');
@@ -422,10 +422,10 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
             $scope.fileModel.type = 'fa-file-pdf-o';
         } else if (type == "rar" || type == "zip") {
             $scope.fileModel.type = 'fa-file-archive-o';
-            if (type == "rar") {
-                $scope.filter = false;
-                hard_file = $files[0];
-            }
+            //if (type == "rar") {
+            $scope.filter = false;
+            hard_file = $files[0];
+            //}
         } else if (type == "shp") {
             $scope.filter = false;
             hard_file = $files[0];
@@ -551,7 +551,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
         var param = {
             gatheringDate: null
         };
-        if ($scope.model.gatheringDate && $scope.model.gatheringDate != "") {
+        if (!!$scope.model.gatheringDate) {
             param.gatheringDate = $scope.model.gatheringDate.toISOString().slice(0, 10);//.toISOString().slice(0, 10), //new Date().toISOString().slice(0, 19).replace('T', ' ');
         }
 
@@ -568,10 +568,10 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
                 usSpinnerService.stop('spinner');
                 // alert(resp.status);
                 $scope.unsave = false;
-                if (error.data && error.data.name) {
-                    Alertify.alert('El nombre de dataset ya existe.');
+                if (error.data.data && error.data.data.name) {
+                    Alertify.alert('El nombre del archivo ya existe.');
                 } else {
-                    Alertify.alert('Ha ocurrido un error al crear el dataset.');
+                    Alertify.alert('Ha ocurrido un error al editar el archivo.');
                 }
             }, function(evt) {
                 var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
@@ -600,9 +600,15 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
             type: $scope.type,
             //params: "include=tags"
         }, function() {
-            $scope.model.updateFrequency = $scope.model.updateFrequency.id;
-            $scope.model.status = $scope.model.status.id;
-            $scope.model.gatheringDate = $scope.model.gatheringDate ? moment($scope.model.gatheringDate).utc() : '';
+            if(!!$scope.model.updateFrequency) {
+                $scope.model.updateFrequency = $scope.model.updateFrequency.id;
+            }
+            if(!!$scope.model.status) {
+                $scope.model.status = $scope.model.status.id;
+            }
+            if(!!$scope.model.gatheringDate) {
+                $scope.model.gatheringDate = $scope.model.gatheringDate ? moment($scope.model.gatheringDate).utc() : '';
+            }
 
             $scope.model.items = [];
             angular.forEach($scope.model.optionals, function(val, key) {

@@ -20,11 +20,21 @@ function ChartListController($scope, modelService) {
         modelService.view($scope, model);
     };
 
-    modelService.loadAll($scope);
-
     $scope.activeClass = function(activeClass) {
         modelService.activeClass(activeClass);
 
+    };
+    
+    $scope.limit = 20;
+
+    $scope.q = "&skip=0&limit=" + $scope.limit;
+
+    modelService.loadAll($scope);
+
+    $scope.paging = function(event, page, pageSize, total) {
+        var skip = (page - 1) * $scope.limit;
+        $scope.q = "&skip=" + skip + "&limit=" + $scope.limit;
+        modelService.loadAll($scope);
     };
 }
 
@@ -36,6 +46,10 @@ function ChartViewController($scope, modelService, $routeParams, rest, $location
             id: $routeParams.id,
             type: $scope.type
         });
+    };
+    
+    $scope.confirmDelete = function(item) {
+        modelService.confirmDelete(item);
     };
 
     $scope.edit = function(model) {
@@ -242,7 +256,7 @@ function ChartCreateController($scope, modelService, rest, $location, model, $sc
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if (error.data && error.data.name) {
+                if(error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre del gráfico ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al crear el gráfico.');
@@ -376,7 +390,7 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if (error.data && error.data.name) {
+                if(error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre del gráfico ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al editar el gráfico.');

@@ -10,12 +10,12 @@ function UserListController($scope, $location, rest, $rootScope, Flash, Alertify
 
     modelService.initService("User", "users", $scope);
 
-    $scope.confirmDelete = function(item) {
+    $scope.inactiveModel = function(item) {
         modelService.confirmDelete(item);
     }
 
-    $scope.deleteModel = function(model) {
-        modelService.delete($scope, model);
+    $scope.activeModel = function(item) {
+        modelService.restore($scope, item);
     };
 
     $scope.edit = function(model) {
@@ -26,7 +26,17 @@ function UserListController($scope, $location, rest, $rootScope, Flash, Alertify
         modelService.view($scope, model);
     }
 
+    $scope.limit = 20;
+
+    $scope.q = "&skip=0&limit=" + $scope.limit;
+
     modelService.loadAll($scope);
+
+    $scope.paging = function(event, page, pageSize, total) {
+        var skip = (page - 1) * $scope.limit;
+        $scope.q = "&skip=" + skip + "&limit=" + $scope.limit;
+        modelService.loadAll($scope);
+    };
 }
 
 function UserViewController($scope, Flash, rest, $routeParams, $location, modelService) {
@@ -62,7 +72,7 @@ function UserCreateController($scope, rest, model, Flash, $location, modelServic
 
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if(error.data && error.data.username) {
+                if(error.data.data && error.data.data.username) {
                     Alertify.alert('El usuario ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al crear el usuario.');
@@ -89,7 +99,7 @@ function UserEditController($scope, Flash, rest, $routeParams, model, $location,
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if(error.data && error.data.username) {
+                if(error.data.data && error.data.data.username) {
                     Alertify.alert('El usuario ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al editar el usuario.');
