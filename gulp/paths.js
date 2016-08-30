@@ -10,11 +10,11 @@ gulp.paths = {
     'views/**/*.html',
     '*.{svg,png,xml,ico}',
     'manifest.json',
+    'index.html',
     // TODO: remove from here on
     'bootstrap/**/*',
     'css/**/*',
-    'plugins/**/*',
-    'index.html',
+    'plugins/**',
     'config.html',
     'home.html',
     'login.html',
@@ -24,4 +24,8 @@ gulp.paths = {
     'js/**/*.js',
     'config.json',
   ],
+  vendors: [
+    'plugins/**',
+    'index.html'
+  ]
 };

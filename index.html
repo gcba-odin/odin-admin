@@ -27,19 +27,24 @@
 
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/styles_admin.css">
-
+        
+        <!-- build:js ie8.min.js -->
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
         <script src="plugins/html5shiv.min.js"></script>
         <script src="plugins/respond.min.js"></script>
         <![endif]-->
+        <!-- endbuild -->
     </head>
     <body  class="hold-transition skin-blue sidebar-mini {{bodyClass}}"  >
         <div class="wrapper{{bodyClass}}">
             <div ng-view></div>
         </div>
         <span us-spinner spinner-key="spinner"></span>
+
+        <!-- JS Vendor dependencies:START -->
+        <!-- build:js vendors.min.js -->
         <script src="plugins/jquery.min.js"></script>
         <script src="plugins/jquery-ui.min.js"></script>
         <script src="plugins/ckeditor/ckeditor.js"></script>
@@ -93,7 +98,9 @@
         <script src="plugins/selectize.js"></script>
 
         <script src="node_modules/ckan/ckan.js"></script>
-        <script src="node_modules/async/lib/async.js"></script>
+        <script src="node_modules/async/dist/async.js"></script>
+        <!-- endbuild -->
+        <!-- JS Vendor dependencies:END -->
         
         <script src="bundle.min.js"></script>
 

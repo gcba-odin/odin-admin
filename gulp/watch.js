@@ -4,11 +4,8 @@ gulp.task('watch', ['serve'], function() {
   // Static Files
   gulp.watch(gulp.paths.static, ['static-watch']);
 
-  // // Vendors
-  // gulp.watch([
-  //   'plugins/**',
-  //   'index.html'
-  //   ], ['vendors-watch']);
+  // Vendors
+  gulp.watch(gulp.paths.vendors, ['vendors-watch']);
 
   // Javascript
   gulp.watch(gulp.paths.javascript, ['javascript-watch']);

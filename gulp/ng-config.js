@@ -12,6 +12,6 @@ gulp.task('ng-config', function() {
       environment: process.env.NODE_ENV || 'local',
       wrap: true
     }))
-    .pipe(rename('.config.js'))
+    .pipe(rename('config.js'))
     .pipe(gulp.dest('js'));
 });

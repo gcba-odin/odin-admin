@@ -39,7 +39,7 @@ node_modules
 config.local.json
 
 # Generated files
-js/.config.js
+js/config.js
 dist/
 
 # OS Generated
