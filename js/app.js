@@ -1,5 +1,5 @@
 (function() {
-    var app = angular.module('odin', ["config-odin", "ngRoute", 'Alertify', 'ngFlash', 'ui.bootstrap', 'localize', 'ckeditor', 'ngMessages', "ngCookies", "ngResource", "ngProgress", "odin.controllers", "store-directives", "store-factories", "bw.paging", 'color.picker', "leaflet-directive", "datePicker", "angularSpinner", "chart.js", , "ngRoute.middleware", "consumer-service"]);
+    var app = angular.module('odin', ["odin.config", "ngRoute", 'Alertify', 'ngFlash', 'ui.bootstrap', 'localize', 'ckeditor', 'ngMessages', "ngCookies", "ngResource", "ngProgress", "odin.controllers", "store-directives", "store-factories", "bw.paging", 'color.picker', "leaflet-directive", "datePicker", "angularSpinner", "chart.js", , "ngRoute.middleware", "consumer-service"]);
 
 
     app.config(function($routeProvider, $httpProvider, $translateProvider, usSpinnerConfigProvider, ChartJsProvider, ConsumerServiceProvider, $middlewareProvider) {
@@ -348,10 +348,10 @@
     });
     app.run(run);
 
-    function run($rootScope, $location, $cookieStore, $http) {
-        // $rootScope.url = 'http://localhost:3000';
-        $rootScope.url = 'http://40.76.56.16/api';
-        // keep user logged in after page refresh
-
+    function run($rootScope, $location, $cookieStore, $http, EnvironmentConfig) {
+        $rootScope.url = EnvironmentConfig.api;
+        $rootScope.$on('$routeChangeSuccess', function (e, current, pre) {
+            $rootScope.actualUrl = current.$$route.originalPath;
+        });
     }
 })();
