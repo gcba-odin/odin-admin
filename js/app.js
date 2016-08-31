@@ -349,7 +349,7 @@
     app.run(run);
 
     function run($rootScope, $location, $cookieStore, $http, EnvironmentConfig) {
-        $rootScope.url = EnvironmentConfig.api;
+        $rootScope.url = EnvironmentConfig.kong;
         $rootScope.$on('$routeChangeSuccess', function (e, current, pre) {
             $rootScope.actualUrl = current.$$route.originalPath;
         });
