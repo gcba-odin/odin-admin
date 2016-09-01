@@ -294,13 +294,13 @@
 
         // Importer
         .when("/importer", {
-                templateUrl: "views/importer/add.html",
+                templateUrl: "views/importer/import.html",
                 controller: ImporterCreateController
             })
-            // .when("/importer/new", {
-            //     templateUrl: "views/importer/add.html",
-            //     controller: ImporterCreateController
-            // })
+            .when("/importer/result", {
+                templateUrl: "views/importer/result.html",
+                controller: ImporterResultController
+            })
 
         .otherwise({
             redirectTo: '/'
@@ -349,8 +349,8 @@
     app.run(run);
 
     function run($rootScope, $location, $cookieStore, $http, EnvironmentConfig) {
-        $rootScope.url = EnvironmentConfig.kong;
-        $rootScope.$on('$routeChangeSuccess', function (e, current, pre) {
+        $rootScope.url = EnvironmentConfig.api;
+        $rootScope.$on('$routeChangeSuccess', function(e, current, pre) {
             $rootScope.actualUrl = current.$$route.originalPath;
         });
     }

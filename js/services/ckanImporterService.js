@@ -8,6 +8,7 @@
     function CkanImporterService($http, $cookieStore, $rootScope, $timeout, $scope, CkanImporterService, rest, Upload) {
         var service = {};
         service.Import = Import;
+        service.getResults = getResults;
 
         var client = null;
         var restClient = rest;
@@ -22,9 +23,36 @@
         };
         var defaults = {};
 
+        var results = {
+            categories: {
+                total: 0,
+                count: 0,
+                log: ""
+            },
+            tags: {
+                total: 0,
+                count: 0,
+                log: ""
+            },
+            datasets: {
+                total: 0,
+                count: 0,
+                log: ""
+            },
+            resources: {
+                total: 0,
+                count: 0,
+                log: ""
+            }
+        }
+
         return service;
 
-        function Import(rest, Upload, def) {
+        function getResults() {
+            return results;
+        }
+
+        function Import(rest, Upload, def, importCallback) {
             restClient = rest;
             uploadClient = Upload;
             defaults = def;
@@ -95,16 +123,20 @@
                 function(callback) {
                     console.log("10) importResources");
                     importResources(callback);
-                },
-            ]);
+                }
+            ], function(err) {
+                console.log('*** IMPORT FINISHED ***');
+                importCallback();
+            });
         }
 
         function getCategoryNames(callback) {
             // http://data.buenosaires.gob.ar/api/3/action/group_list?q=
             client.action('group_list', {}, function(err, result) {
                 if (err) {
-                    console.log("ERROR getCategoryNames: ", err);
+                    // console.log("ERROR getCategoryNames: ", err);
                 } else {
+                    results.categories.total = result.result.length;
                     callback(null, result.result);
                 }
             });
@@ -114,8 +146,9 @@
             // http://data.buenosaires.gob.ar/api/3/action/tag_list?q=
             client.action('tag_list', {}, function(err, result) {
                 if (err) {
-                    console.log("ERROR getTagNames: ", err);
+                    // console.log("ERROR getTagNames: ", err);
                 } else {
+                    results.tags.total = result.result.length;
                     global.tagsLimit = result.result.length;
                     callback(null, result.result);
                 }
@@ -126,8 +159,9 @@
             // http://data.buenosaires.gob.ar/api/3/action/package_list?q=
             client.action('package_list', {}, function(err, result) {
                 if (err) {
-                    console.log("ERROR getDatasetNames: ", err);
+                    // console.log("ERROR getDatasetNames: ", err);
                 } else {
+                    results.datasets.total = result.result.length;
                     global.datasetNames = result.result;
                     global.datasetsLimit = result.result.length;
                     callback(null);
@@ -149,14 +183,16 @@
                             active: category.state == 'active' ? true : false
                         }
 
-                        importModel(model, callback);
+                        importModel(model, callback, results.categories);
                     } else {
-                        console.log("ERROR CATEGORY: ", err);
+                        // console.log("ERROR CATEGORY: ", err);
                         callback(err);
                     }
                 });
             }, function(err) {
-                if (err) console.log("Error importando algunas categorías");
+                if (err) {
+                    // console.log("Error importando algunas categorías");
+                }
                 callbackFunc(null);
             });
         }
@@ -173,14 +209,14 @@
                             name: tag.name.trim()
                         };
 
-                        importModel(model, callback);
+                        importModel(model, callback, results.tags);
                     } else {
-                        console.log("ERROR TAG: ", err);
+                        // console.log("ERROR TAG: ", err);
                         callback(err);
                     }
                 });
             }, function(err) {
-                if (err) console.log("Error importando algunos tags");
+                // if (err) console.log("Error importando algunos tags");
                 callbackFunc(null);
             });
         }
@@ -247,14 +283,14 @@
                             model["optional" + i] = "";
                         }
 
-                        importModel(model, callback);
+                        importModel(model, callback, results.datasets);
                     } else {
-                        console.log("ERROR DATASET: ", err);
+                        // console.log("ERROR DATASET: ", err);
                         callback(err);
                     }
                 });
             }, function(err) {
-                if (err) console.log("Error importando algunos datasets");
+                // if (err) console.log("Error importando algunos datasets");
                 callbackFunc(null);
             });
         }
@@ -311,7 +347,7 @@
                                     $http.get(resource.url).success(function(data) {
                                         setModelType(model);
                                         createFile(data, model);
-                                        uploadModel(model, callback2);
+                                        uploadModel(model, callback2, results.resources);
                                     }).error(function(error) {
                                         callback2();
                                     });
@@ -337,23 +373,26 @@
             });
         }
 
-        function importModel(model, callback) {
+        function importModel(model, callback, results) {
             restClient().save({
                 type: model.type
             }, model, function(resp) {
-                console.log("OK", resp);
+                // console.log("OK", resp);
+                results.count++;
                 callback();
             }, function(error) {
                 try {
-                    console.log(error.data.data.name[0].message);
+                    // console.log(error.data.data.name[0].message);
+                    logMessage(error.data.data.name[0].message, results);
                 } catch (cerr) {
-                    console.log(error);
+                    // console.log(error);
+                    logMessage(error, results);
                 }
                 callback();
             });
         }
 
-        function uploadModel(data, callback) {
+        function uploadModel(data, callback, results) {
             var param = {
                 gatheringDate: null
             };
@@ -364,13 +403,18 @@
                 params: param
             }).then(function(resp) {
                 console.log("OK", resp);
+                results.count++;
+                results.total++;
                 callback();
             }, function(error) {
                 try {
                     console.log(error.data.data.name[0].message);
+                    logMessage(error.data.data.name[0].message, results);
                 } catch (cerr) {
                     console.log(error);
+                    logMessage(error, results);
                 }
+                results.total++;
                 callback();
             });
         }
@@ -403,6 +447,10 @@
             var file = new Blob([data], { type: $scope.fileModel.type });
             file.name = model.name + "." + type;
             model.uploadFile = file;
+        }
+
+        function logMessage(msg, logger) {
+            logger.log += msg + "\n";
         }
     }
 

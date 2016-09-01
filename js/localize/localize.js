@@ -174,7 +174,9 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
     'INACTIVATE': 'Desactivar',
     'IMPORTER': 'Importador',
     'IMPORT': 'Importar',
-    'CKAN_IMPORTER': 'Importador CKAN'
+    'CKAN_IMPORTER': 'Importador CKAN',
+    'IMPORT_RESULTS': 'Resultados de la importación',
+    'RESULTS': 'Resultados'
   });
   $translateProvider.preferredLanguage('es');
 }]);

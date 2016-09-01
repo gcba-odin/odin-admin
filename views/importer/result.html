@@ -1,0 +1,110 @@
+<header-home></header-home>
+<div class="content-wrapper">
+    <breadcrumbs data-type="{{ 'RESULTS' | translate }}" data-model-name="{{ 'IMPORTER' | translate }}" data-model="{{type}}"></breadcrumbs>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">{{ 'IMPORT_RESULTS' | translate }}</h3>
+                    </div>
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table usertable">
+                            <tr ng-if="results.categories">
+                                <td class="detail-bold">Categorías importadas</td>
+                                <td>{{ results.categories.count }} / {{ results.categories.total }}
+                                    <button ng-if="results.categories.log" data-toggle="modal" data-target="#categoriesModal" class="btn btn-default pull-right">
+                                        {{ 'VIEW' | translate }}
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr ng-if="results.tags">
+                                <td class="detail-bold">Etiquetas importadas</td>
+                                <td>{{ results.tags.count }} / {{ results.tags.total }}
+                                    <button ng-if="results.tags.log" data-toggle="modal" data-target="#tagsModal" class="btn btn-default pull-right">
+                                        {{ 'VIEW' | translate }}
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr ng-if="results.datasets">
+                                <td class="detail-bold">Datasets importados</td>
+                                <td>{{ results.datasets.count }} / {{ results.datasets.total }}
+                                    <button ng-if="results.datasets.log" data-toggle="modal" data-target="#datasetsModal" class="btn btn-default pull-right">
+                                        {{ 'VIEW' | translate }}
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr ng-if="results.resources">
+                                <td class="detail-bold">Recursos importados</td>
+                                <td>{{ results.resources.count }} / {{ results.resources.total }}
+                                    <button ng-if="results.resources.log" data-toggle="modal" data-target="#resourcesModal" class="btn btn-default pull-right">
+                                        {{ 'VIEW' | translate }}
+                                    </button>
+                                </td>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <button back-button class="btn btn-default pull-left">
+                            {{ 'BACK' | translate }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="modal fade" id="categoriesModal" tabindex="-1" role="dialog" aria-labelledby="categoriesModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="categoriesModalLabel">{{ 'DETAILS_FOR' | translate }} {{ 'CATEGORIES' | translate }}</h4>
+                </div>
+                <div class="modal-body">
+                    <pre>{{ results.categories.log }}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="tagsModal" tabindex="-1" role="dialog" aria-labelledby="tagsModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="tagsModalLabel">{{ 'DETAILS_FOR' | translate }} {{ 'TAGS' | translate }}</h4>
+                </div>
+                <div class="modal-body">
+                    <pre>{{ results.tags.log }}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="datasetsModal" tabindex="-1" role="dialog" aria-labelledby="datasetsModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="datasetsModalLabel">{{ 'DETAILS_FOR' | translate }} {{ 'DATASETS' | translate }}</h4>
+                </div>
+                <div class="modal-body">
+                    <pre>{{ results.datasets.log }}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="resourcesModal" tabindex="-1" role="dialog" aria-labelledby="resourcesModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="resourcesModalLabel">{{ 'DETAILS_FOR' | translate }} {{ 'RESOURCES' | translate }}</h4>
+                </div>
+                <div class="modal-body">
+                    <pre>{{ results.resources.log }}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer-home></footer-home>
