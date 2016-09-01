@@ -21,6 +21,10 @@
                                 <td class="detail-bold">{{ 'DESCRIPTION' | translate }}</td>
                                 <td ng-bind-html="getHtml(model.description)"></td>
                             </tr>
+                            <tr ng-if="model.file">
+                                <td class="detail-bold">{{ 'FILE' | translate }}</td>
+                                <td><a ng-href="#/files/{{model.file.id}}/view">{{model.file.name}}</a></td>
+                            </tr>
                             <tr ng-if="model.status">
                                  <td class="detail-bold">{{ 'STATUS' | translate }}</td>
                                  <td>{{model.status.name}}</td>

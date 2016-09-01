@@ -144,7 +144,13 @@ function MapPreviewController($scope, modelService, $routeParams, rest, $locatio
     var loadGeojson = function() {
         angular.extend($scope, {// Map data
             tiles: {
-                url: $scope.model.basemap.url
+                url: $scope.model.basemap.url,
+//                options: {
+//                    maxZoom: 18,
+//                    minZoom: 9,
+//                    attribution:'USIG (<a href="http://www.buenosaires.gob.ar" target="_blank">GCBA</a>), © <a href="http://www.openstreetmap.org/copyright/en" target="_blank">OpenStreetMap</a> (ODbL)',
+//                    tms: true
+//                },
             },
             geojson: {
                 data: $scope.model.geojson,
@@ -417,7 +423,6 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
 
     $scope.checkstep = function(step) {
         $scope.jump = 1;
-        console.log($scope.fileModel.meta.count);
         if ((step == 1) && (!!$scope.model.link)) {
             $scope.checkstep(2);
             $scope.jump = 2;

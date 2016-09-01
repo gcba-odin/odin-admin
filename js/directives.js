@@ -28,7 +28,7 @@
                 };
 
                 $scope.clearSearch = function() {
-                    $scope.q = "&condition=AND"
+                    $scope.q = "&condition=OR"
                     $scope.searchModel = {};
                     modelService.search($scope);
                 };

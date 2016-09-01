@@ -330,7 +330,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
         }, function(error) {
             usSpinnerService.stop('spinner');
             // alert(resp.status);
-            $scope.unsave = false;
+            $scope.unsave = true;
             if (error.data.data && error.data.data.name) {
                 Alertify.alert('El nombre del archivo ya existe.');
             } else {
@@ -339,7 +339,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
         }, function(evt) {
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
             $scope.uploadImageProgress = progressPercentage;
-            $scope.unsave = false;
+            $scope.unsave = true;
             usSpinnerService.stop('spinner');
         });
     };

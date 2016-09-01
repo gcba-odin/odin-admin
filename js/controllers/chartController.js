@@ -125,6 +125,17 @@ function ChartPreviewController($scope, modelService, $routeParams, rest, $locat
     }, function() {
         $scope.model.link = $sce.trustAsResourceUrl($scope.model.link);
         $scope.model.charttype = 'chart-' + $scope.model.type;
+        $scope.model.series = [[]];
+        if(!!$scope.model.dataSeries) {
+            if($scope.model.dataType == 'qualitative') {
+                $scope.model.series[0] = $scope.model.dataSeries;
+            } else {
+                $scope.model.series[0].push($scope.model.dataSeries[1]);
+            }
+        }
+        $scope.model.dataChart = {
+            data: [$scope.model.data.data]
+        }
         //load Chart;
     });
 
