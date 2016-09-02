@@ -1,5 +1,5 @@
 (function() {
-    var app = angular.module('store-factories', ["authentication-service", "user-service"]);
+    var app = angular.module('store-factories', ["authentication-service", "user-service", "ckan-importer-service"]);
 
     app.factory('flashService', function($compile, Flash) {
         var msgs = {};

@@ -168,7 +168,12 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
     'INACTIVATE': 'Inactivate',
     'CONFIRM_PASSWORD': 'Confirm password',
     'ERROR_CONFIRM_PASS': 'Password not matching',
-    'ERROR_PASS': 'Password must be at least: 8 characters and at most 20 characters.'
+    'ERROR_PASS': 'Password must be at least: 8 characters and at most 20 characters.',
+    'IMPORTER': 'Importer',
+    'IMPORT': 'Import',
+    'CKAN_IMPORTER': 'CKAN Importer',
+    'IMPORT_RESULTS': 'Import results',
+    'RESULTS': 'Resultados'
   });
 
   $translateProvider.translations('es', {
@@ -337,9 +342,17 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
     'quantitative': 'Cuantitativo',
     'ACTIVATE': 'Activar',
     'INACTIVATE': 'Desactivar',
+
     'CONFIRM_PASSWORD': 'Confirmar contraseña',
     'ERROR_CONFIRM_PASS': 'Las contraseñas no son iguales',
     'ERROR_PASS': 'La contraseña debe cumplir con: 8 caracteres mínimo; 20 caracteres máximo; letras, números y símbolos.',
+
+    'IMPORTER': 'Importador',
+    'IMPORT': 'Importar',
+    'CKAN_IMPORTER': 'Importador CKAN',
+    'IMPORT_RESULTS': 'Resultados de la importación',
+    'RESULTS': 'Resultados'
+
   });
   $translateProvider.preferredLanguage('es');
 }]);
