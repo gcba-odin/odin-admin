@@ -8,7 +8,7 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">{{ 'DATASETS' | translate }}</h3>
+                        <h3 class="box-title">{{ modelName | translate }}</h3>
                         <div class="box-tools">
                             <a ng-href="#/datasets/new" class="btn-primary btn nodecoration pull-right">{{ 'ADD' | translate }} {{ 'DATASET' | translate }} </a>
                         </div>
@@ -16,8 +16,9 @@
                     <!-- /.box-header -->
                     <div class="box-body table-responsive no-padding">
 
-                        <search-bar data-search="{required:true,name:'Nombre'}" data-filters="{{filtersView}}"></search-bar>
-
+                        <div ng-show="!starred">
+                            <search-bar data-search="{required:true,name:'Nombre',condition:'{{condition}}'}" data-filters="{{filtersView}}"></search-bar>
+                        </div>
                         <table class="table table-hover">
                             <tbody>
                                 <tr>

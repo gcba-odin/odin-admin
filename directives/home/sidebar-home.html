@@ -66,7 +66,7 @@
                     <li ng-class="{active: isActive('/organizations')}"><a ng-href="#/organizations"><i class="fa fa-circle-o"></i> {{ 'VIEW_ORGANIZATIONS' | translate }} </a></li>
                 </ul>
             </li>
-            <li ng-class="{active: isActive('/datasets/new') || isActive('/datasets') || isActiveEdit('datasets')}" class="treeview">
+            <li ng-class="{active: isActive('/datasets/new') || isActive('/datasets') || isActive('/datasets/:filters?') || isActiveEdit('datasets')}" class="treeview">
                 <a ng-href="javascript:void(0)">
                     <svg version="1.1" id="datasets-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                         <path fill="#FFB600" d="M7.683,3.225V4.74c0,0.107-0.036,0.196-0.108,0.27C7.499,5.083,7.41,5.12,7.305,5.12H5.788
@@ -99,6 +99,7 @@
                 <ul class="treeview-menu">
                     <li ng-class="{active: isActive('/datasets/new')}"><a ng-href="#/datasets/new"><i class="fa fa-circle-o"></i> {{ 'ADD_DATASET' | translate }}</a></li>
                     <li ng-class="{active: isActive('/datasets')}"><a ng-href="#/datasets"><i class="fa fa-circle-o"></i> {{ 'VIEW_DATASET' | translate }}</a></li>
+                    <li ng-class="{active: isActive('/datasets/:filter?')}"><a ng-href="#/datasets/starred"><i class="fa fa-circle-o"></i> {{ 'VIEW_STARRED_DATASET' | translate }}</a></li>
                 </ul>
             </li>
             <li ng-class="{active: isActive('/files/new/:dataset?') || isActive('/files') || isActiveEdit('files')}" class="treeview">

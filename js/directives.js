@@ -1,7 +1,7 @@
 (function() {
     var app = angular.module('store-directives', ["store-directives-home"]);
 
-    app.directive("searchBar", function($parse) {
+    app.directive("searchBar", function($parse, $window) {
         return {
             restrict: "E",
             templateUrl: "directives/search-bar.html",
@@ -28,9 +28,7 @@
                 };
 
                 $scope.clearSearch = function() {
-                    $scope.q = "&condition=OR"
-                    $scope.searchModel = {};
-                    modelService.search($scope);
+                    $window.location.reload();
                 };
             },
             link: function(scope, element, attrs) {
