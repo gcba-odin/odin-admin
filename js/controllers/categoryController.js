@@ -7,8 +7,15 @@ app.factory('model', function($resource) {
 
 function CategoryListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService) {
 
-
     modelService.initService("Category", "categories", $scope);
+
+    $scope.filtersView = [{
+            name: 'Autor',
+            model: 'users',
+            key: 'username',
+            modelInput: 'createdBy',
+            multiple: true
+        }];
 
     $scope.inactiveModel = function(item) {
         modelService.confirmDelete(item);

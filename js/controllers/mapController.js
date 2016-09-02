@@ -14,7 +14,7 @@ function MapListController($scope, modelService) {
             name: 'Autor',
             model: 'users',
             key: 'username',
-            modelInput: 'owner',
+            modelInput: 'createdBy',
             multiple: true
         }];
 

@@ -7,6 +7,14 @@ app.factory('model', function($resource) {
 function FileTypeListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService) {
 
     modelService.initService("File Type", "filetypes", $scope);
+    
+    $scope.filtersView = [{
+            name: 'Autor',
+            model: 'users',
+            key: 'username',
+            modelInput: 'createdBy',
+            multiple: true
+        }];
 
     $scope.inactiveModel = function(item) {
         modelService.confirmDelete(item);

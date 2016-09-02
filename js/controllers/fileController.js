@@ -20,7 +20,7 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
             name: 'Autor',
             model: 'users',
             key: 'username',
-            modelInput: 'owner',
+            modelInput: 'createdBy',
             multiple: true
         }];
     $scope.confirmDelete = function(item) {

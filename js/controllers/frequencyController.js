@@ -7,6 +7,14 @@ app.factory('model', function($resource) {
 function updateFrequencyListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService) {
 
     modelService.initService("updateFrequency", "updatefrequencies", $scope);
+    
+    $scope.filtersView = [{
+            name: 'Autor',
+            model: 'users',
+            key: 'username',
+            modelInput: 'createdBy',
+            multiple: true
+        }];
 
     $scope.confirmDelete = function(item) {
         modelService.confirmDelete(item);

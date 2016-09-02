@@ -234,10 +234,7 @@
         })
                 //// Categories
                 ////  Datasets
-                .when("/datasets/:filter?", {
-                    templateUrl: "views/dataset/list.html",
-                    controller: DatasetListController
-                }).when("/datasets/:id/view", {
+                .when("/datasets/:id/view", {
             templateUrl: "views/dataset/view.html",
             controller: DatasetViewController
         }).when("/datasets/new", {
@@ -247,6 +244,10 @@
             templateUrl: "views/dataset/edit.html",
             controller: DatasetEditController
         })
+        .when("/datasets/:filter?", {
+                    templateUrl: "views/dataset/list.html",
+                    controller: DatasetListController
+                })
                 // Maps
                 .when("/maps", {
                     templateUrl: "views/map/list.html",

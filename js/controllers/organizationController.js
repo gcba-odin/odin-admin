@@ -28,6 +28,14 @@ app.directive('wysihtml5', function () {
 function OrganizationListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService) {
 
     modelService.initService("Organization", "organizations", $scope);
+    
+    $scope.filtersView = [{
+            name: 'Autor',
+            model: 'users',
+            key: 'username',
+            modelInput: 'createdBy',
+            multiple: true
+        }];
 
     $scope.inactiveModel = function(item) {
         modelService.confirmDelete(item);

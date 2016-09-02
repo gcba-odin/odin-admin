@@ -3,6 +3,14 @@ var app = angular.module('odin.basemapsControllers', []);
 
 function BasemapListController($scope, modelService) {
     modelService.initService("Basemap", "basemaps", $scope);
+    
+    $scope.filtersView = [{
+            name: 'Autor',
+            model: 'users',
+            key: 'username',
+            modelInput: 'createdBy',
+            multiple: true
+        }];
 
     $scope.inactiveModel = function(item) {
         modelService.confirmDelete(item);
