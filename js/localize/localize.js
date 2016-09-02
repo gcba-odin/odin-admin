@@ -87,6 +87,7 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
     'VIEW_DATABASES': 'View databases',
     'ADD_DATASET': 'Add dataset',
     'VIEW_DATASET': 'View dataset',
+    'VIEW_STARRED_DATASET': 'View starred datasets',
     'ID': 'Id',
     'NAME': 'Name',
     'CREATED_BY': 'Created by',
@@ -164,8 +165,10 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
     'pie': 'Pie',
     'qualitative': 'Qualitative',
     'quantitative': 'Quantitative',
-    'INACTIVATE': 'Inactivate'
-
+    'INACTIVATE': 'Inactivate',
+    'CONFIRM_PASSWORD': 'Confirm password',
+    'ERROR_CONFIRM_PASS': 'Password not matching',
+    'ERROR_PASS': 'Password must be at least: 8 characters and at most 20 characters.'
   });
 
   $translateProvider.translations('es', {
@@ -253,6 +256,7 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
     'VIEW_DATABASES': 'Ver bases de datos',
     'ADD_DATASET': 'Crear dataset',
     'VIEW_DATASET': 'Ver dataset',
+    'VIEW_STARRED_DATASET': 'Ver datasets destacados',
     'ID': 'Id',
     'NAME': 'Nombre',
     'CREATED_BY': 'Creado por',
@@ -332,7 +336,10 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
     'qualitative': 'Cualitativo',
     'quantitative': 'Cuantitativo',
     'ACTIVATE': 'Activar',
-    'INACTIVATE': 'Desactivar'
+    'INACTIVATE': 'Desactivar',
+    'CONFIRM_PASSWORD': 'Confirmar contraseña',
+    'ERROR_CONFIRM_PASS': 'Las contraseñas no son iguales',
+    'ERROR_PASS': 'La contraseña debe cumplir con: 8 caracteres mínimo; 20 caracteres máximo; letras, números y símbolos.',
   });
   $translateProvider.preferredLanguage('es');
 }]);

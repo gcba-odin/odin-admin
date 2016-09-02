@@ -1,5 +1,5 @@
 (function() {
-    var app = angular.module('odin', ["config-odin", "ngRoute", 'Alertify', 'ngFlash', 'ui.bootstrap', 'localize', 'ckeditor', 'ngMessages', "ngCookies", "ngResource", "ngProgress", "odin.controllers", "store-directives", "store-factories", "bw.paging", 'color.picker', "leaflet-directive", "datePicker", "angularSpinner", "chart.js", , "ngRoute.middleware", "consumer-service"]);
+    var app = angular.module('odin', ["config-odin", "ngRoute", 'Alertify', 'ngFlash', 'ui.bootstrap', 'localize', 'ckeditor', 'ngMessages', "ngCookies", "ngResource", "ngProgress", "odin.controllers", "store-directives", "store-factories", "bw.paging", 'color.picker', "leaflet-directive", "datePicker", "angularSpinner", "chart.js", , "ngRoute.middleware", "consumer-service", "validation.match"]);
 
 
     app.config(function($routeProvider, $httpProvider, $translateProvider, usSpinnerConfigProvider, ChartJsProvider, ConsumerServiceProvider, $middlewareProvider) {
@@ -212,7 +212,7 @@
         })
                 //// Categories
                 ////  Datasets
-                .when("/datasets", {
+                .when("/datasets/:filter?", {
                     templateUrl: "views/dataset/list.html",
                     controller: DatasetListController
                 }).when("/datasets/:id/view", {

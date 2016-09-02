@@ -74,17 +74,30 @@
 <!-- end Input organization -->
 
 <!-- Input Password -->
-<div class="form-group" if-ng="model.password" ng-class="{ 'has-error': form.password.$touched && form.password.$invalid }">
+<div class="form-group" ng-class="{ 'has-error': form.password.$touched && form.password.$invalid }">
     <label for="password" class="col-sm-2 control-label">* {{ 'PASSWORD' | translate }}</label>
     <div class="col-sm-10">
-        <input value=" " type="password" id="password" ng-model="model.password" autocomplete="false"  name="password" class="form-control" id="title" placeholder="{{ 'PLACE' | translate }} {{ 'PASSWORD' | translate }} {{ 'HERE' | translate }}"/>
-        <div class="help-block" ng-messages="form.password.$error" ng-if="form.password.$touched">
+        <input ng-pattern="/^(?=.*?[A-Za-z0-9^\w\s]).{8,20}$/" value=" " type="password" id="password" ng-model="model.password" autocomplete="false"  name="password" class="form-control" id="title" placeholder="{{ 'PLACE' | translate }} {{ 'PASSWORD' | translate }} {{ 'HERE' | translate }}"/>
+        <div class="help-block has-error" ng-show="form.password.$error.pattern">{{ 'ERROR_PASS' | translate }}</div>
+        <!--<div class="help-block" ng-messages="form.password.$error" ng-if="form.password.$touched">
             <div ng-messages-include="views/messages.html"></div>
-        </div>
+        </div>-->
     </div>
 </div>
 <!-- end Input Password -->
 
+<!-- Input Confirm Password -->
+<div class="form-group" ng-class="{ 'has-error': form.passwordConfirm.$touched && form.passwordConfirm.$invalid && form.passwordConfirm.$error.match}">
+    <label for="passwordConfirm" class="col-sm-2 control-label">* {{ 'CONFIRM_PASSWORD' | translate }}</label>
+    <div class="col-sm-10">
+        <input name="passwordConfirm" ng-model="model.passwordConfirm" type="password" match="model.password" id="passwordConfirm" autocomplete="false" class="form-control" placeholder="{{ 'PLACE' | translate }} {{ 'CONFIRM_PASSWORD' | translate }} {{ 'HERE' | translate }}"/>
+        <div class="help-block has-error" ng-show="form.passwordConfirm.$error.match && !form.password.$error.pattern">{{ 'ERROR_CONFIRM_PASS' | translate }}</div>
+        <!--<div class="help-block" ng-messages="form.passwordConfirm.$error" ng-if="form.passwordConfirm.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>-->
+    </div>
+</div>
+<!-- end Input Confirm Password -->
 
 <!-- Button save  -->
 <div class="box-footer"> 
