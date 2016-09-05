@@ -129,12 +129,17 @@
         }
     });
 
-    app.factory('rest', ['$resource', '$location', '$rootScope', 'ngProgressFactory', 'flashService', 'Flash', '$injector', function($resource, $location, $rootScope, ngProgressFactory, flashService, Flash, $injector) {
+    app.factory('rest', ['$resource', '$location', '$rootScope', 'ngProgressFactory', 'flashService', 'Flash', '$injector', 'jwtHelper', function($resource, $location, $rootScope, ngProgressFactory, flashService, Flash, $injector, jwtHelper) {
             $rootScope.progressbar = ngProgressFactory.createInstance();
             return function($url) {
                 $rootScope.progressbar.start();
                 var token = $rootScope.globals.currentUser.token;
                 $url = ($url == null) ? $rootScope.url + '/:type' : $url;
+                
+                if(jwtHelper.isTokenExpired(token)) {
+                    $location.path('login');
+                }
+                
                 return $resource($url, {
                     type: ''
                 }, {

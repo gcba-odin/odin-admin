@@ -127,7 +127,7 @@
             };
         }]);
 
-    app.directive('selectTwoAjax', ['$timeout', '$parse', '$cookieStore', '$http', function($timeout, $parse, $cookieStore, $http, $scope, $rootScope) {
+    app.directive('selectTwoAjax', ['$timeout', '$parse', '$cookieStore', '$http', 'jwtHelper', '$location', function($timeout, $parse, $cookieStore, $http, jwtHelper, $location, $scope, $rootScope) {
             return {
                 restrict: 'A',
                 scope: {
@@ -136,6 +136,10 @@
                 link: function(scope, element, attrs, rootScope) {
                     var token = $cookieStore.get('globals').currentUser.token;
                     var token_auth = $cookieStore.get('globals').currentConsumer.token;
+
+                    if (jwtHelper.isTokenExpired(token)) {
+                        $location.path('login');
+                    }
 
                     if (!!attrs.create) {
                     } else {
@@ -282,7 +286,7 @@
             };
         }]);
 
-    app.directive('selectStaticAjax', ['$parse', '$cookieStore', function($parse, $cookieStore, $scope) {
+    app.directive('selectStaticAjax', ['$parse', '$cookieStore', 'jwtHelper', '$location', function($parse, $cookieStore, jwtHelper, $location, $scope) {
             return {
                 restrict: 'A',
                 template: '<option value="{{ opt.id }}" ng-repeat="opt in options">{{ opt.name }}</option>',
@@ -295,6 +299,10 @@
 
                     var token = $cookieStore.get('globals').currentUser.token;
                     var token_auth = $cookieStore.get('globals').currentConsumer.token;
+
+                    if (jwtHelper.isTokenExpired(token)) {
+                        $location.path('login');
+                    }
 
                     $.ajax({
                         headers: {
@@ -516,7 +524,7 @@
         };
     });
 
-    app.directive('svgImg', function($rootScope, $cookieStore) {
+    app.directive('svgImg', function($rootScope, $cookieStore, jwtHelper, $location) {
         return {
             restrict: 'A',
             scope: {
@@ -533,6 +541,10 @@
 
                 var token = $cookieStore.get('globals').currentUser.token;
                 var token_auth = $cookieStore.get('globals').currentConsumer.token;
+
+                if (jwtHelper.isTokenExpired(token)) {
+                    $location.path('login');
+                }
 
                 $.ajax({
                     headers: {
