@@ -352,7 +352,7 @@
                 })
                 .when("/importer/result", {
                     templateUrl: "views/importer/result.html",
-                    controller: ImporterResultController
+                    controller: ImporterResultController,
                 })
 
                 .otherwise({
@@ -389,25 +389,27 @@
 
                 }],
             'x-admin': ['$cookieStore', '$rootScope', '$http', '$location', 'jwtHelper', function everyoneMiddleware($cookieStore, $rootScope, $http, $location, jwtHelper) {
-                    $rootScope.globals = $cookieStore.get('globals') || {};
-                    if ($rootScope.globals.currentUser) {
-                        if (jwtHelper.isTokenExpired($rootScope.globals.currentUser.token)) {
-                            this.redirectTo('login');
-                            this.next();
-                        } else {
-                            $http.defaults.headers.common['x-admin-authorization'] = $rootScope.globals.currentUser.token; // jshint ignore:line
-                            this.next();
-                        }
+                    if ($location.path() == '/login') {
+                        this.next();
                     } else {
-                        var restrictedPage = $.inArray($location.path(), ['/login', '/register']) === -1;
-                        var loggedIn = $rootScope.globals.currentUser;
-                        if (restrictedPage && !loggedIn) {
-                            this.redirectTo('login');
+                        $rootScope.globals = $cookieStore.get('globals') || {};
+                        if ($rootScope.globals.currentUser) {
+                            if (jwtHelper.isTokenExpired($rootScope.globals.currentUser.token)) {
+                                this.redirectTo('login');
+                            } else {
+                                $http.defaults.headers.common['x-admin-authorization'] = $rootScope.globals.currentUser.token; // jshint ignore:line
+                                this.next();
+                            }
                         } else {
-                            this.next();
+                            var restrictedPage = $.inArray($location.path(), ['/login', '/register']) === -1;
+                            var loggedIn = $rootScope.globals.currentUser;
+                            if (restrictedPage && !loggedIn) {
+                                this.redirectTo('login');
+                            } else {
+                                this.next();
+                            }
                         }
                     }
-
                 }],
         });
 
