@@ -210,7 +210,7 @@
                                     'Authorization': 'Bearer ' + token_auth,
                                     'x-admin-authorization': token,
                                 },
-                                url: scope.$root.url + '/' + attrs.modelname + '?' + attrs.key + '=' + encodeURIComponent(query), // + '"}}&rand=' + Math.random(),
+                                url: scope.$root.url + '/' + attrs.modelname + '?deletedAt=null&' + attrs.key + '=' + encodeURIComponent(query), // + '"}}&rand=' + Math.random(),
                                 type: 'GET',
                                 error: function() {
                                     callback('error');
@@ -309,7 +309,7 @@
                             'Authorization': 'Bearer ' + token_auth,
                             'x-admin-authorization': token,
                         },
-                        url: scope.$root.url + '/' + attrs.modelname,
+                        url: scope.$root.url + '/' + attrs.modelname + '?deletedAt=null',
                         type: 'GET',
                         error: function() {
                         },
