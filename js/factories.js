@@ -66,28 +66,83 @@
                 var url = '/' + scope.type + '/' + model.id + "/edit";
                 $location.path(url);
             },
-            delete: function(scope, model) {
+            delete: function(scope, model, filters) {
                 rest().delete({
                     type: scope.type,
                     id: model.id
                 }, function(resp) {
+                    var pm = '';
+                    if (!!filters) {
+                        pm += 'include=';
+                        angular.forEach(filters, function(val, key, fil) {
+                            pm += val;
+                            if (key == (filters.length - 1)) {
+                                pm += '&';
+                            } else {
+                                pm += ',';
+                            }
+                        });
+                    }
                     scope.data = rest().get({
                         type: scope.type,
-                        params: "orderBy=createdAt&sort=DESC"
+                        params: pm + "orderBy=createdAt&sort=DESC"
                     });
                 });
             },
-            restore: function(scope, item) {
+            restore: function(scope, item, filters) {
                 var model = item.target.dataset;
                 rest().restore({
                     type: scope.type,
                     id: model.id
                 }, {}, function(resp) {
+                    var pm = '';
+                    if (!!filters) {
+                        pm += 'include=';
+                        angular.forEach(filters, function(val, key, fil) {
+                            pm += val;
+                            if (key == (filters.length - 1)) {
+                                pm += '&';
+                            } else {
+                                pm += ',';
+                            }
+                        });
+                    }
                     scope.data = rest().get({
                         type: scope.type,
-                        params: "orderBy=createdAt&sort=DESC"
+                        params: pm + "orderBy=createdAt&sort=DESC"
                     });
                 });
+            },
+            deactivate: function(item, scope, filters) {
+                var item = item.target.dataset;
+                Alertify.confirm(item.textdelete).then(
+                        function onOk() {
+                            rest().deactivate({
+                                type: scope.type,
+                                id: item.id
+                            }, {}, function(resp) {
+                                var pm = '';
+                                if (!!filters) {
+                                    pm += 'include=';
+                                    angular.forEach(filters, function(val, key, fil) {
+                                        pm += val;
+                                        if (key == (filters.length - 1)) {
+                                            pm += '&';
+                                        } else {
+                                            pm += ',';
+                                        }
+                                    });
+                                }
+                                scope.data = rest().get({
+                                    type: scope.type,
+                                    params: pm + "orderBy=createdAt&sort=DESC"
+                                });
+                            });
+                        },
+                        function onCancel() {
+                            return false
+                        }
+                );
             },
             view: function(scope, model) {
                 var url = '/' + scope.type + '/' + model.id + "/view";
@@ -111,7 +166,7 @@
                     type: scope.type
                 });
             },
-            confirmDelete: function(item, scope) {
+            confirmDelete: function(item, scope, filters) {
                 var _this = this;
                 var item = item.target.dataset;
                 Alertify.confirm(item.textdelete).then(
@@ -119,7 +174,7 @@
 
                             _this.delete(_this.insertalScope, {
                                 id: item.id
-                            })
+                            }, filters)
                         },
                         function onCancel() {
                             return false
@@ -133,13 +188,13 @@
             $rootScope.progressbar = ngProgressFactory.createInstance();
             return function($url) {
                 $rootScope.progressbar.start();
-                var token = $rootScope.globals.currentUser.token;
+                var token = $rootScope.adminglob.currentUser.token;
                 $url = ($url == null) ? $rootScope.url + '/:type' : $url;
-                
-                if(jwtHelper.isTokenExpired(token)) {
+
+                if (jwtHelper.isTokenExpired(token)) {
                     $location.path('login');
                 }
-                
+
                 return $resource($url, {
                     type: ''
                 }, {
@@ -338,6 +393,20 @@
                     },
                     'restore': {
                         url: $url + "/:id/restore",
+                        method: 'POST',
+                        headers: {
+                            'x-admin-authorization': token,
+                        },
+                        interceptor: {
+                            responseError: handError
+                        },
+                        transformResponse: function(data) {
+                            $rootScope.progressbar.complete();
+
+                        }
+                    },
+                    'deactivate': {
+                        url: $url + "/:id/deactivate",
                         method: 'POST',
                         headers: {
                             'x-admin-authorization': token,

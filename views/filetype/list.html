@@ -38,7 +38,7 @@
                                         <!--<a class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)">{{ 'DELETE' | translate }}</a>-->
                                         <a ng-if="model.deletedAt" class="btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="activeModel($event)">{{ 'ACTIVATE' | translate }}</a>
                                         <a ng-if="!model.deletedAt" class="btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="inactiveModel($event)">{{ 'INACTIVATE' | translate }}</a>
-                                        <!--<a ng-if="!model.files.length" class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)">{{ 'DELETE' | translate }}</a>-->
+                                        <a ng-if="!model.files.length" class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)">{{ 'DELETE' | translate }}</a>
                                     </td>
                                 </tr>
 

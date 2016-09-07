@@ -134,7 +134,7 @@
                     modelValue: '@ngModel'
                 },
                 link: function(scope, element, attrs, rootScope) {
-                    var token = $cookieStore.get('globals').currentUser.token;
+                    var token = $cookieStore.get('adminglob').currentUser.token;
                     var token_auth = $cookieStore.get('globals').currentConsumer.token;
 
                     if (jwtHelper.isTokenExpired(token)) {
@@ -210,7 +210,7 @@
                                     'Authorization': 'Bearer ' + token_auth,
                                     'x-admin-authorization': token,
                                 },
-                                url: scope.$root.url + '/' + attrs.modelname + '?' + attrs.key + '=' + encodeURIComponent(query), // + '"}}&rand=' + Math.random(),
+                                url: scope.$root.url + '/' + attrs.modelname + '?condition=AND&deletedAt=null&' + attrs.key + '=' + encodeURIComponent(query), // + '"}}&rand=' + Math.random(),
                                 type: 'GET',
                                 error: function() {
                                     callback('error');
@@ -297,7 +297,7 @@
                             name: 'Seleccione una opción'
                         }];
 
-                    var token = $cookieStore.get('globals').currentUser.token;
+                    var token = $cookieStore.get('adminglob').currentUser.token;
                     var token_auth = $cookieStore.get('globals').currentConsumer.token;
 
                     if (jwtHelper.isTokenExpired(token)) {
@@ -309,7 +309,7 @@
                             'Authorization': 'Bearer ' + token_auth,
                             'x-admin-authorization': token,
                         },
-                        url: scope.$root.url + '/' + attrs.modelname,
+                        url: scope.$root.url + '/' + attrs.modelname + '?deletedAt=null',
                         type: 'GET',
                         error: function() {
                         },
@@ -539,7 +539,7 @@
                     hoverColor = "rgba(32, 149, 242, 0.8)";
                 }
 
-                var token = $cookieStore.get('globals').currentUser.token;
+                var token = $cookieStore.get('adminglob').currentUser.token;
                 var token_auth = $cookieStore.get('globals').currentConsumer.token;
 
                 if (jwtHelper.isTokenExpired(token)) {
