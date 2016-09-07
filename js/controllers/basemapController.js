@@ -3,13 +3,27 @@ var app = angular.module('odin.basemapsControllers', []);
 
 function BasemapListController($scope, modelService) {
     modelService.initService("Basemap", "basemaps", $scope);
+    
+    $scope.filtersView = [{
+            name: 'Autor',
+            model: 'users',
+            key: 'username',
+            modelInput: 'createdBy',
+            multiple: true
+        }];
+    
+    var filtersGet = ['maps'];
 
-    $scope.confirmDelete = function(item) {
-        modelService.confirmDelete(item);
+    $scope.inactiveModel = function(item) {
+        modelService.deactivate(item, $scope, filtersGet);
+    }
+
+    $scope.activeModel = function(item) {
+        modelService.restore($scope, item, filtersGet);
     };
-
-    $scope.deleteModel = function(model) {
-        modelService.delete($scope, model);
+    
+    $scope.confirmDelete = function(item) {
+        modelService.confirmDelete(item, {}, filtersGet);
     };
 
     $scope.edit = function(model) {
@@ -20,11 +34,21 @@ function BasemapListController($scope, modelService) {
         modelService.view($scope, model);
     };
 
-    modelService.loadAll($scope);
-
     $scope.activeClass = function(activeClass) {
         modelService.activeClass(activeClass);
 
+    };
+    
+    $scope.limit = 2;
+
+    $scope.q = "&include=maps&skip=0&limit=" + $scope.limit;
+
+    modelService.loadAll($scope);
+
+    $scope.paging = function(event, page, pageSize, total) {
+        var skip = (page - 1) * $scope.limit;
+        $scope.q = "&include=maps&skip=" + skip + "&limit=" + $scope.limit;
+        modelService.loadAll($scope);
     };
 }
 

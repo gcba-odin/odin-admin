@@ -4,6 +4,20 @@ var app = angular.module('odin.mapsControllers', []);
 function MapListController($scope, modelService) {
     modelService.initService("Map", "maps", $scope);
 
+    $scope.filtersView = [{
+            name: 'Estado',
+            model: 'statuses',
+            key: 'name',
+            modelInput: 'status',
+            multiple: true
+        }, {
+            name: 'Autor',
+            model: 'users',
+            key: 'username',
+            modelInput: 'createdBy',
+            multiple: true
+        }];
+
     $scope.confirmDelete = function(item) {
         modelService.confirmDelete(item);
     };
@@ -20,11 +34,21 @@ function MapListController($scope, modelService) {
         modelService.view($scope, model);
     };
 
-    modelService.loadAll($scope);
-
     $scope.activeClass = function(activeClass) {
         modelService.activeClass(activeClass);
 
+    };
+
+    $scope.limit = 20;
+
+    $scope.q = "&skip=0&limit=" + $scope.limit;
+
+    modelService.loadAll($scope);
+
+    $scope.paging = function(event, page, pageSize, total) {
+        var skip = (page - 1) * $scope.limit;
+        $scope.q = "&skip=" + skip + "&limit=" + $scope.limit;
+        modelService.loadAll($scope);
     };
 }
 
@@ -120,7 +144,13 @@ function MapPreviewController($scope, modelService, $routeParams, rest, $locatio
     var loadGeojson = function() {
         angular.extend($scope, {// Map data
             tiles: {
-                url: $scope.model.basemap.url
+                url: $scope.model.basemap.url,
+//                options: {
+//                    maxZoom: 18,
+//                    minZoom: 9,
+//                    attribution:'USIG (<a href="http://www.buenosaires.gob.ar" target="_blank">GCBA</a>), © <a href="http://www.openstreetmap.org/copyright/en" target="_blank">OpenStreetMap</a> (ODbL)',
+//                    tms: true
+//                },
             },
             geojson: {
                 data: $scope.model.geojson,
@@ -210,8 +240,12 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
         if ((step == 1) && (!angular.isUndefined($scope.model.link) && $scope.model.link != '')) {
             $scope.checkstep(2);
             $scope.jump = 2;
-        } else if ((step == 1) && ($scope.headersFile == null)) {
-            Alertify.alert('Le faltó asociar el archivo o no se puede leer.');
+        } else if ((step == 1) && (($scope.headersFile == null) || ($scope.fileModel.meta.count > 2000))) {
+            if ($scope.headersFile == null) {
+                Alertify.alert('Le faltó asociar el archivo o no se puede leer.');
+            } else {
+                Alertify.alert('El archivo que está queriendo renderizar supera los 2000 datos. Intente asociarle un link.');
+            }
         } else {
             if ((step == 1 && ($scope.model.basemap) && ($scope.model.file)) || (step == 2 && ($scope.model.file) && ($scope.model.link || $scope.model.basemap)) || step == 0) {
 
@@ -285,7 +319,7 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
                 usSpinnerService.stop('spinner');
 
                 var alert_text = 'El mapa se generó ';
-                
+
                 if (!!resp.data.incorrect && resp.data.incorrect > 0) {
                     alert_text += 'con errores.';
                 } else {
@@ -392,8 +426,12 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
         if ((step == 1) && (!!$scope.model.link)) {
             $scope.checkstep(2);
             $scope.jump = 2;
-        } else if ((step == 1) && ($scope.headersFile == null)) {
-            Alertify.alert('Le faltó asociar el archivo o no se puede leer.');
+        } else if ((step == 1) && (($scope.headersFile == null) || ($scope.fileModel.meta.count > 2000))) {
+            if ($scope.headersFile == null) {
+                Alertify.alert('Le faltó asociar el archivo o no se puede leer.');
+            } else {
+                Alertify.alert('El archivo que está queriendo renderizar supera los 2000 datos. Intente asociarle un link.');
+            }
         } else {
             if ((step == 1 && ($scope.model.basemap) && ($scope.model.file)) || (step == 2 && ($scope.model.file) && ($scope.model.link || $scope.model.basemap)) || step == 0) {
 
@@ -513,7 +551,7 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
             id: $routeParams.id,
             type: $scope.type,
         }, function() {
-            if(!!$scope.model.basemap) {
+            if (!!$scope.model.basemap) {
                 $scope.model.basemap = $scope.model.basemap.id;
             }
             url_map = $scope.model.link;

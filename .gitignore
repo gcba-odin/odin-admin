@@ -35,4 +35,16 @@ node_modules
 #IDEA
 .idea
 
+# Sublime
+*.sublime-project
+*.sublime-workspace
+
+# Local config file
+config.local.json
+
+# Generated files
+js/config.js
+dist/
+
+# OS Generated
 .DS_STORE

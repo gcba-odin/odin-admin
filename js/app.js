@@ -1,11 +1,62 @@
 (function() {
-    var app = angular.module('odin', ["config-odin", "ngRoute", 'Alertify', 'ngFlash', 'ui.bootstrap', 'localize', 'ckeditor', 'ngMessages', "ngCookies", "ngResource", "ngProgress", "odin.controllers", "store-directives", "store-factories", "bw.paging", 'color.picker', "leaflet-directive", "datePicker", "angularSpinner", "chart.js", , "ngRoute.middleware", "consumer-service"]);
+    var app = angular.module('odin', ["odin.config",
+        "ngRoute",
+        "Alertify",
+        "ngFlash",
+        "ui.bootstrap",
+        "localize",
+        "ckeditor",
+        "ngMessages",
+        "ngCookies",
+        "ngResource",
+        "ngProgress",
+        "odin.controllers",
+        "store-directives",
+        "store-factories",
+        "bw.paging",
+        "color.picker",
+        "leaflet-directive",
+        "datePicker",
+        "angularSpinner",
+        "chart.js",
+        "ngRoute.middleware",
+        "consumer-service",
+        "validation.match",
+        "angular-jwt"]);
 
+    app.config(function($routeProvider, $httpProvider, $translateProvider, usSpinnerConfigProvider, ChartJsProvider, ConsumerServiceProvider, $middlewareProvider, jwtOptionsProvider) {
 
-    app.config(function($routeProvider, $httpProvider, $translateProvider, usSpinnerConfigProvider, ChartJsProvider, ConsumerServiceProvider, $middlewareProvider) {
+        jwtOptionsProvider.config({
+            unauthenticatedRedirectPath: '/login',
+//            tokenGetter: ['$rootScope', '$cookieStore', function($rootScope, $cookieStore, jwtHelper) {
+//                    $rootScope.globals = $cookieStore.get('globals') || {};
+//                    console.log($rootScope.globals.currentUser.token);
+//                    console.log($rootScope.globals.currenConsumer.token);
+//                    if (jwtHelper.isTokenExpired($rootScope.globals.currentUser.token)) {
+//                        console.log('expirated');
+//                    }
+//                    return $rootScope.globals.currentUser.token;
+//                }],
+            whiteListedDomains: ['localhost']
+        });
+
+        $httpProvider.interceptors.push('jwtInterceptor');
 
         ChartJsProvider.setOptions({
-            colors: ['#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360']
+            tooltips: {
+                callbacks: {
+                    title: function(tooltipItem, data) {
+                        return data.labels[tooltipItem[0].index];
+                    },
+                    label: function(tooltipItem, data) {
+                        var label = 'Cantidad';
+                        if (!!data.datasets[tooltipItem.datasetIndex][0] && data.datasets[tooltipItem.datasetIndex][0] != '') {
+                            label = data.datasets[tooltipItem.datasetIndex][0];
+                        }
+                        return label + ': ' + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                    }
+                }
+            }
         });
 
         usSpinnerConfigProvider.setDefaults({
@@ -168,6 +219,7 @@
         })
                 //// file
 
+
                 ////  Databases
                 .when("/databases", {
                     templateUrl: "views/database/list.html",
@@ -199,19 +251,20 @@
         })
                 //// Categories
                 ////  Datasets
-                .when("/datasets", {
-                    templateUrl: "views/dataset/list.html",
-                    controller: DatasetListController
-                }).when("/datasets/:id/view", {
-            templateUrl: "views/dataset/view.html",
-            controller: DatasetViewController
-        }).when("/datasets/new", {
+                .when("/datasets/:id/view", {
+                    templateUrl: "views/dataset/view.html",
+                    controller: DatasetViewController
+                }).when("/datasets/new", {
             templateUrl: "views/dataset/add.html",
             controller: DatasetCreateController
         }).when("/datasets/:id/edit", {
             templateUrl: "views/dataset/edit.html",
             controller: DatasetEditController
         })
+                .when("/datasets/:filter?", {
+                    templateUrl: "views/dataset/list.html",
+                    controller: DatasetListController
+                })
                 // Maps
                 .when("/maps", {
                     templateUrl: "views/map/list.html",
@@ -292,6 +345,16 @@
                     controller: BasemapEditController
                 })
 
+                // Importer
+                .when("/importer", {
+                    templateUrl: "views/importer/import.html",
+                    controller: ImporterCreateController
+                })
+                .when("/importer/result", {
+                    templateUrl: "views/importer/result.html",
+                    controller: ImporterResultController,
+                })
+
                 .otherwise({
                     redirectTo: '/'
                 });
@@ -300,11 +363,20 @@
 
         $middlewareProvider.map({
             /** Let everyone through */
-            'everyone': ['$cookieStore', '$rootScope', '$http', function everyoneMiddleware($cookieStore, $rootScope, $http) {
+            'everyone': ['$cookieStore', '$rootScope', '$http', 'jwtHelper', function everyoneMiddleware($cookieStore, $rootScope, $http, jwtHelper) {
                     $rootScope.globals = $cookieStore.get('globals') || {};
                     if ($rootScope.globals.currentConsumer) {
-                        $http.defaults.headers.common['Authorization'] = 'Bearer ' + $rootScope.globals.currentConsumer.token; // jshint ignore:line
-                        this.next();
+                        if (jwtHelper.isTokenExpired($rootScope.globals.currentConsumer.token)) {
+                            $auth.Login($auth.Consumer, function(response) {
+                                if (!response.code) {
+                                    $auth.SetCredentials(response.data);
+                                    this.next();
+                                }
+                            }.bind(this));
+                        } else {
+                            $http.defaults.headers.common['Authorization'] = 'Bearer ' + $rootScope.globals.currentConsumer.token; // jshint ignore:line
+                            this.next();
+                        }
                     } else {
                         //$http.defaults.headers.common['Authorization'] = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiI5OWFmYzU3ZmRiYzA0YzZjYjJkZDRiYTU2OTBlNDM0NiJ9.Uo0I98Fu3BX8XlOgSnIvfeFx2Z_LdqM8WNT4hSMdDDM';
                         $auth.Login($auth.Consumer, function(response) {
@@ -316,21 +388,28 @@
                     }
 
                 }],
-            'x-admin': ['$cookieStore', '$rootScope', '$http', '$location', function everyoneMiddleware($cookieStore, $rootScope, $http, $location) {
-                    $rootScope.globals = $cookieStore.get('globals') || {};
-                    if ($rootScope.globals.currentUser) {
-                        $http.defaults.headers.common['x-admin-authorization'] = $rootScope.globals.currentUser.token; // jshint ignore:line
+            'x-admin': ['$cookieStore', '$rootScope', '$http', '$location', 'jwtHelper', function everyoneMiddleware($cookieStore, $rootScope, $http, $location, jwtHelper) {
+                    if ($location.path() == '/login') {
                         this.next();
                     } else {
-                        var restrictedPage = $.inArray($location.path(), ['/login', '/register']) === -1;
-                        var loggedIn = $rootScope.globals.currentUser;
-                        if (restrictedPage && !loggedIn) {
-                            this.redirectTo('login');
+                        $rootScope.adminglob = $cookieStore.get('adminglob') || {};
+                        if ($rootScope.adminglob.currentUser) {
+                            if (jwtHelper.isTokenExpired($rootScope.adminglob.currentUser.token)) {
+                                this.redirectTo('login');
+                            } else {
+                                $http.defaults.headers.common['x-admin-authorization'] = $rootScope.adminglob.currentUser.token; // jshint ignore:line
+                                this.next();
+                            }
                         } else {
-                            this.next();
+                            var restrictedPage = $.inArray($location.path(), ['/login', '/register']) === -1;
+                            var loggedIn = $rootScope.adminglob.currentUser;
+                            if (restrictedPage && !loggedIn) {
+                                this.redirectTo('login');
+                            } else {
+                                this.next();
+                            }
                         }
                     }
-
                 }],
         });
 
@@ -338,9 +417,11 @@
     });
     app.run(run);
 
-    function run($rootScope, $location, $cookieStore, $http) {
-        $rootScope.url = 'http://40.121.80.86/api';
-        // keep user logged in after page refresh
-
+    function run($rootScope, EnvironmentConfig, authManager) {
+        $rootScope.url = EnvironmentConfig.api;
+        authManager.redirectWhenUnauthenticated();
+        $rootScope.$on('$routeChangeSuccess', function(e, current, pre) {
+            $rootScope.actualUrl = current.$$route.originalPath;
+        });
     }
 })();

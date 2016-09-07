@@ -1,7 +1,7 @@
 (function() {
     var app = angular.module('store-directives', ["store-directives-home"]);
 
-    app.directive("searchBar", function($parse) {
+    app.directive("searchBar", function($parse, $window) {
         return {
             restrict: "E",
             templateUrl: "directives/search-bar.html",
@@ -28,9 +28,7 @@
                 };
 
                 $scope.clearSearch = function() {
-                    $scope.q = "&condition=AND"
-                    $scope.searchModel = {};
-                    modelService.search($scope);
+                    $window.location.reload();
                 };
             },
             link: function(scope, element, attrs) {
@@ -38,6 +36,20 @@
                 scope.searchInputForm = $parse(attrs.search)();
             },
             controllerAs: "searchBar"
+        };
+    });
+
+    app.directive('ngEnter', function() {
+        return function(scope, element, attrs) {
+            element.bind("keydown keypress", function(event) {
+                if (event.which === 13) {
+                    scope.$apply(function() {
+                        scope.$eval(attrs.ngEnter);
+                    });
+
+                    event.preventDefault();
+                }
+            });
         };
     });
 
@@ -115,15 +127,19 @@
             };
         }]);
 
-    app.directive('selectTwoAjax', ['$timeout', '$parse', '$cookieStore', '$http', function($timeout, $parse, $cookieStore, $http, $scope, $rootScope) {
+    app.directive('selectTwoAjax', ['$timeout', '$parse', '$cookieStore', '$http', 'jwtHelper', '$location', function($timeout, $parse, $cookieStore, $http, jwtHelper, $location, $scope, $rootScope) {
             return {
                 restrict: 'A',
                 scope: {
                     modelValue: '@ngModel'
                 },
                 link: function(scope, element, attrs, rootScope) {
-                    var token = $cookieStore.get('globals').currentUser.token;
+                    var token = $cookieStore.get('adminglob').currentUser.token;
                     var token_auth = $cookieStore.get('globals').currentConsumer.token;
+
+                    if (jwtHelper.isTokenExpired(token)) {
+                        $location.path('login');
+                    }
 
                     if (!!attrs.create) {
                     } else {
@@ -194,7 +210,7 @@
                                     'Authorization': 'Bearer ' + token_auth,
                                     'x-admin-authorization': token,
                                 },
-                                url: scope.$root.url + '/' + attrs.modelname + '?' + attrs.key + '=' + encodeURIComponent(query), // + '"}}&rand=' + Math.random(),
+                                url: scope.$root.url + '/' + attrs.modelname + '?condition=AND&deletedAt=null&' + attrs.key + '=' + encodeURIComponent(query), // + '"}}&rand=' + Math.random(),
                                 type: 'GET',
                                 error: function() {
                                     callback('error');
@@ -270,7 +286,7 @@
             };
         }]);
 
-    app.directive('selectStaticAjax', ['$parse', '$cookieStore', function($parse, $cookieStore, $scope) {
+    app.directive('selectStaticAjax', ['$parse', '$cookieStore', 'jwtHelper', '$location', function($parse, $cookieStore, jwtHelper, $location, $scope) {
             return {
                 restrict: 'A',
                 template: '<option value="{{ opt.id }}" ng-repeat="opt in options">{{ opt.name }}</option>',
@@ -281,15 +297,19 @@
                             name: 'Seleccione una opción'
                         }];
 
-                    var token = $cookieStore.get('globals').currentUser.token;
+                    var token = $cookieStore.get('adminglob').currentUser.token;
                     var token_auth = $cookieStore.get('globals').currentConsumer.token;
+
+                    if (jwtHelper.isTokenExpired(token)) {
+                        $location.path('login');
+                    }
 
                     $.ajax({
                         headers: {
                             'Authorization': 'Bearer ' + token_auth,
                             'x-admin-authorization': token,
                         },
-                        url: scope.$root.url + '/' + attrs.modelname,
+                        url: scope.$root.url + '/' + attrs.modelname + '?deletedAt=null',
                         type: 'GET',
                         error: function() {
                         },
@@ -504,7 +524,7 @@
         };
     });
 
-    app.directive('svgImg', function($rootScope, $cookieStore) {
+    app.directive('svgImg', function($rootScope, $cookieStore, jwtHelper, $location) {
         return {
             restrict: 'A',
             scope: {
@@ -519,8 +539,12 @@
                     hoverColor = "rgba(32, 149, 242, 0.8)";
                 }
 
-                var token = $cookieStore.get('globals').currentUser.token;
+                var token = $cookieStore.get('adminglob').currentUser.token;
                 var token_auth = $cookieStore.get('globals').currentConsumer.token;
+
+                if (jwtHelper.isTokenExpired(token)) {
+                    $location.path('login');
+                }
 
                 $.ajax({
                     headers: {

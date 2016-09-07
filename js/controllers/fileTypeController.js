@@ -7,13 +7,27 @@ app.factory('model', function($resource) {
 function FileTypeListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService) {
 
     modelService.initService("File Type", "filetypes", $scope);
+    
+    $scope.filtersView = [{
+            name: 'Autor',
+            model: 'users',
+            key: 'username',
+            modelInput: 'createdBy',
+            multiple: true
+        }];
+    
+     var filtersGet = ['files'];
 
-    $scope.confirmDelete = function(item) {
-        modelService.confirmDelete(item);
+    $scope.inactiveModel = function(item) {
+        modelService.deactivate(item, $scope, filtersGet);
     }
 
-    $scope.deleteModel = function(model) {
-        modelService.delete($scope, model);
+    $scope.activeModel = function(item) {
+        modelService.restore($scope, item, filtersGet);
+    };
+    
+    $scope.confirmDelete = function(item) {
+        modelService.confirmDelete(item, {}, filtersGet);
     };
 
     $scope.edit = function(model) {
@@ -24,7 +38,17 @@ function FileTypeListController($scope, $location, rest, $rootScope, Flash, Aler
         modelService.view($scope, model);
     }
 
+    $scope.limit = 20;
+
+    $scope.q = "&include=files&skip=0&limit=" + $scope.limit;
+
     modelService.loadAll($scope);
+
+    $scope.paging = function(event, page, pageSize, total) {
+        var skip = (page - 1) * $scope.limit;
+        $scope.q = "&include=files&skip=" + skip + "&limit=" + $scope.limit;
+        modelService.loadAll($scope);
+    };
 }
 
 function FileTypeViewController($scope, Flash, rest, $routeParams, $location, modelService) {
