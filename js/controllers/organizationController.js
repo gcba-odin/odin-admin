@@ -36,17 +36,19 @@ function OrganizationListController($scope, $location, rest, $rootScope, Flash, 
             modelInput: 'createdBy',
             multiple: true
         }];
+    
+    var filtersGet = ['files', 'users'];
 
     $scope.inactiveModel = function(item) {
-        modelService.confirmDelete(item);
+        modelService.deactivate(item, $scope, filtersGet);
     }
 
     $scope.activeModel = function(item) {
-        modelService.restore($scope, item);
+        modelService.restore($scope, item, filtersGet);
     };
     
     $scope.confirmDelete = function(item) {
-        modelService.confirmDelete(item);
+        modelService.confirmDelete(item, {}, filtersGet);
     };
 
     $scope.edit = function (model) {
