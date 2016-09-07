@@ -133,7 +133,7 @@
             $rootScope.progressbar = ngProgressFactory.createInstance();
             return function($url) {
                 $rootScope.progressbar.start();
-                var token = $rootScope.globals.currentUser.token;
+                var token = $rootScope.adminglob.currentUser.token;
                 $url = ($url == null) ? $rootScope.url + '/:type' : $url;
                 
                 if(jwtHelper.isTokenExpired(token)) {

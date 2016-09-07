@@ -134,7 +134,7 @@
                     modelValue: '@ngModel'
                 },
                 link: function(scope, element, attrs, rootScope) {
-                    var token = $cookieStore.get('globals').currentUser.token;
+                    var token = $cookieStore.get('adminglob').currentUser.token;
                     var token_auth = $cookieStore.get('globals').currentConsumer.token;
 
                     if (jwtHelper.isTokenExpired(token)) {
@@ -297,7 +297,7 @@
                             name: 'Seleccione una opción'
                         }];
 
-                    var token = $cookieStore.get('globals').currentUser.token;
+                    var token = $cookieStore.get('adminglob').currentUser.token;
                     var token_auth = $cookieStore.get('globals').currentConsumer.token;
 
                     if (jwtHelper.isTokenExpired(token)) {
@@ -539,7 +539,7 @@
                     hoverColor = "rgba(32, 149, 242, 0.8)";
                 }
 
-                var token = $cookieStore.get('globals').currentUser.token;
+                var token = $cookieStore.get('adminglob').currentUser.token;
                 var token_auth = $cookieStore.get('globals').currentConsumer.token;
 
                 if (jwtHelper.isTokenExpired(token)) {

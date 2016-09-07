@@ -33,7 +33,7 @@
 
         function SetCredentials(username, password, token, user) {
             var authdata = Base64.encode(username + ':' + password);
-            $rootScope.globals.currentUser = {
+            $rootScope.adminglob.currentUser = {
                 username: username,
                 authdata: authdata,
                 token: token,
@@ -41,12 +41,12 @@
             };
 
             $http.defaults.headers.common['x-admin-authorization'] = token;
-            $cookieStore.put('globals', $rootScope.globals);
+            $cookieStore.put('adminglob', $rootScope.adminglob);
         }
 
         function ClearCredentials() {
-            $rootScope.globals = {};
-            $cookieStore.remove('globals');
+            $rootScope.adminglob = {};
+            $cookieStore.remove('adminglob');
             //$http.defaults.headers.common.Authorization = 'Basic';
             $http.defaults.headers.common['x-admin-authorization'] = '';
         }

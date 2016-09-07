@@ -23,6 +23,10 @@ function FileTypeListController($scope, $location, rest, $rootScope, Flash, Aler
     $scope.activeModel = function(item) {
         modelService.restore($scope, item);
     };
+    
+    $scope.confirmDelete = function(item) {
+        modelService.confirmDelete(item);
+    };
 
     $scope.edit = function(model) {
         modelService.edit($scope, model);

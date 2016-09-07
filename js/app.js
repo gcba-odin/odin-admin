@@ -392,17 +392,17 @@
                     if ($location.path() == '/login') {
                         this.next();
                     } else {
-                        $rootScope.globals = $cookieStore.get('globals') || {};
-                        if ($rootScope.globals.currentUser) {
-                            if (jwtHelper.isTokenExpired($rootScope.globals.currentUser.token)) {
+                        $rootScope.adminglob = $cookieStore.get('adminglob') || {};
+                        if ($rootScope.adminglob.currentUser) {
+                            if (jwtHelper.isTokenExpired($rootScope.adminglob.currentUser.token)) {
                                 this.redirectTo('login');
                             } else {
-                                $http.defaults.headers.common['x-admin-authorization'] = $rootScope.globals.currentUser.token; // jshint ignore:line
+                                $http.defaults.headers.common['x-admin-authorization'] = $rootScope.adminglob.currentUser.token; // jshint ignore:line
                                 this.next();
                             }
                         } else {
                             var restrictedPage = $.inArray($location.path(), ['/login', '/register']) === -1;
-                            var loggedIn = $rootScope.globals.currentUser;
+                            var loggedIn = $rootScope.adminglob.currentUser;
                             if (restrictedPage && !loggedIn) {
                                 this.redirectTo('login');
                             } else {
