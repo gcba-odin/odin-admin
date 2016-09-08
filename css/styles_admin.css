@@ -1,21 +1,21 @@
 @font-face {
     font-family: avenir-black;
-    src: url('../fonts/avenir-black-webfont.woff') format('woff');
+    src: url('fonts/avenir-black-webfont.woff');
 }
 
 @font-face {
     font-family: avenir-light;
-    src: url('../fonts/avenir-light-webfont.woff') format('woff');
+    src: url('fonts/avenir-light-webfont.woff');
 }
 
 @font-face {
     font-family: avenir-medium;
-    src: url('../fonts/avenir-medium-webfont.woff') format('woff');
+    src: url('fonts/avenir-medium-webfont.woff');
 }
 
 @font-face {
     font-family: avenir-roman;
-    src: url('../fonts/avenir-roman-webfont.woff') format('woff');
+    src: url('fonts/avenir-roman-webfont.woff');
 }
 
 html,
