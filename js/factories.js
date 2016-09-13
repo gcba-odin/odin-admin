@@ -21,6 +21,14 @@
 
     app.factory('configs', function(rest) {
         return {
+            findKey: function(scope) {
+                var configs = rest.get({
+                    type: 'configs',
+                    params: 'key=' + scope.config_key
+                });
+                
+                return configs;
+            },
             statuses: function(scope) {
                 var configs = rest().get({
                     type: 'configs'

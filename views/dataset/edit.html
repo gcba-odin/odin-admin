@@ -1,7 +1,6 @@
 <header-home></header-home>
 <div class="content-wrapper">
-
-<breadcrumbs data-type="{{ 'EDIT' | translate }}" data-model-name="{{ 'DATASETS' | translate }}" data-model="{{type}}"></breadcrumbs>
+    <breadcrumbs data-type="{{ 'EDIT' | translate }}" data-model-name="{{ 'DATASETS' | translate }}" data-model="{{type}}"></breadcrumbs>
     <!-- Main content -->
     <section class="content">
         <div class="row">
@@ -18,32 +17,32 @@
         </div>    
     </section>
     <!--  Main content-->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">{{ 'FILES' | translate }}</h4>
-              </div>
-              <div class="modal-body">
-                <table class="table">
-                    <thead>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">{{ 'FILES' | translate }}</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <thead>
                         <th>{{ 'FILE' | translate }}</th>
                         <th>{{ 'FILE' | translate }} - {{ 'LINK' | translate }}</th>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="file in model.files">
-                            <td>
-                                <a target="_blank" ng-href="#/files/{{file.id}}/view">{{file.name}}</a>
-                            </td>
-                            <td>
-                                <a target="_blank" ng-href="{{file.url}}">{{file.url}}</a>
-                            </td>
-                        </tr>
-                        
-                    </tbody>
-                </table>
-              </div>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="file in model.files">
+                                <td>
+                                    <a target="_blank" ng-href="#/files/{{file.id}}/view">{{file.name}}</a>
+                                </td>
+                                <td>
+                                    <a target="_blank" ng-href="{{file.url}}">{{file.url}}</a>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

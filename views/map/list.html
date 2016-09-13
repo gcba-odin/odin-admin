@@ -1,6 +1,5 @@
 <header-home></header-home>
 <div class="content-wrapper">
-
     <breadcrumbs data-model-name="{{ 'MAPS' | translate }}" data-model="{{type}}"></breadcrumbs>
     <!-- Main content -->
     <section class="content">
@@ -9,14 +8,11 @@
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">{{ 'MAPS' | translate }}</h3>
-                        <div class="box-tools">
-                            <!--<a ng-href="#/maps/new" class="btn-primary btn nodecoration pull-right">{{ 'ADD' | translate }} {{ 'MAP' | translate }}</a>-->
-                        </div>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive no-padding">
                         <search-bar data-search="{required:true,name:'Nombre'}" data-filters="{{filtersView}}"></search-bar>
-                        
+
                         <table class="table table-hover">
                             <tbody><tr>
                                     <th>{{ 'NAME' | translate }}</th>

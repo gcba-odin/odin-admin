@@ -26,9 +26,9 @@
                                 <td><a ng-href="#/files/{{model.file.id}}/view">{{model.file.name}}</a></td>
                             </tr>
                             <tr ng-if="model.status">
-                                 <td class="detail-bold">{{ 'STATUS' | translate }}</td>
-                                 <td>{{model.status.name}}</td>
-                             </tr>
+                                <td class="detail-bold">{{ 'STATUS' | translate }}</td>
+                                <td>{{model.status.name}}</td>
+                            </tr>
                             <tr ng-if="model.createdBy">
                                 <td class="detail-bold">{{ 'CREATED_BY' | translate }} </td>
                                 <td><a ng-href="#/users/{{model.createdBy.id}}/view">{{model.createdBy.username}}</a></td>

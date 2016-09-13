@@ -29,9 +29,9 @@
         <div class="panel-heading">
             <h1>{{ 'IMAGE' | translate }}</h1>
 
-                <div ngf-select ng-model="model.uploadImage" name="uploadImage" ngf-pattern="'image/svg+xml'"
-                ngf-accept="'image/svg+xml'" ngf-max-size="500KB" ngf-min-size="100"
-                ngf-resize="{width: 100, height: 100}"   ngf-before-model-change="beforeChange($files)"><i class="fa fa-plus add-image-button" aria-hidden="true"></i></div>
+            <div ngf-select ng-model="model.uploadImage" name="uploadImage" ngf-pattern="'image/svg+xml'"
+                 ngf-accept="'image/svg+xml'" ngf-max-size="500KB" ngf-min-size="100"
+                 ngf-resize="{width: 100, height: 100}"   ngf-before-model-change="beforeChange($files)"><i class="fa fa-plus add-image-button" aria-hidden="true"></i></div>
         </div>
         <div class="panel-body docuemnts-upload">
             <div class="row" ng-if="fileModel.name" >
@@ -46,11 +46,11 @@
                     <i class="fa fa-times" aria-hidden="true"></i>
                 </div>
             </div>
-      </div>
+        </div>
     </div>
 </div>
-
 <!-- end FILE -->
+
 <!-- Input DESCRIPTION -->
 <div class="form-group">
     <label for="description" class="col-sm-2 control-label">* {{ 'DESCRIPTION' | translate }}</label>
@@ -62,9 +62,6 @@
     </div>
 </div>
 <!-- end Input DESCRIPTION -->
-
-
-
 
 <!-- Button save  -->
 <div class="box-footer"> 

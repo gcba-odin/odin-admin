@@ -15,16 +15,16 @@
                     <!-- /.box-header -->
                     <div class="box-body table-responsive no-padding">
                         <search-bar data-search="{required:true,name:'Nombre'}" data-filters="{{filtersView}}"></search-bar>
-                        
+
                         <table class="table table-hover">
                             <tbody>
                                 <tr>
-                                    <th>{{'NAME' | translate}}</th>
+                                    <th>{{'NAME'| translate}}</th>
                                     <th>{{ 'STATE' | translate }}</th>
                                     <th class="text-center">{{ 'ACTIONS' | translate }}</th>
                                 </tr>
                                 <tr ng-repeat="model in data.data">
-                                    <td>{{model.name }}</td>
+                                    <td>{{model.name}}</td>
                                     <td>
                                         <span class="label label-default" ng-class="activeClass(model.deletedAt)">{{model.deletedAt ? 'Inactivo' : 'Activo'}}</span>
                                     </td>

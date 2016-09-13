@@ -169,6 +169,7 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
 }
 
 function FileCreateController($scope, $sce, rest, model, Flash, $location, Upload, $rootScope, modelService, $routeParams, Alertify, usSpinnerService) {
+    usSpinnerService.spin('spinner');
     modelService.initService("File", "files", $scope);
 
     $scope.clearUpload = function() {
@@ -178,11 +179,12 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
 
     $scope.filter = true;
     var hard_file = null;
+    var f_types = [];
 
     $scope.beforeChange = function($files) {
         $scope.filter = true;
         $scope.fileModel.name = $files[0].name;
-        //$scope.model.name = $scope.fileModel.name;
+        
         var type = $files[0].name.split('.').pop();
         if (type == "doc" || type == "docx") {
             $scope.fileModel.type = 'fa-file-word-o';
@@ -190,7 +192,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             $scope.fileModel.type = 'fa-file-excel-o';
         } else if (type == "pdf") {
             $scope.fileModel.type = 'fa-file-pdf-o';
-        } else if (type == "rar" || type == "zip") {
+        } else if ((type == "rar") || (type == "zip" )) {
             $scope.fileModel.type = 'fa-file-archive-o';
             //if (type == "rar") {
             $scope.filter = false;
@@ -372,11 +374,12 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
         var fileTypes = rest().get({
             type: 'fileTypes'
         }, function() {
-            $scope.fileTypes = [];
+            
             angular.forEach(fileTypes.data, function(element) {
-                $scope.fileTypes.push(element.mimetype);
+                f_types.push(element.mimetype);
             });
-            $scope.fileTypes = $scope.fileTypes.toString();
+            $scope.fileTypes = f_types.toString();
+            usSpinnerService.stop('spinner');
         });
     };
 
@@ -476,39 +479,6 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
 
     }
 
-//    $scope.checkstep = function(step) {
-//
-//        if (($scope.fileModel.name && step == 1) || ($scope.fileModel.name && step == 2) || (step == 0)) {
-//            if (step == 0) {
-//                $scope.steps[0] = "active";
-//                $scope.steps[1] = "undone";
-//                $scope.steps[2] = "undone";
-//            } else if (step == 1) {
-//                $scope.steps[0] = "done";
-//                $scope.steps[1] = "active";
-//                $scope.steps[2] = "undone";
-//            } else {
-//                $scope.steps[0] = "done";
-//                $scope.steps[1] = "done";
-//                $scope.steps[2] = "active";
-//            }
-//            $scope.stepactive = step;
-//        }
-//    }
-//    $scope.step = function(step) {
-//        if (($scope.fileModel.name && step == 1) || ($scope.fileModel.name && step == 2) || step == 0) {
-//            var step = $scope.steps[step];
-//            if (step == "undone") {
-//                return "undone";
-//            } else if (step == "done") {
-//                return "done";
-//            } else {
-//                return "active";
-//
-//            }
-//        }
-//
-//    }
     $scope.getHtml = function(html) {
         return $sce.trustAsHtml(html);
     };
@@ -579,16 +549,6 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
                 $scope.unsave = false;
                 usSpinnerService.stop('spinner');
             });
-//            rest().update({
-//                type: $scope.type,
-//                id: $scope.model.id
-//            }, data, function(resp) {
-//                usSpinnerService.stop('spinner');
-//                var url = '/' + $scope.type;
-//                $location.path(url);
-//            }, function(error) {
-//                usSpinnerService.stop('spinner');
-//            });
         }
 
 

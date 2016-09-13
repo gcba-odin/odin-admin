@@ -1,6 +1,5 @@
 <header-home></header-home>
 <div class="content-wrapper">
-
     <breadcrumbs data-type="{{ 'VIEW' | translate }}" data-model-name="{{ 'DATASETS' | translate }}" data-model="{{type}}"></breadcrumbs>
     <!-- Main content -->
     <section class="content">
@@ -57,10 +56,6 @@
                                 <td class="detail-bold">{{ 'NOTES' | translate }}</td>
                                 <td ng-bind-html="getHtml(model.notes)"></td>
                             </tr>
-                            <!--<tr ng-if="model.visible">
-                                <td class="detail-bold">{{ 'VISIBILITY' | translate }}</td>
-                                <td>{{model.visible ? 'Público' : 'No público'}}</td>
-                            </tr>-->
                             <tr ng-if="model.starred">
                                 <td class="detail-bold">{{ 'STARRED' | translate }}</td>
                                 <td>{{model.starred ? 'Si' : 'No'}}</td>
@@ -102,10 +97,8 @@
 
                     <table class="table">
                         <thead>
-                            <th>{{ 'FILE' | translate }}</th>
-                            <th class="text-center">{{ 'ACTIONS' | translate }}</th>
-                            <!--<th>{{ 'EDIT' | translate }}</th>
-                            <th>{{ 'DELETE' | translate }}</th>-->
+                        <th>{{ 'FILE' | translate }}</th>
+                        <th class="text-center">{{ 'ACTIONS' | translate }}</th>
                         </thead>
                         <tbody>
                             <tr ng-repeat="file in model.files">
@@ -114,11 +107,7 @@
                                 </td>
                                 <td class="text-center table-btn">
                                     <a target="_blank" class="btn btn-primary" ng-href="#/files/{{file.id}}/view">{{ 'VIEW' | translate }}</a>
-                                <!--</td>
-                                <td>-->
                                     <a target="_blank" class="btn btn-primary" ng-href="#/files/{{file.id}}/edit">{{ 'EDIT' | translate }}</a>
-                                <!--</td>
-                                <td>-->
                                     <a class="btn btn-primary" ng-click="deleteResource(file.id, 'files')">{{ 'DELETE' | translate }}</a>
                                 </td>
                             </tr>

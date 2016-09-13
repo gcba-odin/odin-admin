@@ -56,6 +56,7 @@ function LoginController($location, AuthenticationService, $scope) {
                 $location.path('/');
             } else {
                 alert(response.message);
+                vm.password = '';
                 vm.dataLoading = false;
             }
         });

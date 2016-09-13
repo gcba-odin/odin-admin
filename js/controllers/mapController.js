@@ -192,6 +192,9 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
     $scope.steps[1] = "undone";
     $scope.steps[2] = "undone";
     $scope.stepactive = 0;
+    
+    $scope.config_key = 'limitMap';
+    var data_limit_map = 2000;////factory configs configs.findKey($scope);
 
     var generate_headers = function() {
         if ($scope.fileModel.data.length > 0)
@@ -240,11 +243,11 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
         if ((step == 1) && (!angular.isUndefined($scope.model.link) && $scope.model.link != '')) {
             $scope.checkstep(2);
             $scope.jump = 2;
-        } else if ((step == 1) && (($scope.headersFile == null) || ($scope.fileModel.meta.count > 2000))) {
+        } else if ((step == 1) && (($scope.headersFile == null) || ($scope.fileModel.meta.count > data_limit_map))) {
             if ($scope.headersFile == null) {
                 Alertify.alert('Le faltó asociar el archivo o no se puede leer.');
             } else {
-                Alertify.alert('El archivo que está queriendo renderizar supera los 2000 datos. Intente asociarle un link.');
+                Alertify.alert('El archivo que está queriendo renderizar supera los '+data_limit_map+' datos. Intente asociarle un link.');
             }
         } else {
             if ((step == 1 && ($scope.model.basemap) && ($scope.model.file)) || (step == 2 && ($scope.model.file) && ($scope.model.link || $scope.model.basemap)) || step == 0) {
@@ -392,6 +395,8 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
     $scope.steps[1] = "undone";
     $scope.steps[2] = "undone";
     $scope.stepactive = 0;
+    
+    var data_limit_map = 2000;
 
     var url_map = '';
 
@@ -426,11 +431,11 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
         if ((step == 1) && (!!$scope.model.link)) {
             $scope.checkstep(2);
             $scope.jump = 2;
-        } else if ((step == 1) && (($scope.headersFile == null) || ($scope.fileModel.meta.count > 2000))) {
+        } else if ((step == 1) && (($scope.headersFile == null) || ($scope.fileModel.meta.count > data_limit_map))) {
             if ($scope.headersFile == null) {
                 Alertify.alert('Le faltó asociar el archivo o no se puede leer.');
             } else {
-                Alertify.alert('El archivo que está queriendo renderizar supera los 2000 datos. Intente asociarle un link.');
+                Alertify.alert('El archivo que está queriendo renderizar supera los '+data_limit_map+' datos. Intente asociarle un link.');
             }
         } else {
             if ((step == 1 && ($scope.model.basemap) && ($scope.model.file)) || (step == 2 && ($scope.model.file) && ($scope.model.link || $scope.model.basemap)) || step == 0) {
