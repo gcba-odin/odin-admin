@@ -153,8 +153,8 @@
                                     <a target="_blank" class="btn btn-primary" ng-href="#/charts/{{chart.id}}/view">{{ 'VIEW' | translate }}</a>
                                     <a target="_blank" class="btn btn-primary" ng-href="#/charts/{{chart.id}}/edit">{{ 'EDIT' | translate }}</a>
                                     <a class="btn btn-primary" ng-click="deleteResource(chart.id, 'charts')">{{ 'DELETE' | translate }}</a>
-                                    <button ng-click="unPublish(chart.id, 'charts')" ng-if="chart.status.id == statuses.published" class="pull-right btn btn-primary">{{ 'UNPUBLISH' | translate }}</button>
-                                    <button ng-click="publish(chart.id, 'charts')" ng-if="chart.status.id !== statuses.published" class="pull-right btn btn-primary">{{ 'PUBLISH' | translate }}</button> 
+                                    <button ng-click="unPublish(chart.id, 'charts')" ng-if="chart.status == statuses.published" class="pull-right btn btn-primary">{{ 'UNPUBLISH' | translate }}</button>
+                                    <button ng-click="publish(chart.id, 'charts')" ng-if="chart.status !== statuses.published" class="pull-right btn btn-primary">{{ 'PUBLISH' | translate }}</button> 
                                 </td>
                             </tr>
 
