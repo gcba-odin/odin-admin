@@ -58,7 +58,7 @@
                                             <td ng-bind-html="getHtml(model.description)"></td>
                                         </tr>
                                         <tr ng-if="model.link">
-                                            <td class="detail-bold">{{ 'LINK' | translate }}</td>
+                                            <td class="detail-bold">{{ 'URL' | translate }}</td>
                                             <td><a target="_blank" ng-href="{{model.link}}">{{model.link}}</a></td>
                                         </tr>
                                         <tr ng-if="model.basemap && !model.link">

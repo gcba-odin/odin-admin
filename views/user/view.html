@@ -37,7 +37,7 @@
                             </tr>
                             <tr ng-if="model.createdAt">
                                 <td class="detail-bold">{{ 'CREATED_AT' | translate }}</td>
-                                <td>{{model.createdAt| date:'d/M/yy H:mm'}}</td>
+                                <td>{{model.createdAt| date:'MMM d, y h:mm:ss a'}}</td>
                             </tr>
                             <tr ng-if="model.updatedAt">
                                 <td class="detail-bold">{{ 'UPDATED_AT' | translate }}</td>
@@ -53,6 +53,8 @@
                             {{ 'BACK' | translate }}
                         </button>
                         <button type="submit" class="btn btn-primary pull-right" ng-click="edit(model)">{{ 'EDIT' | translate }}</button>
+                        <a ng-if="model.deletedAt" class="pull-right btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="activeModel($event)">{{ 'ACTIVATE' | translate }}</a>
+                        <a ng-if="!model.deletedAt" class="pull-right btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="inactiveModel($event)">{{ 'INACTIVATE' | translate }}</a>
                     </div>
                 </div>
 

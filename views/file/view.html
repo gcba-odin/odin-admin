@@ -8,8 +8,8 @@
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} {{ model.name}}</h3>
-                        <button ng-click="unPublish()" ng-if="model.status.id == statuses.published" class="pull-right btn btn-primary">{{ 'UNPUBLISH' | translate }}</button>
-                        <button ng-click="publish()" ng-if="model.status.id !== statuses.published" class="pull-right btn btn-primary">{{ 'PUBLISH' | translate }}</button> 
+                        <button ng-click="unPublish(model.id, 'files')" ng-if="model.status.id == statuses.published" class="pull-right btn btn-primary">{{ 'UNPUBLISH' | translate }}</button>
+                        <button ng-click="publish(model.id, 'files')" ng-if="model.status.id !== statuses.published" class="pull-right btn btn-primary">{{ 'PUBLISH' | translate }}</button> 
                         <!--<a ng-href="#/files/new/{{model.id}}" class="btn btn-default pull-right magin-right-10"><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_RESOURCES' | translate }}</a>-->
                         <div class="dropdown pull-right magin-right-10" ng-if="model.type.api">
                             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{ 'NEW_RESOURCES' | translate }}
@@ -62,7 +62,7 @@
                             </tr>
                             <tr ng-if="model.createdAt">
                                 <td class="detail-bold">{{ 'CREATED_AT' | translate }}</td>
-                                <td>{{model.createdAt| date:'d/M/yy H:mm'}}</td>
+                                <td>{{model.createdAt| date:'MMM d, y h:mm:ss a'}}</td>
                             </tr>
                             <tr ng-if="model.publishedAt">
                                 <td class="detail-bold">{{ 'PUBLISHED_AT' | translate }}</td>
@@ -82,7 +82,7 @@
                             </tr>
                             <tr ng-if="model.gatheringDate">
                                 <td class="detail-bold">{{ 'GATHERING_DATE' | translate }}</td>
-                                <td>{{model.gatheringDate| date:'MMM d, y' : 'UTC' }}</td>
+                                <td>{{model.gatheringDate| date:'MMM d, y h:mm:ss a' : 'UTC' }}</td>
                             </tr>
                             <tr>
                                 <td class="detail-bold">{{ 'UPDATED_VIEW' | translate }}</td>
@@ -138,6 +138,8 @@
                                     <a target="_blank" class="btn btn-primary" ng-href="#/maps/{{map.id}}/view">{{ 'VIEW' | translate }}</a>
                                     <a target="_blank" class="btn btn-primary" ng-href="#/maps/{{map.id}}/edit">{{ 'EDIT' | translate }}</a>
                                     <a class="btn btn-primary" ng-click="deleteResource(map.id, 'maps')">{{ 'DELETE' | translate }}</a>
+                                    <button ng-click="unPublish(map.id, 'maps')" ng-if="map.status.id == statuses.published" class="pull-right btn btn-primary">{{ 'UNPUBLISH' | translate }}</button>
+                                    <button ng-click="publish(map.id, 'maps')" ng-if="map.status.id !== statuses.published" class="pull-right btn btn-primary">{{ 'PUBLISH' | translate }}</button> 
                                 </td>
                             </tr>
                             <tr ng-repeat="chart in model.resources.data.charts">
@@ -151,6 +153,8 @@
                                     <a target="_blank" class="btn btn-primary" ng-href="#/charts/{{chart.id}}/view">{{ 'VIEW' | translate }}</a>
                                     <a target="_blank" class="btn btn-primary" ng-href="#/charts/{{chart.id}}/edit">{{ 'EDIT' | translate }}</a>
                                     <a class="btn btn-primary" ng-click="deleteResource(chart.id, 'charts')">{{ 'DELETE' | translate }}</a>
+                                    <button ng-click="unPublish(chart.id, 'charts')" ng-if="chart.status.id == statuses.published" class="pull-right btn btn-primary">{{ 'UNPUBLISH' | translate }}</button>
+                                    <button ng-click="publish(chart.id, 'charts')" ng-if="chart.status.id !== statuses.published" class="pull-right btn btn-primary">{{ 'PUBLISH' | translate }}</button> 
                                 </td>
                             </tr>
 
