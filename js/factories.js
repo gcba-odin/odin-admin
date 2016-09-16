@@ -457,7 +457,7 @@
                     },
                     'update': {
                         url: $url + "/:id",
-                        method: 'PATCH',
+                        method: 'PUT',
                         headers: {
                             'x-admin-authorization': token,
                         },
