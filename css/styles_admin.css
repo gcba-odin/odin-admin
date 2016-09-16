@@ -95,8 +95,8 @@ a:hover {
     height: 2em;
 }
 
-.sidebar-menu .treeview.active > a > .sidebar-svg > path,
-.sidebar-menu .treeview-menu > li.active > a > .sidebar-svg > path {
+.sidebar-menu .treeview.active > a > .sidebar-svg *,
+.sidebar-menu .treeview-menu > li.active > a > .sidebar-svg * {
     fill: #ff386a;
 }
 
