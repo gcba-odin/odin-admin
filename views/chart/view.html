@@ -35,7 +35,7 @@
                             </tr>
                             <tr ng-if="model.createdAt">
                                 <td class="detail-bold">{{ 'CREATED_AT' | translate }}</td>
-                                <td>{{model.createdAt| date:'d/M/yy H:mm'}}</td>
+                                <td>{{model.createdAt| date:'MMM d, y h:mm:ss a'}}</td>
                             </tr>
                             <tr ng-if="model.publishedAt">
                                 <td class="detail-bold">{{ 'PUBLISHED_AT' | translate }}</td>
@@ -50,7 +50,7 @@
                                 <td ng-bind-html="getHtml(model.notes)"></td>
                             </tr>
                             <tr ng-if="model.link">
-                                <td class="detail-bold">{{ 'LINK' | translate }}</td>
+                                <td class="detail-bold">{{ 'URL' | translate }}</td>
                                 <td><a target="_blank" ng-href="{{model.link}}">{{model.link}}</a></td>
                             </tr>
                             <tr ng-if="model.type && !model.link">

@@ -135,12 +135,12 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
     //factory configs 
     configs.statuses($scope);
 
-    $scope.publish = function() {
+    $scope.publish = function(id, type) {
         usSpinnerService.spin('spinner');
 
         rest().publish({
-            type: $scope.type,
-            id: $scope.model.id
+            type: type,
+            id: id
         }, {}, function(resp) {
             loadModel();
             //var url = '/' + $scope.type;
@@ -148,15 +148,20 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
         });
         usSpinnerService.stop('spinner');
     };
+    
 
-    $scope.unPublish = function() {
-        Alertify.confirm('¿Está seguro que quiere despublicar este dataset?').then(
+    $scope.unPublish = function(id, type) {
+        var text_type = 'dataset';
+        if(type == 'files') {
+            text_type = 'archivo';
+        }
+        Alertify.confirm('¿Está seguro que quiere despublicar este ' + text_type + '?').then(
                 function onOk() {
                     usSpinnerService.spin('spinner');
 
                     rest().unpublish({
-                        type: $scope.type,
-                        id: $scope.model.id
+                        type: type,
+                        id: id
                     }, {}, function(resp) {
                         loadModel();
                         //var url = '/' + $scope.type;

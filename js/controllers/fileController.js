@@ -85,12 +85,12 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
     //factory configs 
     configs.statuses($scope);
 
-    $scope.publish = function() {
+    $scope.publish = function(id, type) {
         usSpinnerService.spin('spinner');
 
         rest().publish({
-            id: $routeParams.id,
-            type: $scope.type,
+            id: id,
+            type: type,
         }, {}, function(resp) {
             usSpinnerService.stop('spinner');
             loadModel();
@@ -101,8 +101,9 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
         });
     };
 
-    $scope.unPublish = function() {
-        Alertify.confirm('¿Está seguro que quiere despublicar este archivo?').then(
+    $scope.unPublish = function(id, type) {
+        var text_type = (type == 'charts') ? 'gráfico' : (type == 'maps') ? 'mapa' : 'archivo';
+        Alertify.confirm('¿Está seguro que quiere despublicar este ' + text_type + '?').then(
                 function onOk() {
                     usSpinnerService.spin('spinner');
 

@@ -40,11 +40,11 @@ function OrganizationListController($scope, $location, rest, $rootScope, Flash, 
     var filtersGet = ['files', 'users'];
 
     $scope.inactiveModel = function(item) {
-        modelService.deactivate(item, $scope, filtersGet);
+        modelService.deactivateList(item, $scope, filtersGet);
     }
 
     $scope.activeModel = function(item) {
-        modelService.restore($scope, item, filtersGet);
+        modelService.restoreList($scope, item, filtersGet);
     };
     
     $scope.confirmDelete = function(item) {
@@ -80,6 +80,15 @@ function OrganizationViewController($scope, Flash, rest, $routeParams, $location
     modelService.initService("Organization", "organizations", $scope);
 
     modelService.findOne($routeParams, $scope);
+    
+    $scope.inactiveModel = function(item) {
+        modelService.deactivateView(item, $scope);
+    }
+
+    $scope.activeModel = function(item) {
+        modelService.restoreView($scope, item);
+    };
+    
     $scope.edit = function (model) {
         modelService.edit($scope, model);
     }

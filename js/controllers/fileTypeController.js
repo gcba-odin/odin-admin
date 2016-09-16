@@ -19,11 +19,11 @@ function FileTypeListController($scope, $location, rest, $rootScope, Flash, Aler
      var filtersGet = ['files'];
 
     $scope.inactiveModel = function(item) {
-        modelService.deactivate(item, $scope, filtersGet);
+        modelService.deactivateList(item, $scope, filtersGet);
     }
 
     $scope.activeModel = function(item) {
-        modelService.restore($scope, item, filtersGet);
+        modelService.restoreList($scope, item, filtersGet);
     };
     
     $scope.confirmDelete = function(item) {
@@ -56,6 +56,13 @@ function FileTypeViewController($scope, Flash, rest, $routeParams, $location, mo
 
     modelService.findOne($routeParams, $scope);
 
+    $scope.inactiveModel = function(item) {
+        modelService.deactivateView(item, $scope);
+    }
+
+    $scope.activeModel = function(item) {
+        modelService.restoreView($scope, item);
+    };
 
     $scope.edit = function(model) {
         modelService.edit($scope, model);

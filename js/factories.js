@@ -97,7 +97,7 @@
                     });
                 });
             },
-            restore: function(scope, item, filters) {
+            restoreList: function(scope, item, filters) {
                 var model = item.target.dataset;
                 rest().restore({
                     type: scope.type,
@@ -121,7 +121,19 @@
                     });
                 });
             },
-            deactivate: function(item, scope, filters) {
+            restoreView: function(scope, item) {
+                var model = item.target.dataset;
+                rest().restore({
+                    type: scope.type,
+                    id: model.id
+                }, {}, function(resp) {
+                    scope.model = rest().findOne({
+                        id: model.id,
+                        type: scope.type
+                    });
+                });
+            },
+            deactivateList: function(item, scope, filters) {
                 var item = item.target.dataset;
                 Alertify.confirm(item.textdelete).then(
                         function onOk() {
@@ -144,6 +156,25 @@
                                 scope.data = rest().get({
                                     type: scope.type,
                                     params: pm + "orderBy=createdAt&sort=DESC"
+                                });
+                            });
+                        },
+                        function onCancel() {
+                            return false
+                        }
+                );
+            },
+            deactivateView: function(item, scope) {
+                var item = item.target.dataset;
+                Alertify.confirm(item.textdelete).then(
+                        function onOk() {
+                            rest().deactivate({
+                                type: scope.type,
+                                id: item.id
+                            }, {}, function(resp) {
+                                scope.model = rest().findOne({
+                                    id: item.id,
+                                    type: scope.type
                                 });
                             });
                         },

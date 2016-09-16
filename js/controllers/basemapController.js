@@ -15,11 +15,11 @@ function BasemapListController($scope, modelService) {
     var filtersGet = ['maps'];
 
     $scope.inactiveModel = function(item) {
-        modelService.deactivate(item, $scope, filtersGet);
+        modelService.deactivateList(item, $scope, filtersGet);
     }
 
     $scope.activeModel = function(item) {
-        modelService.restore($scope, item, filtersGet);
+        modelService.restoreList($scope, item, filtersGet);
     };
     
     $scope.confirmDelete = function(item) {
@@ -59,6 +59,14 @@ function BasemapViewController($scope, modelService, $routeParams, rest, $locati
         id: $routeParams.id,
         type: $scope.type
     });
+    
+    $scope.inactiveModel = function(item) {
+        modelService.deactivateView(item, $scope);
+    }
+
+    $scope.activeModel = function(item) {
+        modelService.restoreView($scope, item);
+    };
 
     $scope.edit = function(model) {
         var url = '/' + $scope.type + '/' + model.id + "/edit";

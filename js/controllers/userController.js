@@ -15,7 +15,7 @@ function UserListController($scope, $location, rest, $rootScope, Flash, Alertify
     }
 
     $scope.activeModel = function(item) {
-        modelService.restore($scope, item);
+        modelService.restoreList($scope, item);
     };
 
     $scope.edit = function(model) {
@@ -44,6 +44,13 @@ function UserViewController($scope, Flash, rest, $routeParams, $location, modelS
 
     modelService.findOne($routeParams, $scope);
 
+    $scope.inactiveModel = function(item) {
+        modelService.deactivateView(item, $scope);
+    }
+
+    $scope.activeModel = function(item) {
+        modelService.restoreView($scope, item);
+    };
 
     $scope.edit = function(model) {
         modelService.edit($scope, model);
