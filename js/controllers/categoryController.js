@@ -243,7 +243,7 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
 
             Upload.upload({
                 url: $rootScope.url + "/categories/" + $scope.model.id,
-                method: 'PATCH',
+                method: 'PUT',
                 data: data
             }).then(function(resp) {
                 usSpinnerService.stop('spinner');

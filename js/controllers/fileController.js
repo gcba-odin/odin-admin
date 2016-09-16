@@ -530,7 +530,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
             Upload.upload({
                 url: $rootScope.url + "/files/" + $scope.model.id,
                 data: data,
-                method: 'PATCH',
+                method: 'PUT',
                 params: param
             }).then(function(resp) {
                 usSpinnerService.stop('spinner');
