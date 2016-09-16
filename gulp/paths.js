@@ -9,6 +9,7 @@ gulp.paths = {
     'directives/**/*.html',
     'views/**/*.html',
     '*.{svg,png,xml,ico}',
+    'config/*.json',
     'manifest.json',
     '*.html',
     'plugins/**',

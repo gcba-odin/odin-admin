@@ -1,21 +1,21 @@
 @font-face {
     font-family: avenir-black;
-    src: url('../fonts/avenir-black-webfont.woff');
+    src: url('fonts/avenir-black-webfont.woff');
 }
 
 @font-face {
     font-family: avenir-light;
-    src: url('../fonts/avenir-light-webfont.woff');
+    src: url('fonts/avenir-light-webfont.woff');
 }
 
 @font-face {
     font-family: avenir-medium;
-    src: url('../fonts/avenir-medium-webfont.woff');
+    src: url('fonts/avenir-medium-webfont.woff');
 }
 
 @font-face {
     font-family: avenir-roman;
-    src: url('../fonts/avenir-roman-webfont.woff');
+    src: url('fonts/avenir-roman-webfont.woff');
 }
 
 html,
@@ -74,10 +74,10 @@ a:hover {
 .logo img {
     height: 2.5em;
 }
-
+/*
 .sidebar-menu {
     margin-top: 2.5em;
-}
+}*/
 
 .user-panel {
     text-align: center;
@@ -95,7 +95,8 @@ a:hover {
     height: 2em;
 }
 
-.sidebar-menu .treeview.active .sidebar-svg * {
+.sidebar-menu .treeview.active > a > .sidebar-svg *,
+.sidebar-menu .treeview-menu > li.active > a > .sidebar-svg * {
     fill: #ff386a;
 }
 
@@ -111,20 +112,31 @@ ul.sidebar-menu a {
     color: #ffb600;
 }
 
-ul.sidebar-menu .treeview.active > a {
-    color: #ff386a;
-}
-
+ul.sidebar-menu .treeview.active > a, 
 ul.sidebar-menu .treeview.active > a > span {
     color: #ff386a;
 }
+
+/*ul.sidebar-menu .treeview.active > a > span {
+    color: #ff386a;
+}*/
 
 .sidebar-menu .treeview-menu li a {
     font-family: avenir-medium;
 }
 
+.sidebar-mini.sidebar-collapse .sidebar-menu .treeview-menu {
+    background: white;
+    min-width: 16em !important;
+}
+
 .sidebar-menu .treeview-menu li.active a {
     color: #ff386a;
+}
+
+.sidebar-mini.sidebar-collapse .sidebar-menu > li:hover > .treeview-menu {
+    top: 5px;
+    margin-left: 0;
 }
 
 div.wrapper li.dropdown.user.user-menu.avenir-medium.ng-scope > a > span {
@@ -222,8 +234,12 @@ div.form-group div.has-error p {
 }
 
 .sidebar-toggle {
-    color: #6d6e70;
+    color: #ff386a !important;
     font-size: 11pt;
+}
+
+.sidebar-toggle:hover {
+    color: #ffb600 !important;
 }
 
 .spinner {
@@ -402,4 +418,33 @@ div.panel-heading {
 .pagination > .active > a:focus, .pagination > .active > a:hover{
     background-color: #FFb600;
     border-color: #FFb600;
+}
+
+.modal-dialog {
+    width: 1000px;
+}
+
+.sidebar {
+    min-height: 1000px;
+}
+
+.box-footer a {
+    margin-right: 10px;
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .sidebar-menu .sidebar-svg {
+        margin-left: -6em !important;
+        margin-right: -6em !important;
+    }
+    
+    .sidebar-collapse .sidebar-menu .sidebar-svg {
+        margin-left: 0 !important;
+        margin-right: -12em !important;
+    }
+    
+    .sidebar-collapse .sidebar-menu .treeview-menu .sidebar-svg {
+        margin-right: -6em !important;
+        margin-left: -6em !important
+    }
 }

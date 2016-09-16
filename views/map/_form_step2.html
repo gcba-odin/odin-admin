@@ -37,16 +37,11 @@
         <div class="col-sm-10" ng-class="{ 'has-error': form[item.name].$touched && form[item.name].$invalid }">
 
             <div class="row">
-                <!--<div class="col-xs-5">
-                    <span>Propiedad {{$index}}</span>
-                    <!--<input type="text" ng-model="model.items[$index].field1" name="{{item.field}}" class="form-control" id="title" required />
-                </div>-->
                 <div class="col-xs-5">
                     <select placeholder="{{ 'SELECT_ONE' | translate }}" name="{{item.field}}" id="{{item.field}}" ng-model="model.items[$index].field2" class="selectize-input items required full has-options has-items" required>
                         <option value="">Seleccione una opción</option>
                         <option value="{{ header.id}}" ng-repeat="header in headersFile">{{ header.name}}</option>
                     </select>
-                    <!--    <input type="text" ng-model="model.items[$index].field2" name="{{item.field}}" class="form-control" id="title" required />   -->
                 </div>
                 <div class="col-xs-2">
                     <button class="btn btn-danger" ng-click="deleteIndexInput($index)" type="button">X</button>
@@ -60,6 +55,7 @@
     </div>
     <!-- end Input properties -->
 </div>
+
 <!-- Input properties -->
 <div class="form-group">
     <label for="properties" class="col-sm-2 control-label"></label>

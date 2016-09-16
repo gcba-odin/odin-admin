@@ -9,9 +9,6 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">{{ 'EDIT' | translate }} {{ 'MAPS' | translate }}</h3>
                     </div>
-                    <!--<form autocomplete="off" class="form-horizontal" name="form"  autocomplete="false"  role="form" ng-submit="add(form.$valid)" novalidate>
-                        <div class="box-body" ng-include="'views/map/_form.html'"></div>
-                    </form>-->
                     <div class="row">
                         <div class="col-xs-12">
 
@@ -61,7 +58,7 @@
                                             <td ng-bind-html="getHtml(model.description)"></td>
                                         </tr>
                                         <tr ng-if="model.link">
-                                            <td class="detail-bold">{{ 'LINK' | translate }}</td>
+                                            <td class="detail-bold">{{ 'URL' | translate }}</td>
                                             <td><a target="_blank" ng-href="{{model.link}}">{{model.link}}</a></td>
                                         </tr>
                                         <tr ng-if="model.basemap && !model.link">

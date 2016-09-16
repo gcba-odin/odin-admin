@@ -28,15 +28,6 @@
 
         jwtOptionsProvider.config({
             unauthenticatedRedirectPath: '/login',
-//            tokenGetter: ['$rootScope', '$cookieStore', function($rootScope, $cookieStore, jwtHelper) {
-//                    $rootScope.globals = $cookieStore.get('globals') || {};
-//                    console.log($rootScope.globals.currentUser.token);
-//                    console.log($rootScope.globals.currenConsumer.token);
-//                    if (jwtHelper.isTokenExpired($rootScope.globals.currentUser.token)) {
-//                        console.log('expirated');
-//                    }
-//                    return $rootScope.globals.currentUser.token;
-//                }],
             whiteListedDomains: ['localhost']
         });
 
@@ -219,22 +210,6 @@
         })
                 //// file
 
-
-                ////  Databases
-                .when("/databases", {
-                    templateUrl: "views/database/list.html",
-                    controller: DatabaseListController
-                }).when("/databases/:id/view", {
-            templateUrl: "views/database/view.html",
-            controller: DatabaseViewController
-        }).when("/databases/new", {
-            templateUrl: "views/database/add.html",
-            controller: DatabaseCreateController
-        }).when("/databases/:id/edit", {
-            templateUrl: "views/database/edit.html",
-            controller: DatabaseEditController
-        })
-                //// Databases
                 ////  Categories
                 .when("/categories", {
                     templateUrl: "views/category/list.html",

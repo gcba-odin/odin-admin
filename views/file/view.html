@@ -8,8 +8,8 @@
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} {{ model.name}}</h3>
-                        <button ng-click="unPublish()" ng-if="model.status.id == statuses.published" class="pull-right btn btn-primary">{{ 'UNPUBLISH' | translate }}</button>
-                        <button ng-click="publish()" ng-if="model.status.id !== statuses.published" class="pull-right btn btn-primary">{{ 'PUBLISH' | translate }}</button> 
+                        <button ng-click="unPublish(model.id, 'files')" ng-if="model.status.id == statuses.published" class="pull-right btn btn-primary">{{ 'UNPUBLISH' | translate }}</button>
+                        <button ng-click="publish(model.id, 'files')" ng-if="model.status.id !== statuses.published" class="pull-right btn btn-primary">{{ 'PUBLISH' | translate }}</button> 
                         <!--<a ng-href="#/files/new/{{model.id}}" class="btn btn-default pull-right magin-right-10"><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_RESOURCES' | translate }}</a>-->
                         <div class="dropdown pull-right magin-right-10" ng-if="model.type.api">
                             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{ 'NEW_RESOURCES' | translate }}
@@ -19,7 +19,7 @@
                                 <li><a ng-href="#/charts/new/{{model.id}}" ><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_CHART' | translate }}</a></li>
                             </ul>
                         </div>
-                        
+
                         <button ng-if="!!model.resources.data.maps || !!model.resources.data.charts"  data-toggle="modal" data-target="#viewLinkResources" class="btn btn-default pull-right magin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_RESOURCES' | translate }}</button> 
                     </div>
                     <div class="box-body table-responsive no-padding">
@@ -62,7 +62,7 @@
                             </tr>
                             <tr ng-if="model.createdAt">
                                 <td class="detail-bold">{{ 'CREATED_AT' | translate }}</td>
-                                <td>{{model.createdAt| date:'d/M/yy H:mm'}}</td>
+                                <td>{{model.createdAt| date:'MMM d, y h:mm:ss a'}}</td>
                             </tr>
                             <tr ng-if="model.publishedAt">
                                 <td class="detail-bold">{{ 'PUBLISHED_AT' | translate }}</td>
@@ -78,20 +78,11 @@
                             </tr>
                             <tr ng-if="model.url">
                                 <td class="detail-bold">{{ 'URL' | translate }}</td>
-                                <td><a target="_blank" ng-href="{{model.url}}">{{model.url}}</a></td>
+                                <td><a target="_blank" ng-href="{{model.url}}/{{model.type.name}}">{{model.url}}/{{model.type.name}}</a></td>
                             </tr>
-                            <!--<tr ng-if="model.visibility">
-                                <td class="detail-bold">{{ 'VISIVILITY' | translate }}</td>
-                                <td>{{model.visibility}}</td>
-                            </tr>
-                            <tr ng-if="model.tags">
-                                <td class="detail-bold">{{ 'TAGS' | translate }}</td>
-                                <td ng-bind-html="getHtml(model.tags)" >
-                                </td>
-                            </tr> -->
                             <tr ng-if="model.gatheringDate">
                                 <td class="detail-bold">{{ 'GATHERING_DATE' | translate }}</td>
-                                <td>{{model.gatheringDate| date:'MMM d, y' : 'UTC' }}</td>
+                                <td>{{model.gatheringDate| date:'MMM d, y h:mm:ss a' : 'UTC' }}</td>
                             </tr>
                             <tr>
                                 <td class="detail-bold">{{ 'UPDATED_VIEW' | translate }}</td>
@@ -112,7 +103,7 @@
                         <div class="pull-right">
                             <a class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)">{{ 'DELETE' | translate }}</a>
                             <button type="submit" class="btn btn-primary" ng-click="edit(model)">{{ 'EDIT' | translate }}</button>
-                            <a class="btn btn-primary" target="_blank" href="{{ model.url}}" download="{{ model.name}}{{ model.type.name}}">{{ 'DOWNLOAD' | translate }}</a>
+                            <a class="btn btn-primary" target="_blank" href="{{ model.url}}/{{model.type.name}}" download="{{ model.name}}{{ model.type.name}}">{{ 'DOWNLOAD' | translate }}</a>
                         </div>
                     </div>
                 </div>
@@ -134,8 +125,6 @@
                         <th>{{ 'RESOURCE' | translate }}</th>
                         <th>{{ 'TYPE' | translate }}</th>
                         <th class="text-center">{{ 'ACTIONS' | translate }}</th>
-                        <!--<th>{{ 'EDIT' | translate }}</th>
-                        <th>{{ 'DELETE' | translate }}</th>-->
                         </thead>
                         <tbody>
                             <tr ng-repeat="map in model.resources.data.maps">
@@ -147,12 +136,10 @@
                                 </td>
                                 <td class="text-center table-btn">
                                     <a target="_blank" class="btn btn-primary" ng-href="#/maps/{{map.id}}/view">{{ 'VIEW' | translate }}</a>
-                                <!--</td>
-                                <td>-->
                                     <a target="_blank" class="btn btn-primary" ng-href="#/maps/{{map.id}}/edit">{{ 'EDIT' | translate }}</a>
-                                <!--</td>
-                                <td>-->
                                     <a class="btn btn-primary" ng-click="deleteResource(map.id, 'maps')">{{ 'DELETE' | translate }}</a>
+                                    <button ng-click="unPublish(map.id, 'maps')" ng-if="map.status.id == statuses.published" class="pull-right btn btn-primary">{{ 'UNPUBLISH' | translate }}</button>
+                                    <button ng-click="publish(map.id, 'maps')" ng-if="map.status.id !== statuses.published" class="pull-right btn btn-primary">{{ 'PUBLISH' | translate }}</button> 
                                 </td>
                             </tr>
                             <tr ng-repeat="chart in model.resources.data.charts">
@@ -164,12 +151,10 @@
                                 </td>
                                 <td class="text-center table-btn">
                                     <a target="_blank" class="btn btn-primary" ng-href="#/charts/{{chart.id}}/view">{{ 'VIEW' | translate }}</a>
-                                <!--</td>
-                                <td>-->
                                     <a target="_blank" class="btn btn-primary" ng-href="#/charts/{{chart.id}}/edit">{{ 'EDIT' | translate }}</a>
-                                <!--</td>
-                                <td>-->
                                     <a class="btn btn-primary" ng-click="deleteResource(chart.id, 'charts')">{{ 'DELETE' | translate }}</a>
+                                    <button ng-click="unPublish(chart.id, 'charts')" ng-if="chart.status.id == statuses.published" class="pull-right btn btn-primary">{{ 'UNPUBLISH' | translate }}</button>
+                                    <button ng-click="publish(chart.id, 'charts')" ng-if="chart.status.id !== statuses.published" class="pull-right btn btn-primary">{{ 'PUBLISH' | translate }}</button> 
                                 </td>
                             </tr>
 

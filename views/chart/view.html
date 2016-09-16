@@ -26,16 +26,16 @@
                                 <td><a ng-href="#/files/{{model.file.id}}/view">{{model.file.name}}</a></td>
                             </tr>
                             <tr ng-if="model.status">
-                                 <td class="detail-bold">{{ 'STATUS' | translate }}</td>
-                                 <td>{{model.status.name}}</td>
-                             </tr>
+                                <td class="detail-bold">{{ 'STATUS' | translate }}</td>
+                                <td>{{model.status.name}}</td>
+                            </tr>
                             <tr ng-if="model.createdBy">
                                 <td class="detail-bold">{{ 'CREATED_BY' | translate }} </td>
                                 <td><a ng-href="#/users/{{model.createdBy.id}}/view">{{model.createdBy.username}}</a></td>
                             </tr>
                             <tr ng-if="model.createdAt">
                                 <td class="detail-bold">{{ 'CREATED_AT' | translate }}</td>
-                                <td>{{model.createdAt| date:'d/M/yy H:mm'}}</td>
+                                <td>{{model.createdAt| date:'MMM d, y h:mm:ss a'}}</td>
                             </tr>
                             <tr ng-if="model.publishedAt">
                                 <td class="detail-bold">{{ 'PUBLISHED_AT' | translate }}</td>
@@ -50,17 +50,17 @@
                                 <td ng-bind-html="getHtml(model.notes)"></td>
                             </tr>
                             <tr ng-if="model.link">
-                                <td class="detail-bold">{{ 'LINK' | translate }}</td>
+                                <td class="detail-bold">{{ 'URL' | translate }}</td>
                                 <td><a target="_blank" ng-href="{{model.link}}">{{model.link}}</a></td>
                             </tr>
                             <tr ng-if="model.type && !model.link">
                                 <td class="detail-bold">{{ 'TYPE' | translate }}</td>
-                                <td>{{model.type | translate}}</td>
+                                <td>{{model.type| translate}}</td>
                             </tr>
 
                             <tr ng-if="model.dataType && !model.link">
                                 <td class="detail-bold">{{ 'CHART_SUBTYPE' | translate }}</td>
-                                <td>{{model.dataType | translate}}</td>
+                                <td>{{model.dataType| translate}}</td>
                             </tr>
                             <!--<tr ng-repeat="(key, val) in model.optionals">
                                 <td class="detail-bold">{{key}}</td>

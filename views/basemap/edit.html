@@ -1,13 +1,13 @@
 <header-home></header-home>
 <div class="content-wrapper">
-   <breadcrumbs data-type="{{ 'EDIT' | translate }}" data-model-name="{{ 'BASEMAP' | translate }}" data-model="{{type}}"></breadcrumbs>
+    <breadcrumbs data-type="{{ 'EDIT' | translate }}" data-model-name="{{ 'BASEMAP' | translate }}" data-model="{{type}}"></breadcrumbs>
     <!-- Main content -->
     <section class="content">
         <div class="row">
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                      <h3 class="box-title">{{ 'EDIT' | translate }} {{ 'BASEMAP' | translate }}</h3>
+                        <h3 class="box-title">{{ 'EDIT' | translate }} {{ 'BASEMAP' | translate }}</h3>
                     </div>
                     <form autocomplete="off"  class="form-horizontal" name="form"  autocomplete="false"  role="form" ng-submit="update(form.$valid)" novalidate>
                         <div class="box-body" ng-include="'views/basemap/_form.html'"></div>
