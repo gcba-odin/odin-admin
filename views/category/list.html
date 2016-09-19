@@ -23,7 +23,7 @@
                                     <th>{{ 'STATE' | translate }}</th>
                                     <th class="text-center">{{ 'ACTIONS' | translate }}</th>
                                 </tr>
-                                <tr ng-repeat="model in data.data">
+                                <tr ng-repeat="model in data.data | orderBy: 'name'">
                                     <td>{{model.name}}</td>
                                     <td>
                                         <span class="label label-default" ng-class="activeClass(model.deletedAt)">{{model.deletedAt ? 'Inactivo' : 'Activo'}}</span>
@@ -42,9 +42,9 @@
                     </div>
                     <!-- /.box-body -->
                     <paging class="text-center" page="data.meta.page" page-size="limit" total="data.meta.count"
-                            paging-action="paging('pageClick', page, pageSize, total)" 
+                            paging-action="paging('pageClick', page, pageSize, total)"
                             show-prev-next="true"
-                            show-first-last="true" hide-if-empty="true"></paging> 
+                            show-first-last="true" hide-if-empty="true"></paging>
                 </div>
                 <!-- /.box -->
             </div>
