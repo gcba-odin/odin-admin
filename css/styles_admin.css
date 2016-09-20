@@ -112,7 +112,7 @@ ul.sidebar-menu a {
     color: #ffb600;
 }
 
-ul.sidebar-menu .treeview.active > a, 
+ul.sidebar-menu .treeview.active > a,
 ul.sidebar-menu .treeview.active > a > span {
     color: #ff386a;
 }
@@ -317,9 +317,11 @@ div.form-group div.has-error p {
 }
 
 .steps li.active a, .steps li.active p{
-    background: #ff386a;
+    /*background: #ff386a;*/
+    background: white;
+    border: 3px solid #ff386a;
     opacity: 1;
-    color: white;
+    color: #ff386a;
 }
 
 .steps li.active a:after, .steps li.active p:after {
@@ -327,13 +329,23 @@ div.form-group div.has-error p {
 }
 
 .steps li a, .steps li p{
-    background-color: #ff386a;
-    opacity: .4;
-    color: white
+    /*background-color: #ff386a;*/
+    background-color: white;
+    border: 3px solid #FFb600;
+    /*opacity: .4;*/
+    color: #FFb600;
 }
 
 .steps li a:before, .steps li p:before{
-    border-left: 0; 
+    /*border-left: 0;*/
+}
+
+.file-upload{
+  background-color: white;
+  border: 2px solid #777777;
+  /*opacity: .4;*/
+  color: #777777;
+
 }
 
 div.panel-heading {
@@ -437,12 +449,12 @@ div.panel-heading {
         margin-left: -6em !important;
         margin-right: -6em !important;
     }
-    
+
     .sidebar-collapse .sidebar-menu .sidebar-svg {
         margin-left: 0 !important;
         margin-right: -12em !important;
     }
-    
+
     .sidebar-collapse .sidebar-menu .treeview-menu .sidebar-svg {
         margin-right: -6em !important;
         margin-left: -6em !important

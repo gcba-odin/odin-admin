@@ -413,7 +413,6 @@
  .steps li {
    display: inline-block;
    margin-bottom: 3px;
-   padding: 0px;
    text-align: center;
    cursor: pointer;
  }
@@ -426,6 +425,7 @@
    display: block;
    font-size: 14px;
    font-weight: bold;
+   font-family: avenir-black, sans-serif;
    position: relative;
    text-indent: 12px;
  }
@@ -451,18 +451,18 @@
 
  .steps li a:after,
  .steps li p:after {
-   border-bottom: 18px solid transparent;
+   /*border-bottom: 18px solid transparent;
    border-left: 12px solid #e5f4fd;
    border-top: 18px solid transparent;
    content: "";
    height: 0;
-   position: absolute;
+   position: absolute;*/
    /*right: -12px;*/
-   left: 100%;
+   /*left: 100%;
    top: 50%;
    width: 0;
    margin-top: -18px;
-   z-index: 1;
+   z-index: 1;*/
  }
 
  .steps li.active a,
@@ -478,17 +478,17 @@
 
  .steps li.undone a,
  .steps li.undone p {
-   background: #eee;
-   color: #333;
+   /*background: #eee;*/
+   /*color: #333;*/
  }
 
  .steps li.undone a:after,
  .steps li.undone p:after {
-   border-left: 12px solid #eee;
+   /*border-left: 12px solid #eee;*/
  }
 
  .steps li.undone p {
-   color: #aaa;
+   /*color: #aaa;*/
  }
 
  div.panel-heading {
