@@ -467,7 +467,7 @@
   background-color: white;
   color: #FF386a;
   font-family: avenir-black, sans-serif;
-  font-size: 1em;  
+  font-size: 1em;
   padding: 1em;
 }
 
@@ -616,19 +616,19 @@
      content: '';
      position: absolute;
      display: block;
-     width: 4px;
+     width: 2px;
      background: #f5f5f6;
      left: 10%;
      top: 20px;
      bottom: 20px;
-     margin-left: -4px;
+     margin-left: -13px;
  }
 
  .timeline-centered .timeline-entry {
      position: relative;
      width: 90%;
      float: right;
-     margin-bottom: 70px;
+     margin-bottom: 55px;
      clear: both;
  }
 
@@ -740,21 +740,22 @@
      background: #fff;
      color: #737881;
      display: block;
-     width: 40px;
-     height: 40px;
+     width: 20px;
+     height: 20px;
      -webkit-background-clip: padding-box;
      -moz-background-clip: padding;
      background-clip: padding-box;
-     -webkit-border-radius: 20px;
-     -moz-border-radius: 20px;
-     border-radius: 20px;
+     -webkit-border-radius: 13px;
+     -moz-border-radius: 13px;
+     border-radius: 13px;
      text-align: center;
-     -moz-box-shadow: 0 0 0 5px #f5f5f6;
-     -webkit-box-shadow: 0 0 0 5px #f5f5f6;
-     box-shadow: 0 0 0 5px #f5f5f6;
+     /*-moz-box-shadow: 0 0 0 2px #f5f5f6;
+     -webkit-box-shadow: 0 0 0 2px #f5f5f6;
+     box-shadow: 0 0 0 2px #f5f5f6;*/
      line-height: 40px;
      font-size: 15px;
      float: left;
+     margin-top: 10px;
  }
 
  .timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon.bg-primary {
@@ -768,8 +769,9 @@
  }
 
  .timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon.bg-success {
-     background-color: #00a651;
+     /*background-color: #00a651;*/
      color: #fff;
+     border: 2px solid #FFb600;
  }
 
  .timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon.bg-info {
@@ -778,13 +780,15 @@
  }
 
  .timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon.bg-warning {
-     background-color: #fad839;
+     /*background-color: #fad839;*/
      color: #fff;
+     border: 2px solid #A3A3A3;
  }
 
  .timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon.bg-danger {
-     background-color: #cc2424;
+     /*background-color: #cc2424;*/
      color: #fff;
+     border: 2px solid #FF386a;
  }
 
  .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label {
