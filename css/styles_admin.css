@@ -265,6 +265,8 @@ div.form-group div.has-error p {
 
 .chat {
     padding: 3em 1em 1em 0em !important;
+    height: 480px;
+    overflow: auto;
 }
 
 #chat-box .item {
@@ -278,6 +280,8 @@ div.form-group div.has-error p {
 .box-header .box-title {
     line-height: 2 !important;
     padding: 0 1em;
+    font-family: avenir-black, sans-serif;
+    color: #FF386a;
 }
 
 .box-header .box-tools {
