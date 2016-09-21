@@ -98,7 +98,7 @@
   text-align: center;
   text-decoration: none;
   vertical-align: middle;
-  border-left: 1px solid #0073bb;
+  /*border-left: 1px solid #0073bb;*/
   -webkit-border-radius: 0 2px 2px 0;
      -moz-border-radius: 0 2px 2px 0;
           border-radius: 0 2px 2px 0;
@@ -199,8 +199,8 @@
   margin: 0 3px 3px 0;
   color: #ffffff;
   cursor: pointer;
-  background: #1da7ee;
-  border: 1px solid #0073bb;
+  background: #FF386a;
+  border: 1px solid #FF386a;
 }
 
 .selectize-control.multi .selectize-input > div.active {
@@ -383,12 +383,12 @@
 
 .selectize-control.multi .selectize-input [data-value] {
   text-shadow: 0 1px 0 rgba(0, 51, 83, 0.3);
-  background-color: #1b9dec;
-  background-image: -moz-linear-gradient(top, #1da7ee, #178ee9);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#1da7ee), to(#178ee9));
-  background-image: -webkit-linear-gradient(top, #1da7ee, #178ee9);
-  background-image: -o-linear-gradient(top, #1da7ee, #178ee9);
-  background-image: linear-gradient(to bottom, #1da7ee, #178ee9);
+  background-color: #FF386a;
+  background-image: -moz-linear-gradient(top, #FF386a, #FF386a);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FF386a), to(#FF386a));
+  background-image: -webkit-linear-gradient(top, #FF386a, #FF386a);
+  background-image: -o-linear-gradient(top, #FF386a, #FF386a);
+  background-image: linear-gradient(to bottom, #FF386a, #FF386a);
   background-repeat: repeat-x;
   -webkit-border-radius: 3px;
      -moz-border-radius: 3px;
@@ -398,16 +398,16 @@
           box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), inset 0 1px rgba(255, 255, 255, 0.03);
 }
 
-.selectize-control.multi .selectize-input [data-value].active {
-  background-color: #0085d4;
-  background-image: -moz-linear-gradient(top, #008fd8, #0075cf);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#008fd8), to(#0075cf));
-  background-image: -webkit-linear-gradient(top, #008fd8, #0075cf);
-  background-image: -o-linear-gradient(top, #008fd8, #0075cf);
-  background-image: linear-gradient(to bottom, #008fd8, #0075cf);
+/*.selectize-control.multi .selectize-input [data-value].active {
+  background-color: #FF1B54;
+  background-image: -moz-linear-gradient(top, #FF1B54, #FF1B54);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FF1B54), to(#FF1B54));
+  background-image: -webkit-linear-gradient(top, #FF1B54, #FF1B54);
+  background-image: -o-linear-gradient(top, #FF1B54, #FF1B54);
+  background-image: linear-gradient(to bottom, #FF1B54, #FF1B54);
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff008fd8', endColorstr='#ff0075cf', GradientType=0);
-}
+}*/
 
 .selectize-control.single .selectize-input {
   background-color: #f9f9f9;

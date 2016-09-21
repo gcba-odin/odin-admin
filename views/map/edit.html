@@ -7,20 +7,21 @@
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">{{ 'EDIT' | translate }} {{ 'MAPS' | translate }}</h3>
+                        <h3 class="box-title">{{ 'EDIT' | translate }}
+                            {{ 'MAPS' | translate }}</h3>
                     </div>
                     <div class="row">
                         <div class="col-xs-12">
 
                             <ul class="steps">
                                 <li ng-class="step(0)" ng-click="checkstep(0)" class=" col-xs-4">
-                                    <p>{{ 'DATA_OF_MAP' | translate }}</p>
+                                    <p> 1. {{ 'DATA_OF_MAP' | translate | uppercase }}</p>
                                 </li>
                                 <li ng-class="step(1)" ng-click="checkstep(1)" class=" col-xs-4">
-                                    <p>{{ 'SELECT_FIELDS' | translate }}</p>
+                                    <p> 2. {{ 'SELECT_FIELDS' | translate | uppercase }}</p>
                                 </li>
                                 <li ng-class="step(2)" ng-click="checkstep(2)" class=" col-xs-4">
-                                    <p>{{ 'REVISION' | translate }}</p>
+                                    <p> 3. {{ 'REVISION' | translate | uppercase }}</p>
                                 </li>
                             </ul>
 
@@ -59,7 +60,9 @@
                                         </tr>
                                         <tr ng-if="model.link">
                                             <td class="detail-bold">{{ 'URL' | translate }}</td>
-                                            <td><a target="_blank" ng-href="{{model.link}}">{{model.link}}</a></td>
+                                            <td>
+                                                <a target="_blank" ng-href="{{model.link}}">{{model.link}}</a>
+                                            </td>
                                         </tr>
                                         <tr ng-if="model.basemap && !model.link">
                                             <td class="detail-bold">{{ 'BASE_MAP' | translate }}</td>
@@ -74,7 +77,8 @@
                                             <td>{{model.longitudeKey}}</td>
                                         </tr>
                                         <tr ng-repeat="item in model.items" ng-if="!model.link">
-                                            <td class="detail-bold">{{ 'PROPERTY' | translate }} {{increment($index)}}</td>
+                                            <td class="detail-bold">{{ 'PROPERTY' | translate }}
+                                                {{increment($index)}}</td>
                                             <td>{{item.field2}}</td>
                                         </tr>
                                     </table>
