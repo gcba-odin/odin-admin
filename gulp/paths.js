@@ -20,6 +20,8 @@ gulp.paths = {
     'config.json',
   ],
   vendors: [
+    'css/**/*.scss',
+    'css/**/*.css',
     'css/**/*',
     'plugins/**',
     'index.html',

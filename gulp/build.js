@@ -4,5 +4,5 @@ gulp.task('build', [
   'clean',
   'static',
   'vendors',
-  'javascript',
+  'javascript'
 ]);
