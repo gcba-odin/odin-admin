@@ -464,6 +464,17 @@ div.panel-heading {
     margin-right: 10px;
 }
 
+
+.label-default{
+  background-color: #9A9A9A;
+  color: white;
+}
+
+.bg-primary{
+  background-color: #FF386a;
+}
+
+
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
     .sidebar-menu .sidebar-svg {
         margin-left: -6em !important;
