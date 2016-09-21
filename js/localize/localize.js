@@ -352,7 +352,8 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
     'CKAN_IMPORTER': 'Importador CKAN',
     'IMPORT_RESULTS': 'Resultados de la importación',
     'RESULTS': 'Resultados',
-    'ATTACH_FILE': 'Adjuntar archivo'
+    'ATTACH_FILE': 'Adjuntar archivo',
+    'ATTACH_IMAGE': 'Adjuntar imagen'
 
   });
   $translateProvider.preferredLanguage('es');
