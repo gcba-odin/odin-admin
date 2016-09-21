@@ -127,7 +127,7 @@
             };
         }]);
 
-    app.directive('selectTwoAjax', ['$timeout', '$parse', '$cookieStore', '$http', 'jwtHelper', '$location', function($timeout, $parse, $cookieStore, $http, jwtHelper, $location, $scope, $rootScope) {
+    app.directive('selectTwoAjax', ['$timeout', '$parse', '$cookieStore', '$http', 'jwtHelper', '$location', 'Alertify', function($timeout, $parse, $cookieStore, $http, jwtHelper, $location, Alertify, $scope, $rootScope) {
             return {
                 restrict: 'A',
                 scope: {
@@ -185,6 +185,12 @@
                                             selectize.addItems(resp.data.id);
                                             selectize.refreshOptions();
 
+                                        },
+                                        error: function(resp) {
+                                            Alertify.alert('El tag que desea agregar ya existe.');
+                                            selectize.refreshOptions();
+                                            selectize.removeOption(name);
+                                            selectize.refreshOptions();
                                         }
                                     });
                                 }

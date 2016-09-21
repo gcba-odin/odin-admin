@@ -19,7 +19,10 @@
                                     <th>{{ 'STATE' | translate }}</th>
                                     <th class="text-center">{{ 'ACTIONS' | translate }}</th>
                                 </tr>
-                                <tr ng-repeat="model in data.data">
+                                <tr ng-if="data.data.length == 0">
+                                    <td colspan="3">No se encuentran datos para mostrar.</td>
+                                </tr>
+                                <tr ng-if="data.data.length != 0" ng-repeat="model in data.data">
                                     <td>{{model.name}}</td>
                                     <td>{{model.status.name}}</td>
                                     <td class="text-center table-btn">

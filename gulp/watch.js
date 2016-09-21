@@ -2,7 +2,7 @@ var gulp = require('gulp');
 
 gulp.task('watch', ['serve'], function() {
   // Static Files
-  gulp.watch(gulp.paths.static, ['static-watch']);
+  gulp.watch(gulp.paths.static, ['static-watch', 'vendors']);
 
   // Vendors
   gulp.watch(gulp.paths.vendors, ['vendors-watch']);
@@ -10,7 +10,7 @@ gulp.task('watch', ['serve'], function() {
   // Javascript
   gulp.watch(gulp.paths.javascript, ['javascript-watch']);
 
-  // // Style
+  // Style
   // gulp.watch([
   //   'css/**/*.{css,scss}'
   //   ], ['styles']);
