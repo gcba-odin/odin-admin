@@ -196,13 +196,13 @@
                             <span> {{ 'ADD_FILES' | translate }} </span> <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
-                            <li ng-class="{active: isActive('/files/new/:dataset?') || isActive('/files') || isActiveEdit('files')}" class="treeview">
-                                <a ng-href="#/files">
+                            <li ng-class="{active: isActive('/files/new/:dataset?')}" class="treeview">
+                                <a ng-href="#/files/new">
                                     A partir de un archivo
                                     <!-- {{ 'ADD_FILES' | translate }}  -->
                                 </a>
                             </li>
-                            <li ng-class="{active: isActive('/files/new/:dataset?') || isActive('/files') || isActiveEdit('files')}" class="treeview">
+                            <li ng-class="{active: isActive('/files/new/ws/:dataset?')" class="treeview">
                               <!--  ng-class="{active: isActive('/files/new/dataset/ws?')}" -->
                                 <a ng-href="#/files">
                                   A partir de un servicio web
