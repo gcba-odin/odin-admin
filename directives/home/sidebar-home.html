@@ -36,7 +36,7 @@
                                       c0.384-0.429,0.56-0.933,0.528-1.511C9.055,6.149,8.825,5.671,8.396,5.285c-0.43-0.386-0.934-0.56-1.511-0.528
                                       C6.309,4.789,5.826,5.021,5.441,5.451z"/>
                             </svg>
-                            {{ 'VIEW_USERS' | translate }}  
+                            {{ 'VIEW_USERS' | translate }}
                         </a>
                     </li>
                 </ul>
@@ -93,7 +93,7 @@
                                       c0.384-0.429,0.56-0.933,0.528-1.511C9.055,6.149,8.825,5.671,8.396,5.285c-0.43-0.386-0.934-0.56-1.511-0.528
                                       C6.309,4.789,5.826,5.021,5.441,5.451z"/>
                             </svg>
-                            {{ 'VIEW_ORGANIZATIONS' | translate }} 
+                            {{ 'VIEW_ORGANIZATIONS' | translate }}
                         </a>
                     </li>
                 </ul>
@@ -185,16 +185,31 @@
                     <span>{{ 'FILES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li ng-class="{active: isActive('/files/new/:dataset?')}">
-                        <a ng-href="#/files/new">
+                    <li ng-class="{active: isActive('/files/new/:dataset?')}" class="treeview">
+                        <a ng-href="javascript:void(0)" >
                             <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                  viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                                 <path fill="#FFB600" d="M5.27,8.981l1.428,1.427l-2.131,0.718L5.27,8.981z M5.846,8.461l3.931-3.928l1.37,1.367L7.216,9.832
                                       L5.846,8.461z M10.328,3.982l0.601-0.62c0.064-0.058,0.135-0.085,0.211-0.085c0.078,0,0.148,0.027,0.213,0.085l0.979,0.979
                                       c0.055,0.059,0.083,0.13,0.083,0.213s-0.028,0.153-0.083,0.209l-0.634,0.589L10.328,3.982z"/>
                             </svg>
-                            {{ 'ADD_FILES' | translate }} 
+                            <span> {{ 'ADD_FILES' | translate }} </span> <i class="fa fa-angle-left pull-right"></i>
                         </a>
+                        <ul class="treeview-menu">
+                            <li ng-class="{active: isActive('/files/new/:dataset?') || isActive('/files') || isActiveEdit('files')}" class="treeview">
+                                <a ng-href="#/files">
+                                    A partir de un archivo
+                                    <!-- {{ 'ADD_FILES' | translate }}  -->
+                                </a>
+                            </li>
+                            <li ng-class="{active: isActive('/files/new/:dataset?') || isActive('/files') || isActiveEdit('files')}" class="treeview">
+                              <!--  ng-class="{active: isActive('/files/new/dataset/ws?')}" -->
+                                <a ng-href="#/files">
+                                  A partir de un servicio web
+                                    <!-- {{ 'VIEW_FILES' | translate }}  -->
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li ng-class="{active: isActive('/files')}">
                         <a ng-href="#/files">
@@ -209,7 +224,7 @@
                                       c0.384-0.429,0.56-0.933,0.528-1.511C9.055,6.149,8.825,5.671,8.396,5.285c-0.43-0.386-0.934-0.56-1.511-0.528
                                       C6.309,4.789,5.826,5.021,5.441,5.451z"/>
                             </svg>
-                            {{ 'VIEW_FILES' | translate }} 
+                            {{ 'VIEW_FILES' | translate }}
                         </a>
                     </li>
                 </ul>
@@ -253,7 +268,7 @@
                                       c0.384-0.429,0.56-0.933,0.528-1.511C9.055,6.149,8.825,5.671,8.396,5.285c-0.43-0.386-0.934-0.56-1.511-0.528
                                       C6.309,4.789,5.826,5.021,5.441,5.451z"/>
                             </svg>
-                            {{ 'VIEW_CHARTS' | translate }} 
+                            {{ 'VIEW_CHARTS' | translate }}
                         </a>
                     </li>
                 </ul>
@@ -306,7 +321,7 @@
                                       c0.384-0.429,0.56-0.933,0.528-1.511C9.055,6.149,8.825,5.671,8.396,5.285c-0.43-0.386-0.934-0.56-1.511-0.528
                                       C6.309,4.789,5.826,5.021,5.441,5.451z"/>
                             </svg>
-                            {{ 'VIEW_MAPS' | translate }} 
+                            {{ 'VIEW_MAPS' | translate }}
                         </a>
                     </li>
                 </ul>
@@ -404,7 +419,7 @@
                                       c0.384-0.429,0.56-0.933,0.528-1.511C9.055,6.149,8.825,5.671,8.396,5.285c-0.43-0.386-0.934-0.56-1.511-0.528
                                       C6.309,4.789,5.826,5.021,5.441,5.451z"/>
                             </svg>
-                            {{ 'VIEW_STATUSES' | translate }} 
+                            {{ 'VIEW_STATUSES' | translate }}
                         </a>
                     </li>
                 </ul>
@@ -481,7 +496,7 @@
                                       c0.384-0.429,0.56-0.933,0.528-1.511C9.055,6.149,8.825,5.671,8.396,5.285c-0.43-0.386-0.934-0.56-1.511-0.528
                                       C6.309,4.789,5.826,5.021,5.441,5.451z"/>
                             </svg>
-                            {{ 'VIEW_FILETYPES' | translate }} 
+                            {{ 'VIEW_FILETYPES' | translate }}
                         </a>
                     </li>
                 </ul>
