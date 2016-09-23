@@ -22,9 +22,18 @@
         "ngRoute.middleware",
         "consumer-service",
         "validation.match",
-        "angular-jwt"]);
+        "angular-jwt",
+        "vcRecaptcha"]);
 
-    app.config(function($routeProvider, $httpProvider, $translateProvider, usSpinnerConfigProvider, ChartJsProvider, ConsumerServiceProvider, $middlewareProvider, jwtOptionsProvider) {
+    app.config(function($routeProvider, $httpProvider, $translateProvider, usSpinnerConfigProvider, ChartJsProvider, ConsumerServiceProvider, $middlewareProvider, jwtOptionsProvider, vcRecaptchaServiceProvider) {
+
+        vcRecaptchaServiceProvider.setDefaults({
+            key: '6LetbAcUAAAAABWhGuMbTaYQBferzWoxYvmtx9PS',
+            theme: 'light',
+//            stoken: '--- YOUR GENERATED SECURE TOKEN ---',
+//            size: '---- compact or normal ----',
+//            type: '---- audio or image ----'
+        });
 
         jwtOptionsProvider.config({
             unauthenticatedRedirectPath: '/login',
