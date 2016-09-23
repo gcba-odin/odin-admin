@@ -27,6 +27,11 @@
                 })
                 .error(function(response) {
                     response.message = 'El usuario y/o la contraseña son inválidos.';
+
+                    if(!angular.isUndefined(response.data.success) && !response.data.success) {
+                        response.message = 'Se olvidó de seleccionar el captcha.';
+                    }
+                    
                     callback(response);
                     //alert();
 

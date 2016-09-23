@@ -39,6 +39,12 @@ function LoginController($location, AuthenticationService, $scope, vcRecaptchaSe
     $scope.$emit('body:class:add', "login-page")
 
     $scope.login = login;
+    
+    recaptchaId = null;
+    
+    $scope.setRecaptchaId = function(widgetId) {
+        recaptchaId = widgetId;
+    };
 
     (function initController() {
         // reset login status
@@ -48,24 +54,31 @@ function LoginController($location, AuthenticationService, $scope, vcRecaptchaSe
     function login() {
         var vm = $scope.vm;
 
-        var data = {
-            username: vm.username,
-            password: vm.password,
-            recaptcha: vcRecaptchaService.getResponse()
-        };
-
-        vm.dataLoading = true;
-        AuthenticationService.Login(data, function(response) {
-            if (!response.code) {
-                AuthenticationService.SetCredentials(vm.username, vm.password, response.data.token, response.data.user);
-                $location.path('/');
-            } else {
-                Alertify.alert(response.message);
-                vm.password = '';
-                vm.dataLoading = false;
-                vcRecaptchaService.reload();
-            }
-        });
+        if (!vcRecaptchaService.getResponse(recaptchaId)) {
+            vm.od_captcha = null;
+            vcRecaptchaService.reload(recaptchaId);
+            Alertify.alert('Por favor, completa el captcha.');
+        } else {
+            
+            var data = {
+                username: vm.username,
+                password: vm.password,
+                recaptcha: vcRecaptchaService.getResponse(recaptchaId)
+            };
+            
+            vm.dataLoading = true;
+            AuthenticationService.Login(data, function(response) {
+                if (!response.code) {
+                    AuthenticationService.SetCredentials(vm.username, vm.password, response.data.token, response.data.user);
+                    $location.path('/');
+                } else {
+                    vcRecaptchaService.reload(recaptchaId);
+                    Alertify.alert(response.message);
+                    vm.password = '';
+                    vm.dataLoading = false;
+                }
+            });
+        }
     }
     ;
 }
