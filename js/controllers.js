@@ -51,7 +51,7 @@ function LoginController($location, AuthenticationService, $scope, vcRecaptchaSe
         var data = {
             username: vm.username,
             password: vm.password,
-            recaptcha: vm.od_captcha
+            recaptcha: vcRecaptchaService.getResponse()
         };
 
         vm.dataLoading = true;
