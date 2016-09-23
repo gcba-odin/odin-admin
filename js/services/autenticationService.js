@@ -14,12 +14,13 @@
         service.ClearCredentials = ClearCredentials;
         return service;
 
-        function Login(username, password, callback) {
+        function Login(data, callback) {
             /* Use this for real authenticationa
              ----------------------------------------------*/
             $http.post($rootScope.url + '/users/login', {
-                    username: username,
-                    password: password
+                    username: data.username,
+                    password: data.password,
+                    'g-recaptcha-response': data.recaptcha
                 })
                 .success(function(response) {
                     callback(response);

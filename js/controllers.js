@@ -35,7 +35,7 @@ app.controller("mainController", function($scope, AuthenticationService, $locati
 });
 
 
-function LoginController($location, AuthenticationService, $scope) {
+function LoginController($location, AuthenticationService, $scope, vcRecaptchaService, Alertify) {
     $scope.$emit('body:class:add', "login-page")
 
     $scope.login = login;
@@ -48,15 +48,22 @@ function LoginController($location, AuthenticationService, $scope) {
     function login() {
         var vm = $scope.vm;
 
+        var data = {
+            username: vm.username,
+            password: vm.password,
+            recaptcha: vm.od_captcha
+        };
+
         vm.dataLoading = true;
-        AuthenticationService.Login(vm.username, vm.password, function(response) {
+        AuthenticationService.Login(data, function(response) {
             if (!response.code) {
                 AuthenticationService.SetCredentials(vm.username, vm.password, response.data.token, response.data.user);
                 $location.path('/');
             } else {
-                alert(response.message);
+                Alertify.alert(response.message);
                 vm.password = '';
                 vm.dataLoading = false;
+                vcRecaptchaService.reload();
             }
         });
     }
