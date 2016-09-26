@@ -353,7 +353,17 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
     'IMPORT_RESULTS': 'Resultados de la importación',
     'RESULTS': 'Resultados',
     'ATTACH_FILE': 'Adjuntar archivo',
-    'ATTACH_IMAGE': 'Adjuntar imagen'
+    'ATTACH_IMAGE': 'Adjuntar imagen',
+    'FROM_FILE': 'A partir de un archivo',
+    'FROM_WEBSERVICE': 'A partir de un servicio web',
+    'WEBSERVICE': 'Servicio web',
+    'CHARGE_OF_WEBSERVICE': 'Carga del servicio web',
+    'CHARGE_OF_DATA': 'Carga de datos',
+    'WEBSERVICE_URL': 'Dirección al servicio web',
+    'WEBSERVICE_TYPE': 'Tipo de servicio web'
+
+
+
 
   });
   $translateProvider.preferredLanguage('es');
