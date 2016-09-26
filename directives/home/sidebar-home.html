@@ -623,6 +623,13 @@
                     <li ng-class="{active: isActive('/importer')}"><a ng-href="#/importer"><i class="fa fa-circle-o"></i> {{ 'IMPORT' | translate }}</a></li>
                 </ul>
             </li>
+
+            <li class="treeview">
+                <a ng-href="{{$rootScope.url + '/public/odin-user-manual.pdf'}}" target="_blank">
+                    {{'USER_MANUAL' | translate}}
+                </a>
+            </li>
+
         </ul>
     </section>
 </aside>

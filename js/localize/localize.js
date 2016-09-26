@@ -361,7 +361,8 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
     'CHARGE_OF_DATA': 'Carga de datos',
     'WEBSERVICE_URL': 'Dirección al servicio web',
     'WEBSERVICE_TYPE': 'Tipo de servicio web',
-    'SELECT_OPTION': 'Elije una opción'
+    'SELECT_OPTION': 'Elije una opción',
+    'USER_MANUAL': 'Manual de usuario'
 
 
 
