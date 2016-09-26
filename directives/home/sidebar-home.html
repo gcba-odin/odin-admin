@@ -129,7 +129,7 @@
                     <span>{{ 'DATASETS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li ng-class="{active: isActive('/datasets/new')}">
+                    <li ng-class="{active: isActive('/datasets/new/:dataset?')}">
                         <a ng-href="#/datasets/new">
                             <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                  viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
@@ -140,7 +140,7 @@
                             {{ 'ADD_DATASET' | translate }}
                         </a>
                     </li>
-                    <li ng-class="{active: isActive('/datasets')}">
+                    <li ng-class="{active: isActive('#/datasets?')}">
                         <a ng-href="#/datasets">
                             <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                  viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
@@ -156,7 +156,7 @@
                             {{ 'VIEW_DATASET' | translate }}
                         </a>
                     </li>
-                    <li ng-class="{active: isActive('/datasets/:filter?')}">
+                    <li ng-class="{active: isActive('/datasets/starred?')}">
                         <a ng-href="#/datasets/starred">
                             <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                  viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
@@ -198,15 +198,13 @@
                         <ul class="treeview-menu">
                             <li ng-class="{active: isActive('/files/new/:dataset?')}" class="treeview">
                                 <a ng-href="#/files/new">
-                                    A partir de un archivo
-                                    <!-- {{ 'ADD_FILES' | translate }}  -->
+                                    {{ 'FROM_FILE' | translate }}
                                 </a>
                             </li>
-                            <li ng-class="{active: isActive('/files/new/ws/:dataset?')" class="treeview">
+                            <li ng-class="{active: isActive('/webservices/new/:dataset?')}" class="treeview">
                               <!--  ng-class="{active: isActive('/files/new/dataset/ws?')}" -->
-                                <a ng-href="#/files">
-                                  A partir de un servicio web
-                                    <!-- {{ 'VIEW_FILES' | translate }}  -->
+                                <a ng-href="#/webservices/new">
+                                    {{ 'FROM_WEBSERVICE' | translate }}
                                 </a>
                             </li>
                         </ul>
