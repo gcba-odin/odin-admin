@@ -2,7 +2,8 @@ var gulp = require('gulp');
 
 gulp.task('build', [
   'clean',
-  'static',
+  'styles',
+  'javascript',
   'vendors',
-  'javascript'
+  'static'
 ]);

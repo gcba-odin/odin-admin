@@ -11,9 +11,7 @@ gulp.task('watch', ['serve'], function() {
   gulp.watch(gulp.paths.javascript, ['javascript-watch']);
 
   // Style
-  // gulp.watch([
-  //   'css/**/*.{css,scss}'
-  //   ], ['styles']);
+  gulp.watch(gulp.paths.styles, ['styles-watch']);
 });
 
 // Watch subtasks
@@ -28,6 +26,11 @@ gulp.task('vendors-watch', ['vendors'], function (done) {
 });
 
 gulp.task('javascript-watch', ['javascript'], function (done) {
+  gulp.browserSync.reload();
+  done();
+});
+
+gulp.task('styles-watch', ['styles'], function (done) {
   gulp.browserSync.reload();
   done();
 });

@@ -7,7 +7,7 @@ var gulp = require('gulp'),
     sourcemaps = require('gulp-sourcemaps'),
     rename = require('gulp-rename');
 
-gulp.task('vendors', ['static'], function() {
+gulp.task('vendors', ['static', 'styles'], function() {
   return gulp.src(gulp.paths.build + '/index.html')
     .pipe(plumber())
     .pipe(useref({ searchPath: '.' },

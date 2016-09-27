@@ -58,8 +58,6 @@ html, body {
     background: -ms-linear-gradient(0deg, rgba(255, 182, 0, 1) 0%, rgba(255, 56, 106, 1) 100%);
     /* ie10+ */
     background: linear-gradient(90deg, rgba(255, 182, 0, 1) 0%, rgba(255, 56, 106, 1) 100%);
-    /* w3c */
-    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#ffb600', endColorstr='#ff386a', GradientType=1);
 }
 
 a {
@@ -376,9 +374,7 @@ div.panel-heading {
     background: -ms-linear-gradient(0deg, rgba(255, 182, 0, 1) 0%, rgba(255, 56, 106, 1) 100%);
     /* ie10+ */
     background: linear-gradient(90deg, rgba(255, 182, 0, 1) 0%, rgba(255, 56, 106, 1) 100%);
-    /* w3c */
-    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#ffb600', endColorstr='#ff386a', GradientType=1);
-    //background-color: #ff386a !important;
+    /*background-color: #ff386a !important;*/
     color: white !important;
 }
 
