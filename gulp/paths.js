@@ -13,6 +13,7 @@ gulp.paths = {
     'manifest.json',
     '*.html',
     'plugins/**',
+    'public/*'
   ],
   build: 'dist',
   javascript: [
