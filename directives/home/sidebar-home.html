@@ -98,7 +98,7 @@
                     </li>
                 </ul>
             </li>
-            <li ng-class="{active: isActive('/datasets/new') || isActive('/datasets') || isActive('/datasets/:filters?') || isActiveEdit('datasets')}" class="treeview">
+            <li ng-class="{active: isActive('/datasets/new') || isActive('/datasets') || isActive('/datasets/:filter?') || isActiveEdit('datasets')}" class="treeview">
                 <a ng-href="javascript:void(0)">
                     <svg version="1.1" id="datasets-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                         <path fill="#FFB600" d="M7.683,3.225V4.74c0,0.107-0.036,0.196-0.108,0.27C7.499,5.083,7.41,5.12,7.305,5.12H5.788
@@ -129,7 +129,7 @@
                     <span>{{ 'DATASETS' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li ng-class="{active: isActive('/datasets/new/:dataset?')}">
+                    <li ng-class="{active: isActive('/datasets/new')}">
                         <a ng-href="#/datasets/new">
                             <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                  viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
@@ -140,7 +140,7 @@
                             {{ 'ADD_DATASET' | translate }}
                         </a>
                     </li>
-                    <li ng-class="{active: isActive('#/datasets?')}">
+                    <li ng-class="{active: isActive('/datasets/:filter?')}">
                         <a ng-href="#/datasets">
                             <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                  viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
@@ -153,10 +153,10 @@
                                       c0.384-0.429,0.56-0.933,0.528-1.511C9.055,6.149,8.825,5.671,8.396,5.285c-0.43-0.386-0.934-0.56-1.511-0.528
                                       C6.309,4.789,5.826,5.021,5.441,5.451z"/>
                             </svg>
-                            {{ 'VIEW_DATASET' | translate }}
+                            {{ 'VIEW_DATASETS' | translate }}
                         </a>
                     </li>
-                    <li ng-class="{active: isActive('/datasets/starred?')}">
+                    <li ng-class="{active: isActive('/datasets/starred')}">
                         <a ng-href="#/datasets/starred">
                             <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                  viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
@@ -174,7 +174,7 @@
                     </li>
                 </ul>
             </li>
-            <li ng-class="{active: isActive('/files/new/:dataset?') || isActive('/files') || isActiveEdit('files')}" class="treeview">
+            <li ng-class="{active: isActive('/files/new/:dataset?') || isActive('/files') || isActiveEdit('files') || isActive('/webservices/new/:dataset?')}" class="treeview">
                 <a ng-href="javascript:void(0)">
                     <svg version="1.1" id="files-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                         <path fill="#FFB600" d="M13.343,3.055v9.314H4.806V3.055H13.343z M12.566,4.608H5.581v6.986h6.985V4.608z M7.133,5.384H6.357V6.16
@@ -185,7 +185,7 @@
                     <span>{{ 'FILES' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li ng-class="{active: isActive('/files/new/:dataset?')}" class="treeview">
+                    <li ng-class="{active: isActive('/files/new/:dataset?') || isActive('/webservices/new/:dataset?')}" class="treeview">
                         <a ng-href="javascript:void(0)" >
                             <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                  viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
