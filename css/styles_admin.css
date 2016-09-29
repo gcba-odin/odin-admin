@@ -94,7 +94,8 @@ a:hover {
     height: 2em;
 }
 
-.sidebar-menu .treeview.active>a>.sidebar-svg *, .sidebar-menu .treeview-menu>li.active>a>.sidebar-svg * {
+.sidebar-menu .treeview.active > a > .sidebar-svg *,
+.sidebar-menu .treeview-menu > li.active > a > .sidebar-svg * {
     fill: #ff386a;
 }
 
@@ -110,10 +111,10 @@ ul.sidebar-menu a {
     color: #ffb600;
 }
 
-ul.sidebar-menu .treeview.active>a, ul.sidebar-menu .treeview.active>a>span {
+ul.sidebar-menu .treeview.active > a,
+ul.sidebar-menu .treeview.active > a > span {
     color: #ff386a;
 }
-
 
 /*ul.sidebar-menu .treeview.active > a > span {
     color: #ff386a;
@@ -128,11 +129,11 @@ ul.sidebar-menu .treeview.active>a, ul.sidebar-menu .treeview.active>a>span {
     min-width: 16em !important;
 }
 
-.sidebar-menu .treeview-menu li.active>a {
+.sidebar-menu .treeview-menu li.active a {
     color: #ff386a;
 }
 
-.sidebar-mini.sidebar-collapse .sidebar-menu>li:hover>.treeview-menu {
+.sidebar-mini.sidebar-collapse .sidebar-menu > li:hover > .treeview-menu {
     top: 5px;
     margin-left: 0;
 }
