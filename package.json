@@ -5,7 +5,8 @@
   "main": "config.js",
   "dependencies": {
     "async": "^2.0.1",
-    "ckan": "^0.2.3"
+    "ckan": "^0.2.3",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "browser-sync": "^2.14.0",
