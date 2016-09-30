@@ -12,7 +12,7 @@
 
 <!-- Input mimetype -->
 <div class="form-group">
-    <label for="mimetype" class="col-sm-2 control-label">{{ 'MIMETYPE' | translate }}</label>
+    <label for="mimetype" class="col-sm-2 control-label">* {{ 'MIMETYPE' | translate }}</label>
     <div class="col-sm-10" id="mimetype_select" ng-class="{ 'has-error': form.mimetypes.$touched && form.mimetypes.$invalid }">
         <select placeholder="{{ 'SELECT_ONE' | translate }}" name="mimetype" id="mimetype" class="selectize-width" ng-model="model.mimetype" select-two required>
             <option value="{{mimetype}}" ng-repeat="mimetype in mimetypes">{{ mimetype}}</option>
