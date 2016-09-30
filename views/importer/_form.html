@@ -57,6 +57,30 @@
     </div>
 </div>
 <!-- end Input organization -->
+<!-- Modules -->
+<div class="form-group">
+    <label for="modules" class="col-sm-2 control-label">* {{ 'IMPORT_MODULES' | translate }}</label>
+    <div class="col-sm-10" ng-class="{ 'has-error': form.modules.$touched && form.modules.$invalid }">
+        <div>
+            <label class="btn btn-default">
+                <input type="checkbox" name="categories" ng-model="model.categories" ng-required="!model.tags"> {{ 'CATEGORIES' | translate }}
+            </label>
+            <label class="btn btn-default">
+                <input type="checkbox" name="tags" ng-model="model.tags" ng-required="!model.categories"> {{ 'TAGS' | translate }}
+            </label>
+            <label class="btn btn-default">
+                <input type="checkbox" name="datasets" ng-model="model.datasets" ng-disabled="!(model.categories && model.tags)" ng-checked="model.categories && model.tags && 0"> {{ 'DATASETS' | translate }}
+            </label>
+            <label class="btn btn-default">
+                <input type="checkbox" name="resources" ng-model="model.resources" ng-disabled="!(model.categories && model.tags && model.datasets)" ng-checked="model.categories && model.tags && model.datasets && 0"> {{ 'RESOURCES' | translate }}
+            </label>
+        </div>
+        <div class="help-block" ng-messages="form.modules.$error" ng-if="form.modules.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Modules -->
 <!-- Button save  -->
 <div class="box-footer">
     <div class="col-sm-12">

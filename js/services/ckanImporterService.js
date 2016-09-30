@@ -40,7 +40,6 @@
                 log: ""
             },
             resources: {
-                total: 0,
                 count: 0,
                 log: ""
             }
@@ -67,62 +66,103 @@
 
             async.waterfall([
                 function(callback) {
-                    console.log("1) getCategoryNames");
-                    getCategoryNames(callback);
+                    if (defaults.modules.categories) {
+                        console.log("* Categories: getting names..");
+                        getCategoryNames(callback);
+                    } else {
+                        callback(null, null);
+                    }
                 },
                 function(categoryNames, callback) {
-                    console.log("2) importCategories");
-                    importCategories(categoryNames, callback);
+                    if (defaults.modules.categories) {
+                        console.log("* Categories: importing..");
+                        importCategories(categoryNames, callback);
+                    } else {
+                        callback(null);
+                    }
                 },
                 function(callback) {
-                    result = restClient().get({
-                        type: "categories",
-                        params: "orderBy=name&sort=DESC"
-                    }, function() {
-                        global.categories = result.data;
-                        console.log("3) Categories", global.categories);
-                        callback();
-                    });
-                },
-                function(callback) {
-                    console.log("4) getTagNames");
-                    getTagNames(callback);
+                    if (defaults.modules.tags) {
+                        console.log("* Tags: getting names..");
+                        getTagNames(callback);
+                    } else {
+                        callback(null, null);
+                    }
                 },
                 function(tagNames, callback) {
-                    console.log("5) importTags");
-                    importTags(tagNames, callback);
+                    if (defaults.modules.tags) {
+                        console.log("* Tags: importing..");
+                        importTags(tagNames, callback);
+                    } else {
+                        callback(null);
+                    }
                 },
                 function(callback) {
-                    result = restClient().get({
-                        type: "tags",
-                        params: "limit=" + global.tagsLimit * 2 + "&orderBy=name&sort=DESC"
-                    }, function() {
-                        global.tags = result.data;
-                        console.log("6) Tags", global.tags);
-                        callback();
-                    });
+                    if (defaults.modules.categories && defaults.modules.tags && defaults.modules.datasets) {
+                        console.log("* Datasets: getting tags..");
+                        result = restClient().get({
+                            type: "tags",
+                            params: "limit=" + global.tagsLimit * 2 + "&orderBy=name&sort=DESC"
+                        }, function() {
+                            global.tags = result.data;
+                            callback();
+                        });
+                    } else {
+                        callback(null);
+                    }
                 },
                 function(callback) {
-                    console.log("7) getDatasetNames");
-                    getDatasetNames(callback);
+                    if (defaults.modules.categories && defaults.modules.tags && defaults.modules.datasets) {
+                        console.log("* Datasets: getting categories..");
+                        result = restClient().get({
+                            type: "categories",
+                            params: "orderBy=name&sort=DESC"
+                        }, function() {
+                            global.categories = result.data;
+                            callback();
+                        });
+                    } else {
+                        callback(null);
+                    }
                 },
                 function(callback) {
-                    console.log("8) importDatasets");
-                    importDatasets(callback);
+                    if (defaults.modules.categories && defaults.modules.tags && defaults.modules.datasets) {
+                        console.log("* Datasets: getting names..");
+                        getDatasetNames(callback);
+                    } else {
+                        callback(null);
+                    }
+
                 },
                 function(callback) {
-                    result = restClient().get({
-                        type: "datasets",
-                        params: "limit=" + global.datasetsLimit * 2 + "&orderBy=name&sort=DESC"
-                    }, function() {
-                        global.datasets = result.data;
-                        console.log("9) Datasets", global.datasets);
-                        callback();
-                    });
+                    if (defaults.modules.categories && defaults.modules.tags && defaults.modules.datasets) {
+                        console.log("* Datasets: importing..");
+                        importDatasets(callback);
+                    } else {
+                        callback(null);
+                    }
                 },
                 function(callback) {
-                    console.log("10) importResources");
-                    importResources(callback);
+                    if (defaults.modules.categories && defaults.modules.tags && defaults.modules.datasets && defaults.modules.resources) {
+                        console.log("* Resources: getting datasets..");
+                        result = restClient().get({
+                            type: "datasets",
+                            params: "limit=" + global.datasetsLimit * 2 + "&orderBy=name&sort=DESC"
+                        }, function() {
+                            global.datasets = result.data;
+                            callback();
+                        });
+                    } else {
+                        callback(null);
+                    }
+                },
+                function(callback) {
+                    if (defaults.modules.categories && defaults.modules.tags && defaults.modules.datasets && defaults.modules.resources) {
+                        console.log("* Resources: importing..");
+                        importResources(callback);
+                    } else {
+                        callback(null);
+                    }
                 }
             ], function(err) {
                 console.log('*** IMPORT FINISHED ***');
@@ -299,7 +339,7 @@
             // http://data.buenosaires.gob.ar/api/3/action/package_show?id=datasetName
             async.eachSeries(global.datasetNames, function(datasetName, outerCallback) {
 
-                console.log('=== Processing dataset: ' + datasetName);
+                // console.log('=== Processing dataset: ' + datasetName);
                 async.waterfall([
                     function(callback) {
                         client.action('package_show', { id: datasetName }, function(err, result) {
@@ -307,10 +347,10 @@
                                 var dataset = result.result;
                                 var datasetResources = dataset.resources;
 
-                                console.log('--- Getting datasetResources');
+                                // console.log('--- Getting datasetResources');
                                 callback(null, dataset, datasetResources);
                             } else {
-                                console.log("ERROR RESOURCE: ", err);
+                                // console.log("ERROR RESOURCE: ", err);
                                 outerCallback(err);
                             }
                         });
@@ -318,7 +358,7 @@
                     function(dataset, datasetResources, callback) {
                         // async.eachSeries(datasetResources, function(resource, callback2) {
                         async.eachSeries(datasetResources, function(resource, outerCallback2) {
-                            console.log('--- Processing resource: ' + resource.name);
+                            // console.log('--- Processing resource: ' + resource.name);
 
                             async.waterfall([
                                 function(callback2) {
@@ -353,22 +393,22 @@
                                     });
                                 }
                             ], function(err) {
-                                console.log('--- Finished resource: ' + resource.name);
+                                // console.log('--- Finished resource: ' + resource.name);
                                 outerCallback2(err);
                             })
                         }, function(err) {
-                            console.log("--- Next resource");
+                            // console.log("--- Next resource");
                             callback(err);
                         });
                     }
                 ], function(err) {
-                    console.log('=== Finished dataset: ' + datasetName);
+                    // console.log('=== Finished dataset: ' + datasetName);
                     outerCallback(err);
                 });
 
             }, function(err) {
-                if (err) console.log("Error importando algunos resources");
-                console.log("10) importResources --> TERMINADO");
+                // if (err) console.log("Error importando algunos resources");
+                // console.log("10) importResources --> TERMINADO");
                 callbackFunc(null);
             });
         }
@@ -377,15 +417,15 @@
             restClient().save({
                 type: model.type
             }, model, function(resp) {
-                // console.log("OK", resp);
+                console.log("Imported OK", resp);
                 results.count++;
                 callback();
             }, function(error) {
                 try {
-                    // console.log(error.data.data.name[0].message);
+                    console.log(error.data.data.name[0].message);
                     logMessage(error.data.data.name[0].message, results);
                 } catch (cerr) {
-                    // console.log(error);
+                    console.log(error);
                     logMessage(error, results);
                 }
                 callback();
@@ -402,7 +442,6 @@
                 data: data,
                 params: param
             }).then(function(resp) {
-                console.log("OK", resp);
                 results.count++;
                 results.total++;
                 callback();

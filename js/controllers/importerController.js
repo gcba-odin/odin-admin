@@ -17,7 +17,13 @@ function ImporterCreateController($scope, $location, usSpinnerService, Alertify,
                 status: $scope.model.status,
                 freq: $scope.model.updateFrequency,
                 organization: $scope.model.organization,
-                url: $scope.model.url
+                url: $scope.model.url,
+                modules: {
+                    categories: $scope.model.categories,
+                    tags: $scope.model.tags,
+                    datasets: $scope.model.datasets,
+                    resources: $scope.model.resources
+                }
             };
 
             CkanImporterService.Import(rest, Upload, defaults, importCallback);
@@ -32,6 +38,5 @@ function ImporterCreateController($scope, $location, usSpinnerService, Alertify,
 }
 
 function ImporterResultController($scope, $location, usSpinnerService, Alertify, CkanImporterService, $uibModal) {
-    console.log(CkanImporterService.getResults());
     $scope.results = CkanImporterService.getResults();
 }
