@@ -1,7 +1,7 @@
 var app = angular.module('odin.chartsControllers', []);
 
 
-function ChartListController($scope, modelService) {
+function ChartListController($scope, modelService, configs) {
     modelService.initService("Chart", "charts", $scope);
 
     $scope.filtersView = [{
@@ -38,12 +38,19 @@ function ChartListController($scope, modelService) {
         modelService.activeClass(activeClass);
 
     };
+    
+    $scope.config_key = 'adminPagination';
+    ////factory configs
+    configs.findKey($scope, function (resp) {
+        $scope.limit = 20;
+        if (!!resp.data[0] && !!resp.data[0].value) {
+            $scope.limit = resp.data[0].value;
+        }
+        
+        $scope.q = "&skip=0&limit=" + $scope.limit;
 
-    $scope.limit = 20;
-
-    $scope.q = "&skip=0&limit=" + $scope.limit;
-
-    modelService.loadAll($scope);
+        modelService.loadAll($scope);
+    });
 
     $scope.paging = function (event, page, pageSize, total) {
         var skip = (page - 1) * $scope.limit;

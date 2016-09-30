@@ -10,13 +10,14 @@
 </div>
 <!-- end Input description -->
 <!-- Input updateFrequency -->
-<div class="form-group" ng-if="value">
-    <label for="valor" class="col-sm-2 control-label">* {{ value.name | translate }}</label>
+<div class="form-group">
+    <label for="valor" class="col-sm-2 control-label">* {{ model.description | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.updateFrequency.$touched && form.updateFrequency.$invalid }">
-        <select placeholder="{{ 'SELECT_ONE' | translate }}" class="selectize-input items required full has-options has-items" data-key="name" data-modelname="statuses" ng-model="model.value" data-model="{{value}}" select-static-ajax name="value" id="value" class="selectize-width"
+        <select ng-if="!model.multiple && model.type == 'model'" placeholder="{{ 'SELECT_ONE' | translate }}" class="selectize-input items required full has-options has-items" data-key="name" data-modelname="{{model.model | lowercase}}" ng-model="model.value" data-model="{{value}}" select-static-ajax name="value" id="valor" class="selectize-width"
             required>
-      </select>
-
+        </select>
+        <!--<select ng-if="model.multiple && model.type == 'model'" data-key="name" data-modelname="values" data-model="{{model.value}}" select-two-ajax name="value" id="categories" ng-model="model.value" required class="selectize-width" multiple></select>-->
+        <input ng-if="model.type != 'model'" type="text" ng-model="model.value" class="form-control" id="valor" placeholder="{{ 'PLACE' | translate }} {{ 'VALUE' | translate }} {{ 'HERE' | translate }}" required />
         <div class="help-block" ng-messages="form.updateFrequency.$error" ng-if="form.updateFrequency.$touched">
             <div ng-messages-include="views/messages.html"></div>
         </div>

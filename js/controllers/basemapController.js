@@ -1,7 +1,7 @@
 var app = angular.module('odin.basemapsControllers', []);
 
 
-function BasemapListController($scope, modelService) {
+function BasemapListController($scope, modelService, configs) {
     modelService.initService("Basemap", "basemaps", $scope);
     
     $scope.filtersView = [{
@@ -39,11 +39,18 @@ function BasemapListController($scope, modelService) {
 
     };
     
-    $scope.limit = 2;
+    $scope.config_key = 'adminPagination';
+    ////factory configs
+    configs.findKey($scope, function (resp) {
+        $scope.limit = 20;
+        if (!!resp.data[0] && !!resp.data[0].value) {
+            $scope.limit = resp.data[0].value;
+        }
+        
+        $scope.q = "&include=maps&skip=0&limit=" + $scope.limit;
 
-    $scope.q = "&include=maps&skip=0&limit=" + $scope.limit;
-
-    modelService.loadAll($scope);
+        modelService.loadAll($scope);
+    });
 
     $scope.paging = function(event, page, pageSize, total) {
         var skip = (page - 1) * $scope.limit;

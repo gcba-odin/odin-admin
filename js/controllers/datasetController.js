@@ -6,7 +6,7 @@ app.factory('model', function($resource) {
 
 
 
-function DatasetListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, $routeParams) {
+function DatasetListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, $routeParams, configs) {
 
 
     modelService.initService("Dataset", "datasets", $scope);
@@ -53,24 +53,31 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
     $scope.view = function(model) {
         modelService.view($scope, model);
     }
+    
+    $scope.config_key = 'adminPagination';
+    ////factory configs
+    configs.findKey($scope, function (resp) {
+        $scope.limit = 20;
+        if (!!resp.data[0] && !!resp.data[0].value) {
+            $scope.limit = resp.data[0].value;
+        }
+        
+        $scope.q = "&skip=0&limit=" + $scope.limit;
 
-    $scope.limit = 20;
+        $scope.starred = false;
+        $scope.condition = 'OR';
+        if ($routeParams.filter == 'starred') {
+            $scope.starred = true;
+            $scope.q += "&starred=true";
+            //$scope.modelName = 'Starred datasets';
+            angular.forEach($scope.filtersView, function(element) {
+                element.multiple = false;
+            });
+            //$scope.condition = 'AND';
+        }
 
-    $scope.q = "&skip=0&limit=" + $scope.limit;
-
-    $scope.starred = false;
-    $scope.condition = 'OR';
-    if ($routeParams.filter == 'starred') {
-        $scope.starred = true;
-        $scope.q += "&starred=true";
-        //$scope.modelName = 'Starred datasets';
-        angular.forEach($scope.filtersView, function(element) {
-            element.multiple = false;
-        });
-        //$scope.condition = 'AND';
-    }
-
-    modelService.loadAll($scope);
+        modelService.loadAll($scope);
+    });
 
     $scope.paging = function(event, page, pageSize, total) {
         var skip = (page - 1) * $scope.limit;

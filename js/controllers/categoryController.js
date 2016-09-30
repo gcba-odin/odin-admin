@@ -5,7 +5,7 @@ app.factory('model', function($resource) {
 });
 
 
-function CategoryListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService) {
+function CategoryListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, configs) {
 
     modelService.initService("Category", "categories", $scope);
 
@@ -44,11 +44,18 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
 
     };
     
-    $scope.limit = 20;
+    $scope.config_key = 'adminPagination';
+    ////factory configs
+    configs.findKey($scope, function (resp) {
+        $scope.limit = 20;
+        if (!!resp.data[0] && !!resp.data[0].value) {
+            $scope.limit = resp.data[0].value;
+        }
+        
+        $scope.q = "&include=datasets&skip=0&limit=" + $scope.limit;
 
-    $scope.q = "&include=datasets&skip=0&limit=" + $scope.limit;
-
-    modelService.loadAll($scope);
+        modelService.loadAll($scope);
+    });
 
     $scope.paging = function(event, page, pageSize, total) {
         var skip = (page - 1) * $scope.limit;

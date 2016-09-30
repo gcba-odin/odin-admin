@@ -4,7 +4,7 @@ app.factory('model', function($resource) {
     return $resource();
 });
 
-function updateFrequencyListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService) {
+function updateFrequencyListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, configs) {
 
     modelService.initService("updateFrequency", "updatefrequencies", $scope);
     
@@ -31,12 +31,19 @@ function updateFrequencyListController($scope, $location, rest, $rootScope, Flas
     $scope.view = function(model) {
         modelService.view($scope, model);
     }
+    
+    $scope.config_key = 'adminPagination';
+    ////factory configs
+    configs.findKey($scope, function (resp) {
+        $scope.limit = 20;
+        if (!!resp.data[0] && !!resp.data[0].value) {
+            $scope.limit = resp.data[0].value;
+        }
+        
+        $scope.q = "&skip=0&limit=" + $scope.limit;
 
-    $scope.limit = 20;
-
-    $scope.q = "&skip=0&limit=" + $scope.limit;
-
-    modelService.loadAll($scope);
+        modelService.loadAll($scope);
+    });
 
     $scope.paging = function(event, page, pageSize, total) {
         var skip = (page - 1) * $scope.limit;
