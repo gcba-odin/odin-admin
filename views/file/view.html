@@ -78,7 +78,7 @@
                             </tr>
                             <tr ng-if="model.url">
                                 <td class="detail-bold">{{ 'URL' | translate }}</td>
-                                <td><a target="_blank" ng-href="{{model.url}}/{{model.type.name}}">{{model.url}}/{{model.type.name}}</a></td>
+                                <td><a target="_blank" ng-href="{{model.url}}"></a></td>
                             </tr>
                             <tr ng-if="model.gatheringDate">
                                 <td class="detail-bold">{{ 'GATHERING_DATE' | translate }}</td>
@@ -87,6 +87,10 @@
                             <tr>
                                 <td class="detail-bold">{{ 'UPDATED_VIEW' | translate }}</td>
                                 <td><span class="label label-default" >{{model.updated ? 'Si' : 'No'}}</span></td>
+                            </tr>
+                            <tr>
+                                <td class="detail-bold">{{ 'LAYOUT' | translate }}</td>
+                                <td><span class="label label-default" >{{model.layout ? 'Si' : 'No'}}</span></td>
                             </tr>
                             <tr ng-repeat="(key, val) in model.optionals">
                                 <td class="detail-bold">{{key}}</td>
@@ -103,7 +107,7 @@
                         <div class="pull-right">
                             <a class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)">{{ 'DELETE' | translate }}</a>
                             <button type="submit" class="btn btn-primary" ng-click="edit(model)">{{ 'EDIT' | translate }}</button>
-                            <a class="btn btn-primary" target="_blank" href="{{ model.url}}/{{model.type.name}}" download="{{ model.name}}{{ model.type.name}}">{{ 'DOWNLOAD' | translate }}</a>
+                            <a class="btn btn-primary" target="_blank" href="{{ model.url}}" download="{{ model.name}}">{{ 'DOWNLOAD' | translate }}</a>
                         </div>
                     </div>
                 </div>

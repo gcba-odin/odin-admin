@@ -137,7 +137,29 @@
         </div>
     </div>
 </div>
-<!-- end Input Starred -->
+<!-- end Input Updated -->
+
+<!-- Input Layout -->
+<div class="form-group">
+    <label class="col-sm-2 control-label">* {{ 'LAYOUT' | translate }}</label>
+    <div class="col-sm-10" ng-class="{ 'has-error': form.layout.$touched && form.layout.$invalid }">
+        <div>
+            <label class="btn btn-default" ng-class="activeClass(model.layout, 1)">
+                <input   type="radio" ng-value="true" name="layout"    ng-model="model.layout" id="option1" autocomplete="off" > {{ 'YES' | translate }}
+            </label>
+            <label class="btn btn-warning" ng-class="activeClass(model.updated, 2)">
+                <input type="radio" ng-value="false" name="layout"  ng-model="model.layout" id="option2" autocomplete="off" ng-checked="model.V" required> {{ 'NO' | translate }}
+            </label>
+            <p class="help-block">{{ 'MANDATARY' | translate }}</p>
+
+        </div>
+
+        <div class="help-block" ng-messages="form.layout.$error" ng-if="form.layout.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input Layout -->
 
 <div class="extraoptionals" ng-repeat="item in model.items">
     <!-- Input optional -->

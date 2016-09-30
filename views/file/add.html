@@ -118,6 +118,10 @@
                                             <td class="detail-bold">{{ 'UPDATED_VIEW' | translate }}</td>
                                             <td><span class="label label-default" >{{model.updated ? 'Si' : 'No'}}</span></td>
                                         </tr>
+                                        <tr>
+                                            <td class="detail-bold">{{ 'LAYOUT' | translate }}</td>
+                                            <td><span class="label label-default" >{{model.layout ? 'Si' : 'No'}}</span></td>
+                                        </tr>
                                         <tr ng-repeat="item in model.items">
                                             <td class="detail-bold">{{item.field1}}</td>
                                             <td>{{item.field2}}</td>

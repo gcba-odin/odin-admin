@@ -123,6 +123,12 @@
                                                     <span class="label" ng-class="model.updated ? 'label-primary' : 'label-default'">{{model.updated ? 'Si' : 'No'}}</span>
                                                 </td>
                                             </tr>
+                                            <tr>
+                                                <td class="detail-bold">{{ 'LAYOUT' | translate }}</td>
+                                                <td>
+                                                    <span class="label" ng-class="model.layout ? 'label-primary' : 'label-default'">{{model.layout ? 'Si' : 'No'}}</span>
+                                                </td>
+                                            </tr>
                                             <tr ng-repeat="item in model.items">
                                                 <td class="detail-bold">{{item.field1}}</td>
                                                 <td>{{item.field2}}</td>

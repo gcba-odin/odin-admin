@@ -175,6 +175,7 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
     'IMPORT_RESULTS': 'Import results',
     'RESULTS': 'Results',
     'IMPORT_MODULES': 'Import modules',
+    'LAYOUT': 'Layout',
   });
 
   $translateProvider.translations('es', {
@@ -366,7 +367,8 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
     'WEBSERVICE_TYPE': 'Tipo de servicio web',
     'SELECT_OPTION': 'Elije una opción',
     'USER_MANUAL': 'Manual de usuario',
-    'VIEW_DATASETS': 'Ver datasets'
+    'VIEW_DATASETS': 'Ver datasets',
+    'LAYOUT': 'Guía de datos',
 
 
 
