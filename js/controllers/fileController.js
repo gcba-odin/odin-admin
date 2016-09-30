@@ -169,7 +169,7 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
     };
 }
 
-function FileCreateController($scope, $sce, rest, model, Flash, $location, Upload, $rootScope, modelService, $routeParams, Alertify, usSpinnerService) {
+function FileCreateController($scope, $sce, rest, model, Flash, $location, Upload, $rootScope, modelService, $routeParams, Alertify, usSpinnerService, $window) {
     usSpinnerService.spin('spinner');
     modelService.initService("File", "files", $scope);
 
@@ -234,7 +234,22 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
         if ($scope.model.uploadFile == null && step == 1 && $scope.fileModel.name && $scope.filter)
         {
             $scope.clearUpload();
-            Alertify.alert('Archivo no permitido.');
+            
+            Alertify.set({
+                labels:
+                        {
+                            ok: 'Ir a Tipo de archivos',
+                            cancel: 'Continuar'
+                        }
+            });
+            Alertify
+                    .confirm("Archivo no permitido. Revise que el tipo del archivo que desea crear se encuentre en la sección 'Tipos de Archivos'.")
+
+                    .then(
+                            function onOk() {
+                                $location.path('filetypes/new');
+                            }
+                    );
         } else {
             if (($scope.fileModel.name && step == 1 && ($scope.model.uploadFile != null || hard_file != null)) || ($scope.fileModel.name && step == 2 && $scope.form.$valid && ($scope.model.uploadFile != null || hard_file != null)) || step == 0) {
 
@@ -381,6 +396,23 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             });
             $scope.fileTypes = f_types.toString();
             usSpinnerService.stop('spinner');
+        }, function() {
+            usSpinnerService.stop('spinner');
+            Alertify.set({
+                labels:
+                        {
+                            ok: 'Recargar página',
+                            cancel: 'Continuar'
+                        }
+            });
+            Alertify
+                    .confirm('Hubo un error en la conexión. Vuelva a cargar la página.')
+
+                    .then(
+                            function onOk() {
+                                $window.location.reload();
+                            }
+                    );
         });
     };
 
@@ -388,7 +420,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
 
 }
 
-function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model, $location, modelService, $sce, Upload, usSpinnerService, Alertify) {
+function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model, $location, modelService, $sce, Upload, usSpinnerService, Alertify, $window) {
     modelService.initService("File", "files", $scope);
     $scope.model = new model();
 
@@ -444,7 +476,21 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
         if ($scope.model.uploadFile == null && step == 1 && $scope.fileModel.name && $scope.filter && $scope.mostrar)
         {
             $scope.clearUpload();
-            Alertify.alert('Archivo no permitido.');
+            Alertify.set({
+                labels:
+                        {
+                            ok: 'Ir a Tipo de archivos',
+                            cancel: 'Continuar'
+                        }
+            });
+            Alertify
+                    .confirm("Archivo no permitido. Revise que el tipo del archivo que desea crear se encuentre en la sección 'Tipos de Archivos'.")
+
+                    .then(
+                            function onOk() {
+                                $location.path('filetypes/new');
+                            }
+            );
         } else {
             if (($scope.fileModel.name && step == 1 && ((!$scope.mostrar) || ($scope.mostrar && ($scope.model.uploadFile != null || hard_file != null)))) || ($scope.fileModel.name && step == 2 && ((!$scope.mostrar) || ($scope.mostrar && ($scope.model.uploadFile != null || hard_file != null)))) || step == 0) {
 
@@ -629,6 +675,23 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
                 $scope.fileTypes.push(element.mimetype);
             });
             $scope.fileTypes = $scope.fileTypes.toString();
+        }, function() {
+            usSpinnerService.stop('spinner');
+            Alertify.set({
+                labels:
+                        {
+                            ok: 'Recargar página',
+                            cancel: 'Continuar'
+                        }
+            });
+            Alertify
+                    .confirm('Hubo un error en la conexión. Vuelva a cargar la página.')
+
+                    .then(
+                            function onOk() {
+                                $window.location.reload();
+                            }
+                    );
         });
     };
 
