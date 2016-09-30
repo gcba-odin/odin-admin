@@ -15,7 +15,7 @@
                     <!-- /.box-header -->
                     <div class="box-body table-responsive no-padding">
                         <!--<search-bar data-search="{required:true,name:'Username'}" data-filters="{{filtersView}}"></search-bar>-->
-                        
+
                         <table class="table table-hover">
                             <tbody><tr>
                                     <!-- <th>{{ 'ID' | translate }}</th>-->
@@ -24,7 +24,10 @@
                                     <th>{{ 'STATE' | translate }}</th>
                                     <th class="text-center">{{ 'ACTIONS' | translate }}</th>
                                 </tr>
-                                <tr ng-repeat="model in data.data">
+                                <tr ng-if="data.data.length == 0">
+                                    <td colspan="3">No se encuentran datos para mostrar.</td>
+                                </tr>
+                                <tr ng-if="data.data.length != 0" ng-repeat="model in data.data">
                                     <!--<td>{{model.id}}</td>-->
                                     <td>{{model.username}}</td>
                                     <td>{{model.email}}</td>
@@ -41,13 +44,14 @@
                                     </td>
                                 </tr>
 
-                            </tbody></table>
-                    </div>
-                    <!-- /.box-body -->
-                    <paging page="data.meta.page" page-size="limit" total="data.meta.count"
+                            </tbody>
+                        </table>
+                        <paging page="data.meta.page" page-size="limit" total="data.meta.count"
                             paging-action="paging('pageClick', page, pageSize, total)" 
                             show-prev-next="true"
                             show-first-last="true" hide-if-empty="true"></paging> 
+                    </div>
+                    <!-- /.box-body -->
                 </div>
                 <!-- /.box -->
             </div>

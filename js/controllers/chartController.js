@@ -1,7 +1,7 @@
 var app = angular.module('odin.chartsControllers', []);
 
 
-function ChartListController($scope, modelService) {
+function ChartListController($scope, modelService, configs) {
     modelService.initService("Chart", "charts", $scope);
 
     $scope.filtersView = [{
@@ -18,34 +18,41 @@ function ChartListController($scope, modelService) {
             multiple: true
         }];
 
-    $scope.confirmDelete = function(item) {
+    $scope.confirmDelete = function (item) {
         modelService.confirmDelete(item);
     };
 
-    $scope.deleteModel = function(model) {
+    $scope.deleteModel = function (model) {
         modelService.delete($scope, model);
     };
 
-    $scope.edit = function(model) {
+    $scope.edit = function (model) {
         modelService.edit($scope, model);
     };
 
-    $scope.view = function(model) {
+    $scope.view = function (model) {
         modelService.view($scope, model);
     };
 
-    $scope.activeClass = function(activeClass) {
+    $scope.activeClass = function (activeClass) {
         modelService.activeClass(activeClass);
 
     };
+    
+    $scope.config_key = 'adminPagination';
+    ////factory configs
+    configs.findKey($scope, function (resp) {
+        $scope.limit = 20;
+        if (!!resp.data[0] && !!resp.data[0].value) {
+            $scope.limit = resp.data[0].value;
+        }
+        
+        $scope.q = "&skip=0&limit=" + $scope.limit;
 
-    $scope.limit = 20;
+        modelService.loadAll($scope);
+    });
 
-    $scope.q = "&skip=0&limit=" + $scope.limit;
-
-    modelService.loadAll($scope);
-
-    $scope.paging = function(event, page, pageSize, total) {
+    $scope.paging = function (event, page, pageSize, total) {
         var skip = (page - 1) * $scope.limit;
         $scope.q = "&skip=" + skip + "&limit=" + $scope.limit;
         modelService.loadAll($scope);
@@ -55,36 +62,36 @@ function ChartListController($scope, modelService) {
 function ChartViewController($scope, modelService, $routeParams, rest, $location, $sce, Alertify, usSpinnerService, configs) {
     modelService.initService("Chart", "charts", $scope);
 
-    var loadModel = function() {
+    var loadModel = function () {
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type
         });
     };
 
-    $scope.confirmDelete = function(item) {
+    $scope.confirmDelete = function (item) {
         modelService.confirmDelete(item);
     };
 
-    $scope.edit = function(model) {
+    $scope.edit = function (model) {
         var url = '/' + $scope.type + '/' + model.id + "/edit";
         $location.path(url);
     };
 
-    $scope.getHtml = function(html) {
+    $scope.getHtml = function (html) {
         return $sce.trustAsHtml(html);
     };
 
     //factory configs 
     configs.statuses($scope);
 
-    $scope.publish = function() {
+    $scope.publish = function () {
         usSpinnerService.spin('spinner');
 
         rest().publish({
             type: $scope.type,
             id: $scope.model.id
-        }, {}, function(resp) {
+        }, {}, function (resp) {
             loadModel();
             //var url = '/' + $scope.type;
             // $location.path(url);
@@ -92,7 +99,7 @@ function ChartViewController($scope, modelService, $routeParams, rest, $location
         usSpinnerService.stop('spinner');
     };
 
-    $scope.unPublish = function() {
+    $scope.unPublish = function () {
         Alertify.confirm('¿Está seguro que quiere despublicar este recurso?').then(
                 function onOk() {
                     usSpinnerService.spin('spinner');
@@ -100,7 +107,7 @@ function ChartViewController($scope, modelService, $routeParams, rest, $location
                     rest().unpublish({
                         type: $scope.type,
                         id: $scope.model.id
-                    }, {}, function(resp) {
+                    }, {}, function (resp) {
                         loadModel();
                         //var url = '/' + $scope.type;
                         // $location.path(url);
@@ -122,12 +129,12 @@ function ChartPreviewController($scope, modelService, $routeParams, rest, $locat
     $scope.model = rest().findOne({
         id: $routeParams.id,
         type: $scope.type
-    }, function() {
+    }, function () {
         $scope.model.link = $sce.trustAsResourceUrl($scope.model.link);
         $scope.model.charttype = 'chart-' + $scope.model.type;
         $scope.model.series = [[]];
-        if(!!$scope.model.dataSeries) {
-            if($scope.model.dataType == 'qualitative') {
+        if (!!$scope.model.dataSeries) {
+            if ($scope.model.dataType == 'qualitative') {
                 $scope.model.series[0] = $scope.model.dataSeries;
             } else {
                 $scope.model.series[0].push($scope.model.dataSeries[1]);
@@ -136,15 +143,36 @@ function ChartPreviewController($scope, modelService, $routeParams, rest, $locat
         $scope.model.dataChart = {
             data: [$scope.model.data.data]
         }
+
+        var getRandomColor = function () {
+
+            var letters = '0123456789ABCDEF'.split('');
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+
+        }
+
+        $scope.model.colors = [];
+        if ($scope.model.type != 'line') {
+            $scope.model.colors[0] = {
+                backgroundColor: []
+            };
+            angular.forEach($scope.model.data.data, function (element) {
+                $scope.model.colors[0].backgroundColor.push(getRandomColor());
+            });
+        }
         //load Chart;
     });
 
-    $scope.edit = function(model) {
+    $scope.edit = function (model) {
         var url = '/' + $scope.type + '/' + model.id + "/edit";
         $location.path(url);
     };
 
-    $scope.getHtml = function(html) {
+    $scope.getHtml = function (html) {
         return $sce.trustAsHtml(html);
     };
 }
@@ -162,18 +190,18 @@ function ChartCreateController($scope, modelService, rest, $location, model, $sc
 
     $scope.model.items = [{field: ""}, {field: ""}];
 
-    var generate_headers = function() {
+    var generate_headers = function () {
         if ($scope.fileModel.data.length > 0)
         {
 
             $scope.headersFile = Object.keys($scope.fileModel.data[0]);
-            $scope.headersFile = $scope.headersFile.filter(function(header) {
+            $scope.headersFile = $scope.headersFile.filter(function (header) {
                 return header !== '_id';
             });
 
             var headers = [];
 
-            angular.forEach($scope.headersFile, function(value, key) {
+            angular.forEach($scope.headersFile, function (value, key) {
                 var header = {
                     id: value,
                     name: value
@@ -192,7 +220,7 @@ function ChartCreateController($scope, modelService, rest, $location, model, $sc
             type: "files",
             id: $routeParams.file,
             params: "limit=1"
-        }, function() {
+        }, function () {
             $scope.model.file = $routeParams.file;
 
             $scope.headersFile = null;
@@ -204,7 +232,7 @@ function ChartCreateController($scope, modelService, rest, $location, model, $sc
 
     }
 
-    $scope.checkstep = function(step) {
+    $scope.checkstep = function (step) {
         $scope.jump = 1;
         if ((step == 1) && (!angular.isUndefined($scope.model.link) && $scope.model.link != '')) {
             $scope.checkstep(2);
@@ -232,7 +260,7 @@ function ChartCreateController($scope, modelService, rest, $location, model, $sc
         }
     }
 
-    $scope.step = function(step) {
+    $scope.step = function (step) {
         if ((step == 1) || (step == 2) || step == 0) {
             var step = $scope.steps[step];
             if (step == "undone") {
@@ -247,7 +275,7 @@ function ChartCreateController($scope, modelService, rest, $location, model, $sc
 
     }
 
-    var validate = function(data) {
+    var validate = function (data) {
         if (data.name != '' && (data.type != '' || data.link != '')) {
             return true;
         } else {
@@ -255,7 +283,7 @@ function ChartCreateController($scope, modelService, rest, $location, model, $sc
         }
     };
 
-    $scope.add = function(model) {
+    $scope.add = function (model) {
         usSpinnerService.spin('spinner');
 
         $scope.model.dataSeries = [];
@@ -271,7 +299,7 @@ function ChartCreateController($scope, modelService, rest, $location, model, $sc
         if (validate(model)) {
             rest().save({
                 type: $scope.type
-            }, $scope.model, function(resp) {
+            }, $scope.model, function (resp) {
                 usSpinnerService.stop('spinner');
                 if (resp.data.id) {
                     var url = '/' + $scope.type + '/' + resp.data.id + '/view';
@@ -279,7 +307,7 @@ function ChartCreateController($scope, modelService, rest, $location, model, $sc
                     var url = '/' + $scope.type;
                 }
                 $location.path(url);
-            }, function(error) {
+            }, function (error) {
                 usSpinnerService.stop('spinner');
                 if (error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre del gráfico ya existe.');
@@ -293,7 +321,7 @@ function ChartCreateController($scope, modelService, rest, $location, model, $sc
         }
     };
 
-    $scope.getHtml = function(html) {
+    $scope.getHtml = function (html) {
         return $sce.trustAsHtml(html);
     };
 
@@ -311,18 +339,18 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
     $scope.steps[2] = "undone";
     $scope.stepactive = 0;
 
-    var generate_headers = function() {
+    var generate_headers = function () {
         if ($scope.fileModel.data.length > 0)
         {
 
             $scope.headersFile = Object.keys($scope.fileModel.data[0]);
-            $scope.headersFile = $scope.headersFile.filter(function(header) {
+            $scope.headersFile = $scope.headersFile.filter(function (header) {
                 return header !== '_id';
             });
 
             var headers = [];
 
-            angular.forEach($scope.headersFile, function(value, key) {
+            angular.forEach($scope.headersFile, function (value, key) {
                 var header = {
                     id: value,
                     name: value
@@ -335,7 +363,7 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
         }
     };
 
-    $scope.checkstep = function(step) {
+    $scope.checkstep = function (step) {
         $scope.jump = 1;
         if ((step == 1) && (!!$scope.model.link)) {
             $scope.checkstep(2);
@@ -363,7 +391,7 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
         }
     }
 
-    $scope.step = function(step) {
+    $scope.step = function (step) {
         if ((step == 1) || (step == 2) || step == 0) {
             var step = $scope.steps[step];
             if (step == "undone") {
@@ -378,7 +406,7 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
 
     }
 
-    var validate = function(data) {
+    var validate = function (data) {
         if (data.name != '' && (data.type != '' || data.link != '')) {
             return true;
         } else {
@@ -386,7 +414,7 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
         }
     };
 
-    $scope.update = function(model) {
+    $scope.update = function (model) {
 
         usSpinnerService.spin('spinner');
 
@@ -405,7 +433,7 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
             rest().update({
                 type: $scope.type,
                 id: $scope.model.id
-            }, $scope.model, function(resp) {
+            }, $scope.model, function (resp) {
                 usSpinnerService.stop('spinner');
                 if (resp.data.id) {
                     var url = '/' + $scope.type + '/' + resp.data.id + '/view';
@@ -413,7 +441,7 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
                     var url = '/' + $scope.type;
                 }
                 $location.path(url);
-            }, function(error) {
+            }, function (error) {
                 usSpinnerService.stop('spinner');
                 if (error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre del gráfico ya existe.');
@@ -428,19 +456,19 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
     };
 
 
-    $scope.load = function() {
+    $scope.load = function () {
 
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type,
-        }, function() {
+        }, function () {
             $scope.file_disabled = 'enabled';
             if (!angular.isUndefined($scope.model.file)) {
                 $scope.fileModel = rest().contents({
                     type: "files",
                     id: $scope.model.file.id,
                     params: "limit=1"
-                }, function() {
+                }, function () {
                     $scope.model.file = $scope.model.file.id;
 
                     $scope.headersFile = null;
@@ -453,7 +481,7 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
 
                 var counter = 0;
                 if (!!$scope.model.dataSeries) {
-                    angular.forEach($scope.model.dataSeries, function(value, key) {
+                    angular.forEach($scope.model.dataSeries, function (value, key) {
                         $scope.model.items.push({
                             field2: value,
                             index: counter
@@ -467,7 +495,7 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
 
     $scope.load();
 
-    $scope.getHtml = function(html) {
+    $scope.getHtml = function (html) {
         return $sce.trustAsHtml(html);
     };
 }

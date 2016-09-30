@@ -14,18 +14,26 @@
         service.ClearCredentials = ClearCredentials;
         return service;
 
-        function Login(username, password, callback) {
+        function Login(data, callback) {
             /* Use this for real authenticationa
              ----------------------------------------------*/
             $http.post($rootScope.url + '/users/login', {
-                    username: username,
-                    password: password
+                    username: data.username,
+                    password: data.password,
+                    'g-recaptcha-response': data.recaptcha
                 })
                 .success(function(response) {
                     callback(response);
                 })
                 .error(function(response) {
-                    alert('El usuario y/o la contraseña son inválidos.');
+                    response.message = 'El usuario y/o la contraseña son inválidos.';
+
+                    if(!angular.isUndefined(response.data.success) && !response.data.success) {
+                        response.message = 'Se olvidó de seleccionar el captcha.';
+                    }
+                    
+                    callback(response);
+                    //alert();
 
                 });
 

@@ -5,7 +5,7 @@ app.factory('model', function($resource) {
 });
 
 
-function CategoryListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService) {
+function CategoryListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, configs) {
 
     modelService.initService("Category", "categories", $scope);
 
@@ -20,11 +20,11 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
     var filtersGet = ['datasets'];
 
     $scope.inactiveModel = function(item) {
-        modelService.deactivate(item, $scope, filtersGet);
+        modelService.deactivateList(item, $scope, filtersGet);
     }
 
     $scope.activeModel = function(item) {
-        modelService.restore($scope, item, filtersGet);
+        modelService.restoreList($scope, item, filtersGet);
     };
     
     $scope.confirmDelete = function(item) {
@@ -44,11 +44,18 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
 
     };
     
-    $scope.limit = 20;
+    $scope.config_key = 'adminPagination';
+    ////factory configs
+    configs.findKey($scope, function (resp) {
+        $scope.limit = 20;
+        if (!!resp.data[0] && !!resp.data[0].value) {
+            $scope.limit = resp.data[0].value;
+        }
+        
+        $scope.q = "&include=datasets&skip=0&limit=" + $scope.limit;
 
-    $scope.q = "&include=datasets&skip=0&limit=" + $scope.limit;
-
-    modelService.loadAll($scope);
+        modelService.loadAll($scope);
+    });
 
     $scope.paging = function(event, page, pageSize, total) {
         var skip = (page - 1) * $scope.limit;
@@ -60,6 +67,14 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
 
 function CategoryViewController($scope, Flash, rest, $routeParams, $location, $sce, modelService, $rootScope) {
     modelService.initService("Category", "categories", $scope);
+    
+    $scope.inactiveModel = function(item) {
+        modelService.deactivateView(item, $scope);
+    }
+
+    $scope.activeModel = function(item) {
+        modelService.restoreView($scope, item);
+    };
 
     $scope.edit = function(model) {
         var url = '/' + $scope.type + '/' + model.id + "/edit";
@@ -235,7 +250,7 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
 
             Upload.upload({
                 url: $rootScope.url + "/categories/" + $scope.model.id,
-                method: 'PATCH',
+                method: 'PUT',
                 data: data
             }).then(function(resp) {
                 usSpinnerService.stop('spinner');

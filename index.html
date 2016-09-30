@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://npmcdn.com/leaflet@1.0.0-rc.3/dist/leaflet.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-csp.css" />
         <!-- CSS CDN dependencies:END -->
 
         <!-- build:css styles.min.css -->
@@ -33,7 +34,7 @@
             <link rel="stylesheet" href="css/main.css">
             <link rel="stylesheet" href="css/styles_admin.css">
         <!-- endbuild -->
-        
+
         <!-- build:js ie8.min.js -->
             <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
             <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -42,6 +43,9 @@
             <script src="plugins/respond.min.js"></script>
             <![endif]-->
         <!-- endbuild -->
+
+        <script src="https://www.google.com/recaptcha/api.js?onload=vcRecaptchaApiLoaded&render=explicit"
+            async defer></script>
     </head>
     <body  class="hold-transition skin-blue sidebar-mini {{bodyClass}}"  >
         <div class="wrapper{{bodyClass}}">
@@ -104,15 +108,17 @@
             <script src="plugins/middleware/angular-middleware.min.js"></script>
             <script src="plugins/validation-pass/angular-validation-match.min.js"></script>
             <script src="plugins/angular-jwt/angular-jwt.min.js"></script>
+            <script src="plugins/angular-recaptcha.min.js"></script>
 
             <script src="plugins/selectize.js"></script>
             <script src="plugins/select2/select2.min.js"></script>
             <script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 
             <script src="node_modules/async/dist/async.js"></script>
+            <script src="node_modules/underscore/underscore.js"></script>
             <script src="node_modules/ckan/ckan.js"></script>
         <!-- endbuild -->
-        
+
         <script src="bundle.min.js"></script>
 
 

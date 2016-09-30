@@ -4,7 +4,7 @@ app.factory('model', function($resource) {
     return $resource();
 });
 
- 
+
 function controllerHome($scope,rest){
     $scope.modelName = "Log";
     $scope.type = "logs";
@@ -27,11 +27,11 @@ function controllerHome($scope,rest){
 
       $scope.setClassLog= function(value){
         if(value=="create"){
-            return "label-success";
+            return "bg-success";
         }else if(value=="update"){
-            return "label-warning";
+            return "bg-warning";
         }else{
-            return "label-danger";
+            return "bg-danger";
         }
     }
 }

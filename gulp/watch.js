@@ -2,7 +2,7 @@ var gulp = require('gulp');
 
 gulp.task('watch', ['serve'], function() {
   // Static Files
-  gulp.watch(gulp.paths.static, ['static-watch']);
+  gulp.watch(gulp.paths.static, ['static-watch', 'vendors']);
 
   // Vendors
   gulp.watch(gulp.paths.vendors, ['vendors-watch']);
@@ -10,10 +10,8 @@ gulp.task('watch', ['serve'], function() {
   // Javascript
   gulp.watch(gulp.paths.javascript, ['javascript-watch']);
 
-  // // Style
-  // gulp.watch([
-  //   'css/**/*.{css,scss}'
-  //   ], ['styles']);
+  // Style
+  gulp.watch(gulp.paths.styles, ['styles-watch']);
 });
 
 // Watch subtasks
@@ -28,6 +26,11 @@ gulp.task('vendors-watch', ['vendors'], function (done) {
 });
 
 gulp.task('javascript-watch', ['javascript'], function (done) {
+  gulp.browserSync.reload();
+  done();
+});
+
+gulp.task('styles-watch', ['styles'], function (done) {
   gulp.browserSync.reload();
   done();
 });

@@ -1,6 +1,5 @@
 <header-home></header-home>
 <div class="content-wrapper">
-
     <breadcrumbs data-type="{{ 'ADD' | translate }}" data-model-name="{{ 'FILE' | translate }}" data-model="{{type}}"></breadcrumbs>
     <!-- Main content -->
     <section class="content">
@@ -10,21 +9,18 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">{{ 'ADD' | translate }} {{ 'FILE' | translate }}</h3>
                     </div>
-                    <!--  <form autocomplete="off"   enctype="multipart/form-data" class="form-horizontal" name="form"  autocomplete="false"  role="form" ng-submit="add(form.$valid)" novalidate>
-                        <div class="box-body" ng-include="'views/file/_form.html'"></div>
-                    </form>-->
                     <div class="row">
                         <div class="col-xs-12">
 
                             <ul class="steps">
                                 <li ng-class="step(0)" ng-click="checkstep(0)" class=" col-xs-4">
-                                    <p>{{ 'CHARGE_OF_FILE' | translate }}</p>
+                                    <p> 1. {{ 'CHARGE_OF_FILE' | translate | uppercase }}</p>
                                 </li>
                                 <li ng-class="step(1)" ng-click="checkstep(1)" class=" col-xs-4">
-                                    <p>{{ 'DATA_OF_FILE' | translate }}</p>
+                                    <p> 2. {{ 'DATA_OF_FILE' | translate | uppercase }}</p>
                                 </li>
                                 <li ng-class="step(2)" ng-click="checkstep(2)" class=" col-xs-4">
-                                    <p>{{ 'REVISION' | translate }}</p>
+                                    <p> 3. {{ 'REVISION' | translate | uppercase }}</p>
                                 </li>
                             </ul>
 
@@ -33,13 +29,13 @@
                     <div class="row" ng-show="stepactive == 0">
                         <div class="col-md-6 col-md-offset-3">
                             <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h1>{{ 'FILES' | translate }}</h1>
-                                    <div ngf-select ng-model="model.uploadFile" name="uploadFile" ngf-pattern="'{{fileTypes}}'"
-                                         ngf-accept="'{{fileTypes}}'" 
+                                <!-- <div class="panel-heading"> -->
+                                    <!-- <h1>{{ 'FILES' | translate }}</h1> -->
+                                    <div class="form-control file-upload" ngf-select ng-model="model.uploadFile" name="uploadFile" ngf-pattern="'{{fileTypes}}'"
+                                         ngf-accept="'{{fileTypes}}'"
                                          ngf-max-size="2000MB" ngf-min-height="100"
-                                         ngf-resize="{width: 100, height: 100}"   ngf-before-model-change="beforeChange($files)"><i class="fa fa-plus add-image-button" aria-hidden="true"></i></div>
-                                </div>
+                                         ngf-resize="{width: 100, height: 100}"   ngf-before-model-change="beforeChange($files)"><i class="fa fa-link fa-flip-horizontal" aria-hidden="true"></i> {{'ATTACH_FILE' | translate}}<!---<i class="fa fa-plus add-image-button" aria-hidden="true"></i>---></div>
+                                <!-- </div> -->
                                 <div class="panel-body docuemnts-upload">
                                     <div class="row" ng-if="fileModel.name" >
                                         <div class="col-xs-2 typeImageUpload">
@@ -122,6 +118,10 @@
                                             <td class="detail-bold">{{ 'UPDATED_VIEW' | translate }}</td>
                                             <td><span class="label label-default" >{{model.updated ? 'Si' : 'No'}}</span></td>
                                         </tr>
+                                        <tr>
+                                            <td class="detail-bold">{{ 'LAYOUT' | translate }}</td>
+                                            <td><span class="label label-default" >{{model.layout ? 'Si' : 'No'}}</span></td>
+                                        </tr>
                                         <tr ng-repeat="item in model.items">
                                             <td class="detail-bold">{{item.field1}}</td>
                                             <td>{{item.field2}}</td>
@@ -148,10 +148,5 @@
             </div>
     </section>
     <!--  Main content-->
-
 </div>
-
-
-
-
 <footer-home></footer-home>

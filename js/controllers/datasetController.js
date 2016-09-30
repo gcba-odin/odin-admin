@@ -6,7 +6,7 @@ app.factory('model', function($resource) {
 
 
 
-function DatasetListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, $routeParams) {
+function DatasetListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, $routeParams, configs) {
 
 
     modelService.initService("Dataset", "datasets", $scope);
@@ -53,24 +53,31 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
     $scope.view = function(model) {
         modelService.view($scope, model);
     }
+    
+    $scope.config_key = 'adminPagination';
+    ////factory configs
+    configs.findKey($scope, function (resp) {
+        $scope.limit = 20;
+        if (!!resp.data[0] && !!resp.data[0].value) {
+            $scope.limit = resp.data[0].value;
+        }
+        
+        $scope.q = "&skip=0&limit=" + $scope.limit;
 
-    $scope.limit = 20;
+        $scope.starred = false;
+        $scope.condition = 'OR';
+        if ($routeParams.filter == 'starred') {
+            $scope.starred = true;
+            $scope.q += "&starred=true";
+            //$scope.modelName = 'Starred datasets';
+            angular.forEach($scope.filtersView, function(element) {
+                element.multiple = false;
+            });
+            //$scope.condition = 'AND';
+        }
 
-    $scope.q = "&skip=0&limit=" + $scope.limit;
-
-    $scope.starred = false;
-    $scope.condition = 'OR';
-    if ($routeParams.filter == 'starred') {
-        $scope.starred = true;
-        $scope.q += "&starred=true";
-        //$scope.modelName = 'Starred datasets';
-        angular.forEach($scope.filtersView, function(element) {
-            element.multiple = false;
-        });
-        //$scope.condition = 'AND';
-    }
-
-    modelService.loadAll($scope);
+        modelService.loadAll($scope);
+    });
 
     $scope.paging = function(event, page, pageSize, total) {
         var skip = (page - 1) * $scope.limit;
@@ -135,12 +142,12 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
     //factory configs 
     configs.statuses($scope);
 
-    $scope.publish = function() {
+    $scope.publish = function(id, type) {
         usSpinnerService.spin('spinner');
 
         rest().publish({
-            type: $scope.type,
-            id: $scope.model.id
+            type: type,
+            id: id
         }, {}, function(resp) {
             loadModel();
             //var url = '/' + $scope.type;
@@ -148,15 +155,20 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
         });
         usSpinnerService.stop('spinner');
     };
+    
 
-    $scope.unPublish = function() {
-        Alertify.confirm('¿Está seguro que quiere despublicar este dataset?').then(
+    $scope.unPublish = function(id, type) {
+        var text_type = 'dataset';
+        if(type == 'files') {
+            text_type = 'archivo';
+        }
+        Alertify.confirm('¿Está seguro que quiere despublicar este ' + text_type + '?').then(
                 function onOk() {
                     usSpinnerService.spin('spinner');
 
                     rest().unpublish({
-                        type: $scope.type,
-                        id: $scope.model.id
+                        type: type,
+                        id: id
                     }, {}, function(resp) {
                         loadModel();
                         //var url = '/' + $scope.type;

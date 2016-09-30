@@ -13,15 +13,23 @@ gulp.paths = {
     'manifest.json',
     '*.html',
     'plugins/**',
+    'public/*'
   ],
   build: 'dist',
+  cleancss:'dist/styles.min.css',
   javascript: [
     'js/**/*.js',
     'config.json',
   ],
   vendors: [
-    'css/**/*',
+    // 'css/**/*.scss',
+    // 'css/**/*.css',
+    // 'css/**/*',
     'plugins/**',
     'index.html',
+  ],
+  styles: [
+    'css/*.scss',
+    'css/*.css'
   ]
 };

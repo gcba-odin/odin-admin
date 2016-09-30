@@ -8,9 +8,6 @@
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">{{ 'CONFIGS' | translate }}</h3>
-                        <!--<div class="box-tools">
-                            <a ng-href="#/configs/new" class="btn-primary btn nodecoration pull-right">{{ 'ADD' | translate }} {{ 'CONFIG' | translate }}</a>
-                        </div>-->
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive no-padding">
@@ -21,11 +18,9 @@
                                     <th class="text-center">{{ 'ACTIONS' | translate }}</th>
                                 </tr>
                                 <tr ng-repeat="model in data.data">
-                                    <td>{{model.description }}</td>
+                                    <td>{{model.description}}</td>
                                     <td class="text-center table-btn">
-                                        <!--<a class="btn btn-primary" ng-click="view({id: model.id})">{{ 'VIEW' | translate }}</a>-->
                                         <a class="btn btn-primary" ng-click="edit({id: model.id})">{{ 'EDIT' | translate }}</a>
-                                        <!--<a class="btn btn-danger" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)">{{ 'DELETE' | translate }}</a>-->
                                     </td>
                                 </tr>
 

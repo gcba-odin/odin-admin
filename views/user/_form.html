@@ -46,25 +46,13 @@
 </div>
 <!-- end Input email -->
 
-<!-- Input organization 
-<div class="form-group">
-    <label for="organization" class="col-sm-2 control-label">{{ 'ORGANIZATION' | translate }}</label>
-    <div class="col-sm-10"  ng-class="{ 'has-error': form.organization.$touched && form.organization.$invalid }">
-        <input value="" autocomplete="off" type="text" ng-model="model.organization" id="organization" name="organization" class="form-control" id="title" placeholder="{{ 'PLACE' | translate }}  {{ 'ORGANIZATION' | translate }} {{ 'HERE' | translate }} " required />
-        <div class="help-block" ng-messages="form.organization.$error" ng-if="form.organization.$touched">
-            <div ng-messages-include="views/messages.html"></div>
-        </div>
-    </div>
-</div>-->
-<!-- end Input organization -->
-
 <!-- Input organization -->
 <div class="form-group">
     <label for="organization" class="col-sm-2 control-label">* {{ 'ORGANIZATION' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.organization.$touched && form.organization.$invalid }">
-    <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="organizations" data-model="{{model.organization}}" select-two-ajax  name="organization" id="organization"
-      ng-model="model.organization" required  class="selectize-width">
-      </select>
+        <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="organizations" data-model="{{model.organization}}" select-two-ajax  name="organization" id="organization"
+                ng-model="model.organization" required  class="selectize-width">
+        </select>
 
         <div class="help-block" ng-messages="form.organization.$error" ng-if="form.organization.$touched">
             <div ng-messages-include="views/messages.html"></div>
@@ -79,9 +67,6 @@
     <div class="col-sm-10">
         <input ng-pattern="/^(?=.*?[A-Za-z0-9^\w\s]).{8,20}$/" value=" " type="password" id="password" ng-model="model.password" autocomplete="false"  name="password" class="form-control" id="title" placeholder="{{ 'PLACE' | translate }} {{ 'PASSWORD' | translate }} {{ 'HERE' | translate }}"/>
         <div class="help-block has-error" ng-show="form.password.$error.pattern">{{ 'ERROR_PASS' | translate }}</div>
-        <!--<div class="help-block" ng-messages="form.password.$error" ng-if="form.password.$touched">
-            <div ng-messages-include="views/messages.html"></div>
-        </div>-->
     </div>
 </div>
 <!-- end Input Password -->
@@ -92,9 +77,6 @@
     <div class="col-sm-10">
         <input name="passwordConfirm" ng-model="model.passwordConfirm" type="password" match="model.password" id="passwordConfirm" autocomplete="false" class="form-control" placeholder="{{ 'PLACE' | translate }} {{ 'CONFIRM_PASSWORD' | translate }} {{ 'HERE' | translate }}"/>
         <div class="help-block has-error" ng-show="form.passwordConfirm.$error.match && !form.password.$error.pattern">{{ 'ERROR_CONFIRM_PASS' | translate }}</div>
-        <!--<div class="help-block" ng-messages="form.passwordConfirm.$error" ng-if="form.passwordConfirm.$touched">
-            <div ng-messages-include="views/messages.html"></div>
-        </div>-->
     </div>
 </div>
 <!-- end Input Confirm Password -->

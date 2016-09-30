@@ -25,7 +25,7 @@ app.directive('wysihtml5', function () {
         }
     };
 });
-function OrganizationListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService) {
+function OrganizationListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, configs) {
 
     modelService.initService("Organization", "organizations", $scope);
     
@@ -40,11 +40,11 @@ function OrganizationListController($scope, $location, rest, $rootScope, Flash, 
     var filtersGet = ['files', 'users'];
 
     $scope.inactiveModel = function(item) {
-        modelService.deactivate(item, $scope, filtersGet);
+        modelService.deactivateList(item, $scope, filtersGet);
     }
 
     $scope.activeModel = function(item) {
-        modelService.restore($scope, item, filtersGet);
+        modelService.restoreList($scope, item, filtersGet);
     };
     
     $scope.confirmDelete = function(item) {
@@ -63,11 +63,18 @@ function OrganizationListController($scope, $location, rest, $rootScope, Flash, 
         modelService.activeClass(activeClass);
     };
     
-    $scope.limit = 20;
+    $scope.config_key = 'adminPagination';
+    ////factory configs
+    configs.findKey($scope, function (resp) {
+        $scope.limit = 20;
+        if (!!resp.data[0] && !!resp.data[0].value) {
+            $scope.limit = resp.data[0].value;
+        }
+        
+        $scope.q = "&include=files,users&skip=0&limit=" + $scope.limit;
 
-    $scope.q = "&include=files,users&skip=0&limit=" + $scope.limit;
-
-    modelService.loadAll($scope);
+        modelService.loadAll($scope);
+    });
 
     $scope.paging = function(event, page, pageSize, total) {
         var skip = (page - 1) * $scope.limit;
@@ -80,6 +87,15 @@ function OrganizationViewController($scope, Flash, rest, $routeParams, $location
     modelService.initService("Organization", "organizations", $scope);
 
     modelService.findOne($routeParams, $scope);
+    
+    $scope.inactiveModel = function(item) {
+        modelService.deactivateView(item, $scope);
+    }
+
+    $scope.activeModel = function(item) {
+        modelService.restoreView($scope, item);
+    };
+    
     $scope.edit = function (model) {
         modelService.edit($scope, model);
     }

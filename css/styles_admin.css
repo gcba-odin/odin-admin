@@ -59,8 +59,6 @@ body {
     background: -ms-linear-gradient(0deg, rgba(255, 182, 0, 1) 0%, rgba(255, 56, 106, 1) 100%);
     /* ie10+ */
     background: linear-gradient(90deg, rgba(255, 182, 0, 1) 0%, rgba(255, 56, 106, 1) 100%);
-    /* w3c */
-    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#ffb600', endColorstr='#ff386a', GradientType=1);
 }
 
 a {
@@ -74,10 +72,10 @@ a:hover {
 .logo img {
     height: 2.5em;
 }
-
+/*
 .sidebar-menu {
     margin-top: 2.5em;
-}
+}*/
 
 .user-panel {
     text-align: center;
@@ -95,7 +93,8 @@ a:hover {
     height: 2em;
 }
 
-.sidebar-menu .treeview.active .sidebar-svg * {
+.sidebar-menu .treeview.active > a > .sidebar-svg *,
+.sidebar-menu .treeview-menu > li.active > a > .sidebar-svg * {
     fill: #ff386a;
 }
 
@@ -111,20 +110,31 @@ ul.sidebar-menu a {
     color: #ffb600;
 }
 
-ul.sidebar-menu .treeview.active > a {
-    color: #ff386a;
-}
-
+ul.sidebar-menu .treeview.active > a,
 ul.sidebar-menu .treeview.active > a > span {
     color: #ff386a;
 }
+
+/*ul.sidebar-menu .treeview.active > a > span {
+    color: #ff386a;
+}*/
 
 .sidebar-menu .treeview-menu li a {
     font-family: avenir-medium;
 }
 
-.sidebar-menu .treeview-menu li.active a {
+.sidebar-mini.sidebar-collapse .sidebar-menu .treeview-menu {
+    background: white;
+    min-width: 16em !important;
+}
+
+.sidebar-menu .treeview-menu li.active > a {
     color: #ff386a;
+}
+
+.sidebar-mini.sidebar-collapse .sidebar-menu > li:hover > .treeview-menu {
+    top: 5px;
+    margin-left: 0;
 }
 
 div.wrapper li.dropdown.user.user-menu.avenir-medium.ng-scope > a > span {
@@ -222,8 +232,12 @@ div.form-group div.has-error p {
 }
 
 .sidebar-toggle {
-    color: #6d6e70;
+    color: #ff386a !important;
     font-size: 11pt;
+}
+
+.sidebar-toggle:hover {
+    color: #ffb600 !important;
 }
 
 .spinner {
@@ -249,6 +263,8 @@ div.form-group div.has-error p {
 
 .chat {
     padding: 3em 1em 1em 0em !important;
+    height: 480px;
+    overflow: auto;
 }
 
 #chat-box .item {
@@ -262,6 +278,8 @@ div.form-group div.has-error p {
 .box-header .box-title {
     line-height: 2 !important;
     padding: 0 1em;
+    font-family: avenir-black, sans-serif;
+    color: #FF386a;
 }
 
 .box-header .box-tools {
@@ -301,9 +319,11 @@ div.form-group div.has-error p {
 }
 
 .steps li.active a, .steps li.active p{
-    background: #ff386a;
+    /*background: #ff386a;*/
+    background: white;
+    border: 3px solid #ff386a;
     opacity: 1;
-    color: white;
+    color: #ff386a;
 }
 
 .steps li.active a:after, .steps li.active p:after {
@@ -311,13 +331,46 @@ div.form-group div.has-error p {
 }
 
 .steps li a, .steps li p{
-    background-color: #ff386a;
-    opacity: .4;
-    color: white
+    /*background-color: #ff386a;*/
+    background-color: white;
+    border: 3px solid #FFb600;
+    /*opacity: .4;*/
+    color: #FFb600;
 }
 
 .steps li a:before, .steps li p:before{
-    border-left: 0; 
+    /*border-left: 0;*/
+}
+
+.file-upload{
+  background-color: white;
+  border: 2px solid #777777;
+  /*opacity: .4;*/
+  color: #777777;
+}
+
+.login-box{
+  box-shadow: 0px 0px 5px 0px #FF386a;
+  background-color: white;
+}
+
+
+.bg-split {
+    background-color: #013A6B;
+    background: -webkit-linear-gradient(120deg, #f9f9f9 50%, #f2f2f2 50%);
+    /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(120deg, #f9f9f9 50%, #f2f2f2 50%);
+    /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(120deg, #f9f9f9 50%, #f2f2f2 50%);
+    /* For Firefox 3.6 to 15 */
+    /*background: linear-gradient(120deg, #f9f9f9 50%, #f2f2f2 50%);*/
+    /* Standard syntax */
+    /*min-height: 100%;*/
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
 }
 
 div.panel-heading {
@@ -332,9 +385,7 @@ div.panel-heading {
     background: -ms-linear-gradient(0deg, rgba(255, 182, 0, 1) 0%, rgba(255, 56, 106, 1) 100%);
     /* ie10+ */
     background: linear-gradient(90deg, rgba(255, 182, 0, 1) 0%, rgba(255, 56, 106, 1) 100%);
-    /* w3c */
-    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#ffb600', endColorstr='#ff386a', GradientType=1);
-    //background-color: #ff386a !important;
+    /*//background-color: #ff386a !important;*/
     color: white !important;
 }
 
@@ -385,6 +436,38 @@ div.panel-heading {
     border-color: #ffb600;
 }
 
+.label-primary{
+  background-color: #FF386a !important;
+}
+
+/* SELECTIZE STYLE*/
+.selectize-input {
+  border-radius: 0;
+  box-shadow: none;
+  border-color: #d2d6de;
+  font-size: 14px;
+}
+.selectize-input:focus {
+  border-color: #ffb600;
+  box-shadow: none;
+}
+.selectize-input.focus {
+  border-color: #ffb600;
+  box-shadow: none;
+}
+.selectize-input::-moz-placeholder,
+.selectize-input:-ms-input-placeholder,
+.selectize-input::-webkit-input-placeholder {
+  color: #bbb;
+  opacity: 1;
+}
+.selectize-input:not(select) {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+/* ./ SELECTIZE STYLE*/
+
 .btn-primary.disabled.focus, .btn-primary.disabled:focus, .btn-primary.disabled:hover, .btn-primary[disabled].focus, .btn-primary[disabled]:focus, .btn-primary[disabled]:hover {
     border-color: #ffb600;
     background-color: #ffb600;
@@ -402,4 +485,44 @@ div.panel-heading {
 .pagination > .active > a:focus, .pagination > .active > a:hover{
     background-color: #FFb600;
     border-color: #FFb600;
+}
+
+.modal-dialog {
+    width: 1000px;
+}
+
+.sidebar {
+    min-height: 1000px;
+}
+
+.box-footer a {
+    margin-right: 10px;
+}
+
+
+.label-default{
+  background-color: #9A9A9A;
+  color: white;
+}
+
+.bg-primary{
+  background-color: #FF386a;
+}
+
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .sidebar-menu .sidebar-svg {
+        margin-left: -6em !important;
+        margin-right: -6em !important;
+    }
+
+    .sidebar-collapse .sidebar-menu .sidebar-svg {
+        margin-left: 0 !important;
+        margin-right: -12em !important;
+    }
+
+    .sidebar-collapse .sidebar-menu .treeview-menu .sidebar-svg {
+        margin-right: -6em !important;
+        margin-left: -6em !important
+    }
 }

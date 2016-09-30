@@ -103,7 +103,6 @@ function ConfigEditController($scope, Flash, rest, $routeParams, model, $locatio
                     type: $filter('lowercase')($scope.model.model)
                 }, function() {
                     $scope.model.value = $scope.value.id
-
                 });
             }
         });

@@ -1,27 +1,3 @@
-<!-- Input uploadFile
-<div class="form-group">
-    <label for="uploadFile" class="col-sm-2 control-label"> {{ 'UPLOAD_FILE' | translate }}</label>
-    <div class="col-sm-5"  ng-class="{ 'has-error': form.uploadFile.$touched && form.uploadFile.$invalid }">
-          <div class="btn btn-info" ngf-select ng-model="model.uploadFile" name="uploadFile" ngf-pattern="'application/zip,text/html,text/csv,text/calendar,application/pdf,application/x-rar-compressed,application/excel,application/xml,text/xml'"
-    ngf-accept="'application/zip,text/html,text/csv,text/calendar,application/pdf,application/x-rar-compressed,application/excel,application/xml,text/xml'" ngf-max-size="20MB" ngf-min-height="100"
-    ngf-resize="{width: 100, height: 100}"   ngf-before-model-change="beforeChange($files)">{{ 'SELECT' | translate }}</div>
-
-        <div class="help-block" ng-messages="form.uploadFile.$error" ng-if="form.uploadFile.$touched">
-            <div ng-messages-include="views/messages.html"></div>
-        </div>
-    </div>
-    <div class="col-sm-5">
-
-        <div class="progress">
-          <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="{{uploadImageProgress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{uploadImageProgress}}%">
-           {{uploadImageProgress}}% {{ 'COMPLETE' | translate }}
-          </div>
-        </div>
-
-    </div>
-</div>
-end Input uploadFile -->
-
 <!-- Input name -->
 <div class="form-group">
     <label for="name" class="col-sm-2 control-label">* {{ 'NAME' | translate }}</label>
@@ -51,9 +27,6 @@ end Input uploadFile -->
 <!-- Input dataset -->
 <div class="form-group">
     <label for="dataset" class="col-sm-2 control-label">* {{ 'DATASET' | translate }}</label>
-    <!--<div class="col-sm-10" ng-if="dataset_disabled">
-        <span>{{model.dataset.name}}</span>
-    </div>-->
     <div class="col-sm-10" ng-class="{ 'has-error': form.dataset.$touched && form.dataset.$invalid }">
         <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="datasets" data-model="{{model.dataset}}" select-two-ajax name="dataset" id="dataset" ng-model="model.dataset" class="selectize-width" required data-dis='{{dataset_disabled}}'>
         </select>
@@ -69,11 +42,8 @@ end Input uploadFile -->
 <div class="form-group" ng-if="!status_default">
     <label for="status" class="col-sm-2 control-label">* {{ 'STATUS' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.status.$touched && form.status.$invalid }">
-
-
         <select placeholder="{{ 'SELECT_ONE' | translate }}" class="selectize-input items required full has-options has-items" data-key="name" data-revision="status" data-modelname="statuses" data-opt="{{ options.data}}" data-model="{{model.status}}" select-static-ajax name="status"
-                id="status" ng-model="model.status" class="selectize-width" required>
-        </select>
+                id="status" ng-model="model.status" class="selectize-width" required></select>
 
         <div class="help-block" ng-messages="form.status.$error" ng-if="form.status.$touched">
             <div ng-messages-include="views/messages.html"></div>
@@ -86,8 +56,7 @@ end Input uploadFile -->
 <div class="form-group">
     <label for="organization" class="col-sm-2 control-label">* {{ 'ORGANIZATION' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.organization.$touched && form.organization.$invalid }">
-        <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="organizations" data-model="{{model.organization}}" select-two-ajax name="organization" id="organization" ng-model="model.organization" class="selectize-width" required>
-        </select>
+        <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="organizations" data-model="{{model.organization}}" select-two-ajax name="organization" id="organization" ng-model="model.organization" class="selectize-width" required></select>
 
         <div class="help-block" ng-messages="form.organization.$error" ng-if="form.organization.$touched">
             <div ng-messages-include="views/messages.html"></div>
@@ -100,10 +69,8 @@ end Input uploadFile -->
 <div class="form-group">
     <label for="updateFrequency" class="col-sm-2 control-label">* {{ 'FREQUENCY' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.updateFrequency.$touched && form.updateFrequency.$invalid }">
-
-        <select placeholder="{{ 'SELECT_ONE' | translate }}" class="selectize-input items required full has-options has-items" data-key="name" data-revision="updateFrequency" data-modelname="updatefrequencies" data-model="{{model.updateFrequency}}" select-static-ajax name="frecuency" id="frecuency"
-                ng-model="model.updateFrequency" class="selectize-width" required>
-        </select>
+        <select placeholder="{{ 'SELECT_ONE' | translate }}" class="form-control" data-key="name" data-revision="updateFrequency" data-modelname="updatefrequencies" data-model="{{model.updateFrequency}}" select-static-ajax name="frecuency" id="frecuency"
+                ng-model="model.updateFrequency" required></select>
 
         <div class="help-block" ng-messages="form.updateFrequency.$error" ng-if="form.updateFrequency.$touched">
             <div ng-messages-include="views/messages.html"></div>
@@ -116,8 +83,7 @@ end Input uploadFile -->
 <div class="form-group">
     <label for="owner" class="col-sm-2 control-label">* {{ 'OWNER' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.owner.$touched && form.owner.$invalid }">
-        <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="username" data-modelname="users" data-model="{{model.owner}}" select-two-ajax name="owner" id="owner" ng-model="model.owner" class="selectize-width" required>
-        </select>
+        <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="username" data-modelname="users" data-model="{{model.owner}}" select-two-ajax name="owner" id="owner" ng-model="model.owner" class="selectize-width" required></select>
 
         <div class="help-block" ng-messages="form.owner.$error" ng-if="form.owner.$touched">
             <div ng-messages-include="views/messages.html"></div>
@@ -125,21 +91,6 @@ end Input uploadFile -->
     </div>
 </div>
 <!-- end Input owner -->
-
-<!-- Input tags
-<div class="form-group">
-    <label for="tags" class="col-sm-2 control-label">{{ 'TAGS' | translate }}</label>
-    <div class="col-sm-10"  ng-class="{ 'has-error': form.tags.$touched && form.tags.$invalid }">
-    <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="tags" data-model="{{model.tags}}" select-two-ajax data-create="true"  name="tags" id="tags"
-      ng-model="model.tags" required  class="selectize-width" multiple>
-      </select>
-
-        <div class="help-block" ng-messages="form.tags.$error" ng-if="form.tags.$touched">
-            <div ng-messages-include="views/messages.html"></div>
-        </div>
-    </div>
-</div>
-<!-- end Input tags -->
 
 <!-- Input Notes -->
 <div class="form-group">
@@ -186,7 +137,29 @@ end Input uploadFile -->
         </div>
     </div>
 </div>
-<!-- end Input Starred -->
+<!-- end Input Updated -->
+
+<!-- Input Layout -->
+<div class="form-group">
+    <label class="col-sm-2 control-label">* {{ 'LAYOUT' | translate }}</label>
+    <div class="col-sm-10" ng-class="{ 'has-error': form.layout.$touched && form.layout.$invalid }">
+        <div>
+            <label class="btn btn-default" ng-class="activeClass(model.layout, 1)">
+                <input   type="radio" ng-value="true" name="layout"    ng-model="model.layout" id="option1" autocomplete="off" > {{ 'YES' | translate }}
+            </label>
+            <label class="btn btn-warning" ng-class="activeClass(model.updated, 2)">
+                <input type="radio" ng-value="false" name="layout"  ng-model="model.layout" id="option2" autocomplete="off" ng-checked="model.V" required> {{ 'NO' | translate }}
+            </label>
+            <p class="help-block">{{ 'MANDATARY' | translate }}</p>
+
+        </div>
+
+        <div class="help-block" ng-messages="form.layout.$error" ng-if="form.layout.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input Layout -->
 
 <div class="extraoptionals" ng-repeat="item in model.items">
     <!-- Input optional -->
@@ -221,50 +194,3 @@ end Input uploadFile -->
     </div>
 </div>
 <!-- end Input optional -->
-
-<!-- Input type
-<div class="form-group">
-    <label for="type" class="col-sm-2 control-label"> {{ 'TYPE' | translate }}</label>
-    <div class="col-sm-10"  ng-class="{ 'has-error': form.type.$touched && form.type.$invalid }">
-        <select placeholder="{{ 'SELECT_ONE' | translate }}"   name="type" id="type"
-      ng-options="option.name for option in model.filetypes.data track by option.id"
-      ng-model="data.type"  class="selectize-width"></select>
-
-        <div class="help-block" ng-messages="form.type.$error" ng-if="form.type.$touched">
-            <div ng-messages-include="views/messages.html"></div>
-        </div>
-    </div>
-</div>-->
-<!-- end Input type -->
-
-<!-- Input Url
-<div class="form-group">
-    <label for="url" class="col-sm-2 control-label"> {{ 'URL' | translate }}</label>
-    <div class="col-sm-10"  ng-class="{ 'has-error': form.url.$touched && form.url.$invalid }">
-        <input type="url" id="url" ng-model="model.url" name="url" class="form-control" id="title" placeholder="{{ 'PLACE' | translate }} {{ 'URL' | translate }} {{ 'HERE' | translate }}"  />
-        <div class="help-block" ng-messages="form.url.$error" ng-if="form.url.$touched">
-            <div ng-messages-include="views/messages.html"></div>
-        </div>
-    </div>
-</div> -->
-<!-- end Input Url -->
-
-<!-- Input Visibility -->
-<!-- <div class="form-group">
-    <label for="title" class="col-sm-2 control-label">* {{ 'VISIBILITY' | translate }}</label>
-    <div class="col-sm-10"  ng-class="{ 'has-error': form.visible.$touched && form.visible.$invalid }">
-        <div>
-          <label  class="btn btn-default" ng-class="activeClass(model.visible,1)">
-            <input   type="radio" ng-value="true" name="visible"    ng-model="model.visible" id="option1" autocomplete="off" ng-checked="model.visible" required> {{ 'YES' | translate }}
-          </label>
-          <label class="btn btn-warning" ng-class="activeClass(model.visible,2)">
-            <input type="radio" ng-value="false" name="visible"  ng-model="model.visible" id="option2" autocomplete="off"> {{ 'NO' | translate }}
-          </label>
-            <p class="help-block">{{ 'MANDATARY' | translate }}</p>
-        </div>
-        <div class="help-block" ng-messages="form.visible.$error" ng-if="form.visible.$touched">
-            <div ng-messages-include="views/messages.html"></div>
-        </div>
-    </div>
-</div> -->
-<!-- end Input Visibility -->
