@@ -46,7 +46,7 @@
                             <label for="url" class="col-sm-2 control-label">*
                                 {{ 'WEBSERVICE_URL' | translate }}</label>
                             <div class="col-sm-10" ng-class="{ 'has-error': form.url.$touched && form.url.$invalid }">
-                                <input type="text" id="url" ng-model="model.url" name="url" class="form-control" id="url" placeholder="Escriba ruta a los datos aqui"/>
+                                <input type="text" id="url" ng-model="model.url" name="url" class="form-control" id="url" placeholder="{{ 'PLACE' | translate }} {{ 'WEBSERVICE_URL' | translate }} {{ 'HERE' | translate }}"/>
                                 <div class="help-block" ng-messages="form.url.$error" ng-if="form.url.$touched">
                                     <div ng-messages-include="views/messages.html"></div>
                                 </div>
@@ -76,9 +76,9 @@
                     <div class="row">
                         <!-- input data_url -->
                         <div class="form-group" ng-if="stepactive == 0 && model.ws_type == 'rest' ">
-                            <label for="data_url" class="col-sm-2 control-label">* Ruta a los datos</label>
+                            <label for="data_url" class="col-sm-2 control-label">* {{'DATA_URL' | translate}}</label>
                             <div class="col-sm-10" ng-class="{'has-error': form.data_url.$touched && form.data_url.$invalid }">
-                                <input type="text" id="data_url" ng-model="model.data_url" name="data_url" class="form-control" id="data_url" placeholder="{{ 'PLACE' | translate }} {{ 'WEBSERVICE_URL' | translate }} {{ 'HERE' | translate }}"/>
+                                <input type="text" id="data_url" ng-model="model.data_url" name="data_url" class="form-control" id="data_url" placeholder="{{ 'PLACE' | translate }} {{ 'DATA_URL' | translate }} {{ 'HERE' | translate }}"/>
                                 <div class="help-block" ng-messages="form.data_url.$error" ng-if="form.data_url.$touched">
                                     <div ng-messages-include="views/messages.html"></div>
                                 </div>
@@ -88,12 +88,12 @@
                     <!-- authentication type -->
                     <div class="row">
                         <div class="form-group" ng-if="stepactive == 0 && model.ws_type == 'rest' ">
-                            <label for="auth_type" class="col-sm-2 control-label">* Forma de autenticación</label>
+                            <label for="auth_type" class="col-sm-2 control-label">* {{'AUTH_TYPE' | translate}}</label>
                             <div class="col-sm-10" ng-class="{'has-error': form.auth_type.$touched && form.auth_type.$invalid }">
                                 <select data-key="auth_type" data-modelname="auth_type" data-model="{{model.auth_type}}" name="auth_type" id="auth_type" ng-model="model.auth_type" class="form-control" required data-dis='{{auth_type_disabled}}'>
                                     <option value="" default disabled selected="selected">{{ 'SELECT_OPTION' | translate }}</option>
-                                    <option value="token">Token</option>
-                                    <option value="user_password">Usuario y contraseña</option>
+                                    <option value="token">{{'TOKEN' | translate}}</option>
+                                    <option value="user_password">{{ 'USER_PASSWORD' | translate }}</option>
                                 </select>
 
                                 <div class="help-block" ng-messages="form.auth_type.$error" ng-if="form.auth_type.$touched">
@@ -107,9 +107,9 @@
                     <!-- token inputs -->
                     <div class="row">
                         <div class="form-group" ng-if="stepactive == 0 && model.ws_type == 'rest' && model.auth_type == 'token' ">
-                            <label for="sign_name" class="col-sm-2 control-label">* Nombre de la firma</label>
+                            <label for="sign_name" class="col-sm-2 control-label">* {{ 'FIRM_NAME' | translate }}</label>
                             <div class="col-sm-10" ng-class="{'has-error': form.sign_name.$touched && form.sign_name.$invalid }">
-                                <input type="text" id="sign_name" ng-model="model.sign_name" name="sign_name" class="form-control" id="sign_name" placeholder="Escriba usuario aqui"/>
+                                <input type="text" id="sign_name" ng-model="model.sign_name" name="sign_name" class="form-control" id="sign_name" placeholder="{{ 'WRITE' | translate }} {{ 'FIRM_NAME' | translate }} {{ 'HERE' | translate }}"/>
                                 <div class="help-block" ng-messages="form.sign_name.$error" ng-if="form.sign_name.$touched">
                                     <div ng-messages-include="views/messages.html"></div>
                                 </div>
@@ -119,9 +119,9 @@
 
                     <div class="row">
                         <div class="form-group" ng-if="stepactive == 0 && model.ws_type == 'rest' && model.auth_type == 'token' ">
-                            <label for="sign_token" class="col-sm-2 control-label">* Token para firma</label>
+                            <label for="sign_token" class="col-sm-2 control-label">* {{ 'TOKEN_FOR_FIRM' | translate }}</label>
                             <div class="col-sm-10" ng-class="{'has-error': form.sign_token.$touched && form.sign_token.$invalid }">
-                                <input type="text" id="sign_token" ng-model="model.sign_token" name="sign_token" class="form-control" id="sign_token" placeholder="Escriba usuario aqui"/>
+                                <input type="text" id="sign_token" ng-model="model.sign_token" name="sign_token" class="form-control" id="sign_token" placeholder="{{ 'WRITE' | translate }} {{ 'TOKEN_FOR_FIRM' | translate }} {{ 'HERE' | translate }}"/>
                                 <div class="help-block" ng-messages="form.sign_token.$error" ng-if="form.sign_token.$touched">
                                     <div ng-messages-include="views/messages.html"></div>
                                 </div>
@@ -131,9 +131,9 @@
 
                     <div class="row">
                         <div class="form-group" ng-if="stepactive == 0 && model.ws_type == 'rest' && model.auth_type == 'token' ">
-                            <label for="sign_algorithm" class="col-sm-2 control-label">* Algoritmo para firma</label>
+                            <label for="sign_algorithm" class="col-sm-2 control-label">* {{'ALGORITHM_FOR_FIRM' | translate}}</label>
                             <div class="col-sm-10" ng-class="{'has-error': form.sign_algorithm.$touched && form.sign_algorithm.$invalid }">
-                                <input type="text" id="sign_algorithm" ng-model="model.sign_algorithm" name="sign_algorithm" class="form-control" id="sign_algorithm" placeholder="Escriba usuario aqui"/>
+                                <input type="text" id="sign_algorithm" ng-model="model.sign_algorithm" name="sign_algorithm" class="form-control" id="sign_algorithm" placeholder="{{ 'WRITE' | translate }} {{ 'ALGORITHM_FOR_FIRM' | translate }} {{ 'HERE' | translate }}"/>
                                 <div class="help-block" ng-messages="form.sign_algorithm.$error" ng-if="form.sign_algorithm.$touched">
                                     <div ng-messages-include="views/messages.html"></div>
                                 </div>
@@ -145,9 +145,9 @@
                     <!-- user and password inputs -->
                     <div class="row">
                         <div class="form-group" ng-if="stepactive == 0 && model.ws_type == 'rest' && model.auth_type == 'user_password' ">
-                            <label for="user" class="col-sm-2 control-label">* Usuario</label>
+                            <label for="user" class="col-sm-2 control-label">* {{ 'USER' | translate }}</label>
                             <div class="col-sm-10" ng-class="{'has-error': form.user.$touched && form.user.$invalid }">
-                                <input type="text" id="user" ng-model="model.user" name="user" class="form-control" id="user" placeholder="Escriba usuario aqui"/>
+                                <input type="text" id="user" ng-model="model.user" name="user" class="form-control" id="user" placeholder="{{ 'WRITE' | translate }} {{ 'USER' | translate }} {{ 'HERE' | translate }}"/>
                                 <div class="help-block" ng-messages="form.user.$error" ng-if="form.user.$touched">
                                     <div ng-messages-include="views/messages.html"></div>
                                 </div>
@@ -157,9 +157,9 @@
 
                     <div class="row">
                         <div class="form-group" ng-if="stepactive == 0 && model.ws_type == 'rest' && model.auth_type == 'user_password' ">
-                            <label for="password" class="col-sm-2 control-label">* Contraseña</label>
+                            <label for="password" class="col-sm-2 control-label">* {{'PASSWORD' | translate}}</label>
                             <div class="col-sm-10" ng-class="{'has-error': form.password.$touched && form.password.$invalid }">
-                                <input type="text" id="password" ng-model="model.password" name="password" class="form-control" id="password" placeholder="Escriba contraseña aqui"/>
+                                <input type="text" id="password" ng-model="model.password" name="password" class="form-control" id="password" placeholder="{{ 'WRITE' | translate }} {{ 'PASSWORD' | translate }} {{ 'HERE' | translate }}"/>
                                 <div class="help-block" ng-messages="form.password.$error" ng-if="form.password.$touched">
                                     <div ng-messages-include="views/messages.html"></div>
                                 </div>
@@ -172,9 +172,9 @@
                     <!-- method-->
                     <div class="row">
                         <div class="form-group" ng-if="stepactive == 0 && model.ws_type == 'soap' ">
-                            <label for="method" class="col-sm-2 control-label">* Método</label>
+                            <label for="method" class="col-sm-2 control-label">* {{'METHOD' | translate}}</label>
                             <div class="col-sm-10" ng-class="{'has-error': form.method.$touched && form.method.$invalid }">
-                                <input type="text" id="method" ng-model="model.method" name="method" class="form-control" id="method" placeholder="Escriba método aqui"/>
+                                <input type="text" id="method" ng-model="model.method" name="method" class="form-control" id="method" placeholder="{{ 'WRITE' | translate }} {{ 'METHOD' | translate }} {{ 'HERE' | translate }}"/>
                                 <div class="help-block" ng-messages="form.method.$error" ng-if="form.method.$touched">
                                     <div ng-messages-include="views/messages.html"></div>
                                 </div>
@@ -186,9 +186,9 @@
                     <!-- namespace-->
                     <div class="row">
                         <div class="form-group" ng-if="stepactive == 0 && model.ws_type == 'soap'">
-                            <label for="namespace" class="col-sm-2 control-label">* Nombre de espacio</label>
+                            <label for="namespace" class="col-sm-2 control-label">* {{'NAMESPACE' | translate}}</label>
                             <div class="col-sm-10" ng-class="{'has-error': form.namespace.$touched && form.namespace.$invalid }">
-                                <input type="text" id="namespace" ng-model="model.namespace" name="namespace" class="form-control" id="namespace" placeholder="Escriba nombre de espacio aqui"/>
+                                <input type="text" id="namespace" ng-model="model.namespace" name="namespace" class="form-control" id="namespace" placeholder="{{ 'WRITE' | translate }} {{ 'NAMESPACE' | translate }} {{ 'HERE' | translate }}"/>
                                 <div class="help-block" ng-messages="form.namespace.$error" ng-if="form.namespace.$touched">
                                     <div ng-messages-include="views/messages.html"></div>
                                 </div>
@@ -198,7 +198,7 @@
 
                     <div class="row">
                         <div class="form-group" ng-if="stepactive == 0 && model.ws_type == 'soap'">
-                            <label for="attrs_as_headers" class="col-sm-2 control-label">* Usar atributos como cabeceras</label>
+                            <label for="attrs_as_headers" class="col-sm-2 control-label">* {{'USE_ATTRS_HEADERS'}}</label>
                             <div class="col-sm-10" ng-class="{'has-error': form.attrs_as_headers.$touched && form.attrs_as_headers.$invalid }">
                               <div class="form-group">
                                   <label for="attrs_as_headers" class="control-sidebar-subheading">
