@@ -107,6 +107,7 @@ function FileTypeCreateController($scope, $http, rest, model, Flash, $location, 
 }
 
 function FileTypeEditController($scope, $http, Flash, rest, $routeParams, model, $location, modelService, Alertify, usSpinnerService) {
+    usSpinnerService.spin('spinner');
     modelService.initService("File Type", "filetypes", $scope);
 
     $http.get('config/mimetypes.json').success(function(data) {
@@ -139,6 +140,11 @@ function FileTypeEditController($scope, $http, Flash, rest, $routeParams, model,
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type
+        }, function() {
+            usSpinnerService.stop('spinner');
+        }, function(error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
         });
     };
 

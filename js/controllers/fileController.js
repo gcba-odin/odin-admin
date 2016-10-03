@@ -60,6 +60,7 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
 }
 
 function FileViewController($scope, Flash, rest, $routeParams, $location, modelService, $sce, Alertify, usSpinnerService, $window, configs) {
+    usSpinnerService.spin('spinner');
     modelService.initService("File", "files", $scope);
     $scope.getHtml = function(html) {
         return $sce.trustAsHtml(html);
@@ -75,14 +76,11 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
                 id: $scope.model.id,
                 type: $scope.type
             });
-        }/*, function () {
-         var tags = [];
-         for (var i = 0; i < $scope.model.tags.length; i++) {
-         tags.push('<span class="label label-primary">' + $scope.model.tags[i].name + '</span>');
-         }
-         ;
-         $scope.model.tags = tags.join(" - ");
-         }*/);
+            usSpinnerService.stop('spinner');
+        }, function(error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
+        });
     };
 
     $scope.edit = function(model) {
@@ -105,6 +103,7 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
             // $location.path(url);
         }, function(error) {
             usSpinnerService.stop('spinner');
+            modelService.reloadPage();
         });
     };
 
@@ -124,6 +123,7 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
                         // $location.path(url);
                     }, function(error) {
                         usSpinnerService.stop('spinner');
+                        modelService.reloadPage();
                     });
                 },
                 function onCancel() {
@@ -147,6 +147,7 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
                         $location.path(url);
                     }, function(error) {
                         usSpinnerService.stop('spinner');
+                        modelService.reloadPage();
                     });
                 },
                 function onCancel() {
@@ -167,6 +168,7 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
                         $window.location.reload();
                     }, function(error) {
                         usSpinnerService.stop('spinner');
+                        modelService.reloadPage();
                     });
                 },
                 function onCancel() {
@@ -455,21 +457,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             usSpinnerService.stop('spinner');
         }, function() {
             usSpinnerService.stop('spinner');
-            Alertify.set({
-                labels:
-                        {
-                            ok: 'Recargar página',
-                            cancel: 'Continuar'
-                        }
-            });
-            Alertify
-                    .confirm('Hubo un error en la conexión. Vuelva a cargar la página.')
-
-                    .then(
-                            function onOk() {
-                                $window.location.reload();
-                            }
-                    );
+            modelService.reloadPage();
         });
     };
 
@@ -477,7 +465,8 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
 
 }
 
-function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model, $location, modelService, $sce, Upload, usSpinnerService, Alertify) {
+function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model, $location, modelService, $sce, Upload, usSpinnerService, Alertify, $window) {
+    usSpinnerService.spin('spinner');
     modelService.initService("File", "files", $scope);
     $scope.model = new model();
 
@@ -724,6 +713,14 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
                 $scope.model.gatheringDate = $scope.model.gatheringDate ? moment($scope.model.gatheringDate).utc() : '';
             }
 
+            if (!$scope.model.updated) {
+                $scope.model.updated = false;
+            }
+
+            if (!$scope.model.layout) {
+                $scope.model.layout = false;
+            }
+
             $scope.model.items = [];
             angular.forEach($scope.model.optionals, function(val, key) {
                 $scope.model.items.push({
@@ -745,6 +742,10 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
             } else {
                 $scope.fileModel.type = 'fa-file-text-o';
             }
+            usSpinnerService.stop('spinner');
+        }, function(error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
         });
     };
 
@@ -781,24 +782,10 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
             angular.forEach(fileTypes.data, function(element) {
                 $scope.fileTypes.push(element.mimetype);
             });
-            $scope.fileTypes = $scope.fileTypes.toString();
+            $scope.fileTypes = $scope.fileTypes.toString();            
         }, function() {
             usSpinnerService.stop('spinner');
-            Alertify.set({
-                labels:
-                        {
-                            ok: 'Recargar página',
-                            cancel: 'Continuar'
-                        }
-            });
-            Alertify
-                    .confirm('Hubo un error en la conexión. Vuelva a cargar la página.')
-
-                    .then(
-                            function onOk() {
-                                $window.location.reload();
-                            }
-                    );
+            modelService.reloadPage();
         });
     };
 

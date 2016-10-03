@@ -97,6 +97,7 @@ function UserCreateController($scope, rest, model, Flash, $location, modelServic
 }
 
 function UserEditController($scope, Flash, rest, $routeParams, model, $location, modelService, usSpinnerService, Alertify) {
+    usSpinnerService.spin('spinner');
     modelService.initService("User", "users", $scope);
 
     $scope.model = new model();
@@ -127,7 +128,11 @@ function UserEditController($scope, Flash, rest, $routeParams, model, $location,
             id: $routeParams.id,
             type: $scope.type
         }, function() {
+            usSpinnerService.stop('spinner');
             // $scope.model.organization=$scope.model.organization.id
+        }, function(error) {
+            usSpinnerService.spin('spinner');
+            modelService.reloadPage();
         });
     };
 

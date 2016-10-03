@@ -1,7 +1,8 @@
 var app = angular.module('odin.chartsControllers', []);
 
 
-function ChartListController($scope, modelService, configs) {
+function ChartListController($scope, modelService, configs, usSpinnerService) {
+    usSpinnerService.spin('spinner');
     modelService.initService("Chart", "charts", $scope);
 
     $scope.filtersView = [{
@@ -50,6 +51,7 @@ function ChartListController($scope, modelService, configs) {
         $scope.q = "&skip=0&limit=" + $scope.limit;
 
         modelService.loadAll($scope);
+        usSpinnerService.stop('spinner');
     });
 
     $scope.paging = function (event, page, pageSize, total) {
@@ -60,12 +62,18 @@ function ChartListController($scope, modelService, configs) {
 }
 
 function ChartViewController($scope, modelService, $routeParams, rest, $location, $sce, Alertify, usSpinnerService, configs) {
+    usSpinnerService.spin('spinner');
     modelService.initService("Chart", "charts", $scope);
 
     var loadModel = function () {
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type
+        }, function() {
+            usSpinnerService.stop('spinner');
+        }, function(error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
         });
     };
 
@@ -123,7 +131,8 @@ function ChartViewController($scope, modelService, $routeParams, rest, $location
     loadModel();
 }
 
-function ChartPreviewController($scope, modelService, $routeParams, rest, $location, $sce) {
+function ChartPreviewController($scope, modelService, $routeParams, rest, $location, $sce, usSpinnerService) {
+    usSpinnerService.spin('spinner');
     modelService.initService("Chart", "charts", $scope);
 
     $scope.model = rest().findOne({
@@ -165,6 +174,10 @@ function ChartPreviewController($scope, modelService, $routeParams, rest, $locat
             });
         }
         //load Chart;
+        usSpinnerService.stop('spinner');
+    }, function(error) {
+        usSpinnerService.stop('spinner');
+        modelService.reloadPage();
     });
 
     $scope.edit = function (model) {
@@ -178,7 +191,7 @@ function ChartPreviewController($scope, modelService, $routeParams, rest, $locat
 }
 
 function ChartCreateController($scope, modelService, rest, $location, model, $sce, $routeParams, Alertify, usSpinnerService) {
-
+    usSpinnerService.spin('spinner');
     modelService.initService("Chart", "charts", $scope);
 
     $scope.model = new model();
@@ -212,6 +225,7 @@ function ChartCreateController($scope, modelService, rest, $location, model, $sc
 
             $scope.headersFile = headers;
         }
+        usSpinnerService.stop('spinner');
     };
 
     $scope.file_disabled = 'enabled';
@@ -226,6 +240,9 @@ function ChartCreateController($scope, modelService, rest, $location, model, $sc
             $scope.headersFile = null;
 
             generate_headers();
+        }, function(error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
         });
         $scope.file_disabled = 'disabled';
 
@@ -329,6 +346,7 @@ function ChartCreateController($scope, modelService, rest, $location, model, $sc
 
 
 function ChartEditController($scope, modelService, $routeParams, $sce, rest, $location, model, Alertify, usSpinnerService) {
+    usSpinnerService.spin('spinner');
     modelService.initService("Chart", "charts", $scope);
 
     $scope.model = new model();
@@ -361,6 +379,7 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
 
             $scope.headersFile = headers;
         }
+        usSpinnerService.stop('spinner');
     };
 
     $scope.checkstep = function (step) {
@@ -474,6 +493,9 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
                     $scope.headersFile = null;
 
                     generate_headers();
+                }, function(error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
                 });
                 $scope.file_disabled = 'disabled';
 
@@ -490,6 +512,9 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
                     });
                 }
             }
+        }, function(error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
         });
     };
 
