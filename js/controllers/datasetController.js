@@ -381,6 +381,9 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
                 if (!!$scope.model.status) {
                     $scope.model.status = $scope.model.status.id;
                 }
+                if(!$scope.model.starred) {
+                    $scope.model.starred = false;
+                }
                 $scope.model.items = [];
                 $scope.publishAt = $scope.model.publishAt;
                 angular.forEach($scope.model.optionals, function(val, key) {
@@ -389,18 +392,6 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
                         field2: val,
                     });
                 });
-//                for (obj in $scope.model) {
-//                    if (obj.indexOf("optional") != -1) {
-//                        if (!!$scope.model[obj]) {
-//                            $scope.model.items.push({
-//                                field1: $scope.model[obj].clave,
-//                                field2: $scope.model[obj].valor,
-//                                index: counter
-//                            });
-//                            counter++;
-//                        }
-//                    }
-//                }
             });
         });
     }

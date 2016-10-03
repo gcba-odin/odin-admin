@@ -185,7 +185,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
     $scope.beforeChange = function($files) {
         $scope.filter = true;
         $scope.fileModel.name = $files[0].name;
-        
+
         var type = $files[0].name.split('.').pop();
         if (type == "doc" || type == "docx") {
             $scope.fileModel.type = 'fa-file-word-o';
@@ -193,7 +193,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             $scope.fileModel.type = 'fa-file-excel-o';
         } else if (type == "pdf") {
             $scope.fileModel.type = 'fa-file-pdf-o';
-        } else if ((type == "rar") || (type == "zip" )) {
+        } else if ((type == "rar") || (type == "zip")) {
             $scope.fileModel.type = 'fa-file-archive-o';
             //if (type == "rar") {
             $scope.filter = false;
@@ -234,7 +234,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
         if ($scope.model.uploadFile == null && step == 1 && $scope.fileModel.name && $scope.filter)
         {
             $scope.clearUpload();
-            
+
             Alertify.set({
                 labels:
                         {
@@ -390,7 +390,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
         var fileTypes = rest().get({
             type: 'fileTypes'
         }, function() {
-            
+
             angular.forEach(fileTypes.data, function(element) {
                 f_types.push(element.mimetype);
             });
@@ -490,7 +490,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
                             function onOk() {
                                 $location.path('filetypes/new');
                             }
-            );
+                    );
         } else {
             if (($scope.fileModel.name && step == 1 && ((!$scope.mostrar) || ($scope.mostrar && ($scope.model.uploadFile != null || hard_file != null)))) || ($scope.fileModel.name && step == 2 && ((!$scope.mostrar) || ($scope.mostrar && ($scope.model.uploadFile != null || hard_file != null)))) || step == 0) {
 
@@ -607,14 +607,22 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
             type: $scope.type,
             //params: "include=tags"
         }, function() {
-            if(!!$scope.model.updateFrequency) {
+            if (!!$scope.model.updateFrequency) {
                 $scope.model.updateFrequency = $scope.model.updateFrequency.id;
             }
-            if(!!$scope.model.status) {
+            if (!!$scope.model.status) {
                 $scope.model.status = $scope.model.status.id;
             }
-            if(!!$scope.model.gatheringDate) {
+            if (!!$scope.model.gatheringDate) {
                 $scope.model.gatheringDate = $scope.model.gatheringDate ? moment($scope.model.gatheringDate).utc() : '';
+            }
+
+            if (!$scope.model.updated) {
+                $scope.model.updated = false;
+            }
+
+            if (!$scope.model.layout) {
+                $scope.model.layout = false;
             }
 
             $scope.model.items = [];
