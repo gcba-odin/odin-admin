@@ -116,7 +116,7 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
     loadModel();
 }
 
-function MapPreviewController($scope, modelService, $routeParams, rest, $location, $sce) {
+function MapPreviewController($scope, modelService, $routeParams, rest, $location, $sce, leafletData) {
     modelService.initService("Map", "maps", $scope);
 
     //modelService.findOne($routeParams, $scope);
@@ -128,7 +128,7 @@ function MapPreviewController($scope, modelService, $routeParams, rest, $locatio
     $scope.center = {
         lat: -34.603722,
         lng: -58.381592,
-        zoom: 13
+        zoom: 12
     };
 
     $scope.model = rest().findOne({
@@ -140,17 +140,30 @@ function MapPreviewController($scope, modelService, $routeParams, rest, $locatio
             loadGeojson();
         }
     });
+    
+    //calculate center automatically from geoJson
+    $scope.centerJSON = function() {
+        leafletData.getMap().then(function(map) {
+            var latlngs = [];
+            for (var i in $scope.geojson.data.features) {
+                var coord = $scope.geojson.data.features[i].geometry.coordinates;
+                for (var j in coord) {
+                    latlngs.push(L.GeoJSON.coordsToLatLng(coord));
+                }
+            }
+            if(latlngs.length > 0)
+                map.fitBounds(latlngs);
+        });
+    };
 
     var loadGeojson = function() {
         angular.extend($scope, {// Map data
             tiles: {
                 url: $scope.model.basemap.url,
-//                options: {
-//                    maxZoom: 18,
-//                    minZoom: 9,
-//                    attribution:'USIG (<a href="http://www.buenosaires.gob.ar" target="_blank">GCBA</a>), © <a href="http://www.openstreetmap.org/copyright/en" target="_blank">OpenStreetMap</a> (ODbL)',
-//                    tms: true
-//                },
+                options: {
+                    minZoom: 8,
+                    maxZoom: 13
+                }
             },
             geojson: {
                 data: $scope.model.geojson,
@@ -167,9 +180,8 @@ function MapPreviewController($scope, modelService, $routeParams, rest, $locatio
                 }
             },
         });
-//        $scope.geojson = {
-//            data: $scope.model.geojson,
-//        };
+        //calculate center automatically from geoJson
+        $scope.centerJSON();
     };
 
     $scope.edit = function(model) {
