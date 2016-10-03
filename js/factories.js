@@ -52,7 +52,7 @@
         }
     });
 
-    app.factory('modelService', function($location, rest, Flash, Alertify) {
+    app.factory('modelService', function($location, rest, Flash, Alertify, $window) {
         return {
             insertalScope: {},
             initService: function(modelName, type, scope) {
@@ -219,6 +219,23 @@
                             return false
                         }
                 );
+            },
+            reloadPage: function() {
+                Alertify.set({
+                    labels:
+                        {
+                            ok: 'Recargar página',
+                            cancel: 'Continuar'
+                        }
+                });
+                Alertify
+                        .confirm('Hubo un error en la conexión. Vuelva a cargar la página.')
+
+                        .then(
+                            function onOk() {
+                                $window.location.reload();
+                            }
+                        );
             }
         }
     });

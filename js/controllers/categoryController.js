@@ -5,8 +5,8 @@ app.factory('model', function($resource) {
 });
 
 
-function CategoryListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService) {
-
+function CategoryListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, usSpinnerService) {
+    usSpinnerService.spin('spinner');
     modelService.initService("Category", "categories", $scope);
 
     $scope.filtersView = [{
@@ -49,6 +49,7 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
     $scope.q = "&include=datasets&skip=0&limit=" + $scope.limit;
 
     modelService.loadAll($scope);
+    usSpinnerService.stop('spinner');
 
     $scope.paging = function(event, page, pageSize, total) {
         var skip = (page - 1) * $scope.limit;
@@ -58,7 +59,8 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
 
 }
 
-function CategoryViewController($scope, Flash, rest, $routeParams, $location, $sce, modelService, $rootScope) {
+function CategoryViewController($scope, Flash, rest, $routeParams, $location, $sce, modelService, $rootScope, usSpinnerService) {
+    usSpinnerService.spin('spinner');
     modelService.initService("Category", "categories", $scope);
     
     $scope.inactiveModel = function(item) {
@@ -87,6 +89,11 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
     $scope.model = rest().findOne({
         id: $routeParams.id,
         type: $scope.type
+    }, function() {
+        usSpinnerService.stop('spinner');
+    }, function(error) {
+        usSpinnerService.stop('spinner');
+        modelService.reloadPage();
     });
 }
 
@@ -183,26 +190,10 @@ function valorCheckbox(valor) {
 }
 
 function CategoryEditController($scope, Flash, rest, $routeParams, model, $location, Alertify, modelService, Upload, $rootScope, usSpinnerService) {
+    usSpinnerService.spin('spinner');
     modelService.initService("Category", "categories", $scope);
 
     $scope.model = new model();
-//    $scope.update = function (isValid) {
-//
-//        $scope.model.createdBy = $scope.model.createdBy.id;
-//
-//        if (isValid) {
-//            rest().update({
-//                type: $scope.type,
-//                id: $scope.model.id
-//            }, $scope.model, function () {
-//                Alertify.success('Se ha editado la categoría con éxito');
-//
-//                var url = '/' + $scope.type;
-//                $location.path(url);
-//            });
-//        }
-//    };
-
 
     $scope.mostrar = false;
 
@@ -290,6 +281,10 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
                 type: 'svg',
                 name: $scope.model.fileName
             };
+            usSpinnerService.stop('spinner');
+        }, function(error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
         });
 
 

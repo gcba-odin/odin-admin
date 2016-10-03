@@ -327,7 +327,7 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
     'GATHERING_DATE': 'Relevamiento de datos',
     'BASEMAPS': 'Mapas base',
     'VIEW_BASEMAPS': 'Ver mapas base',
-    'ADD_BASEMAPS': 'Agregar mapa base',
+    'ADD_BASEMAPS': 'Crear mapa base',
     'BASEMAP': 'Mapa base',
     'ELEMENT': 'Elemento',
     'CHART_SUBTYPE': 'Lógica',

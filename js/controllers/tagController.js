@@ -81,6 +81,7 @@ function TagCreateController($scope, rest, model, Flash, $location, modelService
 }
 
 function TagEditController($scope, Flash, rest, $routeParams, model, $location, modelService, Alertify, usSpinnerService) {
+    usSpinnerService.spin('spinner');
     modelService.initService("Tag", "tags", $scope);
 
     $scope.model = new model();
@@ -109,6 +110,11 @@ function TagEditController($scope, Flash, rest, $routeParams, model, $location, 
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type
+        }, function() {
+            usSpinnerService.stop('spinner');
+        }, function(error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
         });
     };
 

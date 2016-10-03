@@ -83,8 +83,8 @@ function updateFrequencyCreateController($scope, rest, model, Flash, $location, 
 }
 
 function updateFrequencyEditController($scope, Flash, rest, $routeParams, model, $location, modelService, Alertify, usSpinnerService) {
+    usSpinnerService.spin('spinner');
     modelService.initService("updateFrequency", "updatefrequencies", $scope);
-
 
     $scope.model = new model();
     $scope.update = function(isValid) {
@@ -112,6 +112,11 @@ function updateFrequencyEditController($scope, Flash, rest, $routeParams, model,
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type
+        }, function() {
+            usSpinnerService.stop('spinner');
+        }, function(error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
         });
     };
 

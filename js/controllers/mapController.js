@@ -1,7 +1,8 @@
 var app = angular.module('odin.mapsControllers', []);
 
 
-function MapListController($scope, modelService) {
+function MapListController($scope, modelService, usSpinnerService) {
+    usSpinnerService.spin('spinner');
     modelService.initService("Map", "maps", $scope);
 
     $scope.filtersView = [{
@@ -44,6 +45,7 @@ function MapListController($scope, modelService) {
     $scope.q = "&skip=0&limit=" + $scope.limit;
 
     modelService.loadAll($scope);
+    usSpinnerService.stop('spinner');
 
     $scope.paging = function(event, page, pageSize, total) {
         var skip = (page - 1) * $scope.limit;
@@ -53,12 +55,18 @@ function MapListController($scope, modelService) {
 }
 
 function MapViewController($scope, modelService, $routeParams, rest, $location, $sce, configs, usSpinnerService, Alertify) {
+    usSpinnerService.spin('spinner');
     modelService.initService("Map", "maps", $scope);
 
     var loadModel = function() {
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type
+        }, function() {
+            usSpinnerService.stop('spinner');
+        }, function(error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
         });
     };
 
@@ -116,7 +124,8 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
     loadModel();
 }
 
-function MapPreviewController($scope, modelService, $routeParams, rest, $location, $sce, leafletData) {
+function MapPreviewController($scope, modelService, $routeParams, rest, $location, $sce, leafletData, usSpinnerService) {
+    usSpinnerService.spin('spinner');
     modelService.initService("Map", "maps", $scope);
 
     //modelService.findOne($routeParams, $scope);
@@ -139,6 +148,9 @@ function MapPreviewController($scope, modelService, $routeParams, rest, $locatio
         if (!$scope.model.link) {
             loadGeojson();
         }
+    }, function(error) {
+        usSpinnerService.stop('spinner');
+        modelService.reloadPage();
     });
     
     //calculate center automatically from geoJson
@@ -182,6 +194,7 @@ function MapPreviewController($scope, modelService, $routeParams, rest, $locatio
         });
         //calculate center automatically from geoJson
         $scope.centerJSON();
+        usSpinnerService.stop('spinner');
     };
 
     $scope.edit = function(model) {
@@ -195,7 +208,7 @@ function MapPreviewController($scope, modelService, $routeParams, rest, $locatio
 }
 
 function MapCreateController($scope, modelService, rest, $location, model, $sce, $routeParams, Alertify, usSpinnerService) {
-
+    usSpinnerService.spin('spinner');
     modelService.initService("Map", "maps", $scope);
 
     $scope.model = new model();
@@ -231,6 +244,7 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
 
             $scope.headersFile = headers;
         }
+        usSpinnerService.stop('spinner');
     };
 
     $scope.file_disabled = 'enabled';
@@ -258,6 +272,7 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
             }
 
             if (map_exist.condition) {
+                usSpinnerService.stop('spinner');
                 $scope.basemap_view = false;
                 Alertify.set({
                     labels:
@@ -446,6 +461,7 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
 
 
 function MapEditController($scope, modelService, $routeParams, $sce, rest, $location, model, Alertify, usSpinnerService) {
+    usSpinnerService.spin('spinner');
     modelService.initService("Map", "maps", $scope);
     $scope.model = new model();
     $scope.model.items = [];
@@ -482,6 +498,7 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
 
             $scope.headersFile = headers;
         }
+        usSpinnerService.stop('spinner');
     };
 
 
@@ -632,6 +649,9 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
                     $scope.headersFile = null;
 
                     generate_headers();
+                }, function(error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
                 });
                 $scope.file_disabled = 'disabled';
 
@@ -651,6 +671,9 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
                     counter++;
                 });
             }
+        }, function(error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
         });
 
         $scope.basemaps = rest().get({
