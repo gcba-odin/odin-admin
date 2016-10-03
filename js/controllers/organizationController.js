@@ -140,7 +140,7 @@ function OrganizationCreateController($scope, rest, model, Flash, $location, mod
 }
 
 function OrganizationEditController($scope, Flash, rest, $routeParams, model, $location, modelService, usSpinnerService, Alertify) {
-
+    usSpinnerService.spin('spinner');
     $scope.editorOptions = {
         language: 'es',
     };
@@ -182,6 +182,11 @@ function OrganizationEditController($scope, Flash, rest, $routeParams, model, $l
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type
+        }, function() {
+            usSpinnerService.stop('spinner');
+        }, function(error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
         });
     };
 

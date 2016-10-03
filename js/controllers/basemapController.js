@@ -1,7 +1,8 @@
 var app = angular.module('odin.basemapsControllers', []);
 
 
-function BasemapListController($scope, modelService, configs) {
+function BasemapListController($scope, modelService, configs, usSpinnerService) {
+    usSpinnerService.spin('spinner');
     modelService.initService("Basemap", "basemaps", $scope);
     
     $scope.filtersView = [{
@@ -50,6 +51,7 @@ function BasemapListController($scope, modelService, configs) {
         $scope.q = "&include=maps&skip=0&limit=" + $scope.limit;
 
         modelService.loadAll($scope);
+        usSpinnerService.stop('spinner');
     });
 
     $scope.paging = function(event, page, pageSize, total) {
@@ -59,12 +61,18 @@ function BasemapListController($scope, modelService, configs) {
     };
 }
 
-function BasemapViewController($scope, modelService, $routeParams, rest, $location, $sce) {
+function BasemapViewController($scope, modelService, $routeParams, rest, $location, $sce, usSpinnerService) {
+    usSpinnerService.spin('spinner');
     modelService.initService("Basemap", "basemaps", $scope);
 
     $scope.model = rest().findOne({
         id: $routeParams.id,
         type: $scope.type
+    }, function() {
+        usSpinnerService.stop('spinner');
+    }, function(error) {
+        usSpinnerService.stop('spinner');
+        modelService.reloadPage();
     });
     
     $scope.inactiveModel = function(item) {
@@ -86,7 +94,7 @@ function BasemapViewController($scope, modelService, $routeParams, rest, $locati
 }
 
 function BasemapCreateController($scope, modelService, rest, $location, model, $sce, $routeParams, Alertify, usSpinnerService) {
-
+    
     modelService.initService("Basemap", "basemaps", $scope);
 
     $scope.model = new model();
@@ -127,6 +135,7 @@ function BasemapCreateController($scope, modelService, rest, $location, model, $
 
 
 function BasemapEditController($scope, modelService, $routeParams, $sce, rest, $location, model, Alertify, usSpinnerService) {
+    usSpinnerService.spin('spinner');
     modelService.initService("Basemap", "basemaps", $scope);
 
     $scope.model = new model();
@@ -166,6 +175,11 @@ function BasemapEditController($scope, modelService, $routeParams, $sce, rest, $
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type,
+        }, function() {
+            usSpinnerService.stop('spinner');
+        }, function(error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
         });
     };
 

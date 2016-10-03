@@ -10,7 +10,7 @@
                         <h3 class="box-title">{{ 'PREVIEW_OF' | translate }} {{ model.name}}</h3>
                     </div>
                     <div class="box-body table-responsive no-padding">
-                        <leaflet ng-if="!model.link" lf-center="center" id="mapid" geojson="geojson" tiles="tiles"></leaflet>
+                        <leaflet ng-if="!model.link && geojson" lf-center="center" id="mapid" geojson="geojson" tiles="tiles"></leaflet>
                         <iframe id="iframeDiv" ng-src="{{ model.link}}" ng-if="model.link"></iframe>
                     </div>
                     <!-- /.box-body -->
