@@ -4,8 +4,8 @@ app.factory('model', function($resource) {
     return $resource();
 });
 
-function ConfigListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService) {
-
+function ConfigListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, usSpinnerService) {
+    usSpinnerService.spin('spinner');
     modelService.initService("Config", "configs", $scope);
 
     $scope.confirmDelete = function(item) {
@@ -25,6 +25,7 @@ function ConfigListController($scope, $location, rest, $rootScope, Flash, Alerti
     }
 
     modelService.loadAll($scope);
+    usSpinnerService.stop('spinner');
 }
 
 function ConfigViewController($scope, Flash, rest, $routeParams, $location, modelService) {
@@ -66,6 +67,7 @@ function ConfigCreateController($scope, rest, model, Flash, $location, modelServ
 }
 
 function ConfigEditController($scope, Flash, rest, $routeParams, model, $location, modelService, Alertify, usSpinnerService, $filter) {
+    usSpinnerService.spin('spinner');
     modelService.initService("Config", "configs", $scope);
 
 
@@ -105,6 +107,10 @@ function ConfigEditController($scope, Flash, rest, $routeParams, model, $locatio
                     $scope.model.value = $scope.value.id
                 });
             }
+            usSpinnerService.stop('spinner');
+        }, function(error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
         });
     };
     $scope.load();

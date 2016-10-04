@@ -91,8 +91,8 @@ function StatusCreateController($scope, rest, model, Flash, $location, modelServ
 }
 
 function StatusEditController($scope, Flash, rest, $routeParams, model, $location, modelService, Alertify, usSpinnerService) {
+    usSpinnerService.spin('spinner');
     modelService.initService("Status", "statuses", $scope);
-
 
     $scope.model = new model();
     $scope.update = function(isValid) {
@@ -120,6 +120,11 @@ function StatusEditController($scope, Flash, rest, $routeParams, model, $locatio
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type
+        }, function() {
+            usSpinnerService.spin('spinner');
+        }, function(error) {
+            usSpinnerService.spin('spinner');
+            modelService.reloadPage();
         });
     };
 

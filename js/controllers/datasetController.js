@@ -90,7 +90,7 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
 }
 
 function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sce, modelService, Alertify, usSpinnerService, $window, configs) {
-
+    usSpinnerService.spin('spinner');
     modelService.initService("Dataset", "datasets", $scope);
 
     var loadModel = function() {
@@ -122,6 +122,10 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
                     }
                 }
             }
+            usSpinnerService.stop('spinner');
+        }, function(error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
         });
     };
 
@@ -194,6 +198,7 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
                         $window.location.reload();
                     }, function(error) {
                         usSpinnerService.stop('spinner');
+                        modelService.reloadPage();
                     });
                 },
                 function onCancel() {
@@ -290,7 +295,7 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
 }
 
 function DatasetEditController($scope, Flash, rest, $routeParams, model, $location, modelService, usSpinnerService, configs, Alertify) {
-
+    usSpinnerService.spin('spinner');
     modelService.initService("Dataset", "datasets", $scope);
 
     $scope.status_default = false;
@@ -388,6 +393,9 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
                 if (!!$scope.model.status) {
                     $scope.model.status = $scope.model.status.id;
                 }
+                if(!$scope.model.starred) {
+                    $scope.model.starred = false;
+                }
                 $scope.model.items = [];
                 $scope.publishAt = $scope.model.publishAt;
                 angular.forEach($scope.model.optionals, function(val, key) {
@@ -396,19 +404,11 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
                         field2: val,
                     });
                 });
-//                for (obj in $scope.model) {
-//                    if (obj.indexOf("optional") != -1) {
-//                        if (!!$scope.model[obj]) {
-//                            $scope.model.items.push({
-//                                field1: $scope.model[obj].clave,
-//                                field2: $scope.model[obj].valor,
-//                                index: counter
-//                            });
-//                            counter++;
-//                        }
-//                    }
-//                }
             });
+            usSpinnerService.stop('spinner');
+        }, function(error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
         });
     }
 
