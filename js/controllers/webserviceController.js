@@ -251,33 +251,45 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
         var data = {
             'url': $scope.model.url,
             'ws_type': $scope.model.ws_type,
+            'attributesAsHeaders': $scope.model.attrs_as_headers,
+            'datapath': $scope.model.data_url,
+            'token': $scope.model.sign_token,
+            'tokenAlgorithm': $scope.model.sign_algorithm,
+            'tokenSignature': $scope.model.sign_name,
+            'username': $scope.model.user,
+            'password': $scope.model.password,
+            'method': $scope.model.method,
+            'namespace': $scope.model.namespace,
+            'titlepath': $scope.model.titlepath,
+            'parameters': {}
         };
 
+        if (isValid) {
 
 
-        Upload.upload({
-            url: $rootScope.url + "/files",
-            data: data,
-            params: param
-        }).then(function(resp) {
-            usSpinnerService.stop('spinner');
-            $location.url('/files/' + resp.data.data.id + '/view');
-        }, function(error) {
-            usSpinnerService.stop('spinner');
-            // alert(resp.status);
-            $scope.unsave = true;
-            if (error.data.data && error.data.data.name) {
-                Alertify.alert('El nombre del archivo ya existe.');
-            } else {
-                Alertify.alert('Ha ocurrido un error al crear el archivo.');
+            usSpinnerService.spin('spinner');
+            var url = '';
+            if ($scope.model.method == 'rest') {
+                url = $rootScope.url + "/restservices";
             }
-        }, function(evt) {
-            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-            $scope.uploadImageProgress = progressPercentage;
-            $scope.unsave = true;
-            usSpinnerService.stop('spinner');
-        });
-    };
+            elseif($scope.model.method == 'soap') {
+                url = $rootScope.url + "/soapservices";
+            }
+
+            // $http.post(
+            //     url, data).then(function(resp) {
+            //     usSpinnerService.stop('spinner');
+            // }, function(error) {
+            //     usSpinnerService.stop('spinner');
+            //
+            //
+            // });
+
+
+        } // end if isValid
+
+
+    }; //end add function
 
 
 

@@ -59,7 +59,7 @@
                         <div class="form-group" ng-show="stepactive == 0">
                             <label for="ws_type" class="col-sm-2 control-label">*{{ 'WEBSERVICE_TYPE' | translate }}</label>
                             <div class="col-sm-10" ng-class="{'has-error': form.ws_type.$touched && form.ws_type.$invalid }">
-                                <select data-key="ws_type" data-modelname="ws_type" data-model="{{model.ws_type}}" name="ws_type" id="ws_type" ng-model="model.ws_type" class="form-control" required data-dis='{{ws_type_disabled}}'>
+                                <select data-key="ws_type" data-modelname="ws_type" data-model="{{model.ws_type}}" name="ws_type" id="ws_type" ng-model="model.ws_type" class="form-control" required data-dis='{{ws_type_disabled}}' required>
                                     <option value="" default disabled selected="selected">{{ 'SELECT_OPTION' | translate }}</option>
                                     <option value="rest">REST</option>
                                     <option value="soap">SOAP</option>
@@ -85,6 +85,20 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <!-- input titlepath -->
+                        <div class="form-group" ng-if="stepactive == 0 && model.ws_type == 'rest' ">
+                            <label for="titlepath" class="col-sm-2 control-label">Ruta a los titulos de tabla</label>
+                            <div class="col-sm-10" ng-class="{'has-error': form.titlepath.$touched && form.titlepath.$invalid }">
+                                <input type="text" id="titlepath" ng-model="model.titlepath" name="titlepath" class="form-control" id="titlepath" placeholder="{{ 'PLACE' | translate }} {{ 'DATA_URL' | translate }} {{ 'HERE' | translate }}"/>
+                                <div class="help-block" ng-messages="form.titlepath.$error" ng-if="form.titlepath.$touched">
+                                    <div ng-messages-include="views/messages.html"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- authentication type -->
                     <div class="row">
                         <div class="form-group" ng-if="stepactive == 0 && model.ws_type == 'rest' ">
