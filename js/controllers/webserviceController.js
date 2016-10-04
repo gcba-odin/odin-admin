@@ -251,41 +251,47 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
         var data = {
             'url': $scope.model.url,
             'ws_type': $scope.model.ws_type,
-            'attributesAsHeaders': $scope.model.attrs_as_headers,
-            'datapath': $scope.model.data_url,
-            'token': $scope.model.sign_token,
-            'tokenAlgorithm': $scope.model.sign_algorithm,
-            'tokenSignature': $scope.model.sign_name,
-            'username': $scope.model.user,
-            'password': $scope.model.password,
-            'method': $scope.model.method,
-            'namespace': $scope.model.namespace,
-            'titlepath': $scope.model.titlepath,
-            'parameters': {}
         };
-
+        
+        var url = '';
+        
+        if($scope.model.ws_type == 'rest') {
+            data.datapath = $scope.model.data_url;
+            data.titlepath = $scope.model.titlepath;
+            data.tokenSignature = $scope.model.sign_name;
+            data.token = $scope.model.sign_token;
+            data.tokenAlgorithm = $scope.model.sign_algorithm;
+            data.username = $scope.model.user;
+            data.password = $scope.model.password;
+            
+            url = $rootScope.url + "/restservices";
+        } else if($scope.model.ws_type == 'soap') {
+            data.namespace = $scope.model.namespace;
+            data.attributesAsHeaders = $scope.model.attrs_as_headers;
+            data.method = $scope.model.ws_type;
+            data.parameters = {};
+            
+            url = $rootScope.url + "/soapservices";
+        }
+        
+        data.file = {
+            'name': $scope.model.name,
+            'organization': $scope.model.organization,
+            'dataset': $scope.model.dataset,
+            'description': $scope.model.description,
+            'notes': $scope.model.notes,
+            'owner': $scope.model.owner,
+            'updateFrequency': $scope.model.updateFrequency,
+            'updated': $scope.model.updated,
+        }
+        
         if (isValid) {
 
-
-            usSpinnerService.spin('spinner');
-            var url = '';
-            if ($scope.model.method == 'rest') {
-                url = $rootScope.url + "/restservices";
-            }
-            elseif($scope.model.method == 'soap') {
-                url = $rootScope.url + "/soapservices";
-            }
-
-            // $http.post(
-            //     url, data).then(function(resp) {
-            //     usSpinnerService.stop('spinner');
-            // }, function(error) {
-            //     usSpinnerService.stop('spinner');
-            //
-            //
-            // });
-
-
+            rest(url).save({}, data, function() {
+                usSpinnerService.stop('spinner');
+            }, function() {
+                usSpinnerService.stop('spinner');
+            });
         } // end if isValid
 
 
