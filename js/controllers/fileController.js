@@ -32,7 +32,12 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
     };
 
     $scope.edit = function(model) {
-        modelService.edit($scope, model);
+        var type = $scope;
+        
+        if(!!model.restService || !!model.soapService) {
+            type = {type:'webservices'};
+        }
+        modelService.edit(type, model);
     }
 
     $scope.view = function(model) {

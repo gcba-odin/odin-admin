@@ -174,7 +174,6 @@ function WebserviceViewController($scope, Flash, rest, $routeParams, $location, 
 function WebserviceCreateController($scope, $sce, rest, model, Flash, $location, Upload, $rootScope, modelService, $routeParams, Alertify, usSpinnerService) {
     modelService.initService("File", "files", $scope);
 
-
     $scope.status_default = true;
     $scope.unsave = true;
 
@@ -186,21 +185,11 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
     $scope.steps[1] = "undone";
     $scope.steps[2] = "undone";
     $scope.stepactive = 0;
+    $scope.model.items_file = [];
+    $scope.model.items_webservice = [];
 
-    $scope.dataset_disabled = 'enabled';
-    if (!angular.isUndefined($routeParams.dataset)) {
-        $scope.model.dataset = rest().findOne({
-            id: $routeParams.dataset,
-            type: 'datasets'
-        });
-        $scope.dataset_disabled = 'disabled';
-    }
-
-    $scope.fileModel = []
     $scope.checkstep = function(step) {
-
         if ($scope.model.url == '' || $scope.ws_type == '') {
-
             Alertify.alert('Rellene los campos requeridos.');
         } else {
             $scope.stepactive++;
@@ -242,15 +231,24 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
         $scope.uploadImageProgress = 10;
 
         for (obj in $scope.model) {
-            if (obj.indexOf("optional") != -1) {
+            if (obj.indexOf("parameter") != -1) {
                 delete $scope.model[obj]
             }
         }
-
+        
+        $scope.model.parameters = {};
+        var cont = 1;
+        for (var i = 0; i < $scope.model.items_webservice.length; i++) {
+            var values = [];
+            $scope.model["parameter" + cont] = "";
+            $scope.model.parameters[$scope.model.items_webservice[i].field1] = $scope.model.items_webservice[i].field2;
+            cont++;
+        }
 
         var data = {
             'url': $scope.model.url,
             'ws_type': $scope.model.ws_type,
+            'parameters': $scope.model.parameters
         };
         
         var url = '';
@@ -274,6 +272,21 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
             url = $rootScope.url + "/soapservices";
         }
         
+        for (obj in $scope.model) {
+            if (obj.indexOf("optional") != -1) {
+                delete $scope.model[obj]
+            }
+        }
+        
+        $scope.model.optionals = {};
+        var cont = 1;
+        for (var i = 0; i < $scope.model.items_file.length; i++) {
+            var values = [];
+            $scope.model["optional" + cont] = "";
+            $scope.model.optionals[$scope.model.items_file[i].field1] = $scope.model.items_file[i].field2;
+            cont++;
+        }
+        
         data.file = {
             'name': $scope.model.name,
             'organization': $scope.model.organization,
@@ -283,12 +296,31 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
             'owner': $scope.model.owner,
             'updateFrequency': $scope.model.updateFrequency,
             'updated': $scope.model.updated,
+            'optionals': $scope.model.optionals
         }
         
+        console.log(data);
         if (isValid) {
 
-            rest(url).save({}, data, function() {
+            rest(url).save({}, data, function(resp) {
                 usSpinnerService.stop('spinner');
+                console.log(resp);
+                var data_file = {};
+                if($scope.model.ws_type == 'rest') {
+                    data_file.restService = resp.data.id;
+                } else if($scope.model.ws_type == 'soap') {
+                    data_file.soapService = resp.data.id;
+                }
+                rest().update({
+                    type: 'files',
+                    id: resp.data.file.id
+                }, data_file, function(resp_file) {
+                    $location.url('/files/' + resp.data.file.id + '/view');
+                }, function(error) {
+                    console.log('error en el update del file');
+                    $location.url('/files/' + resp.data.file.id + '/view');
+                });
+                
             }, function() {
                 usSpinnerService.stop('spinner');
             });
@@ -297,18 +329,30 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
 
     }; //end add function
 
+    $scope.addOption = function() {
+        if ($scope.model.items_file.length < 10) {
+            var newItemNo = $scope.model.items_file.length + 1;
+            $scope.model.items_file.push({
+                field: ""
+            })
+        }
 
-
-    $scope.deleteIndexInput = function(index, field) {
-        $scope.model.items.splice(index, 1);
     }
-
-    $scope.increment = function(a) {
-        return a + 1;
+    $scope.deleteOption = function(index, field) {
+        $scope.model.items_file.splice(index, 1);
     }
+    
+    $scope.addParameter = function() {
+        if ($scope.model.items_webservice.length < 10) {
+            var newItemNo = $scope.model.items_webservice.length + 1;
+            $scope.model.items_webservice.push({
+                field: ""
+            })
+        }
 
-    $scope.itemName = function(a) {
-        return "optional" + (parseInt(a) + 1);
+    }
+    $scope.deleteParameter = function(index, field) {
+        $scope.model.items_webservice.splice(index, 1);
     }
 
 
