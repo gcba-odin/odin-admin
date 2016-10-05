@@ -447,13 +447,13 @@ function WebserviceEditController($rootScope, $scope, Flash, rest, $routeParams,
             data.username = $scope.model.user;
             data.password = $scope.model.password;
 
-            url = $rootScope.url + "/restservices";
+            url = $rootScope.url + "/restservices/" + $scope.model.id;
         } else if ($scope.model.ws_type == 'soap') {
             data.namespace = $scope.model.namespace;
             data.attributesAsHeaders = $scope.model.attrs_as_headers;
             data.method = $scope.model.ws_type;
 
-            url = $rootScope.url + "/soapservices";
+            url = $rootScope.url + "/soapservices/" + $scope.model.id;
         }
 
         for (obj in $scope.model) {
