@@ -11,18 +11,18 @@ function WebserviceListController($scope, $location, rest, $rootScope, Flash, Al
     modelService.initService("File", "files", $scope);
 
     $scope.filtersView = [{
-        name: 'Estado',
-        model: 'statuses',
-        key: 'name',
-        modelInput: 'status',
-        multiple: true
-    }, {
-        name: 'Autor',
-        model: 'users',
-        key: 'username',
-        modelInput: 'createdBy',
-        multiple: true
-    }];
+            name: 'Estado',
+            model: 'statuses',
+            key: 'name',
+            modelInput: 'status',
+            multiple: true
+        }, {
+            name: 'Autor',
+            model: 'users',
+            key: 'username',
+            modelInput: 'createdBy',
+            multiple: true
+        }];
     $scope.confirmDelete = function(item) {
         modelService.confirmDelete(item);
     }
@@ -60,23 +60,23 @@ function WebserviceViewController($scope, Flash, rest, $routeParams, $location, 
 
     var loadModel = function() {
         $scope.model = rest().findOne({
-                id: $routeParams.id,
-                type: $scope.type,
-                //params: "include=tags"
-            }, function() {
-                $scope.model.resources = rest().resources({
-                    id: $scope.model.id,
-                    type: $scope.type
-                });
-            }
-            /*, function () {
-                     var tags = [];
-                     for (var i = 0; i < $scope.model.tags.length; i++) {
-                     tags.push('<span class="label label-primary">' + $scope.model.tags[i].name + '</span>');
-                     }
-                     ;
-                     $scope.model.tags = tags.join(" - ");
-                     }*/
+            id: $routeParams.id,
+            type: $scope.type,
+            //params: "include=tags"
+        }, function() {
+            $scope.model.resources = rest().resources({
+                id: $scope.model.id,
+                type: $scope.type
+            });
+        }
+        /*, function () {
+         var tags = [];
+         for (var i = 0; i < $scope.model.tags.length; i++) {
+         tags.push('<span class="label label-primary">' + $scope.model.tags[i].name + '</span>');
+         }
+         ;
+         $scope.model.tags = tags.join(" - ");
+         }*/
         );
     };
 
@@ -106,24 +106,24 @@ function WebserviceViewController($scope, Flash, rest, $routeParams, $location, 
     $scope.unPublish = function(id, type) {
         var text_type = (type == 'charts') ? 'gráfico' : (type == 'maps') ? 'mapa' : 'archivo';
         Alertify.confirm('¿Está seguro que quiere despublicar este ' + text_type + '?').then(
-            function onOk() {
-                usSpinnerService.spin('spinner');
+                function onOk() {
+                    usSpinnerService.spin('spinner');
 
-                rest().unpublish({
-                    type: $scope.type,
-                    id: $scope.model.id
-                }, {}, function(resp) {
-                    usSpinnerService.stop('spinner');
-                    loadModel();
-                    //var url = '/' + $scope.type;
-                    // $location.path(url);
-                }, function(error) {
-                    usSpinnerService.stop('spinner');
-                });
-            },
-            function onCancel() {
-                return false;
-            }
+                    rest().unpublish({
+                        type: $scope.type,
+                        id: $scope.model.id
+                    }, {}, function(resp) {
+                        usSpinnerService.stop('spinner');
+                        loadModel();
+                        //var url = '/' + $scope.type;
+                        // $location.path(url);
+                    }, function(error) {
+                        usSpinnerService.stop('spinner');
+                    });
+                },
+                function onCancel() {
+                    return false;
+                }
         );
     };
 
@@ -131,42 +131,42 @@ function WebserviceViewController($scope, Flash, rest, $routeParams, $location, 
 
     $scope.confirmDelete = function(item) {
         Alertify.confirm('¿Está seguro que quiere borrar este archivo?').then(
-            function onOk() {
-                usSpinnerService.spin('spinner');
-                rest().delete({
-                    type: $scope.type,
-                    id: $scope.model.id
-                }, function(resp) {
-                    usSpinnerService.stop('spinner');
-                    var url = "/" + $scope.type;
-                    $location.path(url);
-                }, function(error) {
-                    usSpinnerService.stop('spinner');
-                });
-            },
-            function onCancel() {
-                return false;
-            }
+                function onOk() {
+                    usSpinnerService.spin('spinner');
+                    rest().delete({
+                        type: $scope.type,
+                        id: $scope.model.id
+                    }, function(resp) {
+                        usSpinnerService.stop('spinner');
+                        var url = "/" + $scope.type;
+                        $location.path(url);
+                    }, function(error) {
+                        usSpinnerService.stop('spinner');
+                    });
+                },
+                function onCancel() {
+                    return false;
+                }
         );
     };
 
     $scope.deleteResource = function(id, type) {
         Alertify.confirm('¿Está seguro que quiere borrar este recurso?').then(
-            function onOk() {
-                usSpinnerService.spin('spinner');
-                rest().delete({
-                    type: type,
-                    id: id
-                }, function(resp) {
-                    usSpinnerService.stop('spinner');
-                    $window.location.reload();
-                }, function(error) {
-                    usSpinnerService.stop('spinner');
-                });
-            },
-            function onCancel() {
-                return false;
-            }
+                function onOk() {
+                    usSpinnerService.spin('spinner');
+                    rest().delete({
+                        type: type,
+                        id: id
+                    }, function(resp) {
+                        usSpinnerService.stop('spinner');
+                        $window.location.reload();
+                    }, function(error) {
+                        usSpinnerService.stop('spinner');
+                    });
+                },
+                function onCancel() {
+                    return false;
+                }
         );
     };
 }
@@ -235,7 +235,7 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
                 delete $scope.model[obj]
             }
         }
-        
+
         $scope.model.parameters = {};
         var cont = 1;
         for (var i = 0; i < $scope.model.items_webservice.length; i++) {
@@ -250,10 +250,10 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
             'ws_type': $scope.model.ws_type,
             'parameters': $scope.model.parameters
         };
-        
+
         var url = '';
-        
-        if($scope.model.ws_type == 'rest') {
+
+        if ($scope.model.ws_type == 'rest') {
             data.datapath = $scope.model.data_url;
             data.titlepath = $scope.model.titlepath;
             data.tokenSignature = $scope.model.sign_name;
@@ -261,23 +261,22 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
             data.tokenAlgorithm = $scope.model.sign_algorithm;
             data.username = $scope.model.user;
             data.password = $scope.model.password;
-            
+
             url = $rootScope.url + "/restservices";
-        } else if($scope.model.ws_type == 'soap') {
+        } else if ($scope.model.ws_type == 'soap') {
             data.namespace = $scope.model.namespace;
             data.attributesAsHeaders = $scope.model.attrs_as_headers;
             data.method = $scope.model.ws_type;
-            data.parameters = {};
-            
+
             url = $rootScope.url + "/soapservices";
         }
-        
+
         for (obj in $scope.model) {
             if (obj.indexOf("optional") != -1) {
                 delete $scope.model[obj]
             }
         }
-        
+
         $scope.model.optionals = {};
         var cont = 1;
         for (var i = 0; i < $scope.model.items_file.length; i++) {
@@ -286,7 +285,7 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
             $scope.model.optionals[$scope.model.items_file[i].field1] = $scope.model.items_file[i].field2;
             cont++;
         }
-        
+
         data.file = {
             'name': $scope.model.name,
             'organization': $scope.model.organization,
@@ -298,7 +297,7 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
             'updated': $scope.model.updated,
             'optionals': $scope.model.optionals
         }
-        
+
         console.log(data);
         if (isValid) {
 
@@ -306,9 +305,9 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
                 usSpinnerService.stop('spinner');
                 console.log(resp);
                 var data_file = {};
-                if($scope.model.ws_type == 'rest') {
+                if ($scope.model.ws_type == 'rest') {
                     data_file.restService = resp.data.id;
-                } else if($scope.model.ws_type == 'soap') {
+                } else if ($scope.model.ws_type == 'soap') {
                     data_file.soapService = resp.data.id;
                 }
                 rest().update({
@@ -320,7 +319,7 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
                     console.log('error en el update del file');
                     $location.url('/files/' + resp.data.file.id + '/view');
                 });
-                
+
             }, function() {
                 usSpinnerService.stop('spinner');
             });
@@ -341,7 +340,7 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
     $scope.deleteOption = function(index, field) {
         $scope.model.items_file.splice(index, 1);
     }
-    
+
     $scope.addParameter = function() {
         if ($scope.model.items_webservice.length < 10) {
             var newItemNo = $scope.model.items_webservice.length + 1;
@@ -363,6 +362,7 @@ function WebserviceEditController($rootScope, $scope, Flash, rest, $routeParams,
     $scope.model = new model();
 
     $scope.status_default = false;
+    $scope.unsave = true;
 
     $scope.model = new model();
     $scope.steps = [];
@@ -371,79 +371,36 @@ function WebserviceEditController($rootScope, $scope, Flash, rest, $routeParams,
     $scope.steps[2] = "undone";
     $scope.stepactive = 0;
 
-    $scope.mostrar = false;
-    var hard_file = null;
-    $scope.filter = true;
-
-    $scope.fileModel = [];
-
-    $scope.clearUpload = function() {
-        $scope.fileModel.name = "";
-        $scope.fileModel.type = "";
-    }
-
-    $scope.beforeChange = function($files) {
-        $scope.mostrar = false;
-        $scope.filter = true;
-        $scope.fileModel.name = $files[0].name;
-        //$scope.model.name = $scope.fileModel.name;
-        var type = $files[0].name.split('.').pop();
-        if (type == "doc" || type == "docx") {
-            $scope.fileModel.type = 'fa-file-word-o';
-        } else if (type == "xlsx" || type == "xls") {
-            $scope.fileModel.type = 'fa-file-excel-o';
-        } else if (type == "pdf") {
-            $scope.fileModel.type = 'fa-file-pdf-o';
-        } else if (type == "rar" || type == "zip") {
-            $scope.fileModel.type = 'fa-file-archive-o';
-            //if (type == "rar") {
-            $scope.filter = false;
-            hard_file = $files[0];
-            //}
-        } else if (type == "shp") {
-            $scope.filter = false;
-            hard_file = $files[0];
-            $scope.fileModel.type = 'fa-file-text-o';
-        } else {
-            $scope.fileModel.type = 'fa-file-text-o';
-        }
-        $scope.mostrar = true;
-    }
-
     $scope.checkstep = function(step) {
-        if ($scope.model.url == null && step == 1 && $scope.model.ws_type == null) {
-            Alertify.alert('Archivo no permitido.');
+        if ($scope.model.url == '' || $scope.ws_type == '') {
+            Alertify.alert('Rellene los campos requeridos.');
         } else {
-            if (($scope.fileModel.name && step == 1 && ((!$scope.mostrar) || ($scope.mostrar && ($scope.model.uploadFile != null || hard_file != null)))) || ($scope.fileModel.name && step == 2 && ((!$scope.mostrar) || ($scope.mostrar && ($scope.model.uploadFile != null || hard_file != null)))) || step == 0) {
-
-                if (step == 0) {
-                    $scope.steps[0] = "active";
-                    $scope.steps[1] = "undone";
-                    $scope.steps[2] = "undone";
-                } else if (step == 1) {
-                    $scope.steps[0] = "done";
-                    $scope.steps[1] = "active";
-                    $scope.steps[2] = "undone";
-                } else {
-                    $scope.steps[0] = "done";
-                    $scope.steps[1] = "done";
-                    $scope.steps[2] = "active";
-                }
-                $scope.stepactive = step;
+            $scope.stepactive++;
+            if (step == 0) {
+                $scope.steps[0] = "active";
+                $scope.steps[1] = "undone";
+                $scope.steps[2] = "undone";
+            } else if (step == 1) {
+                $scope.steps[0] = "done";
+                $scope.steps[1] = "active";
+                $scope.steps[2] = "undone";
+            } else {
+                $scope.steps[0] = "done";
+                $scope.steps[1] = "done";
+                $scope.steps[2] = "active";
             }
+            $scope.stepactive = step;
         }
     }
     $scope.step = function(step) {
-        if (($scope.fileModel.name && step == 1) || ($scope.fileModel.name && step == 2) || step == 0 && ((!$scope.mostrar) || ($scope.mostrar && ($scope.model.uploadFile != null || hard_file != null)))) {
-            var step = $scope.steps[step];
-            if (step == "undone") {
-                return "undone";
-            } else if (step == "done") {
-                return "done";
-            } else {
-                return "active";
+        var step = $scope.steps[step];
+        if (step == "undone") {
+            return "undone";
+        } else if (step == "done") {
+            return "done";
+        } else {
+            return "active";
 
-            }
         }
 
     }
@@ -455,71 +412,88 @@ function WebserviceEditController($rootScope, $scope, Flash, rest, $routeParams,
 
     $scope.update = function(isValid) {
         usSpinnerService.spin('spinner');
-
-        $scope.model.optionals = {};
-        angular.forEach($scope.model.items, function(element) {
-            $scope.model.optionals[element.field1] = element.field2;
-        });
-
+        $scope.unsave = false;
         $scope.uploadImageProgress = 10;
-        var data = {
-            'name': $scope.model.name,
-            'status': $scope.model.status,
-            'organization': $scope.model.organization,
-            'dataset': $scope.model.dataset,
-            'description': $scope.model.description,
-            'optionals': Upload.json($scope.model.optionals),
-            'notes': $scope.model.notes,
-            // 'url': $scope.model.url,
-            //'visible': $scope.model.visible,
-            'owner': $scope.model.owner,
-            'updateFrequency': $scope.model.updateFrequency,
-            //'tags': $scope.model.tags ? $scope.model.tags.join(",") : "",
-            'updated': $scope.model.updated,
-            //    'gatheringDate': $scope.model.gatheringDate //new Date().toISOString().slice(0, 19).replace('T', ' ');
-        }
 
-        if ($scope.model.uploadFile != null) {
-            if (hard_file != null) {
-                data.uploadFile = hard_file;
-            } else {
-                data.uploadFile = $scope.model.uploadFile;
+        for (obj in $scope.model) {
+            if (obj.indexOf("parameter") != -1) {
+                delete $scope.model[obj]
             }
         }
 
-        var param = {
-            gatheringDate: null
+        $scope.model.parameters = {};
+        var cont = 1;
+        for (var i = 0; i < $scope.model.items_webservice.length; i++) {
+            var values = [];
+            $scope.model["parameter" + cont] = "";
+            $scope.model.parameters[$scope.model.items_webservice[i].field1] = $scope.model.items_webservice[i].field2;
+            cont++;
+        }
+
+        var data = {
+            'url': $scope.model.url,
+            'ws_type': $scope.model.ws_type,
+            'parameters': $scope.model.parameters
         };
-        if (!!$scope.model.gatheringDate) {
-            param.gatheringDate = $scope.model.gatheringDate.toISOString().slice(0, 10); //.toISOString().slice(0, 10), //new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+        var url = '';
+
+        if ($scope.model.ws_type == 'rest') {
+            data.datapath = $scope.model.data_url;
+            data.titlepath = $scope.model.titlepath;
+            data.tokenSignature = $scope.model.sign_name;
+            data.token = $scope.model.sign_token;
+            data.tokenAlgorithm = $scope.model.sign_algorithm;
+            data.username = $scope.model.user;
+            data.password = $scope.model.password;
+
+            url = $rootScope.url + "/restservices";
+        } else if ($scope.model.ws_type == 'soap') {
+            data.namespace = $scope.model.namespace;
+            data.attributesAsHeaders = $scope.model.attrs_as_headers;
+            data.method = $scope.model.ws_type;
+
+            url = $rootScope.url + "/soapservices";
         }
 
+        for (obj in $scope.model) {
+            if (obj.indexOf("optional") != -1) {
+                delete $scope.model[obj]
+            }
+        }
+
+        $scope.model.optionals = {};
+        var cont = 1;
+        for (var i = 0; i < $scope.model.items_file.length; i++) {
+            var values = [];
+            $scope.model["optional" + cont] = "";
+            $scope.model.optionals[$scope.model.items_file[i].field1] = $scope.model.items_file[i].field2;
+            cont++;
+        }
+
+        data.file = {
+            'name': $scope.model.name,
+            'organization': $scope.model.organization,
+            'dataset': $scope.model.dataset,
+            'description': $scope.model.description,
+            'notes': $scope.model.notes,
+            'owner': $scope.model.owner,
+            'updateFrequency': $scope.model.updateFrequency,
+            'updated': $scope.model.updated,
+            'optionals': $scope.model.optionals
+        }
+
+        console.log(data);
         if (isValid) {
-            Upload.upload({
-                url: $rootScope.url + "/files/" + $scope.model.id,
-                data: data,
-                method: 'PUT',
-                params: param
-            }).then(function(resp) {
-                usSpinnerService.stop('spinner');
-                $location.url('/files/' + resp.data.data.id + '/view');
-            }, function(error) {
-                usSpinnerService.stop('spinner');
-                // alert(resp.status);
-                $scope.unsave = false;
-                if (error.data.data && error.data.data.name) {
-                    Alertify.alert('El nombre del archivo ya existe.');
-                } else {
-                    Alertify.alert('Ha ocurrido un error al editar el archivo.');
-                }
-            }, function(evt) {
-                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                $scope.uploadImageProgress = progressPercentage;
-                $scope.unsave = false;
-                usSpinnerService.stop('spinner');
-            });
-        }
 
+            rest(url).update({}, data, function(resp) {
+                usSpinnerService.stop('spinner');
+                console.log(resp);
+                $location.url('/files/' + resp.data.file.id + '/view');
+            }, function(error) {
+                console.log('error en el update del file');
+            });
+        } // end if isValid
 
     };
 
@@ -527,7 +501,6 @@ function WebserviceEditController($rootScope, $scope, Flash, rest, $routeParams,
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type,
-            //params: "include=tags"
         }, function() {
             if (!!$scope.model.updateFrequency) {
                 $scope.model.updateFrequency = $scope.model.updateFrequency.id;
@@ -539,66 +512,86 @@ function WebserviceEditController($rootScope, $scope, Flash, rest, $routeParams,
                 $scope.model.gatheringDate = $scope.model.gatheringDate ? moment($scope.model.gatheringDate).utc() : '';
             }
 
-            $scope.model.items = [];
+            $scope.model.items_webservice = [];
+
+            if (!!$scope.model.restService) {
+
+                $scope.model.url = $scope.model.restService.url;
+                $scope.model.ws_type = 'rest';
+                $scope.model.data_url = $scope.model.restService.datapath;
+                $scope.model.titlepath = $scope.model.restService.titlepath;
+                if (!!$scope.model.restService.token) {
+                    $scope.model.auth_type = 'token';
+                    $scope.model.sign_name = $scope.model.restService.tokenSignature;
+                    $scope.model.sign_token = $scope.model.restService.token;
+                    $scope.model.sign_algorithm = $scope.model.restService.tokenAlgorithm;
+                } else if (!!$scope.model.restService.username) {
+                    $scope.model.auth_type = 'user_password';
+                    $scope.model.user = $scope.model.restService.username;
+                    $scope.model.password = $scope.model.restService.password;
+                }
+
+                angular.forEach($scope.model.restService.parameters, function(val, key) {
+                    $scope.model.items_webservice.push({
+                        field1: key,
+                        field2: val,
+                    });
+                });
+
+            }
+
+            if (!!$scope.model.soapService) {
+                $scope.model.url = $scope.model.soapService.url;
+                $scope.model.ws_type = 'soap';
+                $scope.model.namespace = $scope.model.soapService.namespace;
+                $scope.model.attributesAsHeaders = $scope.model.soapService.attributesAsHeaders;
+                $scope.model.method = $scope.model.soapService.method;
+
+                angular.forEach($scope.model.soapService.parameters, function(val, key) {
+                    $scope.model.items_webservice.push({
+                        field1: key,
+                        field2: val,
+                    });
+                });
+
+            }
+
+            $scope.model.items_file = [];
             angular.forEach($scope.model.optionals, function(val, key) {
-                $scope.model.items.push({
+                $scope.model.items_file.push({
                     field1: key,
                     field2: val,
                 });
             });
 
-            $scope.fileModel.name = $scope.model.name;
-            var type = $scope.fileModel.name.split('.').pop();
-            if (type == "doc" || type == "docx") {
-                $scope.fileModel.type = 'fa-file-word-o';
-            } else if (type == "xlsx" || type == "xls") {
-                $scope.fileModel.type = 'fa-file-excel-o';
-            } else if (type == "pdf") {
-                $scope.fileModel.type = 'fa-file-pdf-o';
-            } else if (type == "rar" || type == "zip") {
-                $scope.fileModel.type = 'fa-file-archive-o';
-            } else {
-                $scope.fileModel.type = 'fa-file-text-o';
-            }
         });
     };
 
-    $scope.inputs = [];
-    var i = 0;
-    $scope.addInput = function() {
-        if ($scope.model.items.length < 10) {
-            var newItemNo = $scope.model.items.length + 1;
-            $scope.model.items.push({
+    $scope.addOption = function() {
+        if ($scope.model.items_file.length < 10) {
+            var newItemNo = $scope.model.items_file.length + 1;
+            $scope.model.items_file.push({
                 field: ""
             })
         }
 
     }
-    $scope.deleteIndexInput = function(index, field) {
-        $scope.model.items.splice(index, 1);
+    $scope.deleteOption = function(index, field) {
+        $scope.model.items_file.splice(index, 1);
     }
 
-    $scope.increment = function(a) {
-        return a + 1;
-    }
+    $scope.addParameter = function() {
+        if ($scope.model.items_webservice.length < 10) {
+            var newItemNo = $scope.model.items_webservice.length + 1;
+            $scope.model.items_webservice.push({
+                field: ""
+            })
+        }
 
-    $scope.itemName = function(a) {
-        return "optional" + (parseInt(a) + 1);
+    }
+    $scope.deleteParameter = function(index, field) {
+        $scope.model.items_webservice.splice(index, 1);
     }
 
     $scope.load();
-
-    var loadFileTypes = function() {
-        var fileTypes = rest().get({
-            type: 'fileTypes'
-        }, function() {
-            $scope.fileTypes = [];
-            angular.forEach(fileTypes.data, function(element) {
-                $scope.fileTypes.push(element.mimetype);
-            });
-            $scope.fileTypes = $scope.fileTypes.toString();
-        });
-    };
-
-    loadFileTypes();
 }
