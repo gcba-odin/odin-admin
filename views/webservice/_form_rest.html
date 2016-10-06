@@ -1,9 +1,9 @@
 <div class="row">
     <!-- input data_url -->
     <div class="form-group">
-        <label for="data_url" class="col-sm-2 control-label">* {{'DATA_URL'| translate}}</label>
+        <label for="data_url" class="col-sm-2 control-label">{{'DATA_URL'| translate}}</label>
         <div class="col-sm-10" ng-class="{'has-error': form1.data_url.$touched && form1.data_url.$invalid }">
-            <input type="text" id="data_url" ng-model="model.data_url" name="data_url" class="form-control" id="data_url" placeholder="{{ 'PLACE' | translate }} {{ 'DATA_URL' | translate }} {{ 'HERE' | translate }}" required/>
+            <input type="text" id="data_url" ng-model="model.data_url" name="data_url" class="form-control" id="data_url" placeholder="{{ 'PLACE' | translate }} {{ 'DATA_URL' | translate }} {{ 'HERE' | translate }}"/>
             <div class="help-block" ng-messages="form1.data_url.$error" ng-if="form1.data_url.$touched">
                 <div ng-messages-include="views/messages.html"></div>
             </div>
