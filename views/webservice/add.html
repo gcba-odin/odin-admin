@@ -259,7 +259,10 @@
         </div>
 
         <div class="box-footer">
-            <button class="btn btn-default pull-left" ng-click="checkstep(stepactive - 1)" ng-disabled="stepactive == 0">
+            <button class="btn btn-default pull-left" back-button ng-if="stepactive == 0">
+                {{ 'BACK' | translate }}
+            </button>
+            <button class="btn btn-default pull-left" ng-click="checkstep(stepactive - 1)" ng-if="stepactive != 0">
                 {{ 'BACK' | translate }}
             </button>
             <button ng-if="stepactive == 0" ng-disabled="form1.$invalid" type="submit" class="btn btn-primary pull-right" ng-click="checkstep(stepactive + 1)">{{ 'NEXT' | translate }}</button>
