@@ -24,7 +24,7 @@
         "validation.match",
         "angular-jwt",
         "vcRecaptcha"
-    ]);
+          ]);
 
     app.config(function($routeProvider, $httpProvider, $translateProvider, usSpinnerConfigProvider, ChartJsProvider, ConsumerServiceProvider, $middlewareProvider, jwtOptionsProvider, vcRecaptchaServiceProvider) {
 

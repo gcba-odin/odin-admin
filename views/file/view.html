@@ -97,6 +97,48 @@
                                 <td>{{val}}</td>
                             </tr>
                         </table>
+                        <h4 ng-if="!!model.restService || !!model.soapService" class="box-title">{{ 'DETAILS_FOR' | translate }} {{ 'WEBSERVICE' | translate }}</h4>
+                        <table class="table usertable" ng-if="!!model.restService || !!model.soapService">
+                            <tr ng-if="model.restService">
+                                <td class="detail-bold">{{ 'WEBSERVICE_URL' | translate }}</td>
+                                <td>{{model.restService.url}}</td>
+                            </tr>
+                            <tr ng-if="model.soapService">
+                                <td class="detail-bold">{{ 'WEBSERVICE_URL' | translate }}</td>
+                                <td>{{model.soapService.url}}</td>
+                            </tr>
+                            <tr>
+                                <td class="detail-bold">{{ 'WEBSERVICE_TYPE' | translate }}</td>
+                                <td>{{ model.restService ? 'Rest' : 'Soap'}}</td>
+                            </tr>
+                            <tr ng-if="model.restService.datapath">
+                                <td class="detail-bold">{{ 'DATA_URL' | translate }}</td>
+                                <td>{{model.restService.datapath}}</td>
+                            </tr>
+                            <tr ng-if="model.restService.titlepath">
+                                <td class="detail-bold">Ruta a los titulos de tabla</td>
+                                <td>{{model.restService.titlepath}}</td>
+                            </tr>
+                            <tr ng-if="model.soapService.method">
+                                <td class="detail-bold">{{ 'METHOD' | translate }}</td>
+                                <td>{{model.soapService.method}}</td>
+                            </tr>
+                            <tr ng-if="model.soapService.namespace">
+                                <td class="detail-bold">{{ 'NAMESPACE' | translate }}</td>
+                                <td>{{model.soapService.namespace}}</td>
+                            </tr>
+                            <tr ng-if="model.soapService">
+                                <td class="detail-bold">{{ 'USE_ATTRS_HEADERS' | translate }}</td>
+                                <td>
+                                    <span class="label label-default">{{model.soapService.attrs_as_headers ? 'Si' : 'No'}}</span>
+                                </td>
+                            </tr>
+                            <tr ng-repeat="item in model.items_webservice">
+                                <td class="detail-bold">{{item.field1}}</td>
+                                <td>{{item.field2}}</td>
+                            </tr>
+
+                        </table>
                     </div>
                     <!-- /.box-body -->
 

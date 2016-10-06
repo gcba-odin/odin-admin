@@ -23,6 +23,7 @@
                                     <!--<th>ID</th>-->
                                     <th>{{ 'NAME' | translate }}</th>
                                     <th>{{ 'STATUS' | translate }}</th>
+                                    <th>WS</th>
                                     <th class="text-center">{{ 'ACTIONS' | translate }}</th>
                                 </tr>
                                 <tr ng-if="data.data.length == 0">
@@ -32,9 +33,12 @@
                                     <!--<td>{{model.id}}</td>-->
                                     <td>{{model.name}}</td>
                                     <td>{{model.status.name}}</td>
+                                    <td>
+                                        <span class="label label-default {{(!!model.restService || !!model.soapService) ? 'bg-primary color-white' : ''}}" ng-class="">{{(!!model.restService || !!model.soapService) ? 'Si' : 'No'}}</span>
+                                    </td>
                                     <td class="text-center table-btn">
                                         <a class="btn btn-primary" ng-click="view({id: model.id})">{{ 'VIEW' | translate }}</a>
-                                        <a class="btn btn-primary" ng-click="edit({id: model.id})">{{ 'EDIT' | translate }}</a>
+                                        <a class="btn btn-primary" ng-click="edit(model)">{{ 'EDIT' | translate }}</a>
                                         <a class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)">{{ 'DELETE' | translate }}</a>
                                     </td>
                                 </tr>
