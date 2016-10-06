@@ -20,7 +20,7 @@
                             </ul>
                         </div>
 
-                        <button ng-if="!!model.resources.data.maps || !!model.resources.data.charts"  data-toggle="modal" data-target="#viewLinkResources" class="btn btn-default pull-right magin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_RESOURCES' | translate }}</button> 
+                        <button ng-if="!!model.resources.data.maps || !!model.resources.data.charts"  data-toggle="modal" data-target="#viewLinkResources" class="btn btn-default pull-right magin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_VISUALIZATIONS' | translate }}</button> 
                     </div>
                     <div class="box-body table-responsive no-padding">
                         <table class="table usertable">
@@ -163,12 +163,12 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">{{ 'RESOURCES' | translate }}</h4>
+                    <h4 class="modal-title" id="myModalLabel">{{ 'VISUALIZATIONS' | translate }}</h4>
                 </div>
                 <div class="modal-body">
                     <table class="table">
                         <thead>
-                        <th>{{ 'RESOURCE' | translate }}</th>
+                        <th>{{ 'VISUALIZATION' | translate }}</th>
                         <th>{{ 'TYPE' | translate }}</th>
                         <th class="text-center">{{ 'ACTIONS' | translate }}</th>
                         </thead>

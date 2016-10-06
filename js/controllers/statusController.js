@@ -121,9 +121,9 @@ function StatusEditController($scope, Flash, rest, $routeParams, model, $locatio
             id: $routeParams.id,
             type: $scope.type
         }, function() {
-            usSpinnerService.spin('spinner');
+            usSpinnerService.stop('spinner');
         }, function(error) {
-            usSpinnerService.spin('spinner');
+            usSpinnerService.stop('spinner');
             modelService.reloadPage();
         });
     };
