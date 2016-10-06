@@ -469,6 +469,7 @@
   font-family: avenir-black, sans-serif;
   font-size: 1em;
   padding: 1em;
+  background-color: rgba(255,255,255,.8);
 }
 
 .home-box h3{
@@ -479,7 +480,10 @@
 
 .border-secondary{
   /*border: 1px solid #FFb600;*/
-  box-shadow: 0px 0px 1px 0px #FFb600;
+}
+
+.home-box{
+  box-shadow: 0px 0px 3px 0px #FFb600;
 }
 
  div.panel-heading {
@@ -592,6 +596,7 @@
  .timeline-centered {
      position: relative;
      margin-bottom: 30px;
+     margin-left: -30px;
  }
 
  .timeline-centered:before, .timeline-centered:after {
@@ -794,8 +799,8 @@
  .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label {
      position: relative;
      background: #f5f5f6;
-     padding: 1.7em;
-     margin-left: 70px;
+     padding: 1em;
+     margin-left: 55px;
      -webkit-background-clip: padding-box;
      -moz-background-clip: padding;
      background-clip: padding-box;

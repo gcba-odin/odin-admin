@@ -259,6 +259,8 @@ div.form-group div.has-error p {
 
 .box {
     border: 0;
+    box-shadow: 0px 0px 5px 0px #ffb600;
+    background-color: rgba(255,255,255,.8);
 }
 
 .chat {
@@ -268,16 +270,17 @@ div.form-group div.has-error p {
 }
 
 #chat-box .item {
-    height: 50px;
+    height: 15px;
 }
 
 .box-header {
     padding: 1em;
+    /*padding-top: 0px;*/
 }
 
 .box-header .box-title {
     line-height: 2 !important;
-    padding: 0 1em;
+    /*padding: 0 1em;*/
     font-family: avenir-black, sans-serif;
     color: #FF386a;
 }
@@ -525,4 +528,9 @@ div.panel-heading {
         margin-right: -6em !important;
         margin-left: -6em !important
     }
+}
+
+
+.breadcrumb{
+  background-color: rgba(245,245,245,.8);
 }
