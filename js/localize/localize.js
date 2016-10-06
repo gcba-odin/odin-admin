@@ -176,6 +176,10 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'RESULTS': 'Results',
         'IMPORT_MODULES': 'Import modules',
         'LAYOUT': 'Layout',
+        'ADD_PARAMETER': 'Add parameter',
+        'PARAMETER': 'Parameter',
+        'TITLE_PATH': 'Titles path',
+        'USE_ATTRS_HEADERS': 'Use attributes as headers',
     });
 
     $translateProvider.translations('es', {
@@ -381,6 +385,11 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'DATA_URL': 'Ruta a los datos',
         'AUTH_TYPE': 'Forma de autenticación',
         'LAYOUT': 'Guía de datos',
+        
+        'ADD_PARAMETER': 'Agregar parámetro',
+        'PARAMETER': 'Parámetro',
+        'TITLE_PATH': 'Ruta a los titulos de tabla',
+        
 
     });
     $translateProvider.preferredLanguage('es');
