@@ -20,17 +20,17 @@
                     <div class="row">
 
                         <ul class="steps">
-                            <li ng-class="step(0)" ng-click="checkstep(0)" class=" col-xs-4">
+                            <li ng-class="step(0)"  class=" col-xs-4">
                                 <p>
                                     1.
                                     {{ 'CHARGE_OF_WEBSERVICE' | translate | uppercase }}</p>
                             </li>
-                            <li ng-class="step(1)" ng-click="checkstep(1)" class=" col-xs-4">
+                            <li ng-class="step(1)"  class=" col-xs-4">
                                 <p>
                                     2.
                                     {{ 'CHARGE_OF_DATA' | translate | uppercase }}</p>
                             </li>
-                            <li ng-class="step(2)" ng-click="checkstep(2)" class=" col-xs-4">
+                            <li ng-class="step(2)"  class=" col-xs-4">
                                 <p>
                                     3.
                                     {{ 'REVISION' | translate | uppercase }}</p>
@@ -203,7 +203,7 @@
                                             <td>{{model.data_url}}</td>
                                         </tr>
                                         <tr ng-if="model.titlepath">
-                                            <td class="detail-bold">Ruta a los titulos de tabla</td>
+                                            <td class="detail-bold">{{'TITLE_PATH'| translate}}</td>
                                             <td>{{model.titlepath}}</td>
                                         </tr>
                                         <tr ng-if="model.auth_type">
@@ -259,10 +259,10 @@
         </div>
 
         <div class="box-footer">
-            <button class="btn btn-default pull-left" back-button ng-if="dataset_disabled == 'disabled'">
+            <button class="btn btn-default pull-left" back-button ng-if="stepactive == 0">
                 {{ 'BACK' | translate }}
             </button>
-            <button class="btn btn-default pull-left" ng-click="checkstep(stepactive - 1)" ng-disabled="stepactive == 0" ng-if="dataset_disabled == 'enabled'">
+            <button class="btn btn-default pull-left" ng-click="checkstep(stepactive - 1)" ng-if="stepactive != 0">
                 {{ 'BACK' | translate }}
             </button>
             <button ng-if="stepactive == 0" ng-disabled="form1.$invalid" type="submit" class="btn btn-primary pull-right" ng-click="checkstep(stepactive + 1)">{{ 'NEXT' | translate }}</button>

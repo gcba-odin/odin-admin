@@ -1,9 +1,9 @@
 <div class="row">
     <!-- input data_url -->
     <div class="form-group">
-        <label for="data_url" class="col-sm-2 control-label">* {{'DATA_URL'| translate}}</label>
+        <label for="data_url" class="col-sm-2 control-label">{{'DATA_URL'| translate}}</label>
         <div class="col-sm-10" ng-class="{'has-error': form1.data_url.$touched && form1.data_url.$invalid }">
-            <input type="text" id="data_url" ng-model="model.data_url" name="data_url" class="form-control" id="data_url" placeholder="{{ 'PLACE' | translate }} {{ 'DATA_URL' | translate }} {{ 'HERE' | translate }}" required/>
+            <input type="text" id="data_url" ng-model="model.data_url" name="data_url" class="form-control" id="data_url" placeholder="{{ 'PLACE' | translate }} {{ 'DATA_URL' | translate }} {{ 'HERE' | translate }}"/>
             <div class="help-block" ng-messages="form1.data_url.$error" ng-if="form1.data_url.$touched">
                 <div ng-messages-include="views/messages.html"></div>
             </div>
@@ -14,7 +14,7 @@
 <div class="row">
     <!-- input titlepath -->
     <div class="form-group">
-        <label for="titlepath" class="col-sm-2 control-label">Ruta a los titulos de tabla</label>
+        <label for="titlepath" class="col-sm-2 control-label">{{'TITLE_PATH'| translate}}</label>
         <div class="col-sm-10" ng-class="{'has-error': form1.titlepath.$touched && form1.titlepath.$invalid }">
             <input type="text" id="titlepath" ng-model="model.titlepath" name="titlepath" class="form-control" id="titlepath" placeholder="{{ 'PLACE' | translate }} {{ 'DATA_URL' | translate }} {{ 'HERE' | translate }}"/>
             <div class="help-block" ng-messages="form1.titlepath.$error" ng-if="form1.titlepath.$touched">

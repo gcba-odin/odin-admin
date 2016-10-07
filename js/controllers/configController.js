@@ -24,8 +24,12 @@ function ConfigListController($scope, $location, rest, $rootScope, Flash, Alerti
         modelService.view($scope, model);
     }
 
-    modelService.loadAll($scope);
-    usSpinnerService.stop('spinner');
+    modelService.loadAll($scope, function(resp) {
+        usSpinnerService.stop('spinner');
+        if(!resp) {
+            modelService.reloadPage();
+        }
+    });
 }
 
 function ConfigViewController($scope, Flash, rest, $routeParams, $location, modelService) {

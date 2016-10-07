@@ -354,7 +354,9 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
         $scope.model.items_webservice.splice(index, 1);
     }
 
-
+    $scope.increment = function(a) {
+        return a + 1;
+    }
 }
 
 function WebserviceEditController($rootScope, $scope, Flash, rest, $routeParams, model, $location, modelService, $sce, Upload, usSpinnerService, Alertify) {
@@ -591,6 +593,10 @@ function WebserviceEditController($rootScope, $scope, Flash, rest, $routeParams,
     }
     $scope.deleteParameter = function(index, field) {
         $scope.model.items_webservice.splice(index, 1);
+    }
+    
+    $scope.increment = function(a) {
+        return a + 1;
     }
 
     $scope.load();

@@ -4,8 +4,8 @@ app.factory('model', function($resource) {
     return $resource();
 });
 
-function FileTypeListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, configs) {
-
+function FileTypeListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, configs, usSpinnerService) {
+    usSpinnerService.spin('spinner');
     modelService.initService("File Type", "filetypes", $scope);
     
     $scope.filtersView = [{
@@ -48,13 +48,24 @@ function FileTypeListController($scope, $location, rest, $rootScope, Flash, Aler
         
         $scope.q = "&include=files&skip=0&limit=" + $scope.limit;
 
-        modelService.loadAll($scope);
+        modelService.loadAll($scope, function(resp) {
+            usSpinnerService.stop('spinner');
+            if(!resp) {
+                modelService.reloadPage();
+            }
+        });
     });
 
     $scope.paging = function(event, page, pageSize, total) {
+        usSpinnerService.spin('spinner');
         var skip = (page - 1) * $scope.limit;
         $scope.q = "&include=files&skip=" + skip + "&limit=" + $scope.limit;
-        modelService.loadAll($scope);
+        modelService.loadAll($scope, function(resp) {
+            usSpinnerService.stop('spinner');
+            if(!resp) {
+                modelService.reloadPage();
+            }
+        });
     };
 }
 
