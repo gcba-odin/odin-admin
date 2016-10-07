@@ -6,9 +6,8 @@ app.factory('model', function($resource) {
 
 
 
-function DatasetListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, $routeParams, configs) {
-
-
+function DatasetListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, $routeParams, configs, usSpinnerService) {
+    usSpinnerService.spin('spinner');
     modelService.initService("Dataset", "datasets", $scope);
 
     $scope.filtersView = [{
@@ -76,16 +75,27 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
             //$scope.condition = 'AND';
         }
 
-        modelService.loadAll($scope);
+        modelService.loadAll($scope, function(resp) {
+            usSpinnerService.stop('spinner');
+            if(!resp) {
+                modelService.reloadPage();
+            }
+        });
     });
 
     $scope.paging = function(event, page, pageSize, total) {
+        usSpinnerService.spin('spinner');
         var skip = (page - 1) * $scope.limit;
         $scope.q = "&skip=" + skip + "&limit=" + $scope.limit;
         if ($routeParams.filter == 'starred') {
             $scope.q += "&starred=true";
         }
-        modelService.loadAll($scope);
+        modelService.loadAll($scope, function(resp) {
+            usSpinnerService.stop('spinner');
+            if(!resp) {
+                modelService.reloadPage();
+            }
+        });
     };
 }
 

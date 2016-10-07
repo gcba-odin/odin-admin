@@ -54,14 +54,24 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
         
         $scope.q = "&include=datasets&skip=0&limit=" + $scope.limit;
 
-        modelService.loadAll($scope);
-        usSpinnerService.stop('spinner');
+        modelService.loadAll($scope, function(resp) {
+            usSpinnerService.stop('spinner');
+            if(!resp) {
+                modelService.reloadPage();
+            }
+        });
     });
 
     $scope.paging = function(event, page, pageSize, total) {
+        usSpinnerService.spin('spinner');
         var skip = (page - 1) * $scope.limit;
         $scope.q = "&include=datasets&skip=" + skip + "&limit=" + $scope.limit;
-        modelService.loadAll($scope);
+        modelService.loadAll($scope, function(resp) {
+            usSpinnerService.stop('spinner');
+            if(!resp) {
+                modelService.reloadPage();
+            }
+        });
     };
 
 }
