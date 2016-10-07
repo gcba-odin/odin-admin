@@ -61,8 +61,8 @@
             // or could be increased if your app needs to show many images on the page.
             // Each image in ngf-src, ngf-background or ngf-thumbnail is stored and referenced as a blob url
             // and will only be released if the max value of the followings is reached.
-            uploadClient.defaults.blobUrlsMaxMemory = 26214400 // default: 268435456 max total size of files stored in blob urls.
-            uploadClient.defaults.blobUrlsMaxQueueSize = 20 // default: 200 max number of blob urls stored by this application.
+            uploadClient.defaults.blobUrlsMaxMemory = 52428800 // 26214400 default: 268435456 max total size of files stored in blob urls.
+            uploadClient.defaults.blobUrlsMaxQueueSize = 5 // 20 default: 200 max number of blob urls stored by this application.
 
             async.waterfall([
                 function(callback) {
@@ -356,46 +356,44 @@
                         });
                     },
                     function(dataset, datasetResources, callback) {
-                        // async.eachSeries(datasetResources, function(resource, callback2) {
-                        async.eachSeries(datasetResources, function(resource, outerCallback2) {
+                        async.eachLimit(datasetResources, 5, function(resource, callback2) {
                             // console.log('--- Processing resource: ' + resource.name);
 
-                            async.waterfall([
-                                function(callback2) {
-                                    var datasetId = global.datasets.filter(function(dt) {
-                                        return dt.name.trim() === dataset.title.trim();
-                                    }).map(function(dt) {
-                                        return dt.id;
-                                    });
+                            var datasetId = global.datasets.filter(function(dt) {
+                                return dt.name.trim() === dataset.title.trim();
+                            }).map(function(dt) {
+                                return dt.id;
+                            });
 
-                                    var model = {
-                                        modelName: "File",
-                                        type: "files",
-                                        name: resource.name.trim(),
-                                        description: resource.description.trim(),
-                                        type: resource.format.trim(),
-                                        updateFrequency: defaults.freq.trim(),
-                                        status: defaults.status.trim(),
-                                        organization: defaults.organization.trim(),
-                                        dataset: datasetId[0],
-                                        owner: defaults.owner.trim()
-                                    };
+                            var model = {
+                                modelName: "File",
+                                type: "files",
+                                name: resource.name.trim(),
+                                description: resource.description.trim(),
+                                type: resource.format.trim(),
+                                updateFrequency: defaults.freq.trim(),
+                                status: defaults.status.trim(),
+                                organization: defaults.organization.trim(),
+                                dataset: datasetId[0],
+                                owner: defaults.owner.trim()
+                            };
 
-                                    callback2(null, resource.url, model);
-                                },
-                                function(url, model, callback2) {
-                                    $http.get(resource.url).success(function(data) {
-                                        setModelType(model);
-                                        createFile(data, model);
-                                        uploadModel(model, callback2, results.resources);
-                                    }).error(function(error) {
-                                        callback2();
-                                    });
+                            console.log('----- Http Getting resource: ' + resource.url);
+                            $http.get(resource.url, { timeout: 120000 }).success(function(data) {
+                                console.log('----- SUCCESS Http Getting resource: ' + resource.url);
+                                console.log('----- Http Data Length: ' + data.length);
+                                if (data.length > 0 && data.length < 50000000) {
+                                    setModelType(model);
+                                    createFile(data, model);
+                                    uploadModel(model, callback2, results.resources);
+                                } else {
+                                    console.log('----- Http Data NOT UPLOADING');
+                                    callback2();
                                 }
-                            ], function(err) {
-                                // console.log('--- Finished resource: ' + resource.name);
-                                outerCallback2(err);
-                            })
+                            }).error(function(error) {
+                                // console.log('----- ERROR Http Getting resource: ' + resource.url);
+                                callback2();
+                            });
                         }, function(err) {
                             // console.log("--- Next resource");
                             callback(err);
@@ -442,8 +440,9 @@
                 data: data,
                 params: param
             }).then(function(resp) {
+                console.log("Uploaded OK", resp);
                 results.count++;
-                results.total++;
+                // results.total++;
                 callback();
             }, function(error) {
                 try {
@@ -453,7 +452,7 @@
                     console.log(error);
                     logMessage(error, results);
                 }
-                results.total++;
+                // results.total++;
                 callback();
             });
         }
