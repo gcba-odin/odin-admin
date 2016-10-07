@@ -195,10 +195,14 @@
                 //scope.q='&where={"name":{"contains":"'+scope.searchField+'"}}';
                 this.loadAll(scope);
             },
-            loadAll: function(scope) {
+            loadAll: function(scope, callback) {
                 scope.data = rest().get({
                     type: scope.type,
                     params: "orderBy=createdAt&sort=DESC" + scope.q
+                }, function(resp) {
+                    callback(true);
+                }, function(error) {
+                    callback(false);
                 });
             },
             findOne: function(routeParams, scope) {

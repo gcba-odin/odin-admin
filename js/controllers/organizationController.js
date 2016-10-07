@@ -25,8 +25,8 @@ app.directive('wysihtml5', function () {
         }
     };
 });
-function OrganizationListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, configs) {
-
+function OrganizationListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, configs, usSpinnerService) {
+    usSpinnerService.spin('spinner');
     modelService.initService("Organization", "organizations", $scope);
     
     $scope.filtersView = [{
@@ -73,13 +73,24 @@ function OrganizationListController($scope, $location, rest, $rootScope, Flash, 
         
         $scope.q = "&include=files,users&skip=0&limit=" + $scope.limit;
 
-        modelService.loadAll($scope);
+        modelService.loadAll($scope, function(resp) {
+            usSpinnerService.stop('spinner');
+            if(!resp) {
+                modelService.reloadPage();
+            }
+        });
     });
 
     $scope.paging = function(event, page, pageSize, total) {
+        usSpinnerService.spin('spinner');
         var skip = (page - 1) * $scope.limit;
         $scope.q = "&include=files,users&skip=" + skip + "&limit=" + $scope.limit;
-        modelService.loadAll($scope);
+        modelService.loadAll($scope, function(resp) {
+            usSpinnerService.stop('spinner');
+            if(!resp) {
+                modelService.reloadPage();
+            }
+        });
     };
 }
 

@@ -534,3 +534,7 @@ div.panel-heading {
 .breadcrumb{
   background-color: rgba(245,245,245,.8);
 }
+
+.modal{
+  z-index: 10000 !important;
+}
