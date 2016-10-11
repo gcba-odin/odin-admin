@@ -248,6 +248,7 @@ function FilePreviewController($scope, Flash, rest, $routeParams, $location, mod
 
 function FileCreateController($scope, $sce, rest, model, Flash, $location, Upload, $rootScope, modelService, $routeParams, Alertify, usSpinnerService, $window) {
   $scope.today = moment().format('YYYY-MM-DD');
+
     usSpinnerService.spin('spinner');
     modelService.initService("File", "files", $scope);
 
@@ -320,6 +321,8 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
     $scope.steps[1] = "undone";
     $scope.steps[2] = "undone";
     $scope.stepactive = 0;
+
+    $scope.model.owner = {'id': `${$scope.adminglob.currentUser.user}`, 'username': `${$scope.adminglob.currentUser.username}`};
 
     $scope.dataset_disabled = 'enabled';
     if (!angular.isUndefined($routeParams.dataset)) {
@@ -536,7 +539,6 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
 
 function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model, $location, modelService, $sce, Upload, usSpinnerService, Alertify, $window) {
   $scope.today = moment().format('YYYY-MM-DD');
-
     usSpinnerService.spin('spinner');
     modelService.initService("File", "files", $scope);
     $scope.model = new model();

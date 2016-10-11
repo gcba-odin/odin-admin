@@ -188,6 +188,9 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
     $scope.model.items_file = [];
     $scope.model.items_webservice = [];
 
+    $scope.model.owner = {'id': `${$scope.adminglob.currentUser.user}`, 'username': `${$scope.adminglob.currentUser.username}`};
+
+
     $scope.checkstep = function(step) {
         if ($scope.model.url == '' || $scope.ws_type == '') {
             Alertify.alert('Rellene los campos requeridos.');
@@ -505,7 +508,7 @@ function WebserviceEditController($rootScope, $scope, Flash, rest, $routeParams,
                 }, function(error) {
                     console.log('error en el update del file');
                 });
-                
+
             }, function(error) {
                 console.log('error en el update del ws');
             });
@@ -560,7 +563,7 @@ function WebserviceEditController($rootScope, $scope, Flash, rest, $routeParams,
 
             if (!!$scope.model.soapService) {
                 $scope.model.ws_id = $scope.model.soapService.id;
-                
+
                 $scope.model.url = $scope.model.soapService.url;
                 $scope.model.ws_type = 'soap';
                 $scope.model.namespace = $scope.model.soapService.namespace;
@@ -612,7 +615,7 @@ function WebserviceEditController($rootScope, $scope, Flash, rest, $routeParams,
     $scope.deleteParameter = function(index, field) {
         $scope.model.items_webservice.splice(index, 1);
     }
-    
+
     $scope.increment = function(a) {
         return a + 1;
     }
