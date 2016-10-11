@@ -359,7 +359,7 @@ div.form-group div.has-error p {
 
 
 .bg-split {
-    background-color: #013A6B;
+    background-color: #f9f9f9;
     background: -webkit-linear-gradient(120deg, #f9f9f9 50%, #f2f2f2 50%);
     /* For Safari 5.1 to 6.0 */
     background: -o-linear-gradient(120deg, #f9f9f9 50%, #f2f2f2 50%);
