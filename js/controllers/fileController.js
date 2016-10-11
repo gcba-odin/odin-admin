@@ -32,7 +32,7 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
 
     $scope.edit = function(model) {
         var type = $scope;
-        
+
         if(!!model.restService || !!model.soapService) {
             type = {type:'webservices'};
         }
@@ -100,14 +100,14 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
 
     $scope.edit = function(model) {
         var type = $scope;
-        
+
         if(!!model.restService || !!model.soapService) {
             type = {type:'webservices'};
         }
         modelService.edit(type, model);
     }
 
-    //factory configs 
+    //factory configs
     configs.statuses($scope);
 
     $scope.publish = function(id, type) {
@@ -198,7 +198,57 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
     };
 }
 
+function FilePreviewController($scope, Flash, rest, $routeParams, $location, modelService, $sce, Alertify, usSpinnerService, $window, configs) {
+    usSpinnerService.spin('spinner');
+    modelService.initService("File", "files", $scope);
+
+    $scope.params = {
+        limit: 20
+    };
+
+    $scope.model = rest().findOne({
+        id: $routeParams.id,
+        type: $scope.type
+    }, function () {
+        if ($scope.model.type.api) {
+            $scope.model.contents = rest().contents({
+                id: $scope.model.id,
+                type: $scope.type,
+                params: 'limit=' + $scope.params.limit
+            }, function() {
+                usSpinnerService.stop('spinner');
+            }, function(error) {
+                usSpinnerService.stop('spinner');
+                modelService.reloadPage();
+            });
+        } else {
+            usSpinnerService.stop('spinner');
+        }
+    }, function(error) {
+        usSpinnerService.stop('spinner');
+        modelService.reloadPage();
+    });
+
+    $scope.paging = function(event, page, pageSize, total, resource) {
+        usSpinnerService.spin('spinner');
+        var skip = (page - 1) * $scope.params.limit;
+        //$scope.q = "&skip=" + skip + "&limit=" + $scope.limit;
+        resource.contents = rest().contents({
+            id: resource.id,
+            type: 'files',
+            params: "skip=" + skip + "&limit=" + $scope.params.limit
+        }, function() {
+            usSpinnerService.stop('spinner');
+        }, function(error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
+        });
+    };
+}
+
 function FileCreateController($scope, $sce, rest, model, Flash, $location, Upload, $rootScope, modelService, $routeParams, Alertify, usSpinnerService, $window) {
+  $scope.today = moment().format('YYYY-MM-DD');
+
     usSpinnerService.spin('spinner');
     modelService.initService("File", "files", $scope);
 
@@ -236,7 +286,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             $scope.fileModel.type = 'fa-file-text-o';
         }
     }
-    
+
     var datasetHasLayout = function(id, callback) {
         var dataset_file = rest().findOne({
             id: id,
@@ -271,6 +321,8 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
     $scope.steps[1] = "undone";
     $scope.steps[2] = "undone";
     $scope.stepactive = 0;
+
+    $scope.model.owner = {'id': `${$scope.adminglob.currentUser.user}`, 'username': `${$scope.adminglob.currentUser.username}`};
 
     $scope.dataset_disabled = 'enabled';
     if (!angular.isUndefined($routeParams.dataset)) {
@@ -339,8 +391,8 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
                             }
                         });
                     }
-                    
-                    
+
+
                     $scope.steps[0] = "done";
                     $scope.steps[1] = "done";
                     $scope.steps[2] = "active";
@@ -486,6 +538,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
 }
 
 function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model, $location, modelService, $sce, Upload, usSpinnerService, Alertify, $window) {
+  $scope.today = moment().format('YYYY-MM-DD');
     usSpinnerService.spin('spinner');
     modelService.initService("File", "files", $scope);
     $scope.model = new model();
@@ -509,7 +562,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
         $scope.fileModel.name = "";
         $scope.fileModel.type = "";
     }
-    
+
     var datasetHasLayout = function(id, callback) {
         var dataset_file = rest().findOne({
             id: id,
@@ -617,7 +670,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
                             }
                         });
                     }
-                    
+
                     $scope.steps[0] = "done";
                     $scope.steps[1] = "done";
                     $scope.steps[2] = "active";
@@ -802,7 +855,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
             angular.forEach(fileTypes.data, function(element) {
                 $scope.fileTypes.push(element.mimetype);
             });
-            $scope.fileTypes = $scope.fileTypes.toString();            
+            $scope.fileTypes = $scope.fileTypes.toString();
         }, function() {
             usSpinnerService.stop('spinner');
             modelService.reloadPage();
