@@ -198,6 +198,54 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
     };
 }
 
+function FilePreviewController($scope, Flash, rest, $routeParams, $location, modelService, $sce, Alertify, usSpinnerService, $window, configs) {
+    usSpinnerService.spin('spinner');
+    modelService.initService("File", "files", $scope);
+
+    $scope.params = {
+        limit: 20
+    };
+
+    $scope.model = rest().findOne({
+        id: $routeParams.id,
+        type: $scope.type
+    }, function () {
+        if ($scope.model.type.api) {
+            $scope.model.contents = rest().contents({
+                id: $scope.model.id,
+                type: $scope.type,
+                params: 'limit=' + $scope.params.limit
+            }, function() {
+                usSpinnerService.stop('spinner');
+            }, function(error) {
+                usSpinnerService.stop('spinner');
+                modelService.reloadPage();
+            });
+        } else {
+            usSpinnerService.stop('spinner');
+        }
+    }, function(error) {
+        usSpinnerService.stop('spinner');
+        modelService.reloadPage();
+    });
+    
+    $scope.paging = function(event, page, pageSize, total, resource) {
+        usSpinnerService.spin('spinner');
+        var skip = (page - 1) * $scope.params.limit;
+        //$scope.q = "&skip=" + skip + "&limit=" + $scope.limit;
+        resource.contents = rest().contents({
+            id: resource.id,
+            type: 'files',
+            params: "skip=" + skip + "&limit=" + $scope.params.limit
+        }, function() {
+            usSpinnerService.stop('spinner');
+        }, function(error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
+        });
+    };
+}
+
 function FileCreateController($scope, $sce, rest, model, Flash, $location, Upload, $rootScope, modelService, $routeParams, Alertify, usSpinnerService, $window) {
     usSpinnerService.spin('spinner');
     modelService.initService("File", "files", $scope);
