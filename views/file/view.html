@@ -147,6 +147,7 @@
                             {{ 'BACK' | translate }}
                         </button>
                         <div class="pull-right">
+                            <a ng-if="!!model.type.api" class="btn btn-primary" ng-href="#/files/{{model.id}}/preview">{{ 'PREVIEW' | translate }}</a>
                             <a class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)">{{ 'DELETE' | translate }}</a>
                             <button type="submit" class="btn btn-primary" ng-click="edit(model)">{{ 'EDIT' | translate }}</button>
                             <a class="btn btn-primary" target="_blank" href="{{ model.url}}" download="{{ model.name}}">{{ 'DOWNLOAD' | translate }}</a>

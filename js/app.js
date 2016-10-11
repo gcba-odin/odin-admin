@@ -218,6 +218,10 @@
                 templateUrl: "views/file/edit.html",
                 controller: FileEditController
             })
+            .when("/files/:id/preview", {
+                templateUrl: "views/file/preview.html",
+                controller: FilePreviewController
+            })
             //// file
 
         ////  Categories
