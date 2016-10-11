@@ -305,6 +305,7 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
                 usSpinnerService.stop('spinner');
                 console.log(resp);
                 var data_file = {};
+                data_file.type = '9WRhpRV'; //json id
                 if ($scope.model.ws_type == 'rest') {
                     data_file.restService = resp.data.id;
                 } else if ($scope.model.ws_type == 'soap') {
@@ -486,14 +487,18 @@ function WebserviceEditController($rootScope, $scope, Flash, rest, $routeParams,
                     'owner': $scope.model.owner,
                     'updateFrequency': $scope.model.updateFrequency,
                     'updated': $scope.model.updated,
-                    'optionals': $scope.model.optionals
+                    'optionals': $scope.model.optionals,
+                    'type': '9WRhpRV' //json id
                 };
                 if ($scope.model.ws_type == 'rest') {
                     data.file.restService = $scope.model.ws_id;
                 } else if ($scope.model.ws_type == 'soap') {
                     data.file.soapService = $scope.model.ws_id;
                 }
-                rest($rootScope.url+'/files/'+$routeParams.id).update({}, data.file, function(resp) {
+                rest().update({
+                    type: 'files',
+                    id: $routeParams.id
+                }, data.file, function(resp) {
                     usSpinnerService.stop('spinner');
                     console.log(resp);
                     $location.url('/files/' + resp.data.id + '/view');

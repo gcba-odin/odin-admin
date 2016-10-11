@@ -239,8 +239,11 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
     var data_limit_map = 2000;
     ////factory configs
     configs.findKey($scope, function (resp) {
+        usSpinnerService.stop('spinner');
         if (!!resp.data[0] && !!resp.data[0].value) {
             data_limit_map = resp.data[0].value;
+        } else {
+            modelService.reloadPage();
         }
     });
 
@@ -325,8 +328,14 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
                     $scope.headersFile = null;
 
                     generate_headers();
+                }, function(error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
                 });
             }
+        }, function(error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
         });
 
         $scope.file_disabled = 'disabled';
@@ -477,6 +486,11 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
 
     $scope.basemaps = rest().get({
         type: 'basemaps'
+    }, function(){
+        usSpinnerService.stop('spinner');
+    }, function(error) {
+        usSpinnerService.stop('spinner');
+        modelService.reloadPage();
     });
 
 }
@@ -497,8 +511,11 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
     var data_limit_map = 2000;
     ////factory configs
     configs.findKey($scope, function (resp) {
+        usSpinnerService.stop('spinner');
         if (!!resp.data[0] && !!resp.data[0].value) {
             data_limit_map = resp.data[0].value;
+        } else {
+            modelService.reloadPage();
         }
     });
 
@@ -706,6 +723,11 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
 
         $scope.basemaps = rest().get({
             type: 'basemaps'
+        }, function(){
+            usSpinnerService.stop('spinner');
+        }, function(error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
         });
     };
 

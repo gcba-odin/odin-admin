@@ -11,7 +11,7 @@
                         <button ng-click="unPublish(model.id, 'files')" ng-if="model.status.id == statuses.published" class="pull-right btn btn-primary">{{ 'UNPUBLISH' | translate }}</button>
                         <button ng-click="publish(model.id, 'files')" ng-if="model.status.id !== statuses.published" class="pull-right btn btn-primary">{{ 'PUBLISH' | translate }}</button> 
                         <!--<a ng-href="#/files/new/{{model.id}}" class="btn btn-default pull-right magin-right-10"><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_RESOURCES' | translate }}</a>-->
-                        <div class="dropdown pull-right magin-right-10" ng-if="model.type.api">
+                        <div class="dropdown pull-right magin-right-10" ng-if="!!model.url && !!model.type.api">
                             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{ 'NEW_RESOURCES' | translate }}
                                 <span class="caret"></span></button>
                             <ul class="dropdown-menu dropdown-menu-right">
@@ -147,10 +147,10 @@
                             {{ 'BACK' | translate }}
                         </button>
                         <div class="pull-right">
-                            <a ng-if="!!model.type.api" class="btn btn-primary" ng-href="#/files/{{model.id}}/preview">{{ 'PREVIEW' | translate }}</a>
+                            <a ng-if="!!model.url && !!model.type.api" class="btn btn-primary" ng-href="#/files/{{model.id}}/preview">{{ 'PREVIEW' | translate }}</a>
                             <a class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)">{{ 'DELETE' | translate }}</a>
                             <button type="submit" class="btn btn-primary" ng-click="edit(model)">{{ 'EDIT' | translate }}</button>
-                            <a class="btn btn-primary" target="_blank" href="{{ model.url}}" download="{{ model.name}}">{{ 'DOWNLOAD' | translate }}</a>
+                            <a ng-if="!!model.url" class="btn btn-primary" target="_blank" href="{{ model.url}}" download="{{ model.name}}">{{ 'DOWNLOAD' | translate }}</a>
                         </div>
                     </div>
                 </div>
