@@ -247,7 +247,7 @@ function FilePreviewController($scope, Flash, rest, $routeParams, $location, mod
 }
 
 function FileCreateController($scope, $sce, rest, model, Flash, $location, Upload, $rootScope, modelService, $routeParams, Alertify, usSpinnerService, $window) {
-  $scope.today = moment();
+  $scope.today = moment().format('YYYY-MM-DD');
     usSpinnerService.spin('spinner');
     modelService.initService("File", "files", $scope);
 
