@@ -337,7 +337,7 @@
 
         function importResources(callbackFunc) {
             // http://data.buenosaires.gob.ar/api/3/action/package_show?id=datasetName
-            async.eachSeries(global.datasetNames, function(datasetName, outerCallback) {
+            async.eachLimit(global.datasetNames, 5, function(datasetName, outerCallback) {
 
                 // console.log('=== Processing dataset: ' + datasetName);
                 async.waterfall([
@@ -378,16 +378,16 @@
                                 owner: defaults.owner.trim()
                             };
 
-                            console.log('----- Http Getting resource: ' + resource.url);
-                            $http.get(resource.url, { timeout: 120000 }).success(function(data) {
-                                console.log('----- SUCCESS Http Getting resource: ' + resource.url);
-                                console.log('----- Http Data Length: ' + data.length);
+                            // console.log('----- Http Getting resource: ' + resource.url);
+                            $http.get(resource.url, { timeout: 90000 }).success(function(data) {
+                                // console.log('----- SUCCESS Http Getting resource: ' + resource.url);
                                 if (data.length > 0 && data.length < 50000000) {
                                     setModelType(model);
+                                    setModelName(model);
                                     createFile(data, model);
                                     uploadModel(model, callback2, results.resources);
                                 } else {
-                                    console.log('----- Http Data NOT UPLOADING');
+                                    // console.log('----- Http Data NOT UPLOADING');
                                     callback2();
                                 }
                             }).error(function(error) {
@@ -440,7 +440,7 @@
                 data: data,
                 params: param
             }).then(function(resp) {
-                console.log("Uploaded OK", resp);
+                console.log("Uploaded OK", resp, data.name, data.dataset);
                 results.count++;
                 // results.total++;
                 callback();
@@ -449,8 +449,8 @@
                     console.log(error.data.data.name[0].message);
                     logMessage(error.data.data.name[0].message, results);
                 } catch (cerr) {
-                    console.log(error);
-                    logMessage(error, results);
+                    console.log(error, data.name, data.dataset);
+                    // logMessage(error, results);
                 }
                 // results.total++;
                 callback();
@@ -477,6 +477,16 @@
                 $scope.fileModel.type = 'fa-file-text-o';
             } else {
                 $scope.fileModel.type = 'fa-file-text-o';
+            }
+        }
+
+        function setModelName(model) {
+            if (model.name.toLowerCase().indexOf("guía de datos") !== -1) {
+                model.name += " (" + model.dataset + ")";
+            }
+            var type = model.type.toLowerCase();
+            if (type != "csv") {
+                model.name += " (" + type + ")";
             }
         }
 
