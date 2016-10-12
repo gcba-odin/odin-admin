@@ -398,7 +398,7 @@
                             // console.log('----- Http Getting resource: ' + resource.url);
                             $http.get(resource.url, { timeout: 120000 }).success(function(data) {
                                 // console.log('----- SUCCESS Http Getting resource: ' + resource.url);
-                                if (data.length > 0 && data.length < 20000000) {
+                                if (data.length > 0 && data.length < 10000000) {
                                     setModelType(model);
                                     setModelName(model);
                                     createFile(data, model);
