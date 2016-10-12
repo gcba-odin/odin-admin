@@ -22,6 +22,7 @@
             datasetNames: []
         };
         var defaults = {};
+        var res_models = [];
 
         var results = {
             categories: {
@@ -61,8 +62,8 @@
             // or could be increased if your app needs to show many images on the page.
             // Each image in ngf-src, ngf-background or ngf-thumbnail is stored and referenced as a blob url
             // and will only be released if the max value of the followings is reached.
-            uploadClient.defaults.blobUrlsMaxMemory = 26214400 // default: 268435456 max total size of files stored in blob urls.
-            uploadClient.defaults.blobUrlsMaxQueueSize = 20 // default: 200 max number of blob urls stored by this application.
+            uploadClient.defaults.blobUrlsMaxMemory = 52428800 // 26214400 default: 268435456 max total size of files stored in blob urls.
+            uploadClient.defaults.blobUrlsMaxQueueSize = 5 // 20 default: 200 max number of blob urls stored by this application.
 
             async.waterfall([
                 function(callback) {
@@ -160,6 +161,22 @@
                     if (defaults.modules.categories && defaults.modules.tags && defaults.modules.datasets && defaults.modules.resources) {
                         console.log("* Resources: importing..");
                         importResources(callback);
+                    } else {
+                        callback(null);
+                    }
+                }
+                ,
+                function(callback) {
+                    if (defaults.modules.categories && defaults.modules.tags && defaults.modules.datasets && defaults.modules.resources) {
+                        console.log("* Resources: uploading..");
+                        console.log(res_models, res_models.length);
+                        // importResources(callback);
+                        // res_models.forEach(function(res) {
+                        async.eachSeries(res_models, function(resource, callback2) {
+                            uploadModel(resource, callback2, results.resources);
+                        }, function(err) {
+                            callback(null);
+                        });
                     } else {
                         callback(null);
                     }
@@ -337,7 +354,7 @@
 
         function importResources(callbackFunc) {
             // http://data.buenosaires.gob.ar/api/3/action/package_show?id=datasetName
-            async.eachSeries(global.datasetNames, function(datasetName, outerCallback) {
+            async.eachLimit(global.datasetNames, 5, function(datasetName, outerCallback) {
 
                 // console.log('=== Processing dataset: ' + datasetName);
                 async.waterfall([
@@ -356,46 +373,52 @@
                         });
                     },
                     function(dataset, datasetResources, callback) {
-                        // async.eachSeries(datasetResources, function(resource, callback2) {
-                        async.eachSeries(datasetResources, function(resource, outerCallback2) {
+                        async.eachLimit(datasetResources, 5, function(resource, callback2) {
                             // console.log('--- Processing resource: ' + resource.name);
 
-                            async.waterfall([
-                                function(callback2) {
-                                    var datasetId = global.datasets.filter(function(dt) {
-                                        return dt.name.trim() === dataset.title.trim();
-                                    }).map(function(dt) {
-                                        return dt.id;
-                                    });
+                            var datasetId = global.datasets.filter(function(dt) {
+                                return dt.name.trim() === dataset.title.trim();
+                            }).map(function(dt) {
+                                return dt.id;
+                            });
 
-                                    var model = {
-                                        modelName: "File",
-                                        type: "files",
-                                        name: resource.name.trim(),
-                                        description: resource.description.trim(),
-                                        type: resource.format.trim(),
-                                        updateFrequency: defaults.freq.trim(),
-                                        status: defaults.status.trim(),
-                                        organization: defaults.organization.trim(),
-                                        dataset: datasetId[0],
-                                        owner: defaults.owner.trim()
-                                    };
+                            var model = {
+                                modelName: "File",
+                                type: "files",
+                                name: resource.name.trim(),
+                                description: resource.description.trim(),
+                                type: resource.format.trim(),
+                                updateFrequency: defaults.freq.trim(),
+                                status: defaults.status.trim(),
+                                organization: defaults.organization.trim(),
+                                dataset: datasetId[0],
+                                owner: defaults.owner.trim()
+                            };
 
-                                    callback2(null, resource.url, model);
-                                },
-                                function(url, model, callback2) {
-                                    $http.get(resource.url).success(function(data) {
-                                        setModelType(model);
-                                        createFile(data, model);
-                                        uploadModel(model, callback2, results.resources);
-                                    }).error(function(error) {
-                                        callback2();
-                                    });
+                            // console.log('----- Http Getting resource: ' + resource.url);
+                            $http.get(resource.url, { timeout: 120000 }).success(function(data) {
+                                // console.log('----- SUCCESS Http Getting resource: ' + resource.url);
+                                if (data.length > 0 && data.length < 20000000) {
+                                    setModelType(model);
+                                    setModelName(model);
+                                    createFile(data, model);
+
+                                    // uploadModel(model, callback2, results.resources);
+
+                                    res_models.push(model);
+                                    console.log("File pushed!", model.name, model.dataset, resource.url, data.length);
+                                    data = null;
+                                    callback2();
+
+                                } else {
+                                    // console.log('----- Http Data NOT UPLOADING');
+                                    data = null;
+                                    callback2();
                                 }
-                            ], function(err) {
-                                // console.log('--- Finished resource: ' + resource.name);
-                                outerCallback2(err);
-                            })
+                            }).error(function(error) {
+                                // console.log('----- ERROR Http Getting resource: ' + resource.url);
+                                callback2();
+                            });
                         }, function(err) {
                             // console.log("--- Next resource");
                             callback(err);
@@ -442,18 +465,19 @@
                 data: data,
                 params: param
             }).then(function(resp) {
+                console.log("Uploaded OK", resp, data.name, data.dataset);
                 results.count++;
-                results.total++;
+                // results.total++;
                 callback();
             }, function(error) {
                 try {
                     console.log(error.data.data.name[0].message);
                     logMessage(error.data.data.name[0].message, results);
                 } catch (cerr) {
-                    console.log(error);
-                    logMessage(error, results);
+                    console.log(error, data.name, data.dataset);
+                    // logMessage(error, results);
                 }
-                results.total++;
+                // results.total++;
                 callback();
             });
         }
@@ -478,6 +502,16 @@
                 $scope.fileModel.type = 'fa-file-text-o';
             } else {
                 $scope.fileModel.type = 'fa-file-text-o';
+            }
+        }
+
+        function setModelName(model) {
+            if (model.name.toLowerCase().indexOf("guía de datos") !== -1) {
+                model.name += " (" + model.dataset + ")";
+            }
+            var type = model.type.toLowerCase();
+            if (type != "csv") {
+                model.name += " (" + type + ")";
             }
         }
 
