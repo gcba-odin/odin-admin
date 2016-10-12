@@ -22,6 +22,7 @@
             datasetNames: []
         };
         var defaults = {};
+        var res_models = [];
 
         var results = {
             categories: {
@@ -160,6 +161,22 @@
                     if (defaults.modules.categories && defaults.modules.tags && defaults.modules.datasets && defaults.modules.resources) {
                         console.log("* Resources: importing..");
                         importResources(callback);
+                    } else {
+                        callback(null);
+                    }
+                }
+                ,
+                function(callback) {
+                    if (defaults.modules.categories && defaults.modules.tags && defaults.modules.datasets && defaults.modules.resources) {
+                        console.log("* Resources: uploading..");
+                        console.log(res_models, res_models.length);
+                        // importResources(callback);
+                        // res_models.forEach(function(res) {
+                        async.eachSeries(res_models, function(resource, callback2) {
+                            uploadModel(resource, callback2, results.resources);
+                        }, function(err) {
+                            callback(null);
+                        });
                     } else {
                         callback(null);
                     }
@@ -379,15 +396,23 @@
                             };
 
                             // console.log('----- Http Getting resource: ' + resource.url);
-                            $http.get(resource.url, { timeout: 90000 }).success(function(data) {
+                            $http.get(resource.url, { timeout: 120000 }).success(function(data) {
                                 // console.log('----- SUCCESS Http Getting resource: ' + resource.url);
-                                if (data.length > 0 && data.length < 50000000) {
+                                if (data.length > 0 && data.length < 20000000) {
                                     setModelType(model);
                                     setModelName(model);
                                     createFile(data, model);
-                                    uploadModel(model, callback2, results.resources);
+
+                                    // uploadModel(model, callback2, results.resources);
+
+                                    res_models.push(model);
+                                    console.log("File pushed!", model.name, model.dataset, resource.url, data.length);
+                                    data = null;
+                                    callback2();
+
                                 } else {
                                     // console.log('----- Http Data NOT UPLOADING');
+                                    data = null;
                                     callback2();
                                 }
                             }).error(function(error) {
