@@ -209,8 +209,8 @@ function FilePreviewController($scope, Flash, rest, $routeParams, $location, mod
     $scope.model = rest().findOne({
         id: $routeParams.id,
         type: $scope.type
-    }, function () {
-        if ($scope.model.type.api) {
+    }, function (resp) {
+        if (resp.type.api) {
             $scope.model.contents = rest().contents({
                 id: $scope.model.id,
                 type: $scope.type,
@@ -255,6 +255,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
     $scope.clearUpload = function() {
         $scope.fileModel.name = "";
         $scope.fileModel.type = "";
+        $scope.fileModel.mimetype = "";
     }
 
     $scope.filter = true;
@@ -264,7 +265,8 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
     $scope.beforeChange = function($files) {
         $scope.filter = true;
         $scope.fileModel.name = $files[0].name;
-
+        $scope.fileModel.mimetype = $files[0].type;
+        
         var type = $files[0].name.split('.').pop();
         if (type == "doc" || type == "docx") {
             $scope.fileModel.type = 'fa-file-word-o';
@@ -337,6 +339,10 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
     $scope.checkstep = function(step) {
         if ($scope.model.uploadFile == null && step == 1 && $scope.fileModel.name && $scope.filter)
         {
+            var text_mimetype = '';
+            if(!!$scope.fileModel.mimetype && $scope.fileModel.mimetype != '') {
+                text_mimetype = ' (' + $scope.fileModel.mimetype + ')';
+            }
             $scope.clearUpload();
             Alertify.set({
                 labels:
@@ -346,11 +352,11 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
                         }
             });
             Alertify
-                    .confirm("Archivo no permitido. Revise que el tipo del archivo que desea crear se encuentre en la sección 'Tipos de Archivos'.")
+                    .confirm("Archivo no permitido. Revise que el tipo del archivo" + text_mimetype + " que desea crear se encuentre en la sección 'Tipos de Archivos'.")
 
                     .then(
                             function onOk() {
-                                $location.path('filetypes/new');
+                                $location.path('filetypes');
                             }
                     );
         } else {
@@ -367,7 +373,6 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
                 } else {
                     if($scope.model.layout) {
                         datasetHasLayout($scope.model.dataset, function(resp) {
-                            console.log(resp);
                             if(resp.ret) {
                                 Alertify.set({
                                     labels:
@@ -561,6 +566,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
     $scope.clearUpload = function() {
         $scope.fileModel.name = "";
         $scope.fileModel.type = "";
+        $scope.fileModel.mimetype = "";
     }
 
     var datasetHasLayout = function(id, callback) {
@@ -590,6 +596,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
         $scope.mostrar = false;
         $scope.filter = true;
         $scope.fileModel.name = $files[0].name;
+        $scope.fileModel.mimetype = $files[0].type;
         //$scope.model.name = $scope.fileModel.name;
         var type = $files[0].name.split('.').pop();
         if (type == "doc" || type == "docx") {
@@ -617,6 +624,10 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
     $scope.checkstep = function(step) {
         if ($scope.model.uploadFile == null && step == 1 && $scope.fileModel.name && $scope.filter && $scope.mostrar)
         {
+            var text_mimetype = '';
+            if(!!$scope.fileModel.mimetype && $scope.fileModel.mimetype != '') {
+                text_mimetype = ' (' + $scope.fileModel.mimetype + ')';
+            }
             $scope.clearUpload();
             Alertify.set({
                 labels:
@@ -626,11 +637,11 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
                         }
             });
             Alertify
-                    .confirm("Archivo no permitido. Revise que el tipo del archivo que desea crear se encuentre en la sección 'Tipos de Archivos'.")
+                    .confirm("Archivo no permitido. Revise que el tipo del archivo" + text_mimetype + " que desea crear se encuentre en la sección 'Tipos de Archivos'.")
 
                     .then(
                             function onOk() {
-                                $location.path('filetypes/new');
+                                $location.path('filetypes');
                             }
                     );
         } else {
