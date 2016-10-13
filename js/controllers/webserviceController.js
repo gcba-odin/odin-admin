@@ -309,19 +309,19 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
                 console.log(resp);
                 var data_file = {};
                 data_file.type = '9WRhpRV'; //json id
-                if ($scope.model.ws_type == 'rest') {
-                    data_file.restService = resp.data.id;
-                } else if ($scope.model.ws_type == 'soap') {
-                    data_file.soapService = resp.data.id;
-                }
+//                if ($scope.model.ws_type == 'rest') {
+//                    data_file.restService = resp.data.id;
+//                } else if ($scope.model.ws_type == 'soap') {
+//                    data_file.soapService = resp.data.id;
+//                }
                 rest().update({
                     type: 'files',
-                    id: resp.data.file.id
+                    id: resp.data.id
                 }, data_file, function(resp_file) {
-                    $location.url('/files/' + resp.data.file.id + '/view');
+                    $location.url('/files/' + resp.data.id + '/view');
                 }, function(error) {
                     console.log('error en el update del file');
-                    $location.url('/files/' + resp.data.file.id + '/view');
+                    $location.url('/files/' + resp.data.id + '/view');
                 });
 
             }, function() {
@@ -493,11 +493,11 @@ function WebserviceEditController($rootScope, $scope, Flash, rest, $routeParams,
                     'optionals': $scope.model.optionals,
                     'type': '9WRhpRV' //json id
                 };
-                if ($scope.model.ws_type == 'rest') {
-                    data.file.restService = $scope.model.ws_id;
-                } else if ($scope.model.ws_type == 'soap') {
-                    data.file.soapService = $scope.model.ws_id;
-                }
+//                if ($scope.model.ws_type == 'rest') {
+//                    data.file.restService = $scope.model.ws_id;
+//                } else if ($scope.model.ws_type == 'soap') {
+//                    data.file.soapService = $scope.model.ws_id;
+//                }
                 rest().update({
                     type: 'files',
                     id: $routeParams.id
