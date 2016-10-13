@@ -209,8 +209,8 @@ function FilePreviewController($scope, Flash, rest, $routeParams, $location, mod
     $scope.model = rest().findOne({
         id: $routeParams.id,
         type: $scope.type
-    }, function () {
-        if ($scope.model.type.api) {
+    }, function (resp) {
+        if (resp.type.api) {
             $scope.model.contents = rest().contents({
                 id: $scope.model.id,
                 type: $scope.type,
