@@ -40,7 +40,7 @@
 <!-- Input basemap -->
 <div class="form-group" ng-if="!!basemap_view">
     <label for="basemap" class="col-sm-2 control-label"> {{ 'BASE_MAP' | translate }}</label>
-    <div class="col-sm-10" ng-class="{ 'has-error': form1.basemap.$touched && form1.basemap.$invalid }">
+    <div class="col-sm-10" ng-class="{ 'has-error': form1.basemap.$touched && form1.basemap.$invalid }" uib-tooltip="Tipo de mapa. Ej: carretera, satelital, etc." tooltip-placement="top">
 
         <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="basemap" data-model="{{model.basemap}}" name="basemap" id="basemap" ng-model="model.basemap" class="selectize-input items required full has-options has-items" ng-required="!model.link">
             <option value="">Seleccione una opción</option>

@@ -28,7 +28,7 @@
                     </div>
                     <div class="row" ng-show="stepactive == 0">
                         <div class="col-md-6 col-md-offset-3">
-                            <div class="panel panel-default">
+                            <div class="panel panel-default" uib-tooltip="Los tipos de archivos permitidos son aquellos cargados en la sección 'Tipos de archivos'" tooltip-placement="left">
                                 <!-- <div class="panel-heading"> -->
                                     <!-- <h1>{{ 'FILES' | translate }}</h1> -->
                                     <div class="form-control file-upload" ngf-select ng-model="model.uploadFile" name="uploadFile" ngf-pattern="'{{fileTypes}}'"
