@@ -171,7 +171,7 @@ function WebserviceViewController($scope, Flash, rest, $routeParams, $location, 
     };
 }
 
-function WebserviceCreateController($scope, $sce, rest, model, Flash, $location, Upload, $rootScope, modelService, $routeParams, Alertify, usSpinnerService) {
+function WebserviceCreateController($scope, $sce, rest, model, Flash, $location, Upload, $rootScope, modelService, $routeParams, Alertify, usSpinnerService, configs) {
     modelService.initService("File", "files", $scope);
 
     $scope.status_default = true;
@@ -187,6 +187,9 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
     $scope.stepactive = 0;
     $scope.model.items_file = [];
     $scope.model.items_webservice = [];
+    
+    //factory configs
+    configs.statuses($scope);
 
     $scope.model.owner = {'id': `${$scope.adminglob.currentUser.user}`, 'username': `${$scope.adminglob.currentUser.username}`};
 
@@ -300,15 +303,17 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
             'updated': $scope.model.updated,
             'optionals': $scope.model.optionals
         }
+        
+        if($scope.statuses.default == $scope.statuses.published) {
+            data.file.publishedAt = new Date();
+        }
 
-        console.log(data);
         if (isValid) {
 
             rest().save({
                 type: url,
             }, data, function(ws_info) {
                 usSpinnerService.stop('spinner');
-                console.log(ws_info);
                 //var data_file = {};
                 //data_file.type = '9WRhpRV'; //json id
 //                if ($scope.model.ws_type == 'rest') {
@@ -324,7 +329,6 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
                 //);
 
             }, function(error) {
-                console.log('error en el update del file');
                 usSpinnerService.stop('spinner');
                 //$location.url('/files/' + resp.data.id + '/view');
             });
@@ -377,7 +381,7 @@ function WebserviceEditController($rootScope, $scope, Flash, rest, $routeParams,
     $scope.steps[1] = "undone";
     $scope.steps[2] = "undone";
     $scope.stepactive = 0;
-
+    
     $scope.checkstep = function(step) {
         if ($scope.model.url == '' || $scope.ws_type == '') {
             Alertify.alert('Rellene los campos requeridos.');
@@ -478,13 +482,13 @@ function WebserviceEditController($rootScope, $scope, Flash, rest, $routeParams,
             cont++;
         }
 
-        console.log(data);
         if (isValid) {
 
             rest(url).update({}, data, function(resp) {
                 data.file = {
                     'name': $scope.model.name,
                     'organization': $scope.model.organization,
+                    //'status': $scope.model.status,
                     'dataset': $scope.model.dataset,
                     'description': $scope.model.description,
                     'notes': $scope.model.notes,
@@ -504,14 +508,13 @@ function WebserviceEditController($rootScope, $scope, Flash, rest, $routeParams,
                     id: $routeParams.id
                 }, data.file, function(resp) {
                     usSpinnerService.stop('spinner');
-                    console.log(resp);
                     $location.url('/files/' + resp.data.id + '/view');
                 }, function(error) {
-                    console.log('error en el update del file');
+                    usSpinnerService.stop('spinner');
                 });
 
             }, function(error) {
-                console.log('error en el update del ws');
+                usSpinnerService.stop('spinner');
             });
         } // end if isValid
 
@@ -522,7 +525,6 @@ function WebserviceEditController($rootScope, $scope, Flash, rest, $routeParams,
             id: $routeParams.id,
             type: $scope.type,
         }, function() {
-            console.log($scope.model);
             if (!!$scope.model.updateFrequency) {
                 $scope.model.updateFrequency = $scope.model.updateFrequency.id;
             }
