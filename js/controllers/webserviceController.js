@@ -230,7 +230,7 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
 
     $scope.add = function(isValid) {
         usSpinnerService.spin('spinner');
-        $scope.unsave = false;
+        //$scope.unsave = false;
         $scope.uploadImageProgress = 10;
 
         for (obj in $scope.model) {
@@ -265,13 +265,13 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
             data.username = $scope.model.user;
             data.password = $scope.model.password;
 
-            url = $rootScope.url + "/restservices";
+            url = "restservices";
         } else if ($scope.model.ws_type == 'soap') {
             data.namespace = $scope.model.namespace;
             data.attributesAsHeaders = $scope.model.attrs_as_headers;
-            data.method = $scope.model.ws_type;
+            data.method = $scope.model.method;
 
-            url = $rootScope.url + "/soapservices";
+            url = "soapservices";
         }
 
         for (obj in $scope.model) {
@@ -304,28 +304,29 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
         console.log(data);
         if (isValid) {
 
-            rest(url).save({}, data, function(resp) {
+            rest().save({
+                type: url,
+            }, data, function(ws_info) {
                 usSpinnerService.stop('spinner');
-                console.log(resp);
-                var data_file = {};
-                data_file.type = '9WRhpRV'; //json id
+                console.log(ws_info);
+                //var data_file = {};
+                //data_file.type = '9WRhpRV'; //json id
 //                if ($scope.model.ws_type == 'rest') {
 //                    data_file.restService = resp.data.id;
 //                } else if ($scope.model.ws_type == 'soap') {
 //                    data_file.soapService = resp.data.id;
 //                }
-                rest().update({
-                    type: 'files',
-                    id: resp.data.id
-                }, data_file, function(resp_file) {
-                    $location.url('/files/' + resp.data.id + '/view');
-                }, function(error) {
-                    console.log('error en el update del file');
-                    $location.url('/files/' + resp.data.id + '/view');
-                });
+//                rest().update({
+//                    type: 'files',
+//                    id: resp.data.id
+//                }, data_file, function(resp_file) {
+                    $location.url('/files/' + ws_info.data.id + '/view');
+                //);
 
-            }, function() {
+            }, function(error) {
+                console.log('error en el update del file');
                 usSpinnerService.stop('spinner');
+                //$location.url('/files/' + resp.data.id + '/view');
             });
         } // end if isValid
 
