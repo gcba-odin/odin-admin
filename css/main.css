@@ -851,3 +851,10 @@
      -ms-filter: alpha(opacity=60);
      filter: alpha(opacity=60);
  }
+
+.navbar-static-top{
+  z-index: -1;
+}
+.logo{
+  box-shadow: 0px 0px 10px 0px #ffb600;
+}

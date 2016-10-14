@@ -425,7 +425,7 @@ a:focus {
   padding-top: 50px;
   min-height: 100%;
   width: 230px;
-  z-index: 9999;
+  z-index: 1000;
   -webkit-transition: -webkit-transform 0.3s ease-in-out, width 0.3s ease-in-out;
   -moz-transition: -moz-transform 0.3s ease-in-out, width 0.3s ease-in-out;
   -o-transition: -o-transform 0.3s ease-in-out, width 0.3s ease-in-out;
@@ -602,8 +602,25 @@ a:focus {
   .sidebar-mini.sidebar-collapse .sidebar-menu > li {
     position: relative;
   }
+
+  .sidebar-mini.sidebar-collapse .sidebar-menu > ul {
+    text-align: center;
+  }
+
+  .sidebar-collapse .sidebar-menu {
+    text-align: center;
+    padding: 12px 0px 12px 0px;
+  }
+
+  .sidebar-collapse .sidebar-menu .treeview-menu {
+    text-align: left;
+    /*padding: 12px 0px 12px 0px;*/
+  }
+
   .sidebar-mini.sidebar-collapse .sidebar-menu > li > a {
     margin-right: 0;
+    padding-right: 0px;
+    padding-left: 0px;
   }
   .sidebar-mini.sidebar-collapse .sidebar-menu > li > a > span {
     border-top-right-radius: 4px;
