@@ -13,6 +13,7 @@
         var client = null;
         var restClient = rest;
         var uploadClient = Upload;
+
         var global = {
             categories: [],
             tags: [],
@@ -44,7 +45,7 @@
                 count: 0,
                 log: ""
             }
-        }
+        };
 
         return service;
 
@@ -62,8 +63,8 @@
             // or could be increased if your app needs to show many images on the page.
             // Each image in ngf-src, ngf-background or ngf-thumbnail is stored and referenced as a blob url
             // and will only be released if the max value of the followings is reached.
-            uploadClient.defaults.blobUrlsMaxMemory = 52428800 // 26214400 default: 268435456 max total size of files stored in blob urls.
-            uploadClient.defaults.blobUrlsMaxQueueSize = 5 // 20 default: 200 max number of blob urls stored by this application.
+            uploadClient.defaults.blobUrlsMaxMemory = 52428800; // 26214400 default: 268435456 max total size of files stored in blob urls.
+            uploadClient.defaults.blobUrlsMaxQueueSize = 5; // 20 default: 200 max number of blob urls stored by this application.
 
             async.waterfall([
                 function(callback) {
@@ -164,14 +165,11 @@
                     } else {
                         callback(null);
                     }
-                }
-                ,
+                },
                 function(callback) {
                     if (defaults.modules.categories && defaults.modules.tags && defaults.modules.datasets && defaults.modules.resources) {
                         console.log("* Resources: uploading..");
                         console.log(res_models, res_models.length);
-                        // importResources(callback);
-                        // res_models.forEach(function(res) {
                         async.eachSeries(res_models, function(resource, callback2) {
                             uploadModel(resource, callback2, results.resources);
                         }, function(err) {
@@ -238,7 +236,7 @@
                             name: category.title.trim(),
                             description: category.description.trim(),
                             active: category.state == 'active' ? true : false
-                        }
+                        };
 
                         importModel(model, callback, results.categories);
                     } else {
@@ -396,17 +394,17 @@
                             };
 
                             // console.log('----- Http Getting resource: ' + resource.url);
-                            $http.get(resource.url, { timeout: 120000 }).success(function(data) {
+                            $http.get(resource.url, { timeout: 120000, responseType: "arraybuffer" }).success(function(data) {
                                 // console.log('----- SUCCESS Http Getting resource: ' + resource.url);
-                                if (data.length > 0 && data.length < 10000000) {
+
+                                if (data.byteLength > 0 && data.byteLength < 10000000) {
                                     setModelType(model);
                                     setModelName(model);
                                     createFile(data, model);
 
-                                    // uploadModel(model, callback2, results.resources);
-
                                     res_models.push(model);
-                                    console.log("File pushed!", model.name, model.dataset, resource.url, data.length);
+                                    // console.log("File pushed!", model.name, model.dataset, resource.url, data.byteLength);
+
                                     data = null;
                                     callback2();
 
@@ -486,22 +484,28 @@
             $scope.fileModel = [];
             $scope.fileModel.name = model.name;
             var type = model.type.toLowerCase();
-            if (type == "doc" || type == "docx") {
-                $scope.fileModel.type = 'fa-file-word-o';
-            } else if (type == "xlsx" || type == "xls") {
-                $scope.fileModel.type = 'fa-file-excel-o';
+            if (type == "csv") {
+                $scope.fileModel.type = 'text/csv';
+            } else if (type == "html") {
+                $scope.fileModel.type = 'text/html';
+            } else if (type == "ics") {
+                $scope.fileModel.type = 'text/calendar';
             } else if (type == "pdf") {
-                $scope.fileModel.type = 'fa-file-pdf-o';
-            } else if (type == "rar" || type == "zip") {
-                $scope.fileModel.type = 'fa-file-archive-o';
-                if (type == "rar") {
-                    $scope.filter = false;
-                }
+                $scope.fileModel.type = 'application/pdf';
+            } else if (type == "rar") {
+                $scope.fileModel.type = 'application/x-rar-compressed';
             } else if (type == "shp") {
-                $scope.filter = false;
-                $scope.fileModel.type = 'fa-file-text-o';
-            } else {
-                $scope.fileModel.type = 'fa-file-text-o';
+                $scope.fileModel.type = 'application/octet-stream';
+            } else if (type == "xls") {
+                $scope.fileModel.type = 'application/vnd.ms-excel'; //'application/xls';
+            } else if (type == "xlsx") {
+                $scope.fileModel.type = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+            } else if (type == "xml") {
+                $scope.fileModel.type = 'application/xml';
+            } else if (type == "zip") {
+                $scope.fileModel.type = 'application/zip';
+            } else if (type == "json") {
+                $scope.fileModel.type = 'application/json';
             }
         }
 
