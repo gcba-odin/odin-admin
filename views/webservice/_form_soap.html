@@ -5,7 +5,7 @@
     <div class="form-group">
         <label for="method" class="col-sm-2 control-label">* {{'METHOD'| translate}}</label>
         <div class="col-sm-10" ng-class="{'has-error': form.method.$touched && form.method.$invalid }">
-            <input type="text" id="method" ng-model="model.method" name="method" class="form-control" id="method" placeholder="{{ 'WRITE' | translate }} {{ 'METHOD' | translate }} {{ 'HERE' | translate }}" required/>
+            <input type="text" id="method" ng-model="model.method" name="method" class="form-control" id="method" placeholder="{{ 'WRITE' | translate }} {{ 'METHOD' | translate }} {{ 'HERE' | translate }}" uib-tooltip="Indique el método definido en el WSDL" tooltip-placement="left" required/>
             <div class="help-block" ng-messages="form.method.$error" ng-if="form.method.$touched">
                 <div ng-messages-include="views/messages.html"></div>
             </div>
