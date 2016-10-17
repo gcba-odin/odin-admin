@@ -611,11 +611,12 @@
             <li ng-class="{active: isActive('/importer')}" class="treeview">
                 <a ng-href="javascript:void(0)">
                     <svg version="1.1" id="tags-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
-                        <path fill="#FFB600" d="M13.338,7.729l-3.487,3.488L4.974,6.333V3.021c0-0.047,0.018-0.088,0.053-0.122
-                              c0.035-0.035,0.075-0.053,0.122-0.053h3.306L13.338,7.729z M7.199,5.064C7.334,4.93,7.401,4.764,7.401,4.568
-                              c0-0.194-0.067-0.359-0.202-0.494c-0.141-0.14-0.306-0.21-0.499-0.21c-0.192,0-0.358,0.07-0.499,0.21
-                              c-0.134,0.135-0.202,0.3-0.202,0.494c0,0.195,0.068,0.361,0.202,0.496C6.342,5.203,6.508,5.273,6.7,5.273
-                              C6.894,5.273,7.059,5.203,7.199,5.064z"/>
+                        <g>
+                        	<polygon fill="#FFB600" points="15.008,4.104 15.008,13.248 1.73,13.248 1.73,4.104 4.992,4.104 4.992,5.207 2.833,5.207
+                        		2.833,12.146 13.905,12.146 13.905,5.207 11.792,5.207 11.792,4.104 	"/>
+                        	<polygon fill="#FFB600" points="7.243,2.727 7.243,6.617 4.911,6.617 8.356,10.068 11.803,6.617 9.448,6.617 9.448,2.727 	"/>
+                        </g>
+
                     </svg>
                     <span>{{ 'IMPORTER' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
@@ -623,13 +624,6 @@
                     <li ng-class="{active: isActive('/importer')}"><a ng-href="#/importer"><i class="fa fa-circle-o"></i> {{ 'IMPORT' | translate }}</a></li>
                 </ul>
             </li>
-
-            <li class="treeview">
-                <a ng-href="public/odin-user-manual.pdf" target="_blank">
-                    {{'USER_MANUAL' | translate}}
-                </a>
-            </li>
-
         </ul>
     </section>
 </aside>

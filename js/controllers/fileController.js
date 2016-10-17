@@ -246,7 +246,7 @@ function FilePreviewController($scope, Flash, rest, $routeParams, $location, mod
     };
 }
 
-function FileCreateController($scope, $sce, rest, model, Flash, $location, Upload, $rootScope, modelService, $routeParams, Alertify, usSpinnerService, $window) {
+function FileCreateController($scope, $sce, rest, model, Flash, $location, Upload, $rootScope, modelService, $routeParams, Alertify, usSpinnerService, $window, configs) {
   $scope.today = moment().format('YYYY-MM-DD');
 
     usSpinnerService.spin('spinner');
@@ -257,6 +257,9 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
         $scope.fileModel.type = "";
         $scope.fileModel.mimetype = "";
     }
+    
+    //factory configs
+    configs.statuses($scope);
 
     $scope.filter = true;
     var hard_file = null;
@@ -465,6 +468,10 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             'updated': $scope.model.updated,
             'uploadFile': $scope.model.uploadFile,
         };
+        
+        if($scope.statuses.default == $scope.statuses.published) {
+            data.publishedAt = new Date();
+        }
 
         var param = {
             gatheringDate: null
@@ -568,7 +575,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
         $scope.fileModel.type = "";
         $scope.fileModel.mimetype = "";
     }
-
+    
     var datasetHasLayout = function(id, callback) {
         var dataset_file = rest().findOne({
             id: id,
@@ -721,7 +728,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
         $scope.uploadImageProgress = 10;
         var data = {
             'name': $scope.model.name,
-            'status': $scope.model.status,
+            //'status': $scope.model.status,
             'organization': $scope.model.organization,
             'dataset': $scope.model.dataset,
             'description': $scope.model.description,
@@ -746,7 +753,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
         }
 
         var param = {
-            gatheringDate: null
+            gatheringDate: ''
         };
         if (!!$scope.model.gatheringDate) {
             param.gatheringDate = $scope.model.gatheringDate.toISOString().slice(0, 10);//.toISOString().slice(0, 10), //new Date().toISOString().slice(0, 19).replace('T', ' ');

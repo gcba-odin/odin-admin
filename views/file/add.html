@@ -112,7 +112,7 @@
                                         </tr>
                                         <tr ng-if="model.gatheringDate">
                                             <td class="detail-bold">{{ 'GATHERING_DATE' | translate }}</td>
-                                            <td>{{model.gatheringDate| date:'MMM d, y' : 'UTC' }}</td>
+                                            <td>{{model.gatheringDate| date:'MMM d, y h:mm:ss a' : 'UTC' }}</td>
                                         </tr>
                                         <tr>
                                             <td class="detail-bold">{{ 'UPDATED_VIEW' | translate }}</td>
