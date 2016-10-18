@@ -9,6 +9,12 @@ app.factory('model', function($resource) {
 function DatasetListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, $routeParams, configs, usSpinnerService) {
     usSpinnerService.spin('spinner');
     modelService.initService("Dataset", "datasets", $scope);
+    
+    $scope.parameters = {
+        skip: 0,
+        limit: 20,
+        conditions: ''
+    };
 
     $scope.filtersView = [{
             name: 'Estado',
@@ -56,12 +62,11 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
     $scope.config_key = 'adminPagination';
     ////factory configs
     configs.findKey($scope, function (resp) {
-        $scope.limit = 20;
         if (!!resp.data[0] && !!resp.data[0].value) {
-            $scope.limit = resp.data[0].value;
+            $scope.parameters.limit = resp.data[0].value;
         }
         
-        $scope.q = "&skip=0&limit=" + $scope.limit;
+        $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
 
         $scope.starred = false;
         $scope.condition = 'OR';
@@ -85,8 +90,11 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
 
     $scope.paging = function(event, page, pageSize, total) {
         usSpinnerService.spin('spinner');
-        var skip = (page - 1) * $scope.limit;
-        $scope.q = "&skip=" + skip + "&limit=" + $scope.limit;
+        $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
+        $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
+        if(!!$scope.parameters.conditions) {
+            $scope.q += $scope.parameters.conditions;
+        }
         if ($routeParams.filter == 'starred') {
             $scope.q += "&starred=true";
         }

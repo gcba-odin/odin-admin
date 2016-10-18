@@ -29,6 +29,12 @@ function OrganizationListController($scope, $location, rest, $rootScope, Flash, 
     usSpinnerService.spin('spinner');
     modelService.initService("Organization", "organizations", $scope);
     
+    $scope.parameters = {
+        skip: 0,
+        limit: 20,
+        conditions: ''
+    };
+    
     $scope.filtersView = [{
             name: 'Autor',
             model: 'users',
@@ -66,12 +72,11 @@ function OrganizationListController($scope, $location, rest, $rootScope, Flash, 
     $scope.config_key = 'adminPagination';
     ////factory configs
     configs.findKey($scope, function (resp) {
-        $scope.limit = 20;
         if (!!resp.data[0] && !!resp.data[0].value) {
-            $scope.limit = resp.data[0].value;
+            $scope.parameters.limit = resp.data[0].value;
         }
         
-        $scope.q = "&include=files,users&skip=0&limit=" + $scope.limit;
+        $scope.q = "&include=files,users&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
 
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
@@ -83,8 +88,11 @@ function OrganizationListController($scope, $location, rest, $rootScope, Flash, 
 
     $scope.paging = function(event, page, pageSize, total) {
         usSpinnerService.spin('spinner');
-        var skip = (page - 1) * $scope.limit;
-        $scope.q = "&include=files,users&skip=" + skip + "&limit=" + $scope.limit;
+        $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
+        $scope.q = "&include=files,users&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
+        if(!!$scope.parameters.conditions) {
+            $scope.q += $scope.parameters.conditions;
+        }
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if(!resp) {
