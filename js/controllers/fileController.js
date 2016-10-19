@@ -761,7 +761,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
         }
 
         var param = {
-            gatheringDate: ''
+            gatheringDate: null
         };
         if (!!$scope.model.gatheringDate) {
             param.gatheringDate = $scope.model.gatheringDate.toISOString().slice(0, 10);//.toISOString().slice(0, 10), //new Date().toISOString().slice(0, 19).replace('T', ' ');
@@ -809,7 +809,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
                 $scope.model.status = $scope.model.status.id;
             }
             if (!!$scope.model.gatheringDate) {
-                $scope.model.gatheringDate = $scope.model.gatheringDate ? moment($scope.model.gatheringDate).utc() : '';
+                $scope.model.gatheringDate = $scope.model.gatheringDate ? moment($scope.model.gatheringDate).utc() : null;
             }
 
             if (!$scope.model.updated) {
