@@ -749,6 +749,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
             //'tags': $scope.model.tags ? $scope.model.tags.join(",") : "",
             'updated': $scope.model.updated,
             'layout': $scope.model.layout,
+            'gatheringDate': null
             //    'gatheringDate': $scope.model.gatheringDate //new Date().toISOString().slice(0, 19).replace('T', ' ');
         }
 
@@ -760,11 +761,8 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
             }
         }
 
-        var param = {
-            gatheringDate: null
-        };
         if (!!$scope.model.gatheringDate) {
-            param.gatheringDate = $scope.model.gatheringDate.toISOString().slice(0, 10);//.toISOString().slice(0, 10), //new Date().toISOString().slice(0, 19).replace('T', ' ');
+            data.gatheringDate = $scope.model.gatheringDate.toISOString().slice(0, 10);//.toISOString().slice(0, 10), //new Date().toISOString().slice(0, 19).replace('T', ' ');
         }
 
         if (isValid) {
@@ -772,7 +770,6 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
                 url: $rootScope.url + "/files/" + $scope.model.id,
                 data: data,
                 method: 'PUT',
-                params: param
             }).then(function(resp) {
                 usSpinnerService.stop('spinner');
                 $location.url('/files/' + resp.data.data.id + '/view');
