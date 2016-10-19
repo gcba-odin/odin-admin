@@ -51,7 +51,7 @@
                                             <div class="col-sm-10" ng-class="{
                                     'has-error'
                                     : form1.url.$touched && form1.url.$invalid }">
-                                                <input type="text" id="url" ng-model="model.url" name="url" class="form-control" id="url" placeholder="{{ 'PLACE' | translate }} {{ 'WEBSERVICE_URL' | translate }} {{ 'HERE' | translate }}" required/>
+                                                <input type="text" id="url" ng-model="model.url" name="url" class="form-control" id="url" placeholder="{{ 'PLACE' | translate }} {{ 'WEBSERVICE_URL' | translate }} {{ 'HERE' | translate }}" required uib-tooltip="En caso de seleccionar un servicio web SOAP, indicar su WSDL."/>
                                                 <div class="help-block" ng-messages="form1.url.$error" ng-if="form1.url.$touched">
                                                     <div ng-messages-include="views/messages.html"></div>
                                                 </div>

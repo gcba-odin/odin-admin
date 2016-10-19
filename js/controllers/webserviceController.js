@@ -171,7 +171,7 @@ function WebserviceViewController($scope, Flash, rest, $routeParams, $location, 
     };
 }
 
-function WebserviceCreateController($scope, $sce, rest, model, Flash, $location, Upload, $rootScope, modelService, $routeParams, Alertify, usSpinnerService) {
+function WebserviceCreateController($scope, $sce, rest, model, Flash, $location, Upload, $rootScope, modelService, $routeParams, Alertify, usSpinnerService, configs) {
     modelService.initService("File", "files", $scope);
 
     $scope.status_default = true;
@@ -187,6 +187,12 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
     $scope.stepactive = 0;
     $scope.model.items_file = [];
     $scope.model.items_webservice = [];
+    
+    //factory configs
+    configs.statuses($scope);
+
+    $scope.model.owner = {'id': `${$scope.adminglob.currentUser.user}`, 'username': `${$scope.adminglob.currentUser.username}`};
+
 
     $scope.checkstep = function(step) {
         if ($scope.model.url == '' || $scope.ws_type == '') {
@@ -227,7 +233,7 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
 
     $scope.add = function(isValid) {
         usSpinnerService.spin('spinner');
-        $scope.unsave = false;
+        //$scope.unsave = false;
         $scope.uploadImageProgress = 10;
 
         for (obj in $scope.model) {
@@ -262,13 +268,13 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
             data.username = $scope.model.user;
             data.password = $scope.model.password;
 
-            url = $rootScope.url + "/restservices";
+            url = "restservices";
         } else if ($scope.model.ws_type == 'soap') {
             data.namespace = $scope.model.namespace;
             data.attributesAsHeaders = $scope.model.attrs_as_headers;
-            data.method = $scope.model.ws_type;
+            data.method = $scope.model.method;
 
-            url = $rootScope.url + "/soapservices";
+            url = "soapservices";
         }
 
         for (obj in $scope.model) {
@@ -297,31 +303,34 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
             'updated': $scope.model.updated,
             'optionals': $scope.model.optionals
         }
+        
+        if($scope.statuses.default == $scope.statuses.published) {
+            data.file.publishedAt = new Date();
+        }
 
-        console.log(data);
         if (isValid) {
 
-            rest(url).save({}, data, function(resp) {
+            rest().save({
+                type: url,
+            }, data, function(ws_info) {
                 usSpinnerService.stop('spinner');
-                console.log(resp);
-                var data_file = {};
-                if ($scope.model.ws_type == 'rest') {
-                    data_file.restService = resp.data.id;
-                } else if ($scope.model.ws_type == 'soap') {
-                    data_file.soapService = resp.data.id;
-                }
-                rest().update({
-                    type: 'files',
-                    id: resp.data.file.id
-                }, data_file, function(resp_file) {
-                    $location.url('/files/' + resp.data.file.id + '/view');
-                }, function(error) {
-                    console.log('error en el update del file');
-                    $location.url('/files/' + resp.data.file.id + '/view');
-                });
+                //var data_file = {};
+                //data_file.type = '9WRhpRV'; //json id
+//                if ($scope.model.ws_type == 'rest') {
+//                    data_file.restService = resp.data.id;
+//                } else if ($scope.model.ws_type == 'soap') {
+//                    data_file.soapService = resp.data.id;
+//                }
+//                rest().update({
+//                    type: 'files',
+//                    id: resp.data.id
+//                }, data_file, function(resp_file) {
+                    $location.url('/files/' + ws_info.data.id + '/view');
+                //);
 
-            }, function() {
+            }, function(error) {
                 usSpinnerService.stop('spinner');
+                //$location.url('/files/' + resp.data.id + '/view');
             });
         } // end if isValid
 
@@ -372,7 +381,7 @@ function WebserviceEditController($rootScope, $scope, Flash, rest, $routeParams,
     $scope.steps[1] = "undone";
     $scope.steps[2] = "undone";
     $scope.stepactive = 0;
-
+    
     $scope.checkstep = function(step) {
         if ($scope.model.url == '' || $scope.ws_type == '') {
             Alertify.alert('Rellene los campos requeridos.');
@@ -449,13 +458,13 @@ function WebserviceEditController($rootScope, $scope, Flash, rest, $routeParams,
             data.username = $scope.model.user;
             data.password = $scope.model.password;
 
-            url = $rootScope.url + "/restservices/" + $scope.model.id;
+            url = $rootScope.url + "/restservices/" + $scope.model.ws_id;
         } else if ($scope.model.ws_type == 'soap') {
             data.namespace = $scope.model.namespace;
             data.attributesAsHeaders = $scope.model.attrs_as_headers;
             data.method = $scope.model.ws_type;
 
-            url = $rootScope.url + "/soapservices/" + $scope.model.id;
+            url = $rootScope.url + "/soapservices/" + $scope.model.ws_id;
         }
 
         for (obj in $scope.model) {
@@ -473,27 +482,39 @@ function WebserviceEditController($rootScope, $scope, Flash, rest, $routeParams,
             cont++;
         }
 
-        data.file = {
-            'name': $scope.model.name,
-            'organization': $scope.model.organization,
-            'dataset': $scope.model.dataset,
-            'description': $scope.model.description,
-            'notes': $scope.model.notes,
-            'owner': $scope.model.owner,
-            'updateFrequency': $scope.model.updateFrequency,
-            'updated': $scope.model.updated,
-            'optionals': $scope.model.optionals
-        }
-
-        console.log(data);
         if (isValid) {
 
             rest(url).update({}, data, function(resp) {
-                usSpinnerService.stop('spinner');
-                console.log(resp);
-                $location.url('/files/' + resp.data.file.id + '/view');
+                data.file = {
+                    'name': $scope.model.name,
+                    'organization': $scope.model.organization,
+                    //'status': $scope.model.status,
+                    'dataset': $scope.model.dataset,
+                    'description': $scope.model.description,
+                    'notes': $scope.model.notes,
+                    'owner': $scope.model.owner,
+                    'updateFrequency': $scope.model.updateFrequency,
+                    'updated': $scope.model.updated,
+                    'optionals': $scope.model.optionals,
+                    'type': '9WRhpRV' //json id
+                };
+//                if ($scope.model.ws_type == 'rest') {
+//                    data.file.restService = $scope.model.ws_id;
+//                } else if ($scope.model.ws_type == 'soap') {
+//                    data.file.soapService = $scope.model.ws_id;
+//                }
+                rest().update({
+                    type: 'files',
+                    id: $routeParams.id
+                }, data.file, function(resp) {
+                    usSpinnerService.stop('spinner');
+                    $location.url('/files/' + resp.data.id + '/view');
+                }, function(error) {
+                    usSpinnerService.stop('spinner');
+                });
+
             }, function(error) {
-                console.log('error en el update del file');
+                usSpinnerService.stop('spinner');
             });
         } // end if isValid
 
@@ -517,6 +538,7 @@ function WebserviceEditController($rootScope, $scope, Flash, rest, $routeParams,
             $scope.model.items_webservice = [];
 
             if (!!$scope.model.restService) {
+                $scope.model.ws_id = $scope.model.restService.id;
 
                 $scope.model.url = $scope.model.restService.url;
                 $scope.model.ws_type = 'rest';
@@ -543,6 +565,8 @@ function WebserviceEditController($rootScope, $scope, Flash, rest, $routeParams,
             }
 
             if (!!$scope.model.soapService) {
+                $scope.model.ws_id = $scope.model.soapService.id;
+
                 $scope.model.url = $scope.model.soapService.url;
                 $scope.model.ws_type = 'soap';
                 $scope.model.namespace = $scope.model.soapService.namespace;
@@ -594,7 +618,7 @@ function WebserviceEditController($rootScope, $scope, Flash, rest, $routeParams,
     $scope.deleteParameter = function(index, field) {
         $scope.model.items_webservice.splice(index, 1);
     }
-    
+
     $scope.increment = function(a) {
         return a + 1;
     }

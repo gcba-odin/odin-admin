@@ -4,6 +4,12 @@ var app = angular.module('odin.chartsControllers', []);
 function ChartListController($scope, modelService, configs, usSpinnerService) {
     usSpinnerService.spin('spinner');
     modelService.initService("Chart", "charts", $scope);
+    
+    $scope.parameters = {
+        skip: 0,
+        limit: 20,
+        conditions: ''
+    };
 
     $scope.filtersView = [{
             name: 'Estado',
@@ -43,12 +49,11 @@ function ChartListController($scope, modelService, configs, usSpinnerService) {
     $scope.config_key = 'adminPagination';
     ////factory configs
     configs.findKey($scope, function (resp) {
-        $scope.limit = 20;
         if (!!resp.data[0] && !!resp.data[0].value) {
-            $scope.limit = resp.data[0].value;
+            $scope.parameters.limit = resp.data[0].value;
         }
         
-        $scope.q = "&skip=0&limit=" + $scope.limit;
+        $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
 
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
@@ -60,8 +65,11 @@ function ChartListController($scope, modelService, configs, usSpinnerService) {
 
     $scope.paging = function (event, page, pageSize, total) {
         usSpinnerService.spin('spinner');
-        var skip = (page - 1) * $scope.limit;
-        $scope.q = "&skip=" + skip + "&limit=" + $scope.limit;
+        $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
+        $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
+        if(!!$scope.parameters.conditions) {
+            $scope.q += $scope.parameters.conditions;
+        }
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if(!resp) {

@@ -4,6 +4,12 @@ function MapListController($scope, modelService, configs, usSpinnerService) {
     usSpinnerService.spin('spinner');
     modelService.initService("Map", "maps", $scope);
 
+    $scope.parameters = {
+        skip: 0,
+        limit: 20,
+        conditions: ''
+    };
+
     $scope.filtersView = [{
             name: 'Estado',
             model: 'statuses',
@@ -42,12 +48,11 @@ function MapListController($scope, modelService, configs, usSpinnerService) {
     $scope.config_key = 'adminPagination';
     ////factory configs
     configs.findKey($scope, function (resp) {
-        $scope.limit = 20;
         if (!!resp.data[0] && !!resp.data[0].value) {
-            $scope.limit = resp.data[0].value;
+            $scope.parameters.limit = resp.data[0].value;
         }
         
-        $scope.q = "&skip=0&limit=" + $scope.limit;
+        $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
 
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
@@ -59,8 +64,11 @@ function MapListController($scope, modelService, configs, usSpinnerService) {
 
     $scope.paging = function (event, page, pageSize, total) {
         usSpinnerService.spin('spinner');
-        var skip = (page - 1) * $scope.limit;
-        $scope.q = "&skip=" + skip + "&limit=" + $scope.limit;
+        $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
+        $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
+        if(!!$scope.parameters.conditions) {
+            $scope.q += $scope.parameters.conditions;
+        }
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if(!resp) {
@@ -239,8 +247,11 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
     var data_limit_map = 2000;
     ////factory configs
     configs.findKey($scope, function (resp) {
+        usSpinnerService.stop('spinner');
         if (!!resp.data[0] && !!resp.data[0].value) {
             data_limit_map = resp.data[0].value;
+        } else {
+            modelService.reloadPage();
         }
     });
 
@@ -325,8 +336,14 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
                     $scope.headersFile = null;
 
                     generate_headers();
+                }, function(error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
                 });
             }
+        }, function(error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
         });
 
         $scope.file_disabled = 'disabled';
@@ -477,6 +494,11 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
 
     $scope.basemaps = rest().get({
         type: 'basemaps'
+    }, function(){
+        usSpinnerService.stop('spinner');
+    }, function(error) {
+        usSpinnerService.stop('spinner');
+        modelService.reloadPage();
     });
 
 }
@@ -497,8 +519,11 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
     var data_limit_map = 2000;
     ////factory configs
     configs.findKey($scope, function (resp) {
+        usSpinnerService.stop('spinner');
         if (!!resp.data[0] && !!resp.data[0].value) {
             data_limit_map = resp.data[0].value;
+        } else {
+            modelService.reloadPage();
         }
     });
 
@@ -706,6 +731,11 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
 
         $scope.basemaps = rest().get({
             type: 'basemaps'
+        }, function(){
+            usSpinnerService.stop('spinner');
+        }, function(error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
         });
     };
 
