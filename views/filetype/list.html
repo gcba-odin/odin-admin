@@ -20,7 +20,7 @@
                                 <tr>
                                     <!-- <th>ID</th>-->
                                     <th>{{ 'NAME' | translate }}</th>
-                                    <th>{{ 'MIMETYPE' | translate }}</th>
+                                    <!--<th>{{ 'MIMETYPE' | translate }}</th>-->
                                     <th>{{ 'STATE' | translate }}</th>
                                     <th class="text-center">{{ 'ACTIONS' | translate }}</th>
                                 </tr>
@@ -30,7 +30,7 @@
                                 <tr ng-if="data.data.length != 0" ng-repeat="model in data.data">
                                     <!--<td>{{model.id}}</td>-->
                                     <td>{{model.name}}</td>
-                                    <td>{{model.mimetype}}</td>
+                                    <!--<td>{{model.mimetype}}</td>-->
                                     <td>
                                         <span class="label label-default" ng-class="activeClass(model.deletedAt)">{{model.deletedAt ? 'Inactivo' : 'Activo'}}</span>
                                     </td>
