@@ -22,6 +22,64 @@
 </div>
 <!-- end Input url -->
 
+
+<!-- Input TMS -->
+<div class="form-group">
+    <label class="col-sm-2 control-label">TMS</label>
+    <div class="col-sm-10" ng-class="{ 'has-error': form.starred.$touched && form.starred.$invalid }">
+        <div>
+            <label class="btn btn-default" ng-class="activeClass(model.tms, 1)">
+                <input   type="radio" ng-value="true" name="tms"    ng-model="model.tms" id="option1" autocomplete="off" ng-checked="model.V"> {{ 'YES' | translate }}
+            </label>
+            <label class="btn btn-warning" ng-class="activeClass(model.tms, 2)">
+                <input type="radio" ng-value="false" name="tms"  ng-model="model.tms" id="option2" autocomplete="off"> {{ 'NO' | translate }}
+            </label>
+        </div>
+
+        <div class="help-block" ng-messages="form.tms.$error" ng-if="form.tms.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input TMS -->
+
+<!-- Input minZoom -->
+<div class="form-group">
+    <label for="minZoom" class="col-sm-2 control-label">{{ 'MIN' | translate }}</label>
+    <div class="col-sm-10" ng-class="{ 'has-error': form.minZoom.$touched && form.minZoom.$invalid }" uib-tooltip="Valores posibles de 0 a 18. Se pueden modificar en las configuraciones." tooltip-placement="left">
+        <input type="number" ng-model="model.minZoom" min="0" max="18" class="form-control" id="minZoom" placeholder="{{ 'PLACE' | translate }} {{ 'MIN' | translate }} {{ 'HERE' | translate }}" />
+        <div class="help-block" ng-messages="form.minZoom.$error" ng-if="form.minZoom.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input min -->
+
+<!-- Input maxZoom -->
+<div class="form-group">
+    <label for="maxZoom" class="col-sm-2 control-label">{{ 'MAX' | translate }}</label>
+    <div class="col-sm-10" ng-class="{ 'has-error': form.maxZoom.$touched && form.maxZoom.$invalid }" uib-tooltip="Valores posibles de 0 a 18. Se pueden modificar en las configuraciones." tooltip-placement="left">
+        <input type="number" ng-model="model.maxZoom" min="0" max="18" class="form-control" id="maxZoom" placeholder="{{ 'PLACE' | translate }} {{ 'MAX' | translate }} {{ 'HERE' | translate }}" />
+        <div class="help-block" ng-messages="form.maxZoom.$error" ng-if="form.maxZoom.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input max -->
+
+<!-- Input attribution -->
+<div class="form-group">
+    <label for="attribution" class="col-sm-2 control-label">{{ 'ATTRIBUTION' | translate }}</label>
+    <div class="col-sm-10" ng-class="{ 'has-error': form.attribution.$touched && form.attribution.$invalid }">
+        <input type="text" ng-model="model.attribution" class="form-control" id="attribution" placeholder="{{ 'PLACE' | translate }} {{ 'ATTRIBUTION' | translate }} {{ 'HERE' | translate }}" />
+        <div class="help-block" ng-messages="form.attribution.$error" ng-if="form.attribution.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input attribution -->
+
+
 <!-- Button save  -->
 <div class="box-footer">
     <div class="col-sm-12">
