@@ -1,19 +1,17 @@
 <header-home></header-home>
 <div class="content-wrapper">
     <breadcrumbs data-type="{{ 'VIEW' | translate }}" data-model-name="{{ 'DATASETS' | translate }}" data-model="{{type}}"></breadcrumbs>
-    <!-- Main content -->
     <section class="content">
+      <div class="box-header with-border">
+          <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} <b>{{model.name}}</b></h3>
+          <button ng-click="unPublish(model.id, 'datasets')" ng-if="model.status.id == statuses.published" class="pull-right btn btn-primary">{{ 'UNPUBLISH' | translate }}</button>
+          <button ng-click="publish(model.id, 'datasets')" ng-if="model.status.id !== statuses.published" class="pull-right btn btn-primary">{{ 'PUBLISH' | translate }}</button>
+          <a ng-href="#/files/new/{{model.id}}" class="btn btn-default pull-right magin-right-10"><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_FILES' | translate }}</a>
+          <button ng-if="model.files.length > 0" data-toggle="modal" data-target="#viewLinkResources" class="btn btn-default pull-right magin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_FILES' | translate }}</button>
+      </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} <b>{{model.name}}</b></h3>
-                        <!--<button  data-toggle="modal" data-target="#myModal" class="btn btn-default pull-right">{{ 'VIEW_LINK_RESOURCES' | translate }}</button>-->
-                        <button ng-click="unPublish(model.id, 'datasets')" ng-if="model.status.id == statuses.published" class="pull-right btn btn-primary">{{ 'UNPUBLISH' | translate }}</button>
-                        <button ng-click="publish(model.id, 'datasets')" ng-if="model.status.id !== statuses.published" class="pull-right btn btn-primary">{{ 'PUBLISH' | translate }}</button>
-                        <a ng-href="#/files/new/{{model.id}}" class="btn btn-default pull-right magin-right-10"><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_FILES' | translate }}</a>
-                        <button ng-if="model.files.length > 0" data-toggle="modal" data-target="#viewLinkResources" class="btn btn-default pull-right magin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_FILES' | translate }}</button>
-                    </div>
                     <div class="box-body table-responsive no-padding">
                         <table class="table usertable">
                             <tr ng-if="model.name">
@@ -110,7 +108,7 @@
                                     <a target="_blank" class="btn btn-primary" ng-href="#/files/{{file.id}}/edit">{{ 'EDIT' | translate }}</a>
                                     <a class="btn btn-primary" ng-click="deleteResource(file.id, 'files')">{{ 'DELETE' | translate }}</a>
                                     <button ng-click="unPublish(file.id, 'files')" ng-if="file.status == statuses.published" class="pull-right btn btn-primary">{{ 'UNPUBLISH' | translate }}</button>
-                                    <button ng-click="publish(file.id, 'files')" ng-if="file.status !== statuses.published" class="pull-right btn btn-primary">{{ 'PUBLISH' | translate }}</button> 
+                                    <button ng-click="publish(file.id, 'files')" ng-if="file.status !== statuses.published" class="pull-right btn btn-primary">{{ 'PUBLISH' | translate }}</button>
                                 </td>
                             </tr>
 
