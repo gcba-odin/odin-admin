@@ -18,7 +18,7 @@
                             </tr>
                             <tr ng-if="model.mimetype">
                                 <td class="detail-bold">{{ 'mimetype' | translate }}</td>
-                                <td>{{model.mimetype}}</td>
+                                <td ng-bind-html="getHtml(model.mimetype)"></td>
                             </tr>
                             <tr ng-if="model.createdBy">
                                 <td class="detail-bold">{{ 'CREATED_BY' | translate }} </td>

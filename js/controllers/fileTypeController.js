@@ -77,10 +77,9 @@ function FileTypeListController($scope, $location, rest, $rootScope, Flash, Aler
     };
 }
 
-function FileTypeViewController($scope, Flash, rest, $routeParams, $location, modelService) {
+function FileTypeViewController($scope, Flash, rest, $routeParams, $location, modelService, $sce, usSpinnerService) {
+    usSpinnerService.spin('spinner');
     modelService.initService("File Type", "filetypes", $scope);
-
-    modelService.findOne($routeParams, $scope);
 
     $scope.inactiveModel = function(item) {
         modelService.deactivateView(item, $scope);
@@ -94,6 +93,25 @@ function FileTypeViewController($scope, Flash, rest, $routeParams, $location, mo
         modelService.edit($scope, model);
 
     }
+    
+    $scope.getHtml = function(html) {
+        return $sce.trustAsHtml(html);
+    };
+    
+    $scope.model = rest().findOne({
+        id: $routeParams.id,
+        type: $scope.type
+    }, function() {
+        var mimes = [];
+        for (var i = 0; i < $scope.model.mimetype.length; i++) {
+            mimes.push('<span class="label label-primary">' + $scope.model.mimetype[i] + '</span>')
+        }
+        $scope.model.mimetype = mimes.join(" - ");
+        usSpinnerService.stop('spinner');
+    }, function(error) {
+        usSpinnerService.stop('spinner');
+        modelService.reloadPage();
+    });
 }
 
 function FileTypeCreateController($scope, $http, rest, model, Flash, $location, modelService, Alertify, usSpinnerService) {
@@ -104,6 +122,8 @@ function FileTypeCreateController($scope, $http, rest, model, Flash, $location, 
     });
 
     $scope.model = new model();
+    $scope.create = true;
+    
     $scope.add = function(isValid) {
         usSpinnerService.spin('spinner');
         if (isValid) {
@@ -134,6 +154,8 @@ function FileTypeEditController($scope, $http, Flash, rest, $routeParams, model,
     });
 
     $scope.model = new model();
+    $scope.edit = true;
+    
     $scope.update = function(isValid) {
         usSpinnerService.spin('spinner');
         if (isValid) {
