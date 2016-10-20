@@ -8,7 +8,7 @@ app.factory('model', function($resource) {
 function FileListController($scope, $location, rest, $rootScope, Flash, Alertify, $routeParams, modelService, configs, usSpinnerService) {
     usSpinnerService.spin('spinner');
     modelService.initService("File", "files", $scope);
-    
+
     $scope.parameters = {
         skip: 0,
         limit: 20,
@@ -265,7 +265,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
         $scope.fileModel.type = "";
         $scope.fileModel.mimetype = "";
     }
-    
+
     //factory configs
     configs.statuses($scope);
 
@@ -277,7 +277,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
         $scope.filter = true;
         $scope.fileModel.name = $files[0].name;
         $scope.fileModel.mimetype = $files[0].type;
-        
+
         var type = $files[0].name.split('.').pop();
         if (type == "doc" || type == "docx") {
             $scope.fileModel.type = 'fa-file-word-o';
@@ -335,7 +335,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
     $scope.steps[2] = "undone";
     $scope.stepactive = 0;
 
-    $scope.model.owner = {'id': `${$scope.adminglob.currentUser.user}`, 'username': `${$scope.adminglob.currentUser.username}`};
+    $scope.model.owner = {'id': $scope.adminglob.currentUser.user, 'username': $scope.adminglob.currentUser.username};
 
     $scope.dataset_disabled = 'enabled';
     if (!angular.isUndefined($routeParams.dataset)) {
@@ -476,7 +476,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             'updated': $scope.model.updated,
             'uploadFile': $scope.model.uploadFile,
         };
-        
+
         if($scope.statuses.default == $scope.statuses.published) {
             data.publishedAt = new Date();
         }
@@ -583,7 +583,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
         $scope.fileModel.type = "";
         $scope.fileModel.mimetype = "";
     }
-    
+
     var datasetHasLayout = function(id, callback) {
         var dataset_file = rest().findOne({
             id: id,
