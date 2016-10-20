@@ -3,12 +3,13 @@
     <breadcrumbs data-type="{{ 'VIEW' | translate }}" data-model-name="{{ 'FILE_TYPES' | translate }}" data-model="{{type}}"></breadcrumbs>
     <!-- Main content -->
     <section class="content">
+      <div class="box-header with-border">
+          <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} <b>{{model.name}}</b></h3>
+      </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} <b>{{model.name}}</b></h3>
-                    </div>
+
                     <div class="box-body table-responsive no-padding">
                         <table class="table usertable">
                             <tr ng-if="model.name">
