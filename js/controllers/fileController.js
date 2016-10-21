@@ -39,8 +39,8 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
     $scope.edit = function(model) {
         var type = $scope;
 
-        if(!!model.restService || !!model.soapService) {
-            type = {type:'webservices'};
+        if (!!model.restService || !!model.soapService) {
+            type = {type: 'webservices'};
         }
         modelService.edit(type, model);
     }
@@ -60,7 +60,7 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
 
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
-            if(!resp) {
+            if (!resp) {
                 modelService.reloadPage();
             }
         });
@@ -70,12 +70,12 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
         usSpinnerService.spin('spinner');
         $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-        if(!!$scope.parameters.conditions) {
+        if (!!$scope.parameters.conditions) {
             $scope.q += $scope.parameters.conditions;
         }
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
-            if(!resp) {
+            if (!resp) {
                 modelService.reloadPage();
             }
         });
@@ -109,8 +109,8 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
     $scope.edit = function(model) {
         var type = $scope;
 
-        if(!!model.restService || !!model.soapService) {
-            type = {type:'webservices'};
+        if (!!model.restService || !!model.soapService) {
+            type = {type: 'webservices'};
         }
         modelService.edit(type, model);
     }
@@ -217,7 +217,7 @@ function FilePreviewController($scope, Flash, rest, $routeParams, $location, mod
     $scope.model = rest().findOne({
         id: $routeParams.id,
         type: $scope.type
-    }, function (resp) {
+    }, function(resp) {
         if (resp.type.api) {
             $scope.model.contents = rest().contents({
                 id: $scope.model.id,
@@ -255,7 +255,7 @@ function FilePreviewController($scope, Flash, rest, $routeParams, $location, mod
 }
 
 function FileCreateController($scope, $sce, rest, model, Flash, $location, Upload, $rootScope, modelService, $routeParams, Alertify, usSpinnerService, $window, configs) {
-  $scope.today = moment().format('YYYY-MM-DD');
+    $scope.today = moment().format('YYYY-MM-DD');
 
     usSpinnerService.spin('spinner');
     modelService.initService("File", "files", $scope);
@@ -353,7 +353,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
         if ($scope.model.uploadFile == null && step == 1 && $scope.fileModel.name && $scope.filter)
         {
             var text_mimetype = '';
-            if(!!$scope.fileModel.mimetype && $scope.fileModel.mimetype != '') {
+            if (!!$scope.fileModel.mimetype && $scope.fileModel.mimetype != '') {
                 text_mimetype = ' (' + $scope.fileModel.mimetype + ')';
             }
             $scope.clearUpload();
@@ -384,9 +384,9 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
                     $scope.steps[1] = "active";
                     $scope.steps[2] = "undone";
                 } else {
-                    if($scope.model.layout) {
+                    if ($scope.model.layout) {
                         datasetHasLayout($scope.model.dataset, function(resp) {
-                            if(resp.ret) {
+                            if (resp.ret) {
                                 Alertify.set({
                                     labels:
                                             {
@@ -479,22 +479,17 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             'uploadFile': $scope.model.uploadFile,
         };
 
-        if($scope.statuses.default == $scope.statuses.published) {
+        if ($scope.statuses.default == $scope.statuses.published) {
             data.publishedAt = new Date();
         }
 
-        var param = {
-            gatheringDate: null
-        };
-
         if ($scope.model.gatheringDate) {
-            param.gatheringDate = $scope.model.gatheringDate.toISOString().slice(0, 10);//.toISOString().slice(0, 10), //new Date().toISOString().slice(0, 19).replace('T', ' ');
+            data.gatheringDate = $scope.model.gatheringDate.toISOString().slice(0, 10);//.toISOString().slice(0, 10), //new Date().toISOString().slice(0, 19).replace('T', ' ');
         }
 
         Upload.upload({
             url: $rootScope.url + "/files",
             data: data,
-            params: param
         }).then(function(resp) {
             usSpinnerService.stop('spinner');
             $location.url('/files/' + resp.data.data.id + '/view');
@@ -559,13 +554,16 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
 
 }
 
-function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model, $location, modelService, $sce, Upload, usSpinnerService, Alertify, $window) {
-  $scope.today = moment().format('YYYY-MM-DD');
+function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model, $location, modelService, $sce, Upload, usSpinnerService, Alertify, $window, configs) {
+    $scope.today = moment().format('YYYY-MM-DD');
     usSpinnerService.spin('spinner');
     modelService.initService("File", "files", $scope);
     $scope.model = new model();
 
     $scope.status_default = false;
+    
+    //factory configs
+    configs.statuses($scope);
 
     $scope.model = new model();
     $scope.steps = [];
@@ -642,7 +640,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
         if ($scope.model.uploadFile == null && step == 1 && $scope.fileModel.name && $scope.filter && $scope.mostrar)
         {
             var text_mimetype = '';
-            if(!!$scope.fileModel.mimetype && $scope.fileModel.mimetype != '') {
+            if (!!$scope.fileModel.mimetype && $scope.fileModel.mimetype != '') {
                 text_mimetype = ' (' + $scope.fileModel.mimetype + ')';
             }
             $scope.clearUpload();
@@ -673,9 +671,9 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
                     $scope.steps[1] = "active";
                     $scope.steps[2] = "undone";
                 } else {
-                    if($scope.model.layout) {
+                    if ($scope.model.layout) {
                         datasetHasLayout($scope.model.dataset, function(resp) {
-                            if(resp.ret) {
+                            if (resp.ret) {
                                 Alertify.set({
                                     labels:
                                             {
@@ -738,7 +736,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
         $scope.uploadImageProgress = 10;
         var data = {
             'name': $scope.model.name,
-            //'status': $scope.model.status,
+            'status': $scope.model.status,
             'organization': $scope.model.organization,
             'dataset': $scope.model.dataset,
             'description': $scope.model.description,
@@ -752,7 +750,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
             'updated': $scope.model.updated,
             'layout': $scope.model.layout,
             'gatheringDate': null
-            //    'gatheringDate': $scope.model.gatheringDate //new Date().toISOString().slice(0, 19).replace('T', ' ');
+                    //    'gatheringDate': $scope.model.gatheringDate //new Date().toISOString().slice(0, 19).replace('T', ' ');
         }
 
         if ($scope.model.uploadFile != null) {
@@ -767,6 +765,12 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
             data.gatheringDate = $scope.model.gatheringDate.toISOString().slice(0, 10);//.toISOString().slice(0, 10), //new Date().toISOString().slice(0, 19).replace('T', ' ');
         }
 
+        if ($scope.model.status == $scope.statuses.published) {
+            data.publishedAt = new Date();
+        } else {
+            data.publishedAt = null;
+        }
+        
         if (isValid) {
             Upload.upload({
                 url: $rootScope.url + "/files/" + $scope.model.id,
