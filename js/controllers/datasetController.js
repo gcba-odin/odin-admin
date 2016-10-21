@@ -72,6 +72,7 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
         $scope.condition = 'OR';
         if ($routeParams.filter == 'starred') {
             $scope.starred = true;
+            $rootScope.actualUrl = '/datasets/starred';
             $scope.q += "&starred=true";
             //$scope.modelName = 'Starred datasets';
             angular.forEach($scope.filtersView, function(element) {
@@ -247,7 +248,7 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
     $scope.model = new model();
     $scope.model.items = [];
     $scope.model.owner = {'id': $scope.adminglob.currentUser.user, 'username': $scope.adminglob.currentUser.username};
-    
+
     $scope.add = function(isValid) {
         usSpinnerService.spin('spinner');
         for (obj in $scope.model) {
