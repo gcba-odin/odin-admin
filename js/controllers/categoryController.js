@@ -132,7 +132,16 @@ function CategoryCreateController($scope, rest, model, Flash, $location, $rootSc
     $scope.clearUpload = function() {
         $scope.fileModel.name = "";
         $scope.fileModel.type = "";
-    }
+    };
+    
+    $scope.clearImage = function() {
+        image = null;
+        for (var att in  $scope.form.uploadImage.$error) {
+            if ($scope.form.uploadImage.$error.hasOwnProperty(att)) {
+                $scope.form.uploadImage.$setValidity(att, true);
+            }
+        }
+    };
 
     //image usada para subida de imagen como FILE y no
     //como Blob, ya que convierte el svg a png y no genera bien la subida
@@ -179,8 +188,10 @@ function CategoryCreateController($scope, rest, model, Flash, $location, $rootSc
             });
         } else {
             usSpinnerService.stop('spinner');
-            if (image != null && image.type != 'image/svg+xml') {
-                Alertify.alert('Archivo no permitido.');
+            if ((image != null && image.type != 'image/svg+xml') || (!!image && !!image.$error)) {
+                $scope.clearImage();
+                $scope.clearUpload();
+                Alertify.alert('El archivo está dañado o no corresponde a un svg.');
             } else {
                 Alertify.alert('Hay campos sin completar.');
             }
@@ -227,7 +238,16 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
     $scope.clearUpload = function() {
         $scope.fileModel.name = "";
         $scope.fileModel.type = "";
-    }
+    };
+    
+    $scope.clearImage = function() {
+        image = null;
+        for (var att in  $scope.form.uploadImage.$error) {
+            if ($scope.form.uploadImage.$error.hasOwnProperty(att)) {
+                $scope.form.uploadImage.$setValidity(att, true);
+            }
+        }
+    };
 
     //image usada para subida de imagen como FILE y no
     //como Blob, ya que convierte el svg a png y no genera bien la subida
@@ -280,8 +300,10 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
             });
         } else {
             usSpinnerService.stop('spinner');
-            if (image != null && image.type != 'image/svg+xml') {
-                Alertify.alert('Archivo no permitido.');
+            if ((image != null && image.type != 'image/svg+xml') || (!!image && !!image.$error)) {
+                $scope.clearImage();
+                $scope.clearUpload();
+                Alertify.alert('El archivo está dañado o no corresponde a un svg.');
             } else {
                 Alertify.alert('Hay campos sin completar.');
             }
@@ -306,6 +328,7 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
                 type: 'svg',
                 name: $scope.model.fileName
             };
+            console.log($scope.form.uploadImage);
             usSpinnerService.stop('spinner');
         }, function(error) {
             usSpinnerService.stop('spinner');
