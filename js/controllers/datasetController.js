@@ -9,7 +9,7 @@ app.factory('model', function($resource) {
 function DatasetListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, $routeParams, configs, usSpinnerService) {
     usSpinnerService.spin('spinner');
     modelService.initService("Dataset", "datasets", $scope);
-    
+
     $scope.parameters = {
         skip: 0,
         limit: 20,
@@ -58,14 +58,14 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
     $scope.view = function(model) {
         modelService.view($scope, model);
     }
-    
+
     $scope.config_key = 'adminPagination';
     ////factory configs
     configs.findKey($scope, function (resp) {
         if (!!resp.data[0] && !!resp.data[0].value) {
             $scope.parameters.limit = resp.data[0].value;
         }
-        
+
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
 
         $scope.starred = false;
@@ -161,7 +161,7 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
         };
     });
 
-    //factory configs 
+    //factory configs
     configs.statuses($scope);
 
     $scope.publish = function(id, type) {
@@ -177,7 +177,7 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
         });
         usSpinnerService.stop('spinner');
     };
-    
+
 
     $scope.unPublish = function(id, type) {
         var text_type = 'dataset';
@@ -246,6 +246,8 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
 
     $scope.model = new model();
     $scope.model.items = [];
+    $scope.model.owner = {'id': $scope.adminglob.currentUser.user, 'username': $scope.adminglob.currentUser.username};
+    
     $scope.add = function(isValid) {
         usSpinnerService.spin('spinner');
         for (obj in $scope.model) {
@@ -266,6 +268,7 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
         // transform the array of objects into a string of ids
         $scope.model.tags = $scope.model.tags.toString();
         $scope.model.categories = $scope.model.categories.toString();
+
 
         if (isValid) {
             rest().save({
@@ -324,7 +327,7 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
     $scope.tempData = [];
     $scope.publishAt = "";
 
-    //factory configs 
+    //factory configs
     configs.statuses($scope);
 
     $scope.publish = function() {
