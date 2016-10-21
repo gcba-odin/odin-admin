@@ -4,21 +4,21 @@ var app = angular.module('odin.basemapsControllers', []);
 function BasemapListController($scope, modelService, configs, usSpinnerService) {
     usSpinnerService.spin('spinner');
     modelService.initService("Basemap", "basemaps", $scope);
-    
+
     $scope.parameters = {
         skip: 0,
         limit: 20,
         conditions: ''
     };
-    
+
     $scope.filtersView = [{
-            name: 'Autor',
-            model: 'users',
-            key: 'username',
-            modelInput: 'createdBy',
-            multiple: true
-        }];
-    
+        name: 'Autor',
+        model: 'users',
+        key: 'username',
+        modelInput: 'createdBy',
+        multiple: true
+    }];
+
     var filtersGet = ['maps'];
 
     $scope.inactiveModel = function(item) {
@@ -28,7 +28,7 @@ function BasemapListController($scope, modelService, configs, usSpinnerService) 
     $scope.activeModel = function(item) {
         modelService.restoreList($scope, item, filtersGet);
     };
-    
+
     $scope.confirmDelete = function(item) {
         modelService.confirmDelete(item, {}, filtersGet);
     };
@@ -45,19 +45,19 @@ function BasemapListController($scope, modelService, configs, usSpinnerService) 
         modelService.activeClass(activeClass);
 
     };
-    
+
     $scope.config_key = 'adminPagination';
     ////factory configs
-    configs.findKey($scope, function (resp) {
+    configs.findKey($scope, function(resp) {
         if (!!resp.data[0] && !!resp.data[0].value) {
             $scope.parameters.limit = resp.data[0].value;
         }
-        
+
         $scope.q = "&include=maps&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
 
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
-            if(!resp) {
+            if (!resp) {
                 modelService.reloadPage();
             }
         });
@@ -67,12 +67,12 @@ function BasemapListController($scope, modelService, configs, usSpinnerService) 
         usSpinnerService.spin('spinner');
         $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
         $scope.q = "&include=maps&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-        if(!!$scope.parameters.conditions) {
+        if (!!$scope.parameters.conditions) {
             $scope.q += $scope.parameters.conditions;
         }
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
-            if(!resp) {
+            if (!resp) {
                 modelService.reloadPage();
             }
         });
@@ -92,7 +92,7 @@ function BasemapViewController($scope, modelService, $routeParams, rest, $locati
         usSpinnerService.stop('spinner');
         modelService.reloadPage();
     });
-    
+
     $scope.inactiveModel = function(item) {
         modelService.deactivateView(item, $scope);
     }
@@ -112,13 +112,31 @@ function BasemapViewController($scope, modelService, $routeParams, rest, $locati
 }
 
 function BasemapCreateController($scope, modelService, rest, $location, model, $sce, $routeParams, Alertify, usSpinnerService) {
-    
+
     modelService.initService("Basemap", "basemaps", $scope);
 
     $scope.model = new model();
+    $scope.model.items = [];
 
     $scope.add = function(model) {
         usSpinnerService.spin('spinner');
+
+        for (obj in $scope.model) {
+            if (obj.indexOf("optional") != -1) {
+                delete $scope.model[obj]
+            }
+        }
+
+        $scope.model.optionals = {};
+        var cont = 1;
+        for (var i = 0; i < $scope.model.items.length; i++) {
+            var values = [];
+            $scope.model["optional" + cont] = "";
+            $scope.model.optionals[$scope.model.items[i].field1] = $scope.model.items[i].field2;
+            cont++;
+        }
+
+
 
         if (model) {
             rest().save({
@@ -133,7 +151,7 @@ function BasemapCreateController($scope, modelService, rest, $location, model, $
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if(error.data.data && error.data.data.name) {
+                if (error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre del basemap ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al crear el basemap.');
@@ -149,6 +167,32 @@ function BasemapCreateController($scope, modelService, rest, $location, model, $
         return $sce.trustAsHtml(html);
     };
 
+
+    $scope.inputs = [];
+    var i = 0;
+    $scope.addInput = function() {
+        if ($scope.model.items.length < 10) {
+            var newItemNo = $scope.model.items.length + 1;
+            $scope.model.items.push({
+                field: ""
+            })
+        }
+
+    }
+    $scope.deleteIndexInput = function(index, field) {
+        $scope.model.items.splice(index, 1);
+    }
+
+    $scope.increment = function(a) {
+        return a + 1;
+    }
+
+    $scope.itemName = function(a) {
+        return "optional" + (parseInt(a) + 1);
+    }
+
+
+
 }
 
 
@@ -161,6 +205,11 @@ function BasemapEditController($scope, modelService, $routeParams, $sce, rest, $
     $scope.update = function(model) {
 
         usSpinnerService.spin('spinner');
+
+        $scope.model.optionals = {};
+        angular.forEach($scope.model.items, function(element) {
+            $scope.model.optionals[element.field1] = element.field2;
+        });
 
         if (model) {
             rest().update({
@@ -176,7 +225,7 @@ function BasemapEditController($scope, modelService, $routeParams, $sce, rest, $
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if(error.data.data && error.data.data.name) {
+                if (error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre del basemap ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al editar el basemap.');
@@ -195,11 +244,41 @@ function BasemapEditController($scope, modelService, $routeParams, $sce, rest, $
             type: $scope.type,
         }, function() {
             usSpinnerService.stop('spinner');
+            $scope.model.items = [];
+            angular.forEach($scope.model.optionals, function(val, key) {
+                $scope.model.items.push({
+                    field1: key,
+                    field2: val,
+                });
+            });
         }, function(error) {
             usSpinnerService.stop('spinner');
             modelService.reloadPage();
         });
     };
+
+    $scope.inputs = [];
+    var i = 0;
+    $scope.addInput = function() {
+        if ($scope.model.items.length < 10) {
+            var newItemNo = $scope.model.items.length + 1;
+            $scope.model.items.push({
+                field: ""
+            })
+        }
+
+    }
+    $scope.deleteIndexInput = function(index, field) {
+        $scope.model.items.splice(index, 1);
+    }
+
+    $scope.increment = function(a) {
+        return a + 1;
+    }
+
+    $scope.itemName = function(a) {
+        return "optional" + (parseInt(a) + 1);
+    }
 
     $scope.load();
 

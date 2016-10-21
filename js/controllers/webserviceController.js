@@ -187,11 +187,11 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
     $scope.stepactive = 0;
     $scope.model.items_file = [];
     $scope.model.items_webservice = [];
-    
+
     //factory configs
     configs.statuses($scope);
 
-    $scope.model.owner = {'id': `${$scope.adminglob.currentUser.user}`, 'username': `${$scope.adminglob.currentUser.username}`};
+    $scope.model.owner = {'id': $scope.adminglob.currentUser.user, 'username': $scope.adminglob.currentUser.username};
 
 
     $scope.checkstep = function(step) {
@@ -303,7 +303,7 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
             'updated': $scope.model.updated,
             'optionals': $scope.model.optionals
         }
-        
+
         if($scope.statuses.default == $scope.statuses.published) {
             data.file.publishedAt = new Date();
         }
@@ -381,7 +381,7 @@ function WebserviceEditController($rootScope, $scope, Flash, rest, $routeParams,
     $scope.steps[1] = "undone";
     $scope.steps[2] = "undone";
     $scope.stepactive = 0;
-    
+
     $scope.checkstep = function(step) {
         if ($scope.model.url == '' || $scope.ws_type == '') {
             Alertify.alert('Rellene los campos requeridos.');
