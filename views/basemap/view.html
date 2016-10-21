@@ -23,11 +23,11 @@
                                 <td class="detail-bold">{{ 'TMS' | translate }}</td>
                                 <td>{{model.tms ? 'Si' : 'No'}}</td>
                             </tr>
-                            <tr ng-if="model.min">
+                            <tr ng-if="model.minZoom">
                                 <td class="detail-bold">{{ 'MIN' | translate }}</td>
                                 <td>{{model.minZoom}}</td>
                             </tr>
-                            <tr ng-if="model.max">
+                            <tr ng-if="model.maxZoom">
                                 <td class="detail-bold">{{ 'MAX' | translate }}</td>
                                 <td>{{model.maxZoom}}</td>
                             </tr>
@@ -46,6 +46,10 @@
                             <tr ng-if="model.updatedAt">
                                 <td class="detail-bold">{{ 'UPDATED_AT' | translate }}</td>
                                 <td>{{model.updatedAt| date:'MMM d, y h:mm:ss a'}}</td>
+                            </tr>
+                            <tr ng-repeat="(key, val) in model.optionals">
+                                <td class="detail-bold">{{key}}</td>
+                                <td>{{val}}</td>
                             </tr>
                         </table>
                     </div>
