@@ -78,7 +78,7 @@ function TagViewController($scope, Flash, rest, $routeParams, $location, modelSe
 
 
     $scope.edit = function(model) {
-        modelService.view($scope, model);
+        modelService.edit($scope, model);
     }
 }
 
