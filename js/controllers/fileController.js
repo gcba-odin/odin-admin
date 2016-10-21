@@ -329,6 +329,8 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
     $scope.model = new model();
     $scope.model.items = [];
     $scope.model.uploadFile = '';
+    $scope.model.updated = false;
+    $scope.model.layout = false;
     $scope.steps = [];
     $scope.steps[0] = "active";
     $scope.steps[1] = "undone";
