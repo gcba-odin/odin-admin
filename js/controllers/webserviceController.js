@@ -187,11 +187,32 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
     $scope.stepactive = 0;
     $scope.model.items_file = [];
     $scope.model.items_webservice = [];
+    $scope.model.updated = false;
 
     //factory configs
     configs.statuses($scope);
 
-    $scope.model.owner = {'id': $scope.adminglob.currentUser.user, 'username': $scope.adminglob.currentUser.username};
+    $scope.model.owner = {
+        'id': $scope.adminglob.currentUser.user, 
+        'username': $scope.adminglob.currentUser.username
+    };
+    
+    // get organization by default on config
+    $scope.config_key = 'defaultOrganization';
+    configs.findKey($scope, function(resp) {
+        if (!!resp.data[0] && !!resp.data[0].value) {
+            rest().findOne({
+                type: 'organizations',
+                id: resp.data[0].value
+            }, function(organization) {
+                $scope.model.organization = {
+                    'id': resp.data[0].value,
+                    'name': organization.name
+                }
+            });
+            
+        }
+    });
 
 
     $scope.checkstep = function(step) {

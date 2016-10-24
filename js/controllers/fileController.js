@@ -335,7 +335,6 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
     $scope.model.uploadFile = '';
     $scope.model.updated = false;
     $scope.model.layout = false;
-    $scope.model.organization = '';
     $scope.steps = [];
     $scope.steps[0] = "active";
     $scope.steps[1] = "undone";
@@ -351,7 +350,16 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
     $scope.config_key = 'defaultOrganization';
     configs.findKey($scope, function(resp) {
         if (!!resp.data[0] && !!resp.data[0].value) {
-            $scope.model.organization = resp.data[0].value;
+            rest().findOne({
+                type: 'organizations',
+                id: resp.data[0].value
+            }, function(organization) {
+                $scope.model.organization = {
+                    'id': resp.data[0].value,
+                    'name': organization.name
+                }
+            });
+            
         }
     });
 
