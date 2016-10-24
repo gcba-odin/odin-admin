@@ -247,6 +247,7 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
 
     $scope.model = new model();
     $scope.model.items = [];
+  
     $scope.model.owner = {'id': $scope.adminglob.currentUser.user, 'username': $scope.adminglob.currentUser.username};
 
     $scope.add = function(isValid) {

@@ -16,18 +16,18 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
     };
 
     $scope.filtersView = [{
-            name: 'Estado',
-            model: 'statuses',
-            key: 'name',
-            modelInput: 'status',
-            multiple: true
-        }, {
-            name: 'Autor',
-            model: 'users',
-            key: 'username',
-            modelInput: 'createdBy',
-            multiple: true
-        }];
+        name: 'Estado',
+        model: 'statuses',
+        key: 'name',
+        modelInput: 'status',
+        multiple: true
+    }, {
+        name: 'Autor',
+        model: 'users',
+        key: 'username',
+        modelInput: 'createdBy',
+        multiple: true
+    }];
     $scope.confirmDelete = function(item) {
         modelService.confirmDelete(item);
     }
@@ -40,7 +40,9 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
         var type = $scope;
 
         if (!!model.restService || !!model.soapService) {
-            type = {type: 'webservices'};
+            type = {
+                type: 'webservices'
+            };
         }
         modelService.edit(type, model);
     }
@@ -110,7 +112,9 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
         var type = $scope;
 
         if (!!model.restService || !!model.soapService) {
-            type = {type: 'webservices'};
+            type = {
+                type: 'webservices'
+            };
         }
         modelService.edit(type, model);
     }
@@ -138,25 +142,25 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
     $scope.unPublish = function(id, type) {
         var text_type = (type == 'charts') ? 'gráfico' : (type == 'maps') ? 'mapa' : 'archivo';
         Alertify.confirm('¿Está seguro que quiere despublicar este ' + text_type + '?').then(
-                function onOk() {
-                    usSpinnerService.spin('spinner');
+            function onOk() {
+                usSpinnerService.spin('spinner');
 
-                    rest().unpublish({
-                        type: $scope.type,
-                        id: $scope.model.id
-                    }, {}, function(resp) {
-                        usSpinnerService.stop('spinner');
-                        loadModel();
-                        //var url = '/' + $scope.type;
-                        // $location.path(url);
-                    }, function(error) {
-                        usSpinnerService.stop('spinner');
-                        modelService.reloadPage();
-                    });
-                },
-                function onCancel() {
-                    return false;
-                }
+                rest().unpublish({
+                    type: $scope.type,
+                    id: $scope.model.id
+                }, {}, function(resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
+                    //var url = '/' + $scope.type;
+                    // $location.path(url);
+                }, function(error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
         );
     };
 
@@ -164,44 +168,44 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
 
     $scope.confirmDelete = function(item) {
         Alertify.confirm('¿Está seguro que quiere borrar este archivo?').then(
-                function onOk() {
-                    usSpinnerService.spin('spinner');
-                    rest().delete({
-                        type: $scope.type,
-                        id: $scope.model.id
-                    }, function(resp) {
-                        usSpinnerService.stop('spinner');
-                        var url = "/" + $scope.type;
-                        $location.path(url);
-                    }, function(error) {
-                        usSpinnerService.stop('spinner');
-                        modelService.reloadPage();
-                    });
-                },
-                function onCancel() {
-                    return false;
-                }
+            function onOk() {
+                usSpinnerService.spin('spinner');
+                rest().delete({
+                    type: $scope.type,
+                    id: $scope.model.id
+                }, function(resp) {
+                    usSpinnerService.stop('spinner');
+                    var url = "/" + $scope.type;
+                    $location.path(url);
+                }, function(error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
         );
     };
 
     $scope.deleteResource = function(id, type) {
         Alertify.confirm('¿Está seguro que quiere borrar este recurso?').then(
-                function onOk() {
-                    usSpinnerService.spin('spinner');
-                    rest().delete({
-                        type: type,
-                        id: id
-                    }, function(resp) {
-                        usSpinnerService.stop('spinner');
-                        $window.location.reload();
-                    }, function(error) {
-                        usSpinnerService.stop('spinner');
-                        modelService.reloadPage();
-                    });
-                },
-                function onCancel() {
-                    return false;
-                }
+            function onOk() {
+                usSpinnerService.spin('spinner');
+                rest().delete({
+                    type: type,
+                    id: id
+                }, function(resp) {
+                    usSpinnerService.stop('spinner');
+                    $window.location.reload();
+                }, function(error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
         );
     };
 }
@@ -331,13 +335,25 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
     $scope.model.uploadFile = '';
     $scope.model.updated = false;
     $scope.model.layout = false;
+    $scope.model.organization = '';
     $scope.steps = [];
     $scope.steps[0] = "active";
     $scope.steps[1] = "undone";
     $scope.steps[2] = "undone";
     $scope.stepactive = 0;
 
-    $scope.model.owner = {'id': $scope.adminglob.currentUser.user, 'username': $scope.adminglob.currentUser.username};
+    $scope.model.owner = {
+        'id': $scope.adminglob.currentUser.user,
+        'username': $scope.adminglob.currentUser.username
+    };
+
+    // get organization by default on config
+    $scope.config_key = 'defaultOrganization';
+    configs.findKey($scope, function(resp) {
+        if (!!resp.data[0] && !!resp.data[0].value) {
+            $scope.model.organization = resp.data[0].value;
+        }
+    });
 
     $scope.dataset_disabled = 'enabled';
     if (!angular.isUndefined($routeParams.dataset)) {
@@ -350,28 +366,26 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
 
     $scope.fileModel = []
     $scope.checkstep = function(step) {
-        if ($scope.model.uploadFile == null && step == 1 && $scope.fileModel.name && $scope.filter)
-        {
+        if ($scope.model.uploadFile == null && step == 1 && $scope.fileModel.name && $scope.filter) {
             var text_mimetype = '';
             if (!!$scope.fileModel.mimetype && $scope.fileModel.mimetype != '') {
                 text_mimetype = ' (' + $scope.fileModel.mimetype + ')';
             }
             $scope.clearUpload();
             Alertify.set({
-                labels:
-                        {
-                            ok: 'Ir a Tipo de archivos',
-                            cancel: 'Continuar'
-                        }
+                labels: {
+                    ok: 'Ir a Tipo de archivos',
+                    cancel: 'Continuar'
+                }
             });
             Alertify
-                    .confirm("Archivo no permitido. Revise que el tipo del archivo" + text_mimetype + " que desea crear se encuentre en la sección 'Tipos de Archivos'.")
+                .confirm("Archivo no permitido. Revise que el tipo del archivo" + text_mimetype + " que desea crear se encuentre en la sección 'Tipos de Archivos'.")
 
-                    .then(
-                            function onOk() {
-                                $location.path('filetypes');
-                            }
-                    );
+            .then(
+                function onOk() {
+                    $location.path('filetypes');
+                }
+            );
         } else {
             if (($scope.fileModel.name && step == 1 && ($scope.model.uploadFile != null || hard_file != null)) || ($scope.fileModel.name && step == 2 && $scope.form.$valid && ($scope.model.uploadFile != null || hard_file != null)) || step == 0) {
 
@@ -388,24 +402,23 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
                         datasetHasLayout($scope.model.dataset, function(resp) {
                             if (resp.ret) {
                                 Alertify.set({
-                                    labels:
-                                            {
-                                                ok: 'Si',
-                                                cancel: 'No'
-                                            }
+                                    labels: {
+                                        ok: 'Si',
+                                        cancel: 'No'
+                                    }
                                 });
                                 Alertify
-                                        .confirm("El dataset seleccionado ya cuenta con una Guía de Datos. El archivo es <a target='_blank' href='#/files/" + resp.file.id + "/view'>" + resp.file.name + "</a><br>¿Desea cambiarlo? Los archivos no se sobreescribirán.")
+                                    .confirm("El dataset seleccionado ya cuenta con una Guía de Datos. El archivo es <a target='_blank' href='#/files/" + resp.file.id + "/view'>" + resp.file.name + "</a><br>¿Desea cambiarlo? Los archivos no se sobreescribirán.")
 
-                                        .then(
-                                                function onOk() {
-                                                    //nothing
-                                                },
-                                                function onCancel() {
-                                                    $scope.model.layout = false;
-                                                    //$scope.checkstep(step - 1);
-                                                }
-                                        );
+                                .then(
+                                    function onOk() {
+                                        //nothing
+                                    },
+                                    function onCancel() {
+                                        $scope.model.layout = false;
+                                        //$scope.checkstep(step - 1);
+                                    }
+                                );
                             }
                         });
                     }
@@ -484,7 +497,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
         }
 
         if ($scope.model.gatheringDate) {
-            data.gatheringDate = $scope.model.gatheringDate.toISOString().slice(0, 10);//.toISOString().slice(0, 10), //new Date().toISOString().slice(0, 19).replace('T', ' ');
+            data.gatheringDate = $scope.model.gatheringDate.toISOString().slice(0, 10); //.toISOString().slice(0, 10), //new Date().toISOString().slice(0, 19).replace('T', ' ');
         }
 
         Upload.upload({
@@ -561,7 +574,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
     $scope.model = new model();
 
     $scope.status_default = false;
-    
+
     //factory configs
     configs.statuses($scope);
 
@@ -637,28 +650,26 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
     }
 
     $scope.checkstep = function(step) {
-        if ($scope.model.uploadFile == null && step == 1 && $scope.fileModel.name && $scope.filter && $scope.mostrar)
-        {
+        if ($scope.model.uploadFile == null && step == 1 && $scope.fileModel.name && $scope.filter && $scope.mostrar) {
             var text_mimetype = '';
             if (!!$scope.fileModel.mimetype && $scope.fileModel.mimetype != '') {
                 text_mimetype = ' (' + $scope.fileModel.mimetype + ')';
             }
             $scope.clearUpload();
             Alertify.set({
-                labels:
-                        {
-                            ok: 'Ir a Tipo de archivos',
-                            cancel: 'Continuar'
-                        }
+                labels: {
+                    ok: 'Ir a Tipo de archivos',
+                    cancel: 'Continuar'
+                }
             });
             Alertify
-                    .confirm("Archivo no permitido. Revise que el tipo del archivo" + text_mimetype + " que desea crear se encuentre en la sección 'Tipos de Archivos'.")
+                .confirm("Archivo no permitido. Revise que el tipo del archivo" + text_mimetype + " que desea crear se encuentre en la sección 'Tipos de Archivos'.")
 
-                    .then(
-                            function onOk() {
-                                $location.path('filetypes');
-                            }
-                    );
+            .then(
+                function onOk() {
+                    $location.path('filetypes');
+                }
+            );
         } else {
             if (($scope.fileModel.name && step == 1 && ((!$scope.mostrar) || ($scope.mostrar && ($scope.model.uploadFile != null || hard_file != null)))) || ($scope.fileModel.name && step == 2 && ((!$scope.mostrar) || ($scope.mostrar && ($scope.model.uploadFile != null || hard_file != null)))) || step == 0) {
 
@@ -675,24 +686,23 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
                         datasetHasLayout($scope.model.dataset, function(resp) {
                             if (resp.ret) {
                                 Alertify.set({
-                                    labels:
-                                            {
-                                                ok: 'Si',
-                                                cancel: 'No'
-                                            }
+                                    labels: {
+                                        ok: 'Si',
+                                        cancel: 'No'
+                                    }
                                 });
                                 Alertify
-                                        .confirm("El dataset seleccionado ya cuenta con una Guía de Datos. El archivo es <a target='_blank' href='#/files/" + resp.file.id + "/view'>" + resp.file.name + "</a><br>¿Desea cambiarlo? Los archivos no se sobreescribirán.")
+                                    .confirm("El dataset seleccionado ya cuenta con una Guía de Datos. El archivo es <a target='_blank' href='#/files/" + resp.file.id + "/view'>" + resp.file.name + "</a><br>¿Desea cambiarlo? Los archivos no se sobreescribirán.")
 
-                                        .then(
-                                                function onOk() {
-                                                    //nothing
-                                                },
-                                                function onCancel() {
-                                                    $scope.model.layout = false;
-                                                    //$scope.checkstep(step - 1);
-                                                }
-                                        );
+                                .then(
+                                    function onOk() {
+                                        //nothing
+                                    },
+                                    function onCancel() {
+                                        $scope.model.layout = false;
+                                        //$scope.checkstep(step - 1);
+                                    }
+                                );
                             }
                         });
                     }
@@ -750,7 +760,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
             'updated': $scope.model.updated,
             'layout': $scope.model.layout,
             'gatheringDate': null
-                    //    'gatheringDate': $scope.model.gatheringDate //new Date().toISOString().slice(0, 19).replace('T', ' ');
+                //    'gatheringDate': $scope.model.gatheringDate //new Date().toISOString().slice(0, 19).replace('T', ' ');
         }
 
         if ($scope.model.uploadFile != null) {
@@ -762,7 +772,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
         }
 
         if (!!$scope.model.gatheringDate) {
-            data.gatheringDate = $scope.model.gatheringDate.toISOString().slice(0, 10);//.toISOString().slice(0, 10), //new Date().toISOString().slice(0, 19).replace('T', ' ');
+            data.gatheringDate = $scope.model.gatheringDate.toISOString().slice(0, 10); //.toISOString().slice(0, 10), //new Date().toISOString().slice(0, 19).replace('T', ' ');
         }
 
         if ($scope.model.status == $scope.statuses.published) {
@@ -770,7 +780,7 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
         } else {
             data.publishedAt = null;
         }
-        
+
         if (isValid) {
             Upload.upload({
                 url: $rootScope.url + "/files/" + $scope.model.id,
