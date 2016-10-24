@@ -93,9 +93,13 @@
                             }
                         });
                     }
+                    var conditions = '';
+                    if(!!scope.q && scope.q != '') {
+                        conditions = scope.q;
+                    }
                     scope.data = rest().get({
                         type: scope.type,
-                        params: pm + "orderBy=createdAt&sort=DESC"
+                        params: pm + "orderBy=createdAt&sort=DESC" + conditions
                     });
                 });
             },
@@ -117,9 +121,13 @@
                             }
                         });
                     }
+                    var conditions = '';
+                    if(!!scope.q && scope.q != '') {
+                        conditions = scope.q;
+                    }                    
                     scope.data = rest().get({
                         type: scope.type,
-                        params: pm + "orderBy=createdAt&sort=DESC"
+                        params: pm + "orderBy=createdAt&sort=DESC" + conditions
                     });
                 });
             },
@@ -155,9 +163,13 @@
                                         }
                                     });
                                 }
+                                var conditions = '';
+                                if(!!scope.q && scope.q != '') {
+                                    conditions = scope.q;
+                                }
                                 scope.data = rest().get({
                                     type: scope.type,
-                                    params: pm + "orderBy=createdAt&sort=DESC"
+                                    params: pm + "orderBy=createdAt&sort=DESC" + conditions
                                 });
                             });
                         },

@@ -392,11 +392,14 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'DATA_URL': 'Ruta a los datos',
         'AUTH_TYPE': 'Forma de autenticación',
         'LAYOUT': 'Guía de datos',
-        
+
         'ADD_PARAMETER': 'Agregar parámetro',
         'PARAMETER': 'Parámetro',
         'TITLE_PATH': 'Ruta a los titulos de tabla',
-        
+        'MIN': 'Mínimo',
+        'MAX': 'Máximo',
+        'ATTRIBUTION': 'Attribution'
+
 
     });
     $translateProvider.preferredLanguage('es');
