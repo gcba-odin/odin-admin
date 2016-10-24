@@ -247,17 +247,8 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
 
     $scope.model = new model();
     $scope.model.items = [];
-    $scope.model.organization = '';
+  
     $scope.model.owner = {'id': $scope.adminglob.currentUser.user, 'username': $scope.adminglob.currentUser.username};
-
-    // get organization by default on config
-    $scope.config_key = 'defaultOrganization';
-    configs.findKey($scope, function(resp) {
-        if (!!resp.data[0] && !!resp.data[0].value) {
-            $scope.model.organization = resp.data[0].value;
-            console.log($scope.model.organization);
-        }
-    });
 
     $scope.add = function(isValid) {
         usSpinnerService.spin('spinner');
