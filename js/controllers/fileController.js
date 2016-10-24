@@ -335,6 +335,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
     $scope.model.uploadFile = '';
     $scope.model.updated = false;
     $scope.model.layout = false;
+
     $scope.steps = [];
     $scope.steps[0] = "active";
     $scope.steps[1] = "undone";
@@ -362,6 +363,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             
         }
     });
+
 
     $scope.dataset_disabled = 'enabled';
     if (!angular.isUndefined($routeParams.dataset)) {
