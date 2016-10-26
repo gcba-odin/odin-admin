@@ -179,6 +179,29 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
         );
     };
 
+    $scope.reject = function (id, type) {
+        var text_type = (type == 'charts') ? 'gráfico' : (type == 'maps') ? 'mapa' : 'archivo';
+        Alertify.confirm('¿Está seguro que quiere rechazar este ' + text_type + '?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().reject({
+                    type: $scope.type,
+                    id: $scope.model.id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+
     loadModel();
 
     $scope.confirmDelete = function (item) {

@@ -161,6 +161,28 @@ function ChartViewController($scope, modelService, $routeParams, rest, $location
         );
     };
 
+    $scope.reject = function () {
+        Alertify.confirm('¿Está seguro que quiere rechazar este gráfico?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().reject({
+                    type: $scope.type,
+                    id: $scope.model.id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+
     loadModel();
 }
 

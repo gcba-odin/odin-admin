@@ -38,7 +38,8 @@
                     scope.statuses = {
                         default: '',
                         published: '',
-                        unpublished: ''
+                        unpublished: '',
+                        underReview: ''
                     };
                     angular.forEach(configs.data, function(element) {
                         if (element.key == 'defaultStatus') {
@@ -47,6 +48,8 @@
                             scope.statuses.published = element.value;
                         } else if (element.key == 'unpublishedStatus') {
                             scope.statuses.unpublished = element.value;
+                        } else if (element.key == 'underReviewStatus') {
+                            scope.statuses.underReview = element.value;
                         }
                     });
                 });
@@ -509,6 +512,20 @@
                     },
                     unpublish: {
                         url: $url + "/:id/unpublish",
+                        method: 'PATCH',
+                        headers: {
+                            'x-admin-authorization': token,
+                        },
+                        transformResponse: function(data) {
+                            $rootScope.progressbar.complete();
+                            return angular.fromJson(data);
+                        },
+                        interceptor: {
+                            responseError: handError
+                        }
+                    },
+                    reject: {
+                        url: $url + "/:id/reject",
                         method: 'PATCH',
                         headers: {
                             'x-admin-authorization': token,

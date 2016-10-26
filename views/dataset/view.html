@@ -6,8 +6,8 @@
           <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} <b>{{model.name}}</b></h3>
           <button ng-click="unPublish(model.id, 'datasets')" ng-if="model.status.id == statuses.published" class="pull-right btn btn-primary">{{ 'UNPUBLISH' | translate }}</button>
           <button ng-click="publish(model.id, 'datasets')" ng-if="model.status.id !== statuses.published" class="pull-right btn btn-primary">{{ 'PUBLISH' | translate }}</button>
-          <a ng-href="#/files/new/{{model.id}}" class="btn btn-default pull-right magin-right-10"><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_FILES' | translate }}</a>
-          <button ng-if="model.files.length > 0" data-toggle="modal" data-target="#viewLinkResources" class="btn btn-default pull-right magin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_FILES' | translate }}</button>
+          <a ng-href="#/files/new/{{model.id}}" class="btn btn-default pull-right margin-right-10"><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_FILES' | translate }}</a>
+          <button ng-if="model.files.length > 0" data-toggle="modal" data-target="#viewLinkResources" class="btn btn-default pull-right margin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_FILES' | translate }}</button>
       </div>
         <div class="row">
             <div class="col-md-12">

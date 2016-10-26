@@ -181,6 +181,7 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'TITLE_PATH': 'Titles path',
         'USE_ATTRS_HEADERS': 'Use attributes as headers',
         'UNDER_REVIEW': 'Under review',
+        'REJECT': 'Reject',
     });
 
     $translateProvider.translations('es', {
@@ -401,6 +402,7 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'MAX': 'Máximo',
         'ATTRIBUTION': 'Attribution',
         'UNDER_REVIEW': 'En revisión',
+        'REJECT': 'Rechazar',
 
 
     });
