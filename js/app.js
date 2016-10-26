@@ -1,4 +1,4 @@
-(function() {
+(function () {
     var app = angular.module('odin', ["odin.config",
         "ngRoute",
         "Alertify",
@@ -24,9 +24,9 @@
         "validation.match",
         "angular-jwt",
         "vcRecaptcha"
-          ]);
+    ]);
 
-    app.config(function($routeProvider, $httpProvider, $translateProvider, usSpinnerConfigProvider, ChartJsProvider, ConsumerServiceProvider, $middlewareProvider, jwtOptionsProvider, vcRecaptchaServiceProvider) {
+    app.config(function ($routeProvider, $httpProvider, $translateProvider, usSpinnerConfigProvider, ChartJsProvider, ConsumerServiceProvider, $middlewareProvider, jwtOptionsProvider, vcRecaptchaServiceProvider) {
 
         vcRecaptchaServiceProvider.setDefaults({
             key: '6LetbAcUAAAAABWhGuMbTaYQBferzWoxYvmtx9PS',
@@ -46,10 +46,10 @@
         ChartJsProvider.setOptions({
             tooltips: {
                 callbacks: {
-                    title: function(tooltipItem, data) {
+                    title: function (tooltipItem, data) {
                         return data.labels[tooltipItem[0].index];
                     },
-                    label: function(tooltipItem, data) {
+                    label: function (tooltipItem, data) {
                         var label = 'Cantidad';
                         if (!!data.datasets[tooltipItem.datasetIndex][0] && data.datasets[tooltipItem.datasetIndex][0] != '') {
                             label = data.datasets[tooltipItem.datasetIndex][0];
@@ -62,43 +62,43 @@
 
         usSpinnerConfigProvider.setDefaults({
             lines: 10 // The number of lines to draw
-                ,
+            ,
             length: 40 // The length of each line
-                ,
+            ,
             width: 20 // The line thickness
-                ,
+            ,
             radius: 49 // The radius of the inner circle
-                ,
+            ,
             scale: 0.35 // Scales overall size of the spinner
-                ,
+            ,
             corners: 1 // Corner roundness (0..1)
-                ,
+            ,
             color: '#ff386a' // #rgb or #rrggbb or array of colors
-                ,
+            ,
             opacity: 0.3 // Opacity of the lines
-                ,
+            ,
             rotate: 5 // The rotation offset
-                ,
+            ,
             direction: 1 // 1: clockwise, -1: counterclockwise
-                ,
+            ,
             speed: 1 // Rounds per second
-                ,
+            ,
             trail: 63 // Afterglow percentage
-                ,
+            ,
             fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
-                ,
+            ,
             zIndex: 2e9 // The z-index (defaults to 2000000000)
-                ,
+            ,
             className: 'spinner' // The CSS class to assign to the spinner
-                ,
+            ,
             top: '50%' // Top position relative to parent
-                ,
+            ,
             left: '50%' // Left position relative to parent
-                ,
+            ,
             shadow: false // Whether to render a shadow
-                ,
+            ,
             hwaccel: false // Whether to use hardware acceleration
-                ,
+            ,
             position: 'fixed' // Element positioning
         });
 
@@ -207,7 +207,12 @@
             ////  File
             .when("/files", {
                 templateUrl: "views/file/list.html",
-                controller: FileListController
+                controller: FileListController,
+                resolve: {
+                    underReview: function () {
+                        return false;
+                    }
+                }
             }).when("/files/:id/view", {
                 templateUrl: "views/file/view.html",
                 controller: FileViewController
@@ -224,8 +229,8 @@
             })
             //// file
 
-        ////  Categories
-        .when("/categories", {
+            ////  Categories
+            .when("/categories", {
                 templateUrl: "views/category/list.html",
                 controller: CategoryListController
             }).when("/categories/:id/view", {
@@ -257,7 +262,12 @@
             // Maps
             .when("/maps", {
                 templateUrl: "views/map/list.html",
-                controller: MapListController
+                controller: MapListController,
+                resolve: {
+                    underReview: function () {
+                        return false;
+                    }
+                }
             })
             .when("/maps/:id/view", {
                 templateUrl: "views/map/view.html",
@@ -276,10 +286,15 @@
                 controller: MapPreviewController
             })
 
-        // Charts
-        .when("/charts", {
+            // Charts
+            .when("/charts", {
                 templateUrl: "views/chart/list.html",
-                controller: ChartListController
+                controller: ChartListController,
+                resolve: {
+                    underReview: function () {
+                        return false;
+                    }
+                }
             })
             .when("/charts/:id/view", {
                 templateUrl: "views/chart/view.html",
@@ -298,8 +313,8 @@
                 controller: ChartPreviewController
             })
 
-        // Configs
-        .when("/configs", {
+            // Configs
+            .when("/configs", {
                 templateUrl: "views/config/list.html",
                 controller: ConfigListController
             })
@@ -316,8 +331,8 @@
                 controller: ConfigEditController
             })
 
-        // Basemaps
-        .when("/basemaps", {
+            // Basemaps
+            .when("/basemaps", {
                 templateUrl: "views/basemap/list.html",
                 controller: BasemapListController
             })
@@ -334,8 +349,8 @@
                 controller: BasemapEditController
             })
 
-        // Importer
-        .when("/importer", {
+            // Importer
+            .when("/importer", {
                 templateUrl: "views/importer/import.html",
                 controller: ImporterCreateController
             })
@@ -360,10 +375,37 @@
                 controller: WebserviceEditController
             })
 
+            // Under Review
+            .when("/underreview/files", {
+                templateUrl: "views/file/list.html",
+                controller: FileListController,
+                resolve: {
+                    underReview: function () {
+                        return true;
+                    }
+                }
+            }).when("/underreview/charts", {
+                templateUrl: "views/chart/list.html",
+                controller: ChartListController,
+                resolve: {
+                    underReview: function () {
+                        return true;
+                    }
+                }
+            }).when("/underreview/maps", {
+                templateUrl: "views/map/list.html",
+                controller: MapListController,
+                resolve: {
+                    underReview: function () {
+                        return true;
+                    }
+                }
+            })
 
-        .otherwise({
-            redirectTo: '/'
-        });
+
+            .otherwise({
+                redirectTo: '/'
+            });
 
         $auth = ConsumerServiceProvider.$get('ConsumerService');
 
@@ -373,7 +415,7 @@
                 $rootScope.globals = $cookieStore.get('globals') || {};
                 if ($rootScope.globals.currentConsumer) {
                     if (jwtHelper.isTokenExpired($rootScope.globals.currentConsumer.token)) {
-                        $auth.Login($auth.Consumer, function(response) {
+                        $auth.Login($auth.Consumer, function (response) {
                             if (!response.code) {
                                 $auth.SetCredentials(response.data);
                                 this.next();
@@ -385,7 +427,7 @@
                     }
                 } else {
                     //$http.defaults.headers.common['Authorization'] = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiI5OWFmYzU3ZmRiYzA0YzZjYjJkZDRiYTU2OTBlNDM0NiJ9.Uo0I98Fu3BX8XlOgSnIvfeFx2Z_LdqM8WNT4hSMdDDM';
-                    $auth.Login($auth.Consumer, function(response) {
+                    $auth.Login($auth.Consumer, function (response) {
                         if (!response.code) {
                             $auth.SetCredentials(response.data);
                             this.next();
@@ -426,7 +468,7 @@
     function run($rootScope, EnvironmentConfig, authManager) {
         $rootScope.url = EnvironmentConfig.api;
         authManager.redirectWhenUnauthenticated();
-        $rootScope.$on('$routeChangeSuccess', function(e, current, pre) {
+        $rootScope.$on('$routeChangeSuccess', function (e, current, pre) {
             $rootScope.actualUrl = current.$$route.originalPath;
         });
     }

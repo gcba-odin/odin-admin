@@ -1,11 +1,13 @@
 <header-home ng-cloak></header-home>
 <div class="content-wrapper" ng-cloak>
-    <breadcrumbs data-model-name="{{ 'FILES' | translate }}" data-model="{{type}}"></breadcrumbs>
+    <breadcrumbs data-model-name="{{ 'FILES' | translate }}" data-model="{{type}}" ng-if="!underReview"></breadcrumbs>
+    <breadcrumbs data-model-name="{{ 'UNDER_REVIEW' | translate }}" data-model="{{type}}" ng-if="underReview"></breadcrumbs>
 
     <!-- Main content -->
     <section class="content">
       <div class="box-header">
           <h3 class="box-title">{{ 'FILES' | translate }}</h3>
+          <h3 class="box-title" ng-if="underReview">{{ 'UNDER_REVIEW' | translate }}</h3>
           <div class="box-tools">
               <a ng-href="#/files/new" class="btn btn-primary pull-right">{{ 'ADD' | translate }} {{ 'FILE' | translate }} </a>
           </div>

@@ -12,7 +12,16 @@
                     $scope.parameters.skip = 0;
                     $scope.parameters.conditions = '';
                     $scope.q = "&";
+                    var conditionApplied = false;
                     var filters = $scope.searchModel.filters;
+
+                    $scope.dropdowns.forEach(function (drop) {
+                        if (drop.condition) {
+                            conditionApplied = true;
+                            $scope.q += drop.condition;
+                        }
+                    });
+
                     if ($scope.searchModel.q) {
                         $scope.q += "name=" + $scope.searchModel.q + "&";
                     }
@@ -25,7 +34,7 @@
                             }
                         }
                     }
-                    $scope.q += 'condition=OR';
+                    $scope.q += conditionApplied ? 'condition=AND' : 'condition=OR';
                     $scope.parameters.conditions = $scope.q;
                     if ((!angular.isUndefined($scope.parameters.skip)) && (!angular.isUndefined($scope.parameters.limit))) {
                         $scope.q += "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
@@ -60,278 +69,278 @@
     });
 
     app.directive('fileModel', ['$parse', function ($parse) {
-            return {
-                restrict: 'A',
-                link: function (scope, element, attrs) {
-                    var model = $parse(attrs.fileModel);
-                    var modelSetter = model.assign;
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                var model = $parse(attrs.fileModel);
+                var modelSetter = model.assign;
 
-                    element.bind('change', function () {
-                        scope.$apply(function () {
-                            modelSetter(scope, element[0].files[0]);
-                        });
+                element.bind('change', function () {
+                    scope.$apply(function () {
+                        modelSetter(scope, element[0].files[0]);
                     });
-                }
-            };
-        }]);
+                });
+            }
+        };
+    }]);
     app.directive('selectTwoTags', ['$parse', function ($parse, $scope) {
-            return {
-                restrict: 'A',
-                link: function (scope, element, attrs) {
-                    $(element).selectize()[0].selectize.destroy();
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                $(element).selectize()[0].selectize.destroy();
 
-                    var selectize = $(element).selectize({
-                        plugins: ['remove_button'],
-                        delimiter: ',',
-                        create: false,
-                        valueField: 'id',
-                        placeholder: attrs.placeholder,
-                        labelField: 'name',
-                    })[0].selectize;
+                var selectize = $(element).selectize({
+                    plugins: ['remove_button'],
+                    delimiter: ',',
+                    create: false,
+                    valueField: 'id',
+                    placeholder: attrs.placeholder,
+                    labelField: 'name',
+                })[0].selectize;
 
 
-                    scope.$watch('tagsmodel', function (newValue, oldValue) {
-                        attrs.$observe('tagsmodel', function (value) {
-                            if (value) {
-                                var json = angular.fromJson(value);
-                                setTimeout(function () {
-                                    selectize.addOption(json);
-                                }, 300);
+                scope.$watch('tagsmodel', function (newValue, oldValue) {
+                    attrs.$observe('tagsmodel', function (value) {
+                        if (value) {
+                            var json = angular.fromJson(value);
+                            setTimeout(function () {
+                                selectize.addOption(json);
+                            }, 300);
 
-                            }
-                        })
-
+                        }
                     })
-                    scope.$watch('tagsmodel', function (newValue, oldValue) {
-                        attrs.$observe('tagsselected', function (value) {
-                            if (value) {
-                                var json = angular.fromJson(value);
-                                setTimeout(function () {
-                                    selectize.setValue(json);
-                                }, 700);
-                            }
-                        })
-                    });
 
-                }
-            };
-        }]);
+                })
+                scope.$watch('tagsmodel', function (newValue, oldValue) {
+                    attrs.$observe('tagsselected', function (value) {
+                        if (value) {
+                            var json = angular.fromJson(value);
+                            setTimeout(function () {
+                                selectize.setValue(json);
+                            }, 700);
+                        }
+                    })
+                });
+
+            }
+        };
+    }]);
     app.directive('selectTwo', ['$parse', function ($parse, $scope) {
-            return {
-                restrict: 'A',
-                link: function (scope, element, attrs) {
-                    setTimeout(function () {
-                        var selectize = $(element).selectize({
-                            create: false,
-                            placeholder: attrs.placeholder
-                        })[0].selectize;
-                        selectize.removeOption('? object:null ?');
-                        selectize.removeOption('? undefined:undefined ?');
-                    }, 1000);
-                }
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                setTimeout(function () {
+                    var selectize = $(element).selectize({
+                        create: false,
+                        placeholder: attrs.placeholder
+                    })[0].selectize;
+                    selectize.removeOption('? object:null ?');
+                    selectize.removeOption('? undefined:undefined ?');
+                }, 1000);
+            }
 
-            };
-        }]);
+        };
+    }]);
 
     app.directive('selectTwoAjax', ['$timeout', '$parse', '$cookieStore', '$http', 'jwtHelper', '$location', 'Alertify', function ($timeout, $parse, $cookieStore, $http, jwtHelper, $location, Alertify, $scope, $rootScope) {
-            return {
-                restrict: 'A',
-                scope: {
-                    modelValue: '@ngModel'
-                },
-                link: function (scope, element, attrs, rootScope) {
-                    var token = $cookieStore.get('adminglob').currentUser.token;
-                    var token_auth = $cookieStore.get('globals').currentConsumer.token;
+        return {
+            restrict: 'A',
+            scope: {
+                modelValue: '@ngModel'
+            },
+            link: function (scope, element, attrs, rootScope) {
+                var token = $cookieStore.get('adminglob').currentUser.token;
+                var token_auth = $cookieStore.get('globals').currentConsumer.token;
 
-                    if (jwtHelper.isTokenExpired(token)) {
-                        $location.path('login');
-                    }
-
-                    if (!!attrs.create) {
-                    } else {
-                        attrs.create = false;
-                    }
-
-                    var data_selectize = {
-                        valueField: 'id',
-                        labelField: attrs.key,
-                        searchField: attrs.key,
-                        placeholder: attrs.placeholder,
-                        create: attrs.create,
-                        onInitialize: function () {
-                            if (!angular.isUndefined(attrs.dis) && attrs.dis == 'disabled') {
-                                this.disable();
-                            }
-                        },
-                        onOptionAdd: function (a, item, talvez) {
-
-                            if (attrs.create) {
-                                if (item.name == item.id) {
-                                    var name = item.name;
-                                    var selectize = selectizes[0].selectize;
-
-
-                                    $.ajax({
-                                        headers: {
-                                            'Authorization': 'Bearer ' + token_auth,
-                                            'x-admin-authorization': token,
-                                        },
-                                        url: scope.$root.url + "/tags",
-                                        type: 'post',
-                                        data: {
-                                            name: "" + name
-                                        },
-                                        success: function (resp) {
-                                            selectize.removeOption(name);
-                                            selectize.refreshOptions();
-                                            selectize.addOption({
-                                                name: resp.data.name,
-                                                id: resp.data.id
-                                            });
-                                            selectize.addItems(resp.data.id);
-                                            selectize.refreshOptions();
-
-                                        },
-                                        error: function (resp) {
-                                            Alertify.alert('El tag que desea agregar ya existe.');
-                                            selectize.refreshOptions();
-                                            selectize.removeOption(name);
-                                            selectize.refreshOptions();
-                                        }
-                                    });
-                                }
-
-                            }
-                        },
-                        render: {
-                            option: function (item, escape) {
-                                var name = eval("item." + attrs.key);
-                                return '<div>' +
-                                        '<span class="title">' +
-                                        '<span class="name">' + escape(name) + '</span>' +
-                                        '</span><br>' +
-                                        '</div>';
-                            }
-                        },
-                        load: function (query, callback) {
-                            if (!query.length)
-                                return callback();
-
-                            $.ajax({
-                                headers: {
-                                    'Authorization': 'Bearer ' + token_auth,
-                                    'x-admin-authorization': token,
-                                },
-                                url: scope.$root.url + '/' + attrs.modelname + '?condition=AND&deletedAt=null&' + attrs.key + '=' + encodeURIComponent(query), // + '"}}&rand=' + Math.random(),
-                                type: 'GET',
-                                error: function () {
-                                    callback('error');
-                                },
-                                success: function (res) {
-                                    callback(res.data.slice(0, 10));
-                                }
-                            });
-                        }
-                    };
-
-                    if (attrs.multiple) {
-                        data_selectize.plugins = ['remove_button'];
-                    }
-
-                    var selectizes = $(element).selectize(data_selectize);
-
-                    attrs.$observe("model", function (newValue) {
-                        if (!!newValue) {
-                            setTimeout(function () {
-                                try {
-                                    var jsonValue = angular.fromJson(newValue);
-                                    var selectize = selectizes[0].selectize;
-
-                                    if (Object.prototype.toString.call(jsonValue) === '[object Array]') {
-                                        var options = [];
-                                        var idOptions = [];
-                                        for (var i = 0; i < jsonValue.length; i++) {
-                                            var option = {
-                                                id: jsonValue[i].id
-                                            };
-                                            var name = eval("jsonValue[i]." + attrs.key);
-                                            option[attrs.key] = name;
-                                            options.push(option);
-                                            idOptions.push(jsonValue[i].id);
-                                        }
-                                        selectize.addOption(options);
-                                        selectize.addItems(idOptions);
-                                    } else {
-                                        var options = {
-                                            id: jsonValue.id
-                                        };
-                                        var name = eval("jsonValue." + attrs.key);
-                                        options[attrs.key] = name;
-                                        selectize.addOption(options);
-                                        selectize.addItem(jsonValue.id);
-                                    }
-
-                                } catch (e) {
-
-                                }
-
-                            }, 500);
-                        }
-                    });
+                if (jwtHelper.isTokenExpired(token)) {
+                    $location.path('login');
                 }
 
-            };
-        }]);
+                if (!!attrs.create) {
+                } else {
+                    attrs.create = false;
+                }
+
+                var data_selectize = {
+                    valueField: 'id',
+                    labelField: attrs.key,
+                    searchField: attrs.key,
+                    placeholder: attrs.placeholder,
+                    create: attrs.create,
+                    onInitialize: function () {
+                        if (!angular.isUndefined(attrs.dis) && attrs.dis == 'disabled') {
+                            this.disable();
+                        }
+                    },
+                    onOptionAdd: function (a, item, talvez) {
+
+                        if (attrs.create) {
+                            if (item.name == item.id) {
+                                var name = item.name;
+                                var selectize = selectizes[0].selectize;
+
+
+                                $.ajax({
+                                    headers: {
+                                        'Authorization': 'Bearer ' + token_auth,
+                                        'x-admin-authorization': token,
+                                    },
+                                    url: scope.$root.url + "/tags",
+                                    type: 'post',
+                                    data: {
+                                        name: "" + name
+                                    },
+                                    success: function (resp) {
+                                        selectize.removeOption(name);
+                                        selectize.refreshOptions();
+                                        selectize.addOption({
+                                            name: resp.data.name,
+                                            id: resp.data.id
+                                        });
+                                        selectize.addItems(resp.data.id);
+                                        selectize.refreshOptions();
+
+                                    },
+                                    error: function (resp) {
+                                        Alertify.alert('El tag que desea agregar ya existe.');
+                                        selectize.refreshOptions();
+                                        selectize.removeOption(name);
+                                        selectize.refreshOptions();
+                                    }
+                                });
+                            }
+
+                        }
+                    },
+                    render: {
+                        option: function (item, escape) {
+                            var name = eval("item." + attrs.key);
+                            return '<div>' +
+                                '<span class="title">' +
+                                '<span class="name">' + escape(name) + '</span>' +
+                                '</span><br>' +
+                                '</div>';
+                        }
+                    },
+                    load: function (query, callback) {
+                        if (!query.length)
+                            return callback();
+
+                        $.ajax({
+                            headers: {
+                                'Authorization': 'Bearer ' + token_auth,
+                                'x-admin-authorization': token,
+                            },
+                            url: scope.$root.url + '/' + attrs.modelname + '?condition=AND&deletedAt=null&' + attrs.key + '=' + encodeURIComponent(query), // + '"}}&rand=' + Math.random(),
+                            type: 'GET',
+                            error: function () {
+                                callback('error');
+                            },
+                            success: function (res) {
+                                callback(res.data.slice(0, 10));
+                            }
+                        });
+                    }
+                };
+
+                if (attrs.multiple) {
+                    data_selectize.plugins = ['remove_button'];
+                }
+
+                var selectizes = $(element).selectize(data_selectize);
+
+                attrs.$observe("model", function (newValue) {
+                    if (!!newValue) {
+                        setTimeout(function () {
+                            try {
+                                var jsonValue = angular.fromJson(newValue);
+                                var selectize = selectizes[0].selectize;
+
+                                if (Object.prototype.toString.call(jsonValue) === '[object Array]') {
+                                    var options = [];
+                                    var idOptions = [];
+                                    for (var i = 0; i < jsonValue.length; i++) {
+                                        var option = {
+                                            id: jsonValue[i].id
+                                        };
+                                        var name = eval("jsonValue[i]." + attrs.key);
+                                        option[attrs.key] = name;
+                                        options.push(option);
+                                        idOptions.push(jsonValue[i].id);
+                                    }
+                                    selectize.addOption(options);
+                                    selectize.addItems(idOptions);
+                                } else {
+                                    var options = {
+                                        id: jsonValue.id
+                                    };
+                                    var name = eval("jsonValue." + attrs.key);
+                                    options[attrs.key] = name;
+                                    selectize.addOption(options);
+                                    selectize.addItem(jsonValue.id);
+                                }
+
+                            } catch (e) {
+
+                            }
+
+                        }, 500);
+                    }
+                });
+            }
+
+        };
+    }]);
 
     app.directive('selectTwoDefault', ['$parse', function ($parse, $scope) {
 
-            return {
-                restrict: 'A',
-                link: function (scope, element, attrs) {
-                    var selectize = $(element).selectize({
-                        create: false,
-                        placeholder: attrs.placeholder,
-                    })[0].selectize;
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                var selectize = $(element).selectize({
+                    create: false,
+                    placeholder: attrs.placeholder,
+                })[0].selectize;
 
-                }
+            }
 
-            };
-        }]);
+        };
+    }]);
 
     app.directive('selectStaticAjax', ['$parse', '$cookieStore', 'jwtHelper', '$location', function ($parse, $cookieStore, jwtHelper, $location, $scope) {
-            return {
-                restrict: 'A',
-                template: '<option value="{{ opt.id }}" ng-repeat="opt in options">{{ opt.name }}</option>',
-                link: function (scope, element, attrs, rootScope) {
+        return {
+            restrict: 'A',
+            template: '<option value="{{ opt.id }}" ng-repeat="opt in options">{{ opt.name }}</option>',
+            link: function (scope, element, attrs, rootScope) {
 
-                    scope.options = [{
-                            id: '',
-                            name: 'Seleccione una opción'
-                        }];
+                scope.options = [{
+                    id: '',
+                    name: 'Seleccione una opción'
+                }];
 
-                    var token = $cookieStore.get('adminglob').currentUser.token;
-                    var token_auth = $cookieStore.get('globals').currentConsumer.token;
+                var token = $cookieStore.get('adminglob').currentUser.token;
+                var token_auth = $cookieStore.get('globals').currentConsumer.token;
 
-                    if (jwtHelper.isTokenExpired(token)) {
-                        $location.path('login');
-                    }
-
-                    $.ajax({
-                        headers: {
-                            'Authorization': 'Bearer ' + token_auth,
-                            'x-admin-authorization': token,
-                        },
-                        url: scope.$root.url + '/' + attrs.modelname + '?deletedAt=null',
-                        type: 'GET',
-                        error: function () {
-                        },
-                        success: function (res) {
-                            scope.options = scope.options.concat(res.data.slice(0, 10));
-                        }
-                    });
+                if (jwtHelper.isTokenExpired(token)) {
+                    $location.path('login');
                 }
-            };
-        }]);
+
+                $.ajax({
+                    headers: {
+                        'Authorization': 'Bearer ' + token_auth,
+                        'x-admin-authorization': token,
+                    },
+                    url: scope.$root.url + '/' + attrs.modelname + '?deletedAt=null',
+                    type: 'GET',
+                    error: function () {
+                    },
+                    success: function (res) {
+                        scope.options = scope.options.concat(res.data.slice(0, 10));
+                    }
+                });
+            }
+        };
+    }]);
 
     /*  selectStaticAjax using selectize library!
      * TBD: Placeholder + on edit choose the selected model.
@@ -387,16 +396,16 @@
     });
 
     app.controller('ctrlUpload', ['$scope', 'fileUpload', function ($scope, fileUpload, $rootScope) {
-            $scope.uploadFile = function () {
-                var file = $scope.file;
-                var uploadUrl = $scope.url + "/files";
-                fileUpload.uploadFileToUrl(file, uploadUrl);
-            };
-        }]);
+        $scope.uploadFile = function () {
+            var file = $scope.file;
+            var uploadUrl = $scope.url + "/files";
+            fileUpload.uploadFileToUrl(file, uploadUrl);
+        };
+    }]);
 
     app.filter('urlEncode', [function () {
-            return window.encodeURIComponent;
-        }]);
+        return window.encodeURIComponent;
+    }]);
     app.filter('capitalize', function () {
         return function (input) {
             return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
@@ -465,51 +474,51 @@
     });
 
     app.directive("backButton", ["$window", function ($window) {
-            return {
-                restrict: "A",
-                link: function (scope, elem, attrs) {
-                    elem.bind("click", function (e) {
-                        if (attrs.ngClick || attrs.href === '' || attrs.href == '#') {
-                            e.preventDefault();
-                            e.stopPropagation();
-                        }
-                        $window.history.back();
-                        scope.$apply();
+        return {
+            restrict: "A",
+            link: function (scope, elem, attrs) {
+                elem.bind("click", function (e) {
+                    if (attrs.ngClick || attrs.href === '' || attrs.href == '#') {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                    $window.history.back();
+                    scope.$apply();
 
-                    });
-                }
-            };
-        }]);
+                });
+            }
+        };
+    }]);
 
     app.directive("checkbox", ["$window", function ($window) {
-            return {
-                restrict: "A",
-                link: function (scope, elem, attrs) {
-                    $(elem).iCheck({
-                        checkboxClass: 'icheckbox_square-blue',
-                        radioClass: 'iradio_square-blue',
-                        increaseArea: '20%' // optional
-                    });
-                }
-            };
-        }]);
+        return {
+            restrict: "A",
+            link: function (scope, elem, attrs) {
+                $(elem).iCheck({
+                    checkboxClass: 'icheckbox_square-blue',
+                    radioClass: 'iradio_square-blue',
+                    increaseArea: '20%' // optional
+                });
+            }
+        };
+    }]);
 
     app.directive("addOptionButton", ["$window", function ($window) {
-            return {
-                restrict: "A",
-                link: function (scope, elem, attrs) {
-                    elem.bind("click", function () {
+        return {
+            restrict: "A",
+            link: function (scope, elem, attrs) {
+                elem.bind("click", function () {
 
 
-                        var option = $("#option1").html();
+                    var option = $("#option1").html();
 
-                        $(".extraoptionals").append('<div class="form-group" id="option1">' + option + '</div>');
-                        scope.$apply();
+                    $(".extraoptionals").append('<div class="form-group" id="option1">' + option + '</div>');
+                    scope.$apply();
 
-                    });
-                }
-            };
-        }]);
+                });
+            }
+        };
+    }]);
 
     app.directive('confirmClick', function ($window) {
         var i = 0;
@@ -518,7 +527,7 @@
             priority: 1,
             compile: function (tElem, tAttrs) {
                 var fn = '$$confirmClick' + i++,
-                        _ngClick = tAttrs.ngClick;
+                    _ngClick = tAttrs.ngClick;
                 tAttrs.ngClick = fn + '($event)';
 
                 return function (scope, elem, attrs) {
@@ -590,7 +599,8 @@
                             $element.css("color", hoverColor);
                         }
 
-                    }});
+                    }
+                });
             }
         };
     });
