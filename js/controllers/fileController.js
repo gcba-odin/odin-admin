@@ -784,6 +784,10 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
         if (!!$scope.model.gatheringDate) {
             data.gatheringDate = $scope.model.gatheringDate.toISOString().slice(0, 10); //.toISOString().slice(0, 10), //new Date().toISOString().slice(0, 19).replace('T', ' ');
         }
+        
+        if(!!$scope.model.fileName) {
+            data.fileName = $scope.model.fileName;
+        }
 
         if ($scope.model.status == $scope.statuses.published) {
             data.publishedAt = new Date();
