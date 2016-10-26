@@ -109,7 +109,7 @@
 <div class="form-group">
     <label for="gatheringDate" class="col-sm-2 control-label"> {{ 'GATHERING_DATE' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.gatheringDate.$touched && form.gatheringDate.$invalid }">
-        <input date-time format="YYYY-MM-DD" view="date" min-view="date" max-date="{{today}}" id="gatheringDate" ng-model="model.gatheringDate" name="gatheringDate" class="form-control" placeholder="{{ 'PLACE' | translate }} {{ 'GATHERING_DATE' | translate }} {{ 'HERE' | translate }}" />
+        <input readonly="true" date-time format="YYYY-MM-DD" view="date" min-view="date" max-date="{{today}}" id="gatheringDate" ng-model="model.gatheringDate" name="gatheringDate" class="form-control" placeholder="{{ 'PLACE' | translate }} {{ 'GATHERING_DATE' | translate }} {{ 'HERE' | translate }}" />
         <div class="help-block" ng-messages="form.gatheringDate.$error" ng-if="form.gatheringDate.$touched">
             <div ng-messages-include="views/messages.html"></div>
         </div>
