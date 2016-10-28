@@ -167,8 +167,10 @@ function ChartPreviewController($scope, modelService, $routeParams, rest, $locat
                 $scope.model.series[0].push($scope.model.dataSeries[1]);
             }
         }
-        $scope.model.dataChart = {
-            data: [$scope.model.data.data]
+        if(!!$scope.model.data) {
+            $scope.model.dataChart = {
+                data: [$scope.model.data.data]
+            };
         }
 
         var getRandomColor = function () {
@@ -183,7 +185,7 @@ function ChartPreviewController($scope, modelService, $routeParams, rest, $locat
         }
 
         $scope.model.colors = [];
-        if ($scope.model.type != 'line') {
+        if (!!$scope.model.type && $scope.model.type != 'line') {
             $scope.model.colors[0] = {
                 backgroundColor: []
             };
