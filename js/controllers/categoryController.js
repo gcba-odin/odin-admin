@@ -328,7 +328,6 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
                 type: 'svg',
                 name: $scope.model.fileName
             };
-            console.log($scope.form.uploadImage);
             usSpinnerService.stop('spinner');
         }, function(error) {
             usSpinnerService.stop('spinner');

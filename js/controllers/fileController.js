@@ -774,11 +774,9 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
         }
 
         if ($scope.model.uploadFile != null) {
-            if (hard_file != null) {
-                data.uploadFile = hard_file;
-            } else {
-                data.uploadFile = $scope.model.uploadFile;
-            }
+            data.uploadFile = $scope.model.uploadFile;
+        } else if (hard_file != null) {
+            data.uploadFile = hard_file;
         }
 
         if (!!$scope.model.gatheringDate) {
