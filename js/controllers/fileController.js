@@ -296,7 +296,7 @@ function FilePreviewController($scope, Flash, rest, $routeParams, $location, mod
     };
 }
 
-function FileCreateController($scope, $sce, rest, model, Flash, $location, Upload, $rootScope, modelService, $routeParams, Alertify, usSpinnerService, $window, configs) {
+function FileCreateController($scope, $sce, rest, model, flashService, Flash, $location, Upload, $rootScope, modelService, $routeParams, Alertify, usSpinnerService, $window, configs) {
     $scope.today = moment().format('YYYY-MM-DD');
 
     usSpinnerService.spin('spinner');
@@ -551,7 +551,8 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
         Upload.upload({
             url: $rootScope.url + "/files",
             data: data,
-        }).then(function (resp) {
+        }).then(function(resp) {
+            Flash.clear();
             usSpinnerService.stop('spinner');
             $location.url('/files/' + resp.data.data.id + '/view');
         }, function (error) {
@@ -567,7 +568,10 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
             $scope.uploadImageProgress = progressPercentage;
             $scope.unsave = true;
-            usSpinnerService.stop('spinner');
+            if($scope.uploadImageProgress == 100) {
+                flashService.showInfo('Aguarde que se está guardando en la base de datos.');
+            }
+            //usSpinnerService.stop('spinner');
         });
     };
 
@@ -615,7 +619,7 @@ function FileCreateController($scope, $sce, rest, model, Flash, $location, Uploa
 
 }
 
-function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model, $location, modelService, $sce, Upload, usSpinnerService, Alertify, $window, configs) {
+function FileEditController($rootScope, $scope, flashService, Flash, rest, $routeParams, model, $location, modelService, $sce, Upload, usSpinnerService, Alertify, $window, configs) {
     $scope.today = moment().format('YYYY-MM-DD');
     usSpinnerService.spin('spinner');
     modelService.initService("File", "files", $scope);
@@ -836,7 +840,8 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
                 url: $rootScope.url + "/files/" + $scope.model.id,
                 data: data,
                 method: 'PUT',
-            }).then(function (resp) {
+            }).then(function(resp) {
+                Flash.clear();
                 usSpinnerService.stop('spinner');
                 $location.url('/files/' + resp.data.data.id + '/view');
             }, function (error) {
@@ -852,7 +857,9 @@ function FileEditController($rootScope, $scope, Flash, rest, $routeParams, model
                 var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                 $scope.uploadImageProgress = progressPercentage;
                 $scope.unsave = false;
-                usSpinnerService.stop('spinner');
+                if($scope.uploadImageProgress == 100) {
+                    flashService.showInfo('Aguarde que se está guardando en la base de datos.');
+                }
             });
         }
 
