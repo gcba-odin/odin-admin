@@ -384,6 +384,20 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
         'id': $scope.adminglob.currentUser.user,
         'username': $scope.adminglob.currentUser.username
     };
+    
+    //get optionals by default on config
+    $scope.config_key = 'defaultOptionals';
+    configs.findKey($scope, function(resp) {
+        if (!!resp.data[0] && !!resp.data[0].value) {
+            var opts = resp.data[0].value.split(',');
+            angular.forEach(opts, function(element) {
+                $scope.model.items.push({
+                    field1: element,
+                    field2: ''
+                });
+            });
+        }
+    });
 
     // get organization by default on config
     $scope.config_key = 'defaultOrganization';

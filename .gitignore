@@ -48,3 +48,4 @@ dist/
 
 # OS Generated
 .DS_STORE
+/nbproject/private/

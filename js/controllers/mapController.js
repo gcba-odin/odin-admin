@@ -185,7 +185,7 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
     loadModel();
 }
 
-function MapPreviewController($scope, modelService, $routeParams, rest, $location, $sce, leafletData, usSpinnerService) {
+function MapPreviewController($scope, modelService, $routeParams, rest, $location, $sce, leafletData, usSpinnerService,configs) {
     usSpinnerService.spin('spinner');
     modelService.initService("Map", "maps", $scope);
 
@@ -230,12 +230,31 @@ function MapPreviewController($scope, modelService, $routeParams, rest, $locatio
     };
 
     var loadGeojson = function () {
+        var minZoom = 0;
+        var maxZoom = 18;
+        var tms = false;
+        var attribution = '';
+        
+        if(!!$scope.model.basemap.minZoom) {
+            minZoom = $scope.model.basemap.minZoom;
+        } 
+        if(!!$scope.model.basemap.maxZoom) {
+            maxZoom = $scope.model.basemap.maxZoom;
+        } 
+        if(!!$scope.model.basemap.tms) {
+            tms = $scope.model.basemap.tms;
+        }
+        if(!!$scope.model.basemap.attribution) {
+            attribution = $scope.model.basemap.attribution;
+        }
         angular.extend($scope, {// Map data
             tiles: {
                 url: $scope.model.basemap.url,
                 options: {
-                    minZoom: 8,
-                    maxZoom: 13
+                    minZoom: minZoom,
+                    maxZoom: maxZoom,
+                    tms: tms,
+                    attribution: attribution
                 }
             },
             geojson: {

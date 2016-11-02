@@ -197,6 +197,20 @@ function WebserviceCreateController($scope, $sce, rest, model, Flash, $location,
         'username': $scope.adminglob.currentUser.username
     };
     
+    //get optionals by default on config
+    $scope.config_key = 'defaultOptionals';
+    configs.findKey($scope, function(resp) {
+        if (!!resp.data[0] && !!resp.data[0].value) {
+            var opts = resp.data[0].value.split(',');
+            angular.forEach(opts, function(element) {
+                $scope.model.items_file.push({
+                    field1: element,
+                    field2: ''
+                });
+            });
+        }
+    });
+    
     // get organization by default on config
     $scope.config_key = 'defaultOrganization';
     configs.findKey($scope, function(resp) {
