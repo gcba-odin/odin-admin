@@ -208,6 +208,8 @@ function MapPreviewController($scope, modelService, $routeParams, rest, $locatio
         $scope.model.link = $sce.trustAsResourceUrl($scope.model.link);
         if (!$scope.model.link) {
             loadGeojson();
+        } else {
+            usSpinnerService.stop('spinner');
         }
     }, function (error) {
         usSpinnerService.stop('spinner');
