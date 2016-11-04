@@ -118,10 +118,17 @@
             <script src="node_modules/ckan/ckan.js"></script>
             <script src="node_modules/ng-file-upload/dist/ng-file-upload.min.js"></script>
             <script src="node_modules/ng-file-upload/dist/ng-file-upload-shim.min.js"></script>
+            <script src="node_modules/angular-pdf/dist/angular-pdf.js"></script>
         <!-- endbuild -->
 
         <script src="bundle.min.js"></script>
-
+        
+        <!-- build:js pdf.js -->
+        <script src="plugins/pdf/pdf.js"></script>
+        <!-- endbuild -->
+        <!-- build:js pdf.worker.js -->
+        <script src="plugins/pdf/pdf.worker.js"></script>
+        <!-- endbuild -->
 
         <script>
             $(document).ready(function() {

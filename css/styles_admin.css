@@ -562,3 +562,16 @@ div.panel-heading {
 .tooltip.left .tooltip-arrow {
     border-left-color: #333;
 }
+
+.pdf-controls input {
+    width: 30px;
+    height: 25px;
+}
+
+.pdf-controls .pdf-container {
+    margin: 0px 10px 0px 10px;
+}
+
+.pdf-controls .pdf-right {
+    line-height: 54px;
+}

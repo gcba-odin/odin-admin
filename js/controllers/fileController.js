@@ -256,6 +256,25 @@ function FilePreviewController($scope, Flash, rest, $routeParams, $location, mod
             modelService.reloadPage();
         });
     };
+    
+    $scope.scroll = 0;
+    $scope.loading = 'Cargando..';
+
+    $scope.getNavStyle = function(scroll) {
+        if (scroll > 100)
+            return 'pdf-controls fixed';
+        else
+            return 'pdf-controls';
+    }
+
+    $scope.onError = function() {
+        Alertify.alert('El archivo a previsualizar está dañado o hubo un problema al descargarlo.');
+        $scope.loading = 'El archivo a previsualizar está dañado o hubo un problema al descargarlo.';
+    }
+
+    $scope.onLoad = function() {
+        $scope.loading = '';
+    }
 }
 
 function FileCreateController($scope, $sce, rest, model, flashService, Flash, $location, Upload, $rootScope, modelService, $routeParams, Alertify, usSpinnerService, $window, configs) {
