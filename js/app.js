@@ -23,8 +23,9 @@
         "consumer-service",
         "validation.match",
         "angular-jwt",
-        "vcRecaptcha"
-    ]);
+        "vcRecaptcha",
+        "pdf",
+          ]);
 
     app.config(function ($routeProvider, $httpProvider, $translateProvider, usSpinnerConfigProvider, ChartJsProvider, ConsumerServiceProvider, $middlewareProvider, jwtOptionsProvider, vcRecaptchaServiceProvider) {
 
