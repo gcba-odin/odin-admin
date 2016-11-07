@@ -182,6 +182,7 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'USE_ATTRS_HEADERS': 'Use attributes as headers',
         'UNDER_REVIEW': 'Under review',
         'REJECT': 'Reject',
+        'ROLE': 'Role',
     });
 
     $translateProvider.translations('es', {
@@ -403,7 +404,7 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'ATTRIBUTION': 'Attribution',
         'UNDER_REVIEW': 'En revisión',
         'REJECT': 'Rechazar',
-
+        'ROLE': 'Rol',
 
     });
     $translateProvider.preferredLanguage('es');

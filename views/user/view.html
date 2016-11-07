@@ -23,6 +23,10 @@
                                 <td class="detail-bold">{{ 'LAST_NAME' | translate }}</td>
                                 <td>{{model.lastName}}</td>
                             </tr>
+                            <tr ng-if="model.role">
+                                <td class="detail-bold">{{ 'ROLE' | translate }}</td>
+                                <td>{{model.role}}</td>
+                            </tr>
                             <tr ng-if="model.email">
                                 <td class="detail-bold">{{ 'EMAIL' | translate }}</td>
                                 <td>{{model.email}}</td>

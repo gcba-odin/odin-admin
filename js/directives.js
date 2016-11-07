@@ -335,7 +335,18 @@
                     error: function () {
                     },
                     success: function (res) {
-                        scope.options = scope.options.concat(res.data.slice(0, 10));
+                        if (res.data) {
+                            scope.options = scope.options.concat(res.data.slice(0, 10));
+                        } else {
+                            var data = [];
+                            for (var i = 0; i < res.length; i++) {
+                                data.push({
+                                    id: res[i],
+                                    name: res[i]
+                                });
+                            }
+                            scope.options = scope.options.concat(data);
+                        }
                     }
                 });
             }
