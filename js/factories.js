@@ -573,8 +573,8 @@
                         $location.path('login');
                     }
                 }
-                var $http = $http || $injector.get("$http");
-                $http(e.config);
+                //var $http = $http || $injector.get("$http");
+                //$http(e.config);
 
                 //flashService.showError(" Route: <a target='_blank' href='"+e.config.url+"'>"+e.config.url+"</a> <br>"+params);
             }
