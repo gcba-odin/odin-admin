@@ -631,6 +631,7 @@
 
         PermRoleStore.defineManyRoles(rolesObj);
 
+        $rootScope.roles = ROLES;
         $rootScope.$on('$routeChangePermissionDenied', function (event, toState, toParams) {
             $translate('DENIED_ACCESS').then(function (translation) {
                 Alertify.error(translation);
