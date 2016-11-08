@@ -1,6 +1,8 @@
 (function () {
     var app = angular.module('odin', ["odin.config",
         "ngRoute",
+        "permission",
+        "permission.ng",
         "Alertify",
         "ngFlash",
         "ui.bootstrap",
