@@ -113,7 +113,8 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
 
     $scope.model = rest().findOne({
         id: $routeParams.id,
-        type: $scope.type
+        type: $scope.type,
+        params: 'include=subcategories'
     }, function() {
         usSpinnerService.stop('spinner');
     }, function(error) {

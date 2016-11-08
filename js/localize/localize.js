@@ -183,6 +183,8 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'UNDER_REVIEW': 'Under review',
         'REJECT': 'Reject',
         'ROLE': 'Role',
+        'SUBCATEGORY': 'Subcategory',
+        'VIEW_LINK_SUBCATEGORIES': 'View associated subcategories',
     });
 
     $translateProvider.translations('es', {
@@ -405,6 +407,8 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'UNDER_REVIEW': 'En revisión',
         'REJECT': 'Rechazar',
         'ROLE': 'Rol',
+        'SUBCATEGORY': 'Subcategoría',
+        'VIEW_LINK_SUBCATEGORIES': 'Ver subcategorías asociadas',
 
     });
     $translateProvider.preferredLanguage('es');
