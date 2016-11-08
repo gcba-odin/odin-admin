@@ -183,6 +183,7 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'UNDER_REVIEW': 'Under review',
         'REJECT': 'Reject',
         'ROLE': 'Role',
+        'DENIED_ACCESS': 'Denied access'
     });
 
     $translateProvider.translations('es', {
@@ -405,7 +406,7 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'UNDER_REVIEW': 'En revisión',
         'REJECT': 'Rechazar',
         'ROLE': 'Rol',
-
+        'DENIED_ACCESS': 'Acceso denegado'
     });
     $translateProvider.preferredLanguage('es');
 }]);

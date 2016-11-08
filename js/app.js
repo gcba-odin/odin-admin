@@ -467,13 +467,30 @@
 
         $middlewareProvider.global(['everyone', 'x-admin']);
     });
-    app.run(run);
-
-    function run($rootScope, EnvironmentConfig, authManager) {
+    app.run(function ($rootScope, EnvironmentConfig, authManager) {
         $rootScope.url = EnvironmentConfig.api;
         authManager.redirectWhenUnauthenticated();
         $rootScope.$on('$routeChangeSuccess', function (e, current, pre) {
             $rootScope.actualUrl = current.$$route.originalPath;
         });
-    }
+    });
+
+    app.run(function ($rootScope, PermRoleStore, ROLES, Alertify, $location, $translate) {
+        var rolesObj = _.reduce(_.values(ROLES), function(roles, roleName) {
+            roles[roleName] = function() {
+                return $rootScope.adminglob.currentUser.role === roleName;
+            };
+
+            return roles;
+        }, {});
+
+        PermRoleStore.defineManyRoles(rolesObj);
+
+        $rootScope.$on('$routeChangePermissionDenied', function (event, toState, toParams) {
+            $translate('DENIED_ACCESS').then(function (translation) {
+                Alertify.error(translation);
+            });
+            $location.path('/');
+        });
+    });
 })();
