@@ -6,7 +6,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} <b>{{ 'CATEGORY' | translate }}</b></h3>
             <a ng-href="#/categories/new" ng-if="!model.parent" class="btn-primary btn pull-right">{{ 'ADD' | translate }} {{ 'SUBCATEGORY' | translate }}</a>
-            <button ng-if="model.subcategories.length > 0" data-toggle="modal" data-target="#viewLinkResources" class="btn btn-default pull-right margin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_SUBCATEGORIES' | translate }}</button>
+            <button ng-if="model.subcategories.length > 0" data-toggle="modal" data-target="#viewLinkSubcategories" class="btn btn-default pull-right margin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_SUBCATEGORIES' | translate }}</button>
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -68,5 +68,47 @@
         </div>
     </section>
     <!--  Main content-->
+    <!-- Linked Subcategories -->
+    <div class="modal fade" id="viewLinkSubcategories" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">{{ 'SUBCATEGORIES' | translate }}</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <thead>
+                            <th>{{ 'SUBCATEGORY' | translate }}</th>
+                            <th>{{ 'STATE' | translate }}</th>
+                            <th class="text-center">{{ 'ACTIONS' | translate }}</th>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="subcategory in model.subcategories">
+                                <td>
+                                    <span>{{subcategory.name}}</span>
+                                </td>
+                                <td>
+                                    <span class="label label-default">{{subcategory.deletedAt ? 'Inactivo' : 'Activo'}}</span>
+                                </td>
+                                <td class="text-center table-btn">
+                                    <a target="_blank" class="btn btn-primary" ng-href="#/categories/{{subcategory.id}}/view">{{ 'VIEW' | translate }}</a>
+                                    <a target="_blank" class="btn btn-primary" ng-href="#/categories/{{subcategory.id}}/edit">{{ 'EDIT' | translate }}</a>
+                                    <a ng-if="subcategory.deletedAt" class="btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{subcategory.id}}"
+                                        ng-click="activeModel($event)">{{ 'ACTIVATE' | translate }}</a>
+                                    <a ng-if="!subcategory.deletedAt" class="btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{subcategory.id}}"
+                                        ng-click="inactiveModel($event)">{{ 'INACTIVATE' | translate }}</a>
+                                    <a ng-if="!subcategory.datasets.length" class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{subcategory.id}}"
+                                        ng-click="confirmDelete($event)">{{ 'DELETE' | translate }}</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Linked Subcategories -->
 </div>
 <footer-home></footer-home>

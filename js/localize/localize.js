@@ -184,6 +184,7 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'REJECT': 'Reject',
         'ROLE': 'Role',
         'SUBCATEGORY': 'Subcategory',
+        'SUBCATEGORIES': 'Subcategories',
         'VIEW_LINK_SUBCATEGORIES': 'View associated subcategories',
     });
 
@@ -408,6 +409,7 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'REJECT': 'Rechazar',
         'ROLE': 'Rol',
         'SUBCATEGORY': 'Subcategoría',
+        'SUBCATEGORIES': 'Subcategorías',
         'VIEW_LINK_SUBCATEGORIES': 'Ver subcategorías asociadas',
 
     });
