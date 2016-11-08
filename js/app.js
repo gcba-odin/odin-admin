@@ -3,6 +3,7 @@
         "ngRoute",
         "permission",
         "permission.ng",
+        "roles-constant",
         "Alertify",
         "ngFlash",
         "ui.bootstrap",
