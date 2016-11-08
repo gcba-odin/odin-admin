@@ -39,13 +39,14 @@
 
         }
 
-        function SetCredentials(username, password, token, user) {
+        function SetCredentials(username, password, token, user, role) {
             var authdata = Base64.encode(username + ':' + password);
             $rootScope.adminglob.currentUser = {
                 username: username,
                 authdata: authdata,
                 token: token,
-                user: user
+                user: user,
+                role: role
             };
 
             $http.defaults.headers.common['x-admin-authorization'] = token;
