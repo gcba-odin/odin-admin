@@ -30,7 +30,7 @@
         "pdf"
           ]);
 
-    app.config(function ($routeProvider, $httpProvider, $translateProvider, usSpinnerConfigProvider, ChartJsProvider, ConsumerServiceProvider, $middlewareProvider, jwtOptionsProvider, vcRecaptchaServiceProvider) {
+    app.config(function ($routeProvider, $httpProvider, $translateProvider, usSpinnerConfigProvider, ChartJsProvider, ConsumerServiceProvider, $middlewareProvider, jwtOptionsProvider, vcRecaptchaServiceProvider, ROLES) {
 
         vcRecaptchaServiceProvider.setDefaults({
             key: '6LetbAcUAAAAABWhGuMbTaYQBferzWoxYvmtx9PS',
@@ -121,16 +121,36 @@
             //// user Routes
             .when("/users", {
                 templateUrl: "views/user/list.html",
-                controller: UserListController
+                controller: UserListController,
+                data: {
+                    permissions: {
+                        except: ROLES.GUEST
+                    }
+                }
             }).when("/users/:id/view", {
                 templateUrl: "views/user/view.html",
-                controller: UserViewController
+                controller: UserViewController,
+                 data: {
+                    permissions: {
+                        except: ROLES.GUEST
+                    }
+                }
             }).when("/users/new", {
                 templateUrl: "views/user/add.html",
-                controller: UserCreateController
+                controller: UserCreateController,
+                data: {
+                    permissions: {
+                        only: ROLES.SUPERADMIN
+                    }
+                }
             }).when("/users/:id/edit", {
                 templateUrl: "views/user/edit.html",
-                controller: UserEditController
+                controller: UserEditController,
+                data: {
+                    permissions: {
+                        except: ROLES.GUEST
+                    }
+                }
             })
             //// end user Routes
             //// user Organizations
@@ -142,10 +162,20 @@
                 controller: OrganizationViewController
             }).when("/organizations/new", {
                 templateUrl: "views/organization/add.html",
-                controller: OrganizationCreateController
+                controller: OrganizationCreateController,
+                data: {
+                    permissions: {
+                        except: ROLES.GUEST
+                    }
+                }
             }).when("/organizations/:id/edit", {
                 templateUrl: "views/organization/edit.html",
-                controller: OrganizationEditController
+                controller: OrganizationEditController,
+                data: {
+                    permissions: {
+                        except: ROLES.GUEST
+                    }
+                }
             })
             //// end user Organizations
             ////  Status
@@ -157,10 +187,20 @@
                 controller: StatusViewController
             }).when("/statuses/new", {
                 templateUrl: "views/status/add.html",
-                controller: StatusCreateController
+                controller: StatusCreateController,
+                data: {
+                    permissions: {
+                        except: ROLES.GUEST
+                    }
+                }
             }).when("/statuses/:id/edit", {
                 templateUrl: "views/status/edit.html",
-                controller: StatusEditController
+                controller: StatusEditController,
+                data: {
+                    permissions: {
+                        except: ROLES.GUEST
+                    }
+                }
             })
             //// end  Status
             ////  File type
@@ -172,10 +212,20 @@
                 controller: FileTypeViewController
             }).when("/filetypes/new", {
                 templateUrl: "views/filetype/add.html",
-                controller: FileTypeCreateController
+                controller: FileTypeCreateController,
+                data: {
+                    permissions: {
+                        except: ROLES.GUEST
+                    }
+                }
             }).when("/filetypes/:id/edit", {
                 templateUrl: "views/filetype/edit.html",
-                controller: FileTypeEditController
+                controller: FileTypeEditController,
+                data: {
+                    permissions: {
+                        except: ROLES.GUEST
+                    }
+                }
             })
             //// file type
             ////  Tags
@@ -187,10 +237,20 @@
                 controller: TagViewController
             }).when("/tags/new", {
                 templateUrl: "views/tag/add.html",
-                controller: TagCreateController
+                controller: TagCreateController,
+                data: {
+                    permissions: {
+                        except: ROLES.GUEST
+                    }
+                }
             }).when("/tags/:id/edit", {
                 templateUrl: "views/tag/edit.html",
-                controller: TagEditController
+                controller: TagEditController,
+                data: {
+                    permissions: {
+                        except: ROLES.GUEST
+                    }
+                }
             })
             //// file type
             ////  Frequency
@@ -202,10 +262,20 @@
                 controller: updateFrequencyViewController
             }).when("/updatefrequencies/new", {
                 templateUrl: "views/updatefrequency/add.html",
-                controller: updateFrequencyCreateController
+                controller: updateFrequencyCreateController,
+                data: {
+                    permissions: {
+                        except: ROLES.GUEST
+                    }
+                }
             }).when("/updatefrequencies/:id/edit", {
                 templateUrl: "views/updatefrequency/edit.html",
-                controller: updateFrequencyEditController
+                controller: updateFrequencyEditController,
+                data: {
+                    permissions: {
+                        except: ROLES.GUEST
+                    }
+                }
             })
             //// Frequency
             ////  File
@@ -242,10 +312,20 @@
                 controller: CategoryViewController
             }).when("/categories/new", {
                 templateUrl: "views/category/add.html",
-                controller: CategoryCreateController
+                controller: CategoryCreateController,
+                data: {
+                    permissions: {
+                        except: ROLES.GUEST
+                    }
+                }
             }).when("/categories/:id/edit", {
                 templateUrl: "views/category/edit.html",
-                controller: CategoryEditController
+                controller: CategoryEditController,
+                data: {
+                    permissions: {
+                        except: ROLES.GUEST
+                    }
+                }
             })
             //// Categories
             ////  Datasets
@@ -254,10 +334,20 @@
                 controller: DatasetViewController
             }).when("/datasets/new", {
                 templateUrl: "views/dataset/add.html",
-                controller: DatasetCreateController
+                controller: DatasetCreateController,
+                data: {
+                    permissions: {
+                        except: ROLES.GUEST
+                    }
+                }
             }).when("/datasets/:id/edit", {
                 templateUrl: "views/dataset/edit.html",
-                controller: DatasetEditController
+                controller: DatasetEditController,
+                data: {
+                    permissions: {
+                        except: ROLES.GUEST
+                    }
+                }
             })
             .when("/datasets/:filter?", {
                 templateUrl: "views/dataset/list.html",
@@ -328,11 +418,21 @@
             })
             .when("/configs/new", {
                 templateUrl: "views/config/add.html",
-                controller: ConfigCreateController
+                controller: ConfigCreateController,
+                data: {
+                    permissions: {
+                        except: ROLES.GUEST
+                    }
+                }
             })
             .when("/configs/:id/edit", {
                 templateUrl: "views/config/edit.html",
-                controller: ConfigEditController
+                controller: ConfigEditController,
+                data: {
+                    permissions: {
+                        except: ROLES.GUEST
+                    }
+                }
             })
 
             // Basemaps
@@ -346,21 +446,41 @@
             })
             .when("/basemaps/new", {
                 templateUrl: "views/basemap/add.html",
-                controller: BasemapCreateController
+                controller: BasemapCreateController,
+                data: {
+                    permissions: {
+                        except: ROLES.GUEST
+                    }
+                }
             })
             .when("/basemaps/:id/edit", {
                 templateUrl: "views/basemap/edit.html",
-                controller: BasemapEditController
+                controller: BasemapEditController,
+                data: {
+                    permissions: {
+                        except: ROLES.GUEST
+                    }
+                }
             })
 
             // Importer
             .when("/importer", {
                 templateUrl: "views/importer/import.html",
-                controller: ImporterCreateController
+                controller: ImporterCreateController,
+                data: {
+                    permissions: {
+                        only: ROLES.SUPERADMIN
+                    }
+                }
             })
             .when("/importer/result", {
                 templateUrl: "views/importer/result.html",
                 controller: ImporterResultController,
+                data: {
+                    permissions: {
+                        only: ROLES.SUPERADMIN
+                    }
+                }
             })
 
 
@@ -373,10 +493,20 @@
                 controller: WebserviceViewController
             }).when("/webservices/new/:dataset?", {
                 templateUrl: "views/webservice/add.html",
-                controller: WebserviceCreateController
+                controller: WebserviceCreateController,
+                data: {
+                    permissions: {
+                        except: ROLES.GUEST
+                    }
+                }
             }).when("/webservices/:id/edit", {
                 templateUrl: "views/webservice/edit.html",
-                controller: WebserviceEditController
+                controller: WebserviceEditController,
+                data: {
+                    permissions: {
+                        except: ROLES.GUEST
+                    }
+                }
             })
 
             // Under Review
@@ -387,6 +517,11 @@
                     underReview: function () {
                         return true;
                     }
+                },
+                data: {
+                    permissions: {
+                        except: ROLES.ADMIN
+                    }
                 }
             }).when("/underreview/charts", {
                 templateUrl: "views/chart/list.html",
@@ -395,6 +530,11 @@
                     underReview: function () {
                         return true;
                     }
+                },
+                data: {
+                    permissions: {
+                        except: ROLES.ADMIN
+                    }
                 }
             }).when("/underreview/maps", {
                 templateUrl: "views/map/list.html",
@@ -402,6 +542,11 @@
                 resolve: {
                     underReview: function () {
                         return true;
+                    }
+                },
+                data: {
+                    permissions: {
+                        except: ROLES.ADMIN
                     }
                 }
             })
