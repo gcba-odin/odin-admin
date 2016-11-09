@@ -83,6 +83,7 @@
             }
         };
     }]);
+
     app.directive('selectTwoTags', ['$parse', function ($parse, $scope) {
         return {
             restrict: 'A',
@@ -125,6 +126,7 @@
             }
         };
     }]);
+
     app.directive('selectTwo', ['$parse', function ($parse, $scope) {
         return {
             restrict: 'A',
@@ -417,6 +419,7 @@
     app.filter('urlEncode', [function () {
         return window.encodeURIComponent;
     }]);
+
     app.filter('capitalize', function () {
         return function (input) {
             return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
@@ -615,4 +618,19 @@
             }
         };
     });
+
+    app.filter('filterIfGuestUser', function ($rootScope, ROLES) {
+        return function (models) { 
+            var userObj = $rootScope.adminglob.currentUser;
+
+            if (!userObj || userObj.role !== ROLES.GUEST) {
+                return models;
+            } else {
+                return _.filter(models, function(model) {
+                    return model.createdBy.id === userObj.user;
+                });
+            }
+        };
+    });
+
 })();

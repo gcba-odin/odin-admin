@@ -520,7 +520,7 @@
                 },
                 data: {
                     permissions: {
-                        except: ROLES.ADMIN
+                        except: ROLES.GUEST
                     }
                 }
             }).when("/underreview/charts", {
@@ -533,7 +533,7 @@
                 },
                 data: {
                     permissions: {
-                        except: ROLES.ADMIN
+                        except: ROLES.GUEST
                     }
                 }
             }).when("/underreview/maps", {
@@ -546,11 +546,10 @@
                 },
                 data: {
                     permissions: {
-                        except: ROLES.ADMIN
+                        except: ROLES.GUEST
                     }
                 }
             })
-
 
             .otherwise({
                 redirectTo: '/'

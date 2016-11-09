@@ -99,7 +99,7 @@
                         <th class="text-center">{{ 'ACTIONS' | translate }}</th>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="file in model.files">
+                            <tr ng-repeat="file in model.files | filterIfGuestUser">
                                 <td>
                                     <span>{{file.name}}</span>
                                 </td>
