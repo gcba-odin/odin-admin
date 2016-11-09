@@ -39,7 +39,7 @@
 <div class="form-group">
     <label for="categories" class="col-sm-2 control-label">* {{ 'CATEGORIES' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.categories.$touched && form.categories.$invalid }">
-        <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="categories" data-model="{{model.categories}}" select-two-ajax name="categories" id="categories" ng-model="model.categories" required class="selectize-width" multiple></select>
+        <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-condition="parent=null" data-modelname="categories" data-model="{{model.categories}}" select-two-ajax name="categories" id="categories" ng-model="model.categories" required class="selectize-width" multiple></select>
 
         <div class="help-block" ng-messages="form.categories.$error" ng-if="form.categories.$touched">
             <div ng-messages-include="views/messages.html"></div>

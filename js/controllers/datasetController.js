@@ -313,8 +313,6 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
     $scope.itemName = function(a) {
         return "optional" + (parseInt(a) + 1);
     }
-
-
 }
 
 function DatasetEditController($scope, Flash, rest, $routeParams, model, $location, modelService, usSpinnerService, configs, Alertify) {

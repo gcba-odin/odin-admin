@@ -1,21 +1,21 @@
-(function () {
+(function() {
     var app = angular.module('store-directives', ["store-directives-home"]);
 
-    app.directive("searchBar", function ($parse, $window) {
+    app.directive("searchBar", function($parse, $window) {
         return {
             restrict: "E",
             templateUrl: "directives/search-bar.html",
             scope: "=",
-            controller: function ($scope, modelService) {
+            controller: function($scope, modelService) {
 
-                $scope.search = function () {
+                $scope.search = function() {
                     $scope.parameters.skip = 0;
                     $scope.parameters.conditions = '';
                     $scope.q = "&";
                     var conditionApplied = false;
                     var filters = $scope.searchModel.filters;
 
-                    $scope.dropdowns.forEach(function (drop) {
+                    $scope.dropdowns.forEach(function(drop) {
                         if (drop.condition) {
                             conditionApplied = true;
                             $scope.q += drop.condition;
@@ -42,11 +42,11 @@
                     modelService.search($scope);
                 };
 
-                $scope.clearSearch = function () {
+                $scope.clearSearch = function() {
                     $window.location.reload();
                 };
             },
-            link: function (scope, element, attrs) {
+            link: function(scope, element, attrs) {
                 scope.dropdowns = $parse(attrs.filters)();
                 scope.searchInputForm = $parse(attrs.search)();
             },
@@ -54,11 +54,11 @@
         };
     });
 
-    app.directive('ngEnter', function () {
-        return function (scope, element, attrs) {
-            element.bind("keydown keypress", function (event) {
+    app.directive('ngEnter', function() {
+        return function(scope, element, attrs) {
+            element.bind("keydown keypress", function(event) {
                 if (event.which === 13) {
-                    scope.$apply(function () {
+                    scope.$apply(function() {
                         scope.$eval(attrs.ngEnter);
                     });
 
@@ -68,25 +68,25 @@
         };
     });
 
-    app.directive('fileModel', ['$parse', function ($parse) {
+    app.directive('fileModel', ['$parse', function($parse) {
         return {
             restrict: 'A',
-            link: function (scope, element, attrs) {
+            link: function(scope, element, attrs) {
                 var model = $parse(attrs.fileModel);
                 var modelSetter = model.assign;
 
-                element.bind('change', function () {
-                    scope.$apply(function () {
+                element.bind('change', function() {
+                    scope.$apply(function() {
                         modelSetter(scope, element[0].files[0]);
                     });
                 });
             }
         };
     }]);
-    app.directive('selectTwoTags', ['$parse', function ($parse, $scope) {
+    app.directive('selectTwoTags', ['$parse', function($parse, $scope) {
         return {
             restrict: 'A',
-            link: function (scope, element, attrs) {
+            link: function(scope, element, attrs) {
                 $(element).selectize()[0].selectize.destroy();
 
                 var selectize = $(element).selectize({
@@ -99,11 +99,11 @@
                 })[0].selectize;
 
 
-                scope.$watch('tagsmodel', function (newValue, oldValue) {
-                    attrs.$observe('tagsmodel', function (value) {
+                scope.$watch('tagsmodel', function(newValue, oldValue) {
+                    attrs.$observe('tagsmodel', function(value) {
                         if (value) {
                             var json = angular.fromJson(value);
-                            setTimeout(function () {
+                            setTimeout(function() {
                                 selectize.addOption(json);
                             }, 300);
 
@@ -111,11 +111,11 @@
                     })
 
                 })
-                scope.$watch('tagsmodel', function (newValue, oldValue) {
-                    attrs.$observe('tagsselected', function (value) {
+                scope.$watch('tagsmodel', function(newValue, oldValue) {
+                    attrs.$observe('tagsselected', function(value) {
                         if (value) {
                             var json = angular.fromJson(value);
-                            setTimeout(function () {
+                            setTimeout(function() {
                                 selectize.setValue(json);
                             }, 700);
                         }
@@ -125,11 +125,11 @@
             }
         };
     }]);
-    app.directive('selectTwo', ['$parse', function ($parse, $scope) {
+    app.directive('selectTwo', ['$parse', function($parse, $scope) {
         return {
             restrict: 'A',
-            link: function (scope, element, attrs) {
-                setTimeout(function () {
+            link: function(scope, element, attrs) {
+                setTimeout(function() {
                     var selectize = $(element).selectize({
                         create: false,
                         placeholder: attrs.placeholder
@@ -142,13 +142,13 @@
         };
     }]);
 
-    app.directive('selectTwoAjax', ['$timeout', '$parse', '$cookieStore', '$http', 'jwtHelper', '$location', 'Alertify', function ($timeout, $parse, $cookieStore, $http, jwtHelper, $location, Alertify, $scope, $rootScope) {
+    app.directive('selectTwoAjax', ['$timeout', '$parse', '$cookieStore', '$http', 'jwtHelper', '$location', 'Alertify', function($timeout, $parse, $cookieStore, $http, jwtHelper, $location, Alertify, $scope, $rootScope) {
         return {
             restrict: 'A',
             scope: {
                 modelValue: '@ngModel'
             },
-            link: function (scope, element, attrs, rootScope) {
+            link: function(scope, element, attrs, rootScope) {
                 var token = $cookieStore.get('adminglob').currentUser.token;
                 var token_auth = $cookieStore.get('globals').currentConsumer.token;
 
@@ -167,12 +167,12 @@
                     searchField: attrs.key,
                     placeholder: attrs.placeholder,
                     create: attrs.create,
-                    onInitialize: function () {
+                    onInitialize: function() {
                         if (!angular.isUndefined(attrs.dis) && attrs.dis == 'disabled') {
                             this.disable();
                         }
                     },
-                    onOptionAdd: function (a, item, talvez) {
+                    onOptionAdd: function(a, item, talvez) {
 
                         if (attrs.create) {
                             if (item.name == item.id) {
@@ -190,7 +190,7 @@
                                     data: {
                                         name: "" + name
                                     },
-                                    success: function (resp) {
+                                    success: function(resp) {
                                         selectize.removeOption(name);
                                         selectize.refreshOptions();
                                         selectize.addOption({
@@ -201,7 +201,7 @@
                                         selectize.refreshOptions();
 
                                     },
-                                    error: function (resp) {
+                                    error: function(resp) {
                                         Alertify.alert('El tag que desea agregar ya existe.');
                                         selectize.refreshOptions();
                                         selectize.removeOption(name);
@@ -213,7 +213,7 @@
                         }
                     },
                     render: {
-                        option: function (item, escape) {
+                        option: function(item, escape) {
                             var name = eval("item." + attrs.key);
                             return '<div>' +
                                 '<span class="title">' +
@@ -222,21 +222,27 @@
                                 '</div>';
                         }
                     },
-                    load: function (query, callback) {
+                    load: function(query, callback) {
                         if (!query.length)
                             return callback();
+
+                        var urlStr = scope.$root.url + '/' + attrs.modelname + '?condition=AND&deletedAt=null&';
+                        if (attrs.condition) {
+                            urlStr += attrs.condition + '&';
+                        }
+                        urlStr += attrs.key + '=' + encodeURIComponent(query);
 
                         $.ajax({
                             headers: {
                                 'Authorization': 'Bearer ' + token_auth,
                                 'x-admin-authorization': token,
                             },
-                            url: scope.$root.url + '/' + attrs.modelname + '?condition=AND&deletedAt=null&' + attrs.key + '=' + encodeURIComponent(query), // + '"}}&rand=' + Math.random(),
+                            url: urlStr,
                             type: 'GET',
-                            error: function () {
+                            error: function() {
                                 callback('error');
                             },
-                            success: function (res) {
+                            success: function(res) {
                                 callback(res.data.slice(0, 10));
                             }
                         });
@@ -249,9 +255,9 @@
 
                 var selectizes = $(element).selectize(data_selectize);
 
-                attrs.$observe("model", function (newValue) {
+                attrs.$observe("model", function(newValue) {
                     if (!!newValue) {
-                        setTimeout(function () {
+                        setTimeout(function() {
                             try {
                                 var jsonValue = angular.fromJson(newValue);
                                 var selectize = selectizes[0].selectize;
@@ -292,11 +298,11 @@
         };
     }]);
 
-    app.directive('selectTwoDefault', ['$parse', function ($parse, $scope) {
+    app.directive('selectTwoDefault', ['$parse', function($parse, $scope) {
 
         return {
             restrict: 'A',
-            link: function (scope, element, attrs) {
+            link: function(scope, element, attrs) {
                 var selectize = $(element).selectize({
                     create: false,
                     placeholder: attrs.placeholder,
@@ -307,11 +313,11 @@
         };
     }]);
 
-    app.directive('selectStaticAjax', ['$parse', '$cookieStore', 'jwtHelper', '$location', function ($parse, $cookieStore, jwtHelper, $location, $scope) {
+    app.directive('selectStaticAjax', ['$parse', '$cookieStore', 'jwtHelper', '$location', function($parse, $cookieStore, jwtHelper, $location, $scope) {
         return {
             restrict: 'A',
             template: '<option value="{{ opt.id }}" ng-repeat="opt in options">{{ opt.name }}</option>',
-            link: function (scope, element, attrs, rootScope) {
+            link: function(scope, element, attrs, rootScope) {
 
                 scope.options = [{
                     id: '',
@@ -332,9 +338,9 @@
                     },
                     url: scope.$root.url + '/' + attrs.modelname + '?deletedAt=null',
                     type: 'GET',
-                    error: function () {
+                    error: function() {
                     },
-                    success: function (res) {
+                    success: function(res) {
                         if (res.data) {
                             scope.options = scope.options.concat(res.data.slice(0, 10));
                         } else {
@@ -388,11 +394,11 @@
      */
 
 
-    app.directive('fileUpload', function () {
+    app.directive('fileUpload', function() {
         return {
             scope: true, //create a new scope
-            link: function (scope, el, attrs) {
-                el.bind('change', function (event) {
+            link: function(scope, el, attrs) {
+                el.bind('change', function(event) {
                     var files = event.target.files;
                     //iterate files since 'multiple' may be specified on the element
                     for (var i = 0; i < files.length; i++) {
@@ -406,37 +412,37 @@
         };
     });
 
-    app.controller('ctrlUpload', ['$scope', 'fileUpload', function ($scope, fileUpload, $rootScope) {
-        $scope.uploadFile = function () {
+    app.controller('ctrlUpload', ['$scope', 'fileUpload', function($scope, fileUpload, $rootScope) {
+        $scope.uploadFile = function() {
             var file = $scope.file;
             var uploadUrl = $scope.url + "/files";
             fileUpload.uploadFileToUrl(file, uploadUrl);
         };
     }]);
 
-    app.filter('urlEncode', [function () {
+    app.filter('urlEncode', [function() {
         return window.encodeURIComponent;
     }]);
-    app.filter('capitalize', function () {
-        return function (input) {
+    app.filter('capitalize', function() {
+        return function(input) {
             return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
         }
     });
 
-    app.filter('generalize', function () {
-        return function (input) {
+    app.filter('generalize', function() {
+        return function(input) {
             return (input.slice(-1) == "a" || input.slice(-1) == "n") ? "A" : "AN";
         }
     });
 
-    app.filter('selectedOption', function () {
-        return function (element, tag) {
+    app.filter('selectedOption', function() {
+        return function(element, tag) {
             // return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
         }
     });
 
-    app.filter('selectFilterArray', function () {
-        return function (input, model) {
+    app.filter('selectFilterArray', function() {
+        return function(input, model) {
 
             /*
              var output;
@@ -450,7 +456,7 @@
 
             // return $("#" + model + " option:selected").text();
 
-            var result = $.map($("#" + model + " option:selected"), function (el, i) {
+            var result = $.map($("#" + model + " option:selected"), function(el, i) {
                 return $(el).text();
             });
 
@@ -459,8 +465,8 @@
 
     });
 
-    app.filter('truncString', function () {
-        return function (input) {
+    app.filter('truncString', function() {
+        return function(input) {
             var add = '...';
             var max = 26;
             var str = input;
@@ -469,8 +475,8 @@
     });
 
 
-    app.filter('md5', function () {
-        return function (input) {
+    app.filter('md5', function() {
+        return function(input) {
             var add = '...';
             var max = 26;
             var str = input;
@@ -478,17 +484,17 @@
         }
     });
 
-    app.filter('inArray', function () {
-        return function (array, value) {
+    app.filter('inArray', function() {
+        return function(array, value) {
             return array.indexOf(value) !== -1;
         };
     });
 
-    app.directive("backButton", ["$window", function ($window) {
+    app.directive("backButton", ["$window", function($window) {
         return {
             restrict: "A",
-            link: function (scope, elem, attrs) {
-                elem.bind("click", function (e) {
+            link: function(scope, elem, attrs) {
+                elem.bind("click", function(e) {
                     if (attrs.ngClick || attrs.href === '' || attrs.href == '#') {
                         e.preventDefault();
                         e.stopPropagation();
@@ -501,10 +507,10 @@
         };
     }]);
 
-    app.directive("checkbox", ["$window", function ($window) {
+    app.directive("checkbox", ["$window", function($window) {
         return {
             restrict: "A",
-            link: function (scope, elem, attrs) {
+            link: function(scope, elem, attrs) {
                 $(elem).iCheck({
                     checkboxClass: 'icheckbox_square-blue',
                     radioClass: 'iradio_square-blue',
@@ -514,11 +520,11 @@
         };
     }]);
 
-    app.directive("addOptionButton", ["$window", function ($window) {
+    app.directive("addOptionButton", ["$window", function($window) {
         return {
             restrict: "A",
-            link: function (scope, elem, attrs) {
-                elem.bind("click", function () {
+            link: function(scope, elem, attrs) {
+                elem.bind("click", function() {
 
 
                     var option = $("#option1").html();
@@ -531,20 +537,20 @@
         };
     }]);
 
-    app.directive('confirmClick', function ($window) {
+    app.directive('confirmClick', function($window) {
         var i = 0;
         return {
             restrict: 'A',
             priority: 1,
-            compile: function (tElem, tAttrs) {
+            compile: function(tElem, tAttrs) {
                 var fn = '$$confirmClick' + i++,
                     _ngClick = tAttrs.ngClick;
                 tAttrs.ngClick = fn + '($event)';
 
-                return function (scope, elem, attrs) {
+                return function(scope, elem, attrs) {
                     var confirmMsg = attrs.confirmClick || 'Are you sure?';
 
-                    scope[fn] = function (event) {
+                    scope[fn] = function(event) {
                         if ($window.confirm(confirmMsg)) {
                             scope.$eval(_ngClick, {
                                 $event: event
@@ -556,13 +562,13 @@
         };
     });
 
-    app.directive('svgImg', function ($rootScope, $cookieStore, jwtHelper, $location) {
+    app.directive('svgImg', function($rootScope, $cookieStore, jwtHelper, $location) {
         return {
             restrict: 'A',
             scope: {
                 svgImg: '='
             },
-            link: function (scope, element, attrs) {
+            link: function(scope, element, attrs) {
                 var $element = jQuery(element);
                 var attributes = $element.prop("attributes");
 
@@ -586,7 +592,7 @@
                     type: 'GET',
                     dataType: 'xml',
                     url: $rootScope.url + '/categories/' + scope.svgImg + '/image',
-                    success: function (data) {
+                    success: function(data) {
                         // Get the SVG tag, ignore the rest
                         var $svg = jQuery(data).find('svg');
 
@@ -594,7 +600,7 @@
                         $svg = $svg.removeAttr('xmlns:a');
 
                         // Loop through IMG attributes and apply on SVG
-                        $.each(attributes, function () {
+                        $.each(attributes, function() {
                             $svg.attr(this.name, this.value);
                         });
 
