@@ -50,9 +50,9 @@
                         <button back-button class="btn btn-default pull-left">
                             {{ 'BACK' | translate }}
                         </button>
-                        <button type="submit" class="btn btn-primary pull-right" ng-click="edit(model)">{{ 'EDIT' | translate }}</button>
-                        <a ng-if="model.deletedAt" class="pull-right btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="activeModel($event)">{{ 'ACTIVATE' | translate }}</a>
-                        <a ng-if="!model.deletedAt" class="pull-right btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="inactiveModel($event)">{{ 'INACTIVATE' | translate }}</a>
+                        <button type="submit" class="btn btn-primary pull-right" ng-click="edit(model)" permission permission-except="roles.GUEST">{{ 'EDIT' | translate }}</button>
+                        <a ng-if="model.deletedAt" class="pull-right btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="activeModel($event)" permission permission-except="roles.GUEST">{{ 'ACTIVATE' | translate }}</a>
+                        <a ng-if="!model.deletedAt" class="pull-right btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="inactiveModel($event)" permission permission-except="roles.GUEST">{{ 'INACTIVATE' | translate }}</a>
                     </div>
                 </div>
 

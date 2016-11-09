@@ -222,7 +222,7 @@
                                     {{ 'FROM_FILE' | translate }}
                                 </a>
                             </li>
-                            <li ng-class="{active: isActive('/webservices/new/:dataset?')}" class="treeview">
+                            <li ng-class="{active: isActive('/webservices/new/:dataset?')}" class="treeview" permission permission-except="roles.GUEST">
                                 <!--  ng-class="{active: isActive('/files/new/dataset/ws?')}" -->
                                 <a ng-href="#/webservices/new">
                                     {{ 'FROM_WEBSERVICE' | translate }}
@@ -665,7 +665,7 @@
 
             <!--Under Review-->
             <li ng-class="{active: isActive('/underreview') || isActive('/underreview/files') || isActive('/underreview/charts') || isActive('/underreview/maps')}"
-                class="treeview" permission permission-except="roles.ADMIN">
+                class="treeview" permission permission-except="roles.GUEST">
                 <a ng-href="javascript:void(0)">
                     <svg version="1.1" id="filetypes-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
