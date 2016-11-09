@@ -237,7 +237,7 @@
             }).when("/categories/:id/view", {
                 templateUrl: "views/category/view.html",
                 controller: CategoryViewController
-            }).when("/categories/new", {
+            }).when("/categories/new/:category?", {
                 templateUrl: "views/category/add.html",
                 controller: CategoryCreateController
             }).when("/categories/:id/edit", {

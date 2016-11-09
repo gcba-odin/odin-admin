@@ -5,7 +5,7 @@
     <section class="content">
         <div class="box-header with-border">
             <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} <b>{{ 'CATEGORY' | translate }}</b></h3>
-            <a ng-href="#/categories/new" ng-if="!model.parent" class="btn-primary btn pull-right">{{ 'ADD' | translate }} {{ 'SUBCATEGORY' | translate }}</a>
+            <a ng-href="#/categories/new/{{model.id}}" ng-if="!model.parent" class="btn-primary btn pull-right">{{ 'ADD' | translate }} {{ 'SUBCATEGORY' | translate }}</a>
             <button ng-if="model.subcategories.length > 0" data-toggle="modal" data-target="#viewLinkSubcategories" class="btn btn-default pull-right margin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_SUBCATEGORIES' | translate }}</button>
         </div>
         <div class="row">

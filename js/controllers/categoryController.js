@@ -146,7 +146,7 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
     });
 }
 
-function CategoryCreateController($scope, rest, model, Flash, $location, $rootScope, Alertify, modelService, Upload, usSpinnerService) {
+function CategoryCreateController($scope, rest, $routeParams, model, Flash, $location, $rootScope, Alertify, modelService, Upload, usSpinnerService) {
     modelService.initService("Category", "categories", $scope);
 
     $scope.fileModel = [];
@@ -188,6 +188,7 @@ function CategoryCreateController($scope, rest, model, Flash, $location, $rootSc
                 'description': $scope.model.description,
                 'color': $scope.model.color,
                 'uploadImage': $scope.model.uploadImage,
+                'parent': $scope.model.parent
             };
 
             Upload.upload({
@@ -243,6 +244,9 @@ function CategoryCreateController($scope, rest, model, Flash, $location, $rootSc
         placeholder: 'Seleccione un color',
     };
 
+    if (!angular.isUndefined($routeParams.category)) {
+        $scope.model.parent = $routeParams.category;
+    }
 }
 
 function valorCheckbox(valor) {
