@@ -1,0 +1,83 @@
+<!-- Input name -->
+<div class="form-group">
+    <label for="name" class="col-sm-2 control-label">*
+        {{ 'NAME' | translate }}</label>
+    <div class="col-sm-10" ng-class="{ 'has-error': form.name.$touched && form.name.$invalid }">
+        <input type="text" ng-model="model.name" name="name" class="form-control" id="name" placeholder="{{ 'PLACE' | translate }} {{ 'NAME' | translate }} {{ 'HERE' | translate }}" required/>
+        <div class="help-block" ng-messages="form.name.$error" ng-if="form.name.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input name -->
+
+<!-- Input color -->
+<div class="form-group">
+    <label for="color" class="col-sm-2 control-label">{{ 'COLOR' | translate }}</label>
+    <div class="col-sm-10" ng-class="{ 'has-error': form.color.$touched && form.color.$invalid }">
+        <color-picker ng-model="model.color" options="options_color"></color-picker>
+        <div class="help-block" ng-messages="form.color.$error" ng-if="form.color.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input color -->
+
+<!-- FILE -->
+<div class="form-group">
+    <label for="uploadImage" class="col-sm-2 control-label">{{ 'IMAGE' | translate }}</label>
+    <div class="col-sm-10" ng-class="{ 'has-error': form.uploadImage.$touched && form.uploadImage.$invalid}" uib-tooltip="Sólo se permite subir un archivo de extensión .svg" tooltip-placement="top">
+        <div
+            class="form-control file-upload"
+            ngf-select
+            ng-model="model.uploadImage"
+            name="uploadImage"
+            ngf-pattern="'image/svg+xml'"
+            ngf-accept="'image/svg+xml'"
+            ngf-max-size="500KB"
+            ngf-min-size="100"
+            ngf-resize="{width: 100, height: 100}"
+            ngf-before-model-change="beforeChange($files)">
+            <i class="fa fa-link fa-flip-horizontal" aria-hidden="true"></i>
+            {{'ATTACH_IMAGE' | translate}}</div>
+        <div class="panel-body docuemnts-upload">
+            <div class="row" ng-if="fileModel.name">
+
+                <div class="col-xs-2 typeImageUpload">
+                    <i class="fa {{fileModel.type}}" aria-hidden="true"></i>
+                </div>
+                <div class="col-xs-8">
+                    <h4>{{fileModel.name}}</h4>
+                </div>
+                <div class="col-xs-2 close" ng-click="clearUpload()" ng-if="mostrar">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end FILE -->
+
+<!-- Input DESCRIPTION -->
+<div class="form-group">
+    <label for="description" class="col-sm-2 control-label">*
+        {{ 'DESCRIPTION' | translate }}</label>
+    <div class="col-sm-10" ng-class="{ 'has-error': form.description.$touched && form.description.$invalid }">
+        <textarea class="form-control" id="description" ready="onReady()" ckeditor="options" ng-model="model.description" name="description" required></textarea>
+        <div class="help-block" ng-messages="form.description.$error" ng-if="form.description.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input DESCRIPTION -->
+
+<!-- Button save  -->
+<div class="box-footer">
+    <div class="col-sm-12">
+        <button type="button" back-button class="btn btn-default pull-left">
+            {{ 'BACK' | translate }}
+        </button>
+        <input type="submit" class="btn btn-primary pull-right" value="{{ 'SAVE' | translate }}"/>
+    </div>
+</div>
+<!-- end Button save -->

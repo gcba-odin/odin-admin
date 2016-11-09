@@ -1,0 +1,36 @@
+<!-- Input name -->
+<div class="form-group">
+    <label for="title" class="col-sm-2 control-label">* {{ 'NAME' | translate }}</label>
+    <div class="col-sm-10" ng-class="{ 'has-error': form.name.$touched && form.name.$invalid }">
+        <input type="text" ng-model="model.name" name="name" class="form-control" id="title" placeholder="{{ 'PLACE' | translate }} {{ 'NAME' | translate }} {{ 'HERE' | translate }}" required />
+        <div class="help-block" ng-messages="form.name.$error" ng-if="form.name.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input username -->
+
+<!-- Input mimetype -->
+<div class="form-group">
+    <label for="mimetype" class="col-sm-2 control-label">* {{ 'MIMETYPE' | translate }}</label>
+    <div class="col-sm-10" id="mimetype_select" ng-class="{ 'has-error': form.mimetypes.$touched && form.mimetypes.$invalid }" uib-tooltip="Es el formato real del archivo, más allá de su extensión.">
+        <select ng-show="(mimetypes && (edit && model.mimetype) || (create))" placeholder="{{ 'SELECT_ONE' | translate }}" name="mimetype" id="mimetype" class="selectize-width" ng-model="model.mimetype" select-two required multiple>
+            <option value="{{mimetype}}" ng-repeat="mimetype in mimetypes" ng-selected="inArray(mimetype, model.mimetype)">{{ mimetype}}</option>
+        </select>
+        <div class="help-block" ng-messages="form.mimetypes.$error" ng-if="form.mimetypes.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input mimetype -->
+
+<!-- Button save  -->
+<div class="box-footer">
+    <div class="col-sm-12">
+        <button type="button" back-button class="btn btn-default pull-left">
+            {{ 'BACK' | translate }}
+        </button>
+        <input type="submit" class="btn btn-primary pull-right" value="{{ 'SAVE' | translate }}" ng-disabled="form.$invalid" />
+    </div>
+</div>
+<!-- end Button save -->

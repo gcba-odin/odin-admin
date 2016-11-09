@@ -1,0 +1,48 @@
+<!-- Input chart dataType -->
+<div class="form-group">
+    <label for="dataType" class="col-sm-2 control-label">* {{ 'CHART_SUBTYPE' | translate }}</label>
+    <div class="col-sm-10" ng-class="{ 'has-error': form.dataType.$touched && form.dataType.$invalid }">
+        <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" name="dataType" id="dataType" ng-model="model.dataType" class="selectize-input items required full has-options has-items" required>
+            <option value="">Seleccione una opción</option>
+            <option value="quantitative">Cuantitativo</option>
+            <option value="qualitative">Cualitativo</option>
+        </select>
+
+        <div class="help-block" ng-messages="form.dataType.$error" ng-if="form.dataType.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input chart subtype -->
+
+<!-- Input element -->
+<div class="form-group" ng-if="!!model.dataType">
+    <label for="items[0]" class="col-sm-2 control-label">* {{ 'ELEMENT' | translate }}</label>
+    <div class="col-sm-10" ng-class="{ 'has-error': form.items[0].$touched && form.items[0].$invalid }">
+        <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" name="items[0]" id="items[0]" ng-model="model.items[0].field2" class="selectize-input items required full has-options has-items" required>
+            <option value="">Seleccione una opción</option>
+            <option value="{{ header.id}}" ng-repeat="header in headersFile">{{ header.name}}</option>
+        </select>
+
+        <div class="help-block" ng-messages="form.items[0].$error" ng-if="form.items[0].$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input element -->
+
+<!-- Input element -->
+<div class="form-group" ng-if="!!model.dataType && model.dataType == 'quantitative'">
+    <label for="items[1]" class="col-sm-2 control-label">* {{ 'ELEMENT' | translate }}</label>
+    <div class="col-sm-10" ng-class="{ 'has-error': form.items[1].$touched && form.items[1].$invalid }">
+        <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" name="items[1]" id="items[1]" ng-model="model.items[1].field2" class="selectize-input items required full has-options has-items" required>
+            <option value="">Seleccione una opción</option>
+            <option value="{{ header.id}}" ng-repeat="header in headersFile">{{ header.name}}</option>
+        </select>
+
+        <div class="help-block" ng-messages="form.items[1].$error" ng-if="form.items[1].$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input element -->

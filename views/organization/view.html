@@ -1,0 +1,56 @@
+<header-home></header-home>
+<div class="content-wrapper">
+    <breadcrumbs data-type="{{ 'VIEW' | translate }}" data-model-name="{{ 'ORGANIZATIONS' | translate }}" data-model="{{type}}"></breadcrumbs>
+    <!-- Main content -->
+    <section class="content">
+      <div class="box-header with-border">
+          <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} <b>{{model.name}}</b></h3>
+      </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table usertable">
+                            <tr ng-if="model.name">
+                                <td class="detail-bold">{{ 'NAME' | translate }}</td>
+                                <td>{{model.name}}</td>
+                            </tr>
+                            <tr ng-if="model.description">
+                                <td class="detail-bold">{{ 'DESCRIPTION' | translate }}</td>
+                                <td ng-bind-html="getHtml(model.description)"></td>
+                            </tr>
+                            <tr ng-if="model.address">
+                                <td class="detail-bold">{{ 'ADDRESS' | translate }}</td>
+                                <td ng-bind-html="getHtml(model.address)"></td>
+                            </tr>
+                            <tr ng-if="model.createdBy">
+                                <td class="detail-bold">{{ 'CREATED_BY' | translate }} </td>
+                                <td><a ng-href="#/users/{{model.createdBy.id}}/view">{{model.createdBy.username}}</a></td>
+                            </tr>
+                            <tr ng-if="model.createdAt">
+                                <td class="detail-bold">{{ 'CREATED_AT' | translate }}</td>
+                                <td>{{model.createdAt| date:'MMM d, y h:mm:ss a'}}</td>
+                            </tr>
+                            <tr ng-if="model.updatedAt">
+                                <td class="detail-bold">{{ 'UPDATED_AT' | translate }}</td>
+                                <td>{{model.updatedAt| date:'MMM d, y h:mm:ss a'}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <button back-button class="btn btn-default pull-left">
+                            {{ 'BACK' | translate }}
+                        </button>
+                        <button type="submit" class="btn btn-primary pull-right" ng-click="edit(model)">{{ 'EDIT' | translate }}</button>
+                        <a ng-if="model.deletedAt" class="pull-right btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="activeModel($event)">{{ 'ACTIVATE' | translate }}</a>
+                        <a ng-if="!model.deletedAt" class="pull-right btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="inactiveModel($event)">{{ 'INACTIVATE' | translate }}</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!--  Main content-->
+</div>
+<footer-home></footer-home>

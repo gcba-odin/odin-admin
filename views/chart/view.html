@@ -1,0 +1,89 @@
+<header-home></header-home>
+<div class="content-wrapper">
+    <breadcrumbs data-type="{{ 'VIEW' | translate }}" data-model-name="{{ 'CHARTS' | translate }}" data-model="{{type}}"></breadcrumbs>
+    <!-- Main content -->
+    <section class="content">
+      <div class="box-header with-border">
+          <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} {{ model.name}}</h3>
+          <button ng-click="unPublish()" ng-if="model.status.id == statuses.published" class="pull-right btn btn-primary">{{ 'UNPUBLISH' | translate }}</button>
+          <button ng-click="publish()" ng-if="model.status.id !== statuses.published" class="pull-right btn btn-primary">{{ 'PUBLISH' | translate }}</button>
+      </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table usertable">
+                            <tr ng-if="model.name">
+                                <td class="detail-bold">{{ 'NAME' | translate }}</td>
+                                <td>{{model.name}}</td>
+                            </tr>
+                            <tr ng-if="model.description">
+                                <td class="detail-bold">{{ 'DESCRIPTION' | translate }}</td>
+                                <td ng-bind-html="getHtml(model.description)"></td>
+                            </tr>
+                            <tr ng-if="model.file">
+                                <td class="detail-bold">{{ 'FILE' | translate }}</td>
+                                <td><a ng-href="#/files/{{model.file.id}}/view">{{model.file.name}}</a></td>
+                            </tr>
+                            <tr ng-if="model.status">
+                                <td class="detail-bold">{{ 'STATUS' | translate }}</td>
+                                <td>{{model.status.name}}</td>
+                            </tr>
+                            <tr ng-if="model.createdBy">
+                                <td class="detail-bold">{{ 'CREATED_BY' | translate }} </td>
+                                <td><a ng-href="#/users/{{model.createdBy.id}}/view">{{model.createdBy.username}}</a></td>
+                            </tr>
+                            <tr ng-if="model.createdAt">
+                                <td class="detail-bold">{{ 'CREATED_AT' | translate }}</td>
+                                <td>{{model.createdAt| date:'MMM d, y h:mm:ss a'}}</td>
+                            </tr>
+                            <tr ng-if="model.publishedAt">
+                                <td class="detail-bold">{{ 'PUBLISHED_AT' | translate }}</td>
+                                <td>{{model.publishedAt| date:'MMM d, y h:mm:ss a' }}</td>
+                            </tr>
+                            <tr ng-if="model.updatedAt">
+                                <td class="detail-bold">{{ 'UPDATED_AT' | translate }}</td>
+                                <td>{{model.updatedAt| date:'MMM d, y h:mm:ss a'}}</td>
+                            </tr>
+                            <tr ng-if="model.notes">
+                                <td class="detail-bold">{{ 'NOTES' | translate }}</td>
+                                <td ng-bind-html="getHtml(model.notes)"></td>
+                            </tr>
+                            <tr ng-if="model.link">
+                                <td class="detail-bold">{{ 'URL' | translate }}</td>
+                                <td><a target="_blank" ng-href="{{model.link}}">{{model.link}}</a></td>
+                            </tr>
+                            <tr ng-if="model.type && !model.link">
+                                <td class="detail-bold">{{ 'TYPE' | translate }}</td>
+                                <td>{{model.type| translate}}</td>
+                            </tr>
+
+                            <tr ng-if="model.dataType && !model.link">
+                                <td class="detail-bold">{{ 'CHART_SUBTYPE' | translate }}</td>
+                                <td>{{model.dataType| translate}}</td>
+                            </tr>
+                            <!--<tr ng-repeat="(key, val) in model.optionals">
+                                <td class="detail-bold">{{key}}</td>
+                                <td>{{val}}</td>
+                            </tr>-->
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <button back-button class="btn btn-default pull-left">
+                            {{ 'BACK' | translate }}
+                        </button>
+                        <div class="pull-right">
+                            <a class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)">{{ 'DELETE' | translate }}</a>
+                            <button type="submit" class="btn btn-primary" ng-click="edit(model)">{{ 'EDIT' | translate }}</button>
+                            <a class="btn btn-primary" ng-href="#/charts/preview/{{ model.id}}">{{ 'PREVIEW' | translate }}</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</div>
+<footer-home></footer-home>

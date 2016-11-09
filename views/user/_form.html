@@ -1,0 +1,93 @@
+<!-- Input username -->
+<div class="form-group">
+    <label for="username" class="col-sm-2 control-label">* {{ 'USER_NAME' | translate }}</label>
+    <div class="col-sm-10"  ng-class="{ 'has-error': form.username.$touched && form.username.$invalid }">
+        <input ng-change="model.username = model.username.split(' ').join('')" type="text" ng-model="model.username" id="username" name="username" class="form-control" id="title" placeholder="{{ 'PLACE' | translate }} {{ 'USER_NAME' | translate }} {{ 'HERE' | translate }}" required />
+        <div class="help-block" ng-messages="form.username.$error" ng-if="form.username.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input username -->
+
+<!-- Input firstName -->
+<div class="form-group">
+    <label for="firstName" class="col-sm-2 control-label">* {{ 'FIRST_NAME' | translate }}</label>
+    <div class="col-sm-10"  ng-class="{ 'has-error': form.firstName.$touched && form.username.$invalid }">
+        <input type="text" ng-model="model.firstName" id="firstName" name="firstName" class="form-control" id="title" placeholder="{{ 'PLACE' | translate }} {{ 'FIRST_NAME' | translate }} {{ 'HERE' | translate }}" required />
+        <div class="help-block" ng-messages="form.firstName.$error" ng-if="form.firstName.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input firstName -->
+
+<!-- Input lastName -->
+<div class="form-group">
+    <label for="lastName" class="col-sm-2 control-label">* {{ 'LAST_NAME' | translate }}</label>
+    <div class="col-sm-10"  ng-class="{ 'has-error': form.lastName.$touched && form.lastName.$invalid }">
+        <input type="text" ng-model="model.lastName" id="lastName" name="lastName" class="form-control" id="title" placeholder="{{ 'PLACE' | translate }} {{ 'LAST_NAME' | translate }} {{ 'HERE' | translate }}" required />
+        <div class="help-block" ng-messages="form.lastName.$error" ng-if="form.lastName.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input lastName -->
+
+<!-- Input email -->
+<div class="form-group" ng-class="{ 'has-error': form.email.$touched && form.email.$invalid }">
+    <label for="email" class="col-sm-2 control-label">* {{ 'EMAIL' | translate }}</label>
+    <div class="col-sm-10">
+        <input  type="email"   name="email"  ng-model="model.email" autocomplete="false" id="email"   class="form-control" id="title" placeholder="{{ 'PLACE' | translate }} {{ 'EMAIL' | translate }} {{ 'HERE' | translate }}" required/>
+        <div class="help-block" ng-messages="form.email.$error" ng-if="form.email.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input email -->
+
+<!-- Input organization -->
+<div class="form-group">
+    <label for="organization" class="col-sm-2 control-label">* {{ 'ORGANIZATION' | translate }}</label>
+    <div class="col-sm-10"  ng-class="{ 'has-error': form.organization.$touched && form.organization.$invalid }">
+        <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="organizations" data-model="{{model.organization}}" select-two-ajax  name="organization" id="organization"
+                ng-model="model.organization" required  class="selectize-width">
+        </select>
+
+        <div class="help-block" ng-messages="form.organization.$error" ng-if="form.organization.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input organization -->
+
+<!-- Input Password -->
+<div class="form-group" ng-class="{ 'has-error': form.password.$touched && form.password.$invalid }">
+    <label for="password" class="col-sm-2 control-label">* {{ 'PASSWORD' | translate }}</label>
+    <div class="col-sm-10">
+        <input ng-pattern="/^(?=.*?[A-Za-z0-9^\w\s]).{8,20}$/" value=" " type="password" id="password" ng-model="model.password" autocomplete="false"  name="password" class="form-control" id="title" placeholder="{{ 'PLACE' | translate }} {{ 'PASSWORD' | translate }} {{ 'HERE' | translate }}"/>
+        <div class="help-block has-error" ng-show="form.password.$error.pattern">{{ 'ERROR_PASS' | translate }}</div>
+    </div>
+</div>
+<!-- end Input Password -->
+
+<!-- Input Confirm Password -->
+<div class="form-group" ng-class="{ 'has-error': form.passwordConfirm.$touched && form.passwordConfirm.$invalid && form.passwordConfirm.$error.match}">
+    <label for="passwordConfirm" class="col-sm-2 control-label">* {{ 'CONFIRM_PASSWORD' | translate }}</label>
+    <div class="col-sm-10">
+        <input name="passwordConfirm" ng-model="model.passwordConfirm" type="password" match="model.password" id="passwordConfirm" autocomplete="false" class="form-control" placeholder="{{ 'PLACE' | translate }} {{ 'CONFIRM_PASSWORD' | translate }} {{ 'HERE' | translate }}"/>
+        <div class="help-block has-error" ng-show="form.passwordConfirm.$error.match && !form.password.$error.pattern">{{ 'ERROR_CONFIRM_PASS' | translate }}</div>
+    </div>
+</div>
+<!-- end Input Confirm Password -->
+
+<!-- Button save  -->
+<div class="box-footer"> 
+    <div class="col-sm-12">
+        <button type="button" back-button class="btn btn-default pull-left">
+            {{ 'BACK' | translate }}
+        </button>
+        <input type="submit"  class="btn btn-primary pull-right" value="{{ 'SAVE' | translate }}" ng-disabled="form.$invalid"/>
+    </div>
+</div> 
+<!-- end Button save -->

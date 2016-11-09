@@ -1,0 +1,114 @@
+<header-home></header-home>
+<div class="content-wrapper">
+    <breadcrumbs data-type="{{ 'ADD' | translate }}" data-model-name="{{ 'MAPS' | translate }}" data-model="{{type}}"></breadcrumbs>
+    <!-- Main content -->
+    <section class="content">
+      <div class="box-header with-border">
+          <h3 class="box-title">{{ 'ADD' | translate }}
+              {{ 'MAP' | translate }}</h3>
+      </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="row">
+                        <div class="col-xs-12">
+
+                            <ul class="steps">
+                                <li ng-class="step(0)" ng-click="checkstep(0)" class=" col-xs-4">
+                                    <p>
+                                        1.
+                                        {{ 'DATA_OF_MAP' | translate | uppercase }}</p>
+                                </li>
+                                <li ng-class="step(1)" ng-click="checkstep(1)" class=" col-xs-4">
+                                    <p>
+                                        2.
+                                        {{ 'SELECT_FIELDS' | translate | uppercase }}</p>
+                                </li>
+                                <li ng-class="step(2)" ng-click="checkstep(2)" class=" col-xs-4">
+                                    <p>
+                                        3.
+                                        {{ 'REVISION' | translate | uppercase }}</p>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                    <div class="row" ng-show="stepactive == 0">
+                        <div class="col-xs-12">
+                            <form autocomplete="off" class="form-horizontal" name="form1" autocomplete="false" role="form" novalidate>
+                                <div class="box-body" ng-include="'views/map/_form_step1.html'"></div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row" ng-show="stepactive == 1">
+                        <div class="col-xs-12">
+                            <form autocomplete="off" enctype="multipart/form-data" class="form-horizontal" name="form2" autocomplete="false" role="form" novalidate>
+                                <div class="box-body" ng-include="'views/map/_form_step2.html'"></div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row" ng-show="stepactive == 2">
+                        <div class="col-md-12">
+                            <div class="box box-primary">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">{{ 'DETAILS_FOR' | translate }}</h3>
+                                </div>
+                                <div class="box-body table-responsive no-padding">
+                                    <table class="table usertable">
+                                        <tr ng-if="model.name">
+                                            <td class="detail-bold">{{ 'NAME' | translate }}</td>
+                                            <td>{{model.name}}</td>
+                                        </tr>
+                                        <tr ng-if="model.description">
+                                            <td class="detail-bold">{{ 'DESCRIPTION' | translate }}</td>
+                                            <td ng-bind-html="getHtml(model.description)"></td>
+                                        </tr>
+                                        <tr ng-if="model.link">
+                                            <td class="detail-bold">{{ 'URL' | translate }}</td>
+                                            <td>
+                                                <a target="_blank" ng-href="{{model.link}}">{{model.link}}</a>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="model.basemap && !model.link">
+                                            <td class="detail-bold">{{ 'BASE_MAP' | translate }}</td>
+                                            <td>{{model.basemap| selectFilterArray:'basemap'}}</td>
+                                        </tr>
+                                        <tr ng-if="model.latitudeKey && !model.link">
+                                            <td class="detail-bold">{{ 'LATITUDE' | translate }}</td>
+                                            <td>{{model.latitudeKey}}</td>
+                                        </tr>
+                                        <tr ng-if="model.longitudeKey && !model.link">
+                                            <td class="detail-bold">{{ 'LONGITUDE' | translate }}</td>
+                                            <td>{{model.longitudeKey}}</td>
+                                        </tr>
+                                        <tr ng-repeat="item in model.items" ng-if="!model.link">
+                                            <td class="detail-bold">{{ 'PROPERTY' | translate }}
+                                                {{increment($index)}}</td>
+                                            <td>{{item.field2}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <!-- /.box-body -->
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <button class="btn btn-default pull-left" back-button ng-if="stepactive == 0">
+                            {{ 'BACK' | translate }}
+                        </button>
+                        <button class="btn btn-default pull-left" ng-click="checkstep(stepactive - jump)" ng-if="stepactive != 0">
+                            {{ 'BACK' | translate }}
+                        </button>
+                        <button ng-if="stepactive != 2" type="submit" class="btn btn-primary pull-right" ng-click="checkstep(stepactive + 1)" ng-disabled="(form1.$invalid && stepactive == 0) || (form1.$invalid && form2.$invalid && stepactive == 1)">{{ 'NEXT' | translate }}</button>
+                        <button ng-if="stepactive == 2" type="submit" class="btn btn-primary pull-right" ng-click="add(model)">{{ 'SAVE' | translate }}</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--  Main content-->
+</div>
+<footer-home></footer-home>

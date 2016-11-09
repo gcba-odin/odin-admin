@@ -1,0 +1,107 @@
+<div class="row">
+    <!-- input data_url -->
+    <div class="form-group">
+        <label for="data_url" class="col-sm-2 control-label">{{'DATA_URL'| translate}}</label>
+        <div class="col-sm-10" ng-class="{'has-error': form1.data_url.$touched && form1.data_url.$invalid }">
+            <input type="text" id="data_url" ng-model="model.data_url" name="data_url" class="form-control" id="data_url" placeholder="{{ 'PLACE' | translate }} {{ 'DATA_URL' | translate }} {{ 'HERE' | translate }}"/>
+            <div class="help-block" ng-messages="form1.data_url.$error" ng-if="form1.data_url.$touched">
+                <div ng-messages-include="views/messages.html"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- input titlepath -->
+    <div class="form-group">
+        <label for="titlepath" class="col-sm-2 control-label">{{'TITLE_PATH'| translate}}</label>
+        <div class="col-sm-10" ng-class="{'has-error': form1.titlepath.$touched && form1.titlepath.$invalid }">
+            <input type="text" id="titlepath" ng-model="model.titlepath" name="titlepath" class="form-control" id="titlepath" placeholder="{{ 'PLACE' | translate }} {{ 'DATA_URL' | translate }} {{ 'HERE' | translate }}"/>
+            <div class="help-block" ng-messages="form1.titlepath.$error" ng-if="form1.titlepath.$touched">
+                <div ng-messages-include="views/messages.html"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- authentication type -->
+<div class="row">
+    <div class="form-group">
+        <label for="auth_type" class="col-sm-2 control-label">{{'AUTH_TYPE'| translate}}</label>
+        <div class="col-sm-10" ng-class="{'has-error': form1.auth_type.$touched && form1.auth_type.$invalid }">
+            <select data-key="auth_type" data-modelname="auth_type" data-model="{{model.auth_type}}" name="auth_type" id="auth_type" ng-model="model.auth_type" class="form-control" data-dis='{{auth_type_disabled}}'>
+                <option value="" default disabled selected="selected">{{ 'SELECT_OPTION' | translate }}</option>
+                <option value="token">{{'TOKEN'| translate}}</option>
+                <option value="user_password">{{ 'USER_PASSWORD' | translate }}</option>
+            </select>
+
+            <div class="help-block" ng-messages="form1.auth_type.$error" ng-if="form1.auth_type.$touched">
+                <div ng-messages-include="views/messages.html"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- token inputs -->
+<div class="row">
+    <div class="form-group" ng-if="model.auth_type == 'token'">
+        <label for="sign_name" class="col-sm-2 control-label">{{ 'FIRM_NAME' | translate }}</label>
+        <div class="col-sm-10" ng-class="{'has-error': form1.sign_name.$touched && form1.sign_name.$invalid }">
+            <input type="text" id="sign_name" ng-model="model.sign_name" name="sign_name" class="form-control" id="sign_name" placeholder="{{ 'WRITE' | translate }} {{ 'FIRM_NAME' | translate }} {{ 'HERE' | translate }}"/>
+            <div class="help-block" ng-messages="form1.sign_name.$error" ng-if="form1.sign_name.$touched">
+                <div ng-messages-include="views/messages.html"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group" ng-if="model.auth_type == 'token'">
+        <label for="sign_token" class="col-sm-2 control-label">{{ 'TOKEN_FOR_FIRM' | translate }}</label>
+        <div class="col-sm-10" ng-class="{'has-error': form1.sign_token.$touched && form1.sign_token.$invalid }">
+            <input type="text" id="sign_token" ng-model="model.sign_token" name="sign_token" class="form-control" id="sign_token" placeholder="{{ 'WRITE' | translate }} {{ 'TOKEN_FOR_FIRM' | translate }} {{ 'HERE' | translate }}"/>
+            <div class="help-block" ng-messages="form1.sign_token.$error" ng-if="form1.sign_token.$touched">
+                <div ng-messages-include="views/messages.html"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group" ng-if="model.auth_type == 'token'">
+        <label for="sign_algorithm" class="col-sm-2 control-label">{{'ALGORITHM_FOR_FIRM'| translate}}</label>
+        <div class="col-sm-10" ng-class="{'has-error': form1.sign_algorithm.$touched && form1.sign_algorithm.$invalid }">
+            <input type="text" id="sign_algorithm" ng-model="model.sign_algorithm" name="sign_algorithm" class="form-control" id="sign_algorithm" placeholder="{{ 'WRITE' | translate }} {{ 'ALGORITHM_FOR_FIRM' | translate }} {{ 'HERE' | translate }}"/>
+            <div class="help-block" ng-messages="form1.sign_algorithm.$error" ng-if="form1.sign_algorithm.$touched">
+                <div ng-messages-include="views/messages.html"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- user and password inputs -->
+<div class="row">
+    <div class="form-group" ng-if="model.auth_type == 'user_password'">
+        <label for="user" class="col-sm-2 control-label">{{ 'USER' | translate }}</label>
+        <div class="col-sm-10" ng-class="{'has-error': form1.user.$touched && form1.user.$invalid }">
+            <input type="text" id="user" ng-model="model.user" name="user" class="form-control" id="user" placeholder="{{ 'WRITE' | translate }} {{ 'USER' | translate }} {{ 'HERE' | translate }}"/>
+            <div class="help-block" ng-messages="form1.user.$error" ng-if="form1.user.$touched">
+                <div ng-messages-include="views/messages.html"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group" ng-if="model.auth_type == 'user_password'">
+        <label for="password" class="col-sm-2 control-label">{{'PASSWORD'| translate}}</label>
+        <div class="col-sm-10" ng-class="{'has-error': form1.password.$touched && form1.password.$invalid }">
+            <input type="text" id="password" ng-model="model.password" name="password" class="form-control" id="password" placeholder="{{ 'WRITE' | translate }} {{ 'PASSWORD' | translate }} {{ 'HERE' | translate }}"/>
+            <div class="help-block" ng-messages="form1.password.$error" ng-if="form1.password.$touched">
+                <div ng-messages-include="views/messages.html"></div>
+            </div>
+        </div>
+    </div>
+</div>

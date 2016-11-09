@@ -1,0 +1,43 @@
+<header-home></header-home>
+<div class="content-wrapper">
+    <breadcrumbs data-type="{{ 'PREVIEW' | translate }}" data-model-name="{{ 'FILES' | translate }}" data-model="{{type}}"></breadcrumbs>
+    <!-- Main content -->
+    <section class="content">
+      <div class="box-header with-border">
+          <h3 class="box-title">{{ 'PREVIEW_OF' | translate }} {{ model.name}}</h3>
+      </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table dataset-additional-info-table" ng-if="model.type.name != 'pdf'">
+                            <thead>
+                                <tr>
+                                    <th ng-repeat="(key, val) in model.contents.data[0]" ng-if="key !== '_id' && key !== 'GEOJSON'">{{key}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="field in model.contents.data">
+                                    <td ng-repeat="(key, val) in field" ng-if="key !== '_id' && key !== 'GEOJSON'">{{val}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="paging">
+                            <paging page="model.contents.meta.page" page-size="params.limit" total="model.contents.meta.count" paging-action="paging('pageClick', page, pageSize, total, model)" hide-if-empty="true"></paging>
+                        </div>
+                        <ng-pdf ng-if="model.type.name == 'pdf'" template-url="/views/file/pdfviewer.html" ng-init="pdfUrl = model.url" scale="page-fit"></ng-pdf>
+                    </div>
+                    <!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <button back-button class="btn btn-default pull-left">
+                            {{ 'BACK' | translate }}
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</div>
+<footer-home></footer-home>

@@ -1,0 +1,96 @@
+<header-home></header-home>
+<div class="content-wrapper">
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="box-header ui-sortable-handle">
+          <h3 class="box-title">{{ 'LATEST_UPDATES' | translate }}</h3>
+      </div>
+        <div class="box">
+
+            <div class="chat border-secondary" id="chat-box">
+                <!-- chat item -->
+                <div class="timeline-centered">
+                    <div class="item timeline-entry" ng-repeat="log in logs.data">
+                        <!--<img class="online" alt="user image"  ng-src="http://www.gravatar.com/avatar/{{log.user.email | md5}}fs=150"/>-->
+                        <div class="timeline-entry-inner">
+                          <div class="timeline-icon" ng-class="setClassLog(log.action)">
+                              <i class="entypo-feather"></i>
+                          </div>
+                            <p class="message timeline-label">
+
+                                <a class="name" ng-href="#/users/{{log.user.id}}/view">
+                                    <small class="text-muted pull-right">
+                                        <i class="fa fa-clock-o"></i>
+                                        {{log.createdAt| date: "MMM d, y h:mm:ss a"}}</small>
+                                    {{log.user.username}}
+                                </a>
+                                <span>{{log.action + 'D'| uppercase | translate | lowercase }}</span> <!-- class="label label-default" ng-class="setClassLog(log.action)" -->
+
+                                {{log.target| uppercase| translate | generalize | translate | lowercase}}
+                                <a ng-href="#/{{log.target}}s/{{log.resource}}/view" ng-if="log.action == 'create' || log.action == 'update'">
+                                    {{log.target| uppercase | translate | lowercase}}
+                                </a>
+                                <span ng-if="log.action == 'delete'">
+                                    {{log.target| uppercase | translate | lowercase}}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- /.item -->
+                </div>
+            </div>
+        </div>
+        <!-- /.logs  -->
+
+        <div class="row">
+            <div class="col-lg-3 col-xs-6">
+                <!-- home box -->
+                <div class="home-box border-secondary">
+                      <a href="#/datasets" >
+                        <h3 class="text-center">{{datasetsCount.data.count}} {{'DATASETS'| translate}}</h3>
+                      </a>
+                </div>
+            </div>
+            <!-- ./col -->
+
+            <div class="col-lg-3 col-xs-6">
+                <!-- home box -->
+                <div class="home-box border-secondary">
+                      <a href="#/files" >
+                        <h3 class="text-center">{{filesCount.data.count}} {{'FILES'| translate}}</h3>
+                      </a>
+                </div>
+            </div>
+
+            <!-- ./col -->
+
+            <div class="col-lg-3 col-xs-6">
+                <!-- home box -->
+                <div class="home-box border-secondary">
+                      <a href="#/organizations" >
+                        <h3 class="text-center">{{organizationsCount.data.count}} {{'ORGANIZATIONS'| translate}}</h3>
+                      </a>
+                </div>
+            </div>
+
+            <!-- ./col -->
+
+            <div class="col-lg-3 col-xs-6">
+                <!-- home box -->
+                <div class="home-box border-secondary">
+                      <a href="#/users" >
+                        <h3 class="text-center">{{usersCount.data.count}} {{'USERS'| translate}}</h3>
+                      </a>
+                </div>
+            </div>
+
+            <!-- ./col -->
+        </div>
+        <!-- ./row -->
+    </section>
+    <!--  Main content-->
+
+</div>
+
+<footer-home></footer-home>

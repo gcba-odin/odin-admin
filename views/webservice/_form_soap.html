@@ -1,0 +1,42 @@
+<!-- ws_type: SOAP inputs -->
+
+<!-- method-->
+<div class="row">
+    <div class="form-group">
+        <label for="method" class="col-sm-2 control-label">* {{'METHOD'| translate}}</label>
+        <div class="col-sm-10" ng-class="{'has-error': form.method.$touched && form.method.$invalid }">
+            <input type="text" id="method" ng-model="model.method" name="method" class="form-control" id="method" placeholder="{{ 'WRITE' | translate }} {{ 'METHOD' | translate }} {{ 'HERE' | translate }}" uib-tooltip="Indique el método definido en el WSDL" tooltip-placement="left" required/>
+            <div class="help-block" ng-messages="form.method.$error" ng-if="form.method.$touched">
+                <div ng-messages-include="views/messages.html"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- namespace-->
+<div class="row">
+    <div class="form-group">
+        <label for="namespace" class="col-sm-2 control-label">* {{'NAMESPACE'| translate}}</label>
+        <div class="col-sm-10" ng-class="{'has-error': form1.namespace.$touched && form1.namespace.$invalid }">
+            <input type="text" id="namespace" ng-model="model.namespace" name="namespace" class="form-control" id="namespace" placeholder="{{ 'WRITE' | translate }} {{ 'NAMESPACE' | translate }} {{ 'HERE' | translate }}" required/>
+            <div class="help-block" ng-messages="form1.namespace.$error" ng-if="form1.namespace.$touched">
+                <div ng-messages-include="views/messages.html"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group">
+        <label for="attrs_as_headers" class="col-sm-2 control-label">{{'USE_ATTRS_HEADERS' | translate}}</label>
+        <div class="col-sm-10" ng-class="{'has-error': form1.attrs_as_headers.$touched && form1.attrs_as_headers.$invalid }">
+            <div class="form-group">
+                <label for="attrs_as_headers" class="control-sidebar-subheading">
+                    <input name="attrs_as_headers" ng-model="model.attrs_as_headers" type="checkbox" class="checkbox icheck">
+                </label>
+
+            </div>
+        </div>
+    </div>
+</div>

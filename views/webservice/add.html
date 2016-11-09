@@ -1,0 +1,276 @@
+<header-home></header-home>
+<style media="screen">
+    .control-label {
+        text-align:right;
+    }
+</style>
+
+<div class="content-wrapper">
+    <breadcrumbs data-type="{{ 'ADD' | translate }}" data-model-name="{{ 'WEBSERVICE' | translate }}" data-model="{{type}}"></breadcrumbs>
+    <!-- Main content -->
+    <section class="content">
+      <div class="box-header with-border">
+          <h3 class="box-title">{{ 'ADD' | translate }}
+              {{ 'WEBSERVICE' | translate }}</h3>
+      </div>
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <section class="content">
+
+                    <div class="row">
+
+                        <ul class="steps">
+                            <li ng-class="step(0)"  class=" col-xs-4">
+                                <p>
+                                    1.
+                                    {{ 'CHARGE_OF_WEBSERVICE' | translate | uppercase }}</p>
+                            </li>
+                            <li ng-class="step(1)"  class=" col-xs-4">
+                                <p>
+                                    2.
+                                    {{ 'CHARGE_OF_DATA' | translate | uppercase }}</p>
+                            </li>
+                            <li ng-class="step(2)"  class=" col-xs-4">
+                                <p>
+                                    3.
+                                    {{ 'REVISION' | translate | uppercase }}</p>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <form autocomplete="off" enctype="multipart/form-data" class="form-horizontal" name="form1" autocomplete="false" role="form" novalidate>
+                        <div class="row" ng-show="stepactive == 0">
+                            <div class="col-xs-12">
+                                <div class="box-body">
+                                    <div class="row">
+
+                                        <!-- Input url -->
+                                        <div class="form-group">
+                                            <label for="url" class="col-sm-2 control-label">*
+                                                {{ 'WEBSERVICE_URL' | translate }}</label>
+                                            <div class="col-sm-10" ng-class="{
+                                    'has-error'
+                                    : form1.url.$touched && form1.url.$invalid }">
+                                                <input type="text" id="url" ng-model="model.url" name="url" class="form-control" id="url" placeholder="{{ 'PLACE' | translate }} {{ 'WEBSERVICE_URL' | translate }} {{ 'HERE' | translate }}" required uib-tooltip="En caso de seleccionar un servicio web SOAP, indicar su WSDL."/>
+                                                <div class="help-block" ng-messages="form1.url.$error" ng-if="form1.url.$touched">
+                                                    <div ng-messages-include="views/messages.html"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end Input url -->
+                                    </div>
+                                    <div class="row">
+                                        <!-- select ws_type -->
+                                        <div class="form-group">
+                                            <label for="ws_type" class="col-sm-2 control-label">*{{ 'WEBSERVICE_TYPE' | translate }}</label>
+                                            <div class="col-sm-10" ng-class="{'has-error': form1.ws_type.$touched && form1.ws_type.$invalid }">
+                                                <select data-key="ws_type" data-modelname="ws_type" data-model="{{model.ws_type}}" name="ws_type" id="ws_type" ng-model="model.ws_type" class="form-control" required data-dis='{{ws_type_disabled}}'>
+                                                    <option value="" default disabled selected="selected">{{ 'SELECT_OPTION' | translate }}</option>
+                                                    <option value="rest">REST</option>
+                                                    <option value="soap">SOAP</option>
+                                                </select>
+
+                                                <div class="help-block" ng-messages="form1.ws_type.$error" ng-if="form1.ws_type.$touched">
+                                                    <div ng-messages-include="views/messages.html"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="stepactive == 0 && !!model.ws_type">
+                            <div class="col-xs-12">
+
+                                <div ng-if="model.ws_type == 'rest'" class="box-body" ng-include="'views/webservice/_form_rest.html'"></div>
+                                <div ng-if="model.ws_type == 'soap'" class="box-body" ng-include="'views/webservice/_form_soap.html'"></div>
+
+                            </div>
+                        </div>
+                        <div class="row" ng-show="stepactive == 0">
+                            <div class="col-xs-12">
+                                <div class="extraoptionals" ng-repeat="item in model.items_webservice">
+                                    <!-- Input optional -->
+                                    <div class="form-group" id="option1">
+                                        <label class="col-sm-2 control-label">{{ 'PARAMETER' | translate }} {{increment($index)}}</label>
+                                        <div class="col-sm-10" ng-class="{ 'has-error': form1[item.name].$touched && form1[item.name].$invalid }">
+
+                                            <div class="row">
+                                                <div class="col-xs-5">
+                                                    <input type="text" ng-model="model.items_webservice[$index].field1" name="{{item.field}}" class="form-control" id="title" required />
+                                                </div>
+                                                <div class="col-xs-5">
+                                                    <input type="text" ng-model="model.items_webservice[$index].field2" name="{{item.field}}" class="form-control" id="title" required />
+                                                </div>
+                                                <div class="col-xs-2">
+                                                    <button class="btn btn-danger" ng-click="deleteParameter($index)" type="button">X</button>
+                                                </div>
+
+                                            </div>
+                                            <div class="help-block" ng-messages="form1[item.name].$error" ng-if="form1[item.name].$touched">
+                                                <div ng-messages-include="views/messages.html"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end Input optional -->
+                                </div>
+                                <!-- Input optional -->
+                                <div class="form-group">
+                                    <label for="title" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-10">
+                                        <button type="button" ng-click="addParameter()" ng-show="model.items_webservice.length < 10" class="btn btn-default">{{ 'ADD_PARAMETER' | translate }}</button>
+                                    </div>
+                                </div>
+                                <!-- end Input optional -->
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row" ng-show="stepactive == 1">
+                        <div class="col-xs-12">
+                            <form autocomplete="off" enctype="multipart/form-data" class="form-horizontal" name="form2" autocomplete="false" role="form" novalidate>
+                                <div class="box-body" ng-include="'views/webservice/_form.html'"></div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row" ng-if="stepactive == 2">
+                        <div class="col-md-12">
+                            <div class="box box-primary">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} {{model.name}}
+                                    </h3>
+                                </div>
+                                <div class="box-body table-responsive no-padding">
+                                    <h4 class="box-title">{{ 'DETAILS_FOR' | translate }} {{ 'FILE' | translate }}</h4>
+                                    <table class="table usertable">
+                                        <tr ng-if="model.name">
+                                            <td class="detail-bold">{{ 'NAME' | translate }}</td>
+                                            <td>{{model.name}}</td>
+                                        </tr>
+                                        <tr ng-if="model.description">
+                                            <td class="detail-bold">{{ 'DESCRIPTION' | translate }}</td>
+                                            <td ng-bind-html="getHtml(model.description)"></td>
+                                        </tr>
+                                        <tr ng-if="model.dataset">
+                                            <td class="detail-bold">{{ 'DATASET' | translate }}</td>
+                                            <td>{{model.dataset.name| selectFilterArray:'dataset'}}</td>
+                                        </tr>
+                                        <tr ng-if="model.organization">
+                                            <td class="detail-bold">{{ 'ORGANIZATION' | translate }}</td>
+                                            <td>{{model.organization.name| selectFilterArray:'organization'}}</td>
+                                        </tr>
+                                        <tr ng-if="model.updateFrequency">
+                                            <td class="detail-bold">{{ 'FREQUENCY' | translate }}</td>
+                                            <td>{{model.updateFrequency| selectFilterArray:'frecuency'}}</td>
+                                        </tr>
+                                        <tr ng-if="model.owner">
+                                            <td class="detail-bold">{{ 'OWNER' | translate }}</td>
+                                            <td>{{model.owner| selectFilterArray:'owner'}}</td>
+                                        </tr>
+                                        <tr ng-if="model.notes">
+                                            <td class="detail-bold">{{ 'NOTES' | translate }}</td>
+                                            <td ng-bind-html="getHtml(model.notes)"></td>
+                                        </tr>
+                                        <tr ng-if="model.gatheringDate">
+                                            <td class="detail-bold">{{ 'GATHERING_DATE' | translate }}</td>
+                                            <td>{{model.gatheringDate| date:'MMM d, y' : 'UTC' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="detail-bold">{{ 'UPDATED_VIEW' | translate }}</td>
+                                            <td>
+                                                <span class="label label-default">{{model.updated ? 'Si' : 'No'}}</span>
+                                            </td>
+                                        </tr>
+                                        <tr ng-repeat="item in model.items_file">
+                                            <td class="detail-bold">{{item.field1}}</td>
+                                            <td>{{item.field2}}</td>
+                                        </tr>
+
+                                    </table>
+                                    <br><br>
+                                    <h4 class="box-title">{{ 'DETAILS_FOR' | translate }} {{ 'WEBSERVICE' | translate }}</h4>
+                                    <table class="table usertable">
+                                        <tr ng-if="model.url">
+                                            <td class="detail-bold">{{ 'WEBSERVICE_URL' | translate }}</td>
+                                            <td>{{model.url}}</td>
+                                        </tr>
+                                        <tr ng-if="model.ws_type">
+                                            <td class="detail-bold">{{ 'WEBSERVICE_TYPE' | translate }}</td>
+                                            <td>{{ model.ws_type}}</td>
+                                        </tr>
+                                        <tr ng-if="model.data_url">
+                                            <td class="detail-bold">{{ 'DATA_URL' | translate }}</td>
+                                            <td>{{model.data_url}}</td>
+                                        </tr>
+                                        <tr ng-if="model.titlepath">
+                                            <td class="detail-bold">{{'TITLE_PATH'| translate}}</td>
+                                            <td>{{model.titlepath}}</td>
+                                        </tr>
+                                        <tr ng-if="model.auth_type">
+                                            <td class="detail-bold">{{ 'AUTH_TYPE' | translate }}</td>
+                                            <td>{{model.auth_type}}</td>
+                                        </tr>
+                                        <tr ng-if="model.sign_name">
+                                            <td class="detail-bold">{{ 'FIRM_NAME' | translate }}</td>
+                                            <td>{{model.sign_name}}</td>
+                                        </tr>
+                                        <tr ng-if="model.sign_token">
+                                            <td class="detail-bold">{{ 'TOKEN_FOR_FIRM' | translate }}</td>
+                                            <td>{{ model.sign_token}}</td>
+                                        </tr>
+                                        <tr ng-if="model.sign_algorithm">
+                                            <td class="detail-bold">{{ 'ALGORITHM_FOR_FIRM' | translate }}</td>
+                                            <td>{{model.sign_algorithm}}</td>
+                                        </tr>
+                                        <tr ng-if="model.user">
+                                            <td class="detail-bold">{{ 'USER' | translate }}</td>
+                                            <td>{{model.user}}</td>
+                                        </tr>
+                                        <tr ng-if="model.password">
+                                            <td class="detail-bold">{{ 'PASSWORD' | translate }}</td>
+                                            <td>{{model.password}}</td>
+                                        </tr>
+                                        <tr ng-if="model.method">
+                                            <td class="detail-bold">{{ 'METHOD' | translate }}</td>
+                                            <td>{{model.method}}</td>
+                                        </tr>
+                                        <tr ng-if="model.namespace">
+                                            <td class="detail-bold">{{ 'NAMESPACE' | translate }}</td>
+                                            <td>{{model.namespace}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="detail-bold">{{ 'USE_ATTRS_HEADERS' | translate }}</td>
+                                            <td>
+                                                <span class="label label-default">{{model.attrs_as_headers ? 'Si' : 'No'}}</span>
+                                            </td>
+                                        </tr>
+                                        <tr ng-repeat="item in model.items_webservice">
+                                            <td class="detail-bold">{{item.field1}}</td>
+                                            <td>{{item.field2}}</td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+        <div class="box-footer">
+            <button class="btn btn-default pull-left" back-button ng-if="stepactive == 0">
+                {{ 'BACK' | translate }}
+            </button>
+            <button class="btn btn-default pull-left" ng-click="checkstep(stepactive - 1)" ng-if="stepactive != 0">
+                {{ 'BACK' | translate }}
+            </button>
+            <button ng-if="stepactive == 0" ng-disabled="form1.$invalid" type="submit" class="btn btn-primary pull-right" ng-click="checkstep(stepactive + 1)">{{ 'NEXT' | translate }}</button>
+            <button ng-if="stepactive == 1 && unsave" type="submit" class="btn btn-primary pull-right" ng-click="checkstep(stepactive + 1)" ng-disabled="form2.$invalid">{{ 'NEXT' | translate }}</button>
+            <button ng-if="stepactive == 2 && unsave" type="submit" class="btn btn-primary pull-right" ng-click="add(model)" ng-disabled="form1.$invalid && form2.$invalid">{{ 'SAVE' | translate }}</button>
+
+        </div>
+    </section>
+</div>
+<!-- ./ Main content -->
+<footer-home></footer-home>
