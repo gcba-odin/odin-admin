@@ -24,7 +24,8 @@
         "validation.match",
         "angular-jwt",
         "vcRecaptcha",
-        "pdf"
+        "pdf",
+        "selectize"
           ]);
 
     app.config(function ($routeProvider, $httpProvider, $translateProvider, usSpinnerConfigProvider, ChartJsProvider, ConsumerServiceProvider, $middlewareProvider, jwtOptionsProvider, vcRecaptchaServiceProvider) {

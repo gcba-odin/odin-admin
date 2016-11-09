@@ -17,33 +17,33 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
     };
 
     $scope.filtersView = [{
-            name: 'Estado',
-            model: 'statuses',
-            key: 'name',
-            modelInput: 'status',
-            multiple: true
-        }, {
-            name: 'Autor',
-            model: 'users',
-            key: 'username',
-            modelInput: 'owner',
-            multiple: true
-        }, {
-            name: 'Categoria',
-            model: 'categories',
-            key: 'name',
-            modelInput: 'categories',
-            multiple: true
-        }];
+        name: 'Estado',
+        model: 'statuses',
+        key: 'name',
+        modelInput: 'status',
+        multiple: true
+    }, {
+        name: 'Autor',
+        model: 'users',
+        key: 'username',
+        modelInput: 'owner',
+        multiple: true
+    }, {
+        name: 'Categoria',
+        model: 'categories',
+        key: 'name',
+        modelInput: 'categories',
+        multiple: true
+    }];
 
     $scope.confirmDelete = function(item) {
         Alertify.confirm('¿Está seguro que quiere borrar este dataset?<br> Al hacerlo, se borrarán todos los recursos asociados').then(
-                function onOk() {
-                    $scope.deleteModel(item);
-                },
-                function onCancel() {
-                    return false;
-                }
+            function onOk() {
+                $scope.deleteModel(item);
+            },
+            function onCancel() {
+                return false;
+            }
         );
     };
 
@@ -61,7 +61,7 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
 
     $scope.config_key = 'adminPagination';
     ////factory configs
-    configs.findKey($scope, function (resp) {
+    configs.findKey($scope, function(resp) {
         if (!!resp.data[0] && !!resp.data[0].value) {
             $scope.parameters.limit = resp.data[0].value;
         }
@@ -83,7 +83,7 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
 
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
-            if(!resp) {
+            if (!resp) {
                 modelService.reloadPage();
             }
         });
@@ -93,7 +93,7 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
         usSpinnerService.spin('spinner');
         $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-        if(!!$scope.parameters.conditions) {
+        if (!!$scope.parameters.conditions) {
             $scope.q += $scope.parameters.conditions;
         }
         if ($routeParams.filter == 'starred') {
@@ -101,7 +101,7 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
         }
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
-            if(!resp) {
+            if (!resp) {
                 modelService.reloadPage();
             }
         });
@@ -116,7 +116,7 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type,
-            params: "include=tags,files,categories"
+            params: "include=tags,files,categories,subcategories"
         }, function() {
             var tags = [];
             for (var i = 0; i < $scope.model.tags.length; i++) {
@@ -125,10 +125,17 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
             $scope.model.tags = tags.join(" - ");
 
             var categories = [];
+            var subcategories = [];
+
             for (var i = 0; i < $scope.model.categories.length; i++) {
                 categories.push('<span class="label label-primary">' + $scope.model.categories[i].name + '</span>')
             }
             $scope.model.categories = categories.join(" - ");
+
+            for (var i = 0; i < $scope.model.subcategories.length; i++) {
+                subcategories.push('<span class="label label-primary">' + $scope.model.subcategories[i].name + '</span>')
+            }
+            $scope.model.subcategories = subcategories.join(" - ");
 
             $scope.model.items = [];
             for (obj in $scope.model) {
@@ -182,47 +189,47 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
 
     $scope.unPublish = function(id, type) {
         var text_type = 'dataset';
-        if(type == 'files') {
+        if (type == 'files') {
             text_type = 'archivo';
         }
         Alertify.confirm('¿Está seguro que quiere despublicar este ' + text_type + '?').then(
-                function onOk() {
-                    usSpinnerService.spin('spinner');
+            function onOk() {
+                usSpinnerService.spin('spinner');
 
-                    rest().unpublish({
-                        type: type,
-                        id: id
-                    }, {}, function(resp) {
-                        loadModel();
-                        //var url = '/' + $scope.type;
-                        // $location.path(url);
-                    });
-                    usSpinnerService.stop('spinner');
-                },
-                function onCancel() {
-                    return false;
-                }
+                rest().unpublish({
+                    type: type,
+                    id: id
+                }, {}, function(resp) {
+                    loadModel();
+                    //var url = '/' + $scope.type;
+                    // $location.path(url);
+                });
+                usSpinnerService.stop('spinner');
+            },
+            function onCancel() {
+                return false;
+            }
         );
     };
 
     $scope.deleteResource = function(id, type) {
         Alertify.confirm('¿Está seguro que quiere borrar este recurso?').then(
-                function onOk() {
-                    usSpinnerService.spin('spinner');
-                    rest().delete({
-                        type: type,
-                        id: id
-                    }, function(resp) {
-                        usSpinnerService.stop('spinner');
-                        $window.location.reload();
-                    }, function(error) {
-                        usSpinnerService.stop('spinner');
-                        modelService.reloadPage();
-                    });
-                },
-                function onCancel() {
-                    return false;
-                }
+            function onOk() {
+                usSpinnerService.spin('spinner');
+                rest().delete({
+                    type: type,
+                    id: id
+                }, function(resp) {
+                    usSpinnerService.stop('spinner');
+                    $window.location.reload();
+                }, function(error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
         );
     };
 
@@ -247,8 +254,8 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
 
     $scope.model = new model();
     $scope.model.items = [];
-  
-    $scope.model.owner = {'id': $scope.adminglob.currentUser.user, 'username': $scope.adminglob.currentUser.username};
+
+    $scope.model.owner = { 'id': $scope.adminglob.currentUser.user, 'username': $scope.adminglob.currentUser.username };
 
     $scope.add = function(isValid) {
         usSpinnerService.spin('spinner');
@@ -270,7 +277,7 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
         // transform the array of objects into a string of ids
         $scope.model.tags = $scope.model.tags.toString();
         $scope.model.categories = $scope.model.categories.toString();
-
+        $scope.model.subcategories = $scope.model.subcategories.toString();
 
         if (isValid) {
             rest().save({
@@ -349,10 +356,9 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
 
         var optionsTemp = [];
 
-
         $scope.tempData = angular.copy($scope.model);
         for (var o = 0; o < 10; o++) {
-            var verified = verifyOptional($scope.model.items, o)
+            var verified = verifyOptional($scope.model.items, o);
 
             if (verified) {
                 optionsTemp.push(verified);
@@ -369,6 +375,7 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
         $scope.tempData.files = reformatArray($scope.tempData.files).toString();
         $scope.tempData.tags = $scope.tempData.tags.toString();
         $scope.tempData.categories = $scope.tempData.categories.toString();
+        $scope.tempData.subcategories = $scope.tempData.subcategories.toString();
 
         // TODO: chequear cual forma de mandar los items (opcionales) es la correcta
         // $scope.tempData.items
@@ -409,12 +416,12 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
             $scope.model = rest().findOne({
                 id: $routeParams.id,
                 type: $scope.type,
-                params: "include=tags,files,categories"
+                params: "include=tags,files,categories,subcategories"
             }, function() {
                 if (!!$scope.model.status) {
                     $scope.model.status = $scope.model.status.id;
                 }
-                if(!$scope.model.starred) {
+                if (!$scope.model.starred) {
                     $scope.model.starred = false;
                 }
                 $scope.model.items = [];
@@ -459,6 +466,7 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
         }
 
     }
+
     $scope.deleteIndexInput = function(index, field) {
         $scope.model.items.splice(index, 1);
     }
@@ -470,7 +478,6 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
     $scope.itemName = function(a) {
         return "optional" + (parseInt(a) + 1);
     }
+
     $scope.load();
-
-
 }

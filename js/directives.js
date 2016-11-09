@@ -146,7 +146,9 @@
         return {
             restrict: 'A',
             scope: {
-                modelValue: '@ngModel'
+                modelValue: '@ngModel',
+                values: '=values',
+                subcats: '=subcats'
             },
             link: function(scope, element, attrs, rootScope) {
                 var token = $cookieStore.get('adminglob').currentUser.token;
@@ -167,6 +169,7 @@
                     searchField: attrs.key,
                     placeholder: attrs.placeholder,
                     create: attrs.create,
+                    openOnFocus: false,
                     onInitialize: function() {
                         if (!angular.isUndefined(attrs.dis) && attrs.dis == 'disabled') {
                             this.disable();
@@ -226,6 +229,19 @@
                         if (!query.length)
                             return callback();
 
+                        var self = this;
+                        // This line removes the old history, but also removes selected items.
+                        // Waiting for a workaround. See: https://github.com/selectize/selectize.js/pull/1080
+                        // self.clearOptions();
+
+                        $.each(self.options, function(key, value) {
+                            if (self.items.indexOf(key) == -1) {
+                                delete self.options[key];
+                            }
+                        });
+                        self.sifter.items = self.options;
+                        self.clearCache();
+
                         var urlStr = scope.$root.url + '/' + attrs.modelname + '?condition=AND&deletedAt=null&';
                         if (attrs.condition) {
                             urlStr += attrs.condition + '&';
@@ -246,6 +262,34 @@
                                 callback(res.data.slice(0, 10));
                             }
                         });
+                    },
+                    onChange: function(value) {
+                        if (attrs.onchange) {
+                            scope.$apply(function() {
+                                if (value) {
+                                    scope.values = value.join();
+
+                                    // Check if there are subcategories associated
+                                    $.ajax({
+                                        headers: {
+                                            'Authorization': 'Bearer ' + token_auth,
+                                            'x-admin-authorization': token,
+                                        },
+                                        url: scope.$root.url + '/' + attrs.modelname + '?condition=AND&deletedAt=null&parent=' + scope.values,
+                                        type: 'GET',
+                                        success: function(res) {
+                                            scope.$apply(function() {
+                                                scope.subcats = res.data.length > 0;
+                                            });
+                                        }
+                                    });
+
+                                } else {
+                                    scope.values = "";
+                                    scope.subcats = false;
+                                }
+                            });
+                        }
                     }
                 };
 

@@ -26,6 +26,10 @@
                                 <td class="detail-bold">{{ 'CATEGORIES' | translate }}</td>
                                 <td ng-bind-html="getHtml(model.categories)"></td>
                             </tr>
+                            <tr ng-if="model.subcategories">
+                                <td class="detail-bold">{{ 'SUBCATEGORIES' | translate }}</td>
+                                <td ng-bind-html="getHtml(model.subcategories)"></td>
+                            </tr>
                             <tr ng-if="model.status">
                                 <td class="detail-bold">{{ 'STATUS' | translate }}</td>
                                 <td>{{model.status.name}}</td>
