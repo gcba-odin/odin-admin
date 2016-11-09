@@ -1,6 +1,6 @@
 var app = angular.module('odin.categoryControllers', []);
 
-app.factory('model', function ($resource) {
+app.factory('model', function($resource) {
     return $resource();
 });
 
@@ -12,7 +12,7 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
     $scope.parameters = {
         skip: 0,
         limit: 20,
-        conditions: ''
+        conditions: 'include=subcategories'
     };
 
     $scope.filtersView = [{
@@ -25,41 +25,41 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
 
     var filtersGet = ['datasets'];
 
-    $scope.inactiveModel = function (item) {
+    $scope.inactiveModel = function(item) {
         modelService.deactivateList(item, $scope, filtersGet);
     }
 
-    $scope.activeModel = function (item) {
+    $scope.activeModel = function(item) {
         modelService.restoreList($scope, item, filtersGet);
     };
 
-    $scope.confirmDelete = function (item) {
+    $scope.confirmDelete = function(item) {
         modelService.confirmDelete(item, {}, filtersGet);
     };
 
-    $scope.edit = function (model) {
+    $scope.edit = function(model) {
         modelService.edit($scope, model);
     }
 
-    $scope.view = function (model) {
+    $scope.view = function(model) {
         modelService.view($scope, model);
     }
 
-    $scope.activeClass = function (activeClass) {
+    $scope.activeClass = function(activeClass) {
         modelService.activeClass(activeClass);
 
     };
 
     $scope.config_key = 'adminPagination';
     ////factory configs
-    configs.findKey($scope, function (resp) {
+    configs.findKey($scope, function(resp) {
         if (!!resp.data[0] && !!resp.data[0].value) {
             $scope.parameters.limit = resp.data[0].value;
         }
 
         $scope.q = "&include=datasets&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
 
-        modelService.loadAll($scope, function (resp) {
+        modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if (!resp) {
                 modelService.reloadPage();
@@ -67,14 +67,14 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
         });
     });
 
-    $scope.paging = function (event, page, pageSize, total) {
+    $scope.paging = function(event, page, pageSize, total) {
         usSpinnerService.spin('spinner');
         $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
         $scope.q = "&include=datasets&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
         if (!!$scope.parameters.conditions) {
             $scope.q += $scope.parameters.conditions;
         }
-        modelService.loadAll($scope, function (resp) {
+        modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if (!resp) {
                 modelService.reloadPage();
@@ -88,15 +88,15 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
     usSpinnerService.spin('spinner');
     modelService.initService("Category", "categories", $scope);
 
-    $scope.inactiveModel = function (item) {
+    $scope.inactiveModel = function(item) {
         modelService.deactivateView(item, $scope);
     }
 
-    $scope.activeModel = function (item) {
+    $scope.activeModel = function(item) {
         modelService.restoreView($scope, item);
     };
 
-    $scope.confirmDelete = function (item) {
+    $scope.confirmDelete = function(item) {
         // modelService.confirmDelete(item, {});
         var item = item.target.dataset;
         Alertify.confirm(item.textdelete).then(
@@ -105,10 +105,10 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
                 rest().delete({
                     id: item.id,
                     type: 'categories'
-                }, function (resp) {
+                }, function(resp) {
                     usSpinnerService.stop('spinner');
                     $window.location.reload();
-                }, function (error) {
+                }, function(error) {
                     usSpinnerService.stop('spinner');
                     modelService.reloadPage();
                 });
@@ -119,11 +119,11 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
         );
     };
 
-    $scope.edit = function (model) {
+    $scope.edit = function(model) {
         var url = '/' + $scope.type + '/' + model.id + "/edit";
         $location.path(url);
     }
-    $scope.getHtml = function (html) {
+    $scope.getHtml = function(html) {
         return $sce.trustAsHtml(html);
     };
 
@@ -138,9 +138,14 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
         id: $routeParams.id,
         type: $scope.type,
         params: 'include=subcategories'
-    }, function () {
+    }, function() {
+        var subcategories = [];
+        for (var i = 0; i < $scope.model.subcategories.length; i++) {
+            subcategories.push('<span class="label label-primary">' + $scope.model.subcategories[i].name + '</span>')
+        }
+        $scope.subcategoriesNames = subcategories.join(" - ");
         usSpinnerService.stop('spinner');
-    }, function (error) {
+    }, function(error) {
         usSpinnerService.stop('spinner');
         modelService.reloadPage();
     });
@@ -153,12 +158,12 @@ function CategoryCreateController($scope, rest, $routeParams, model, Flash, $loc
 
     $scope.mostrar = true;
 
-    $scope.clearUpload = function () {
+    $scope.clearUpload = function() {
         $scope.fileModel.name = "";
         $scope.fileModel.type = "";
     };
 
-    $scope.clearImage = function () {
+    $scope.clearImage = function() {
         image = null;
         for (var att in $scope.form.uploadImage.$error) {
             if ($scope.form.uploadImage.$error.hasOwnProperty(att)) {
@@ -171,14 +176,14 @@ function CategoryCreateController($scope, rest, $routeParams, model, Flash, $loc
     //como Blob, ya que convierte el svg a png y no genera bien la subida
     image = null;
 
-    $scope.beforeChange = function ($files) {
+    $scope.beforeChange = function($files) {
         image = $files[0];
         $scope.fileModel.name = $files[0].name;
     };
 
 
     $scope.model = new model();
-    $scope.add = function (isValid) {
+    $scope.add = function(isValid) {
         usSpinnerService.spin('spinner');
         if (isValid) {
             $scope.model.uploadImage = image;
@@ -194,11 +199,11 @@ function CategoryCreateController($scope, rest, $routeParams, model, Flash, $loc
             Upload.upload({
                 url: $rootScope.url + "/categories",
                 data: data
-            }).then(function (resp) {
+            }).then(function(resp) {
                 usSpinnerService.stop('spinner');
                 Alertify.success('Se ha creado la categoría con éxito');
                 $location.url('/categories/' + resp.data.data.id + '/view');
-            }, function (error) {
+            }, function(error) {
                 usSpinnerService.stop('spinner');
                 if (error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre de la categoría ya existe.');
@@ -206,7 +211,7 @@ function CategoryCreateController($scope, rest, $routeParams, model, Flash, $loc
                     Alertify.alert('Ha ocurrido un error al crear la categoría.');
                 }
                 // alert(resp.status);
-            }, function (evt) {
+            }, function(evt) {
                 usSpinnerService.stop('spinner');
                 //                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                 //                $scope.uploadImageProgress = progressPercentage;
@@ -222,7 +227,7 @@ function CategoryCreateController($scope, rest, $routeParams, model, Flash, $loc
             }
         }
     };
-    $scope.activeClass = function (activeClass, type) {
+    $scope.activeClass = function(activeClass, type) {
         if (activeClass && (type == 1)) {
             $scope.active = "true";
             return "active";
@@ -232,7 +237,7 @@ function CategoryCreateController($scope, rest, $routeParams, model, Flash, $loc
             return "active";
         }
     };
-    $scope.onReady = function () {
+    $scope.onReady = function() {
 
     };
 
@@ -263,12 +268,12 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
 
     $scope.fileModel = [];
 
-    $scope.clearUpload = function () {
+    $scope.clearUpload = function() {
         $scope.fileModel.name = "";
         $scope.fileModel.type = "";
     };
 
-    $scope.clearImage = function () {
+    $scope.clearImage = function() {
         image = null;
         for (var att in $scope.form.uploadImage.$error) {
             if ($scope.form.uploadImage.$error.hasOwnProperty(att)) {
@@ -281,7 +286,7 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
     //como Blob, ya que convierte el svg a png y no genera bien la subida
     image = null;
 
-    $scope.beforeChange = function ($files) {
+    $scope.beforeChange = function($files) {
         image = $files[0];
         $scope.fileModel.name = $files[0].name;
         $scope.mostrar = true;
@@ -289,7 +294,7 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
 
 
     $scope.model = new model();
-    $scope.update = function (isValid) {
+    $scope.update = function(isValid) {
         usSpinnerService.spin('spinner');
         if (isValid) {
             $scope.model.uploadImage = image;
@@ -309,11 +314,11 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
                 url: $rootScope.url + "/categories/" + $scope.model.id,
                 method: 'PUT',
                 data: data
-            }).then(function (resp) {
+            }).then(function(resp) {
                 usSpinnerService.stop('spinner');
                 Alertify.success('Se ha editado la categoría con éxito');
                 $location.url('/categories/' + resp.data.data.id + '/view');
-            }, function (error) {
+            }, function(error) {
                 usSpinnerService.stop('spinner');
                 if (error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre de la categoría ya existe.');
@@ -321,7 +326,7 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
                     Alertify.alert('Ha ocurrido un error al editar la categoría.');
                 }
                 // alert(resp.status);
-            }, function (evt) {
+            }, function(evt) {
                 usSpinnerService.stop('spinner');
                 //                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                 //                $scope.uploadImageProgress = progressPercentage;
@@ -339,25 +344,25 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
     };
 
 
-    $scope.activate = function () {
+    $scope.activate = function() {
         $scope.model.active = true;
     };
 
-    $scope.deActivate = function () {
+    $scope.deActivate = function() {
         $scope.model.active = false;
     };
 
-    $scope.load = function () {
+    $scope.load = function() {
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type
-        }, function () {
+        }, function() {
             $scope.fileModel = {
                 type: 'svg',
                 name: $scope.model.fileName
             };
             usSpinnerService.stop('spinner');
-        }, function (error) {
+        }, function(error) {
             usSpinnerService.stop('spinner');
             modelService.reloadPage();
         });
@@ -372,7 +377,7 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
     };
 
 
-    $scope.activeClass = function (activeClass, type) {
+    $scope.activeClass = function(activeClass, type) {
         if (activeClass && (type == 1)) {
             return "active";
         } else if (!activeClass && (type == 2)) {
@@ -381,7 +386,7 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
     };
 
 
-    $scope.onReady = function () {
+    $scope.onReady = function() {
         $scope.load();
     };
 
