@@ -277,7 +277,9 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
         // transform the array of objects into a string of ids
         $scope.model.tags = $scope.model.tags.toString();
         $scope.model.categories = $scope.model.categories.toString();
-        $scope.model.subcategories = $scope.model.subcategories.toString();
+        if ($scope.model.subcategories) {
+            $scope.model.subcategories = $scope.model.subcategories.toString();
+        }
 
         if (isValid) {
             rest().save({
@@ -375,7 +377,9 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
         $scope.tempData.files = reformatArray($scope.tempData.files).toString();
         $scope.tempData.tags = $scope.tempData.tags.toString();
         $scope.tempData.categories = $scope.tempData.categories.toString();
-        $scope.tempData.subcategories = $scope.tempData.subcategories.toString();
+        if ($scope.tempData.subcategories) {
+            $scope.tempData.subcategories = $scope.tempData.subcategories.toString();
+        }
 
         // TODO: chequear cual forma de mandar los items (opcionales) es la correcta
         // $scope.tempData.items

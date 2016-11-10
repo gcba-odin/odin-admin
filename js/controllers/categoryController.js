@@ -57,7 +57,7 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
             $scope.parameters.limit = resp.data[0].value;
         }
 
-        $scope.q = "&include=datasets&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
+        $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
 
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
@@ -70,7 +70,7 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
     $scope.paging = function(event, page, pageSize, total) {
         usSpinnerService.spin('spinner');
         $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
-        $scope.q = "&include=datasets&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
+        $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
         if (!!$scope.parameters.conditions) {
             $scope.q += $scope.parameters.conditions;
         }
