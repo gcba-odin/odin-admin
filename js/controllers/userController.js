@@ -15,9 +15,15 @@ function UserListController($scope, $location, rest, $rootScope, Flash, Alertify
         limit: 20,
         conditions: ''
     };
-
+    
+    $scope.current = {
+        'id': $scope.adminglob.currentUser.user,
+    };
+    
+    //var filtersGet = [];//['files', 'datasets', 'charts', 'maps'];
+    
     $scope.inactiveModel = function(item) {
-        modelService.confirmDelete(item);
+        modelService.deactivateList(item, $scope);
     }
 
     $scope.activeModel = function(item) {
