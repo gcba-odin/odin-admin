@@ -5,9 +5,9 @@
     <section class="content">
       <div class="box-header with-border">
           <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} {{ model.name}}</h3>
-          <button ng-click="unPublish()" ng-if="model.status.id == statuses.published" class="pull-right btn btn-primary">{{ 'UNPUBLISH' | translate }}</button>
-          <button ng-click="publish()" ng-if="model.status.id !== statuses.published" class="pull-right btn btn-primary">{{ 'PUBLISH' | translate }}</button>
-          <button ng-click="reject()" ng-if="model.status.id == statuses.underReview" class="pull-right btn btn-primary margin-right-10">{{ 'REJECT' | translate }}</button>
+          <button ng-click="unPublish()" ng-if="model.status.id == statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'UNPUBLISH' | translate }}</button>
+          <button ng-click="publish()" ng-if="model.status.id !== statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'PUBLISH' | translate }}</button>
+          <button ng-click="reject()" ng-if="model.status.id == statuses.underReview" class="pull-right btn btn-primary margin-right-10" permission permission-except="roles.GUEST">{{ 'REJECT' | translate }}</button>
       </div>
         <div class="row">
             <div class="col-md-12">
@@ -76,8 +76,8 @@
                             {{ 'BACK' | translate }}
                         </button>
                         <div class="pull-right">
-                            <a class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)">{{ 'DELETE' | translate }}</a>
-                            <button type="submit" class="btn btn-primary" ng-click="edit(model)">{{ 'EDIT' | translate }}</button>
+                            <a class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
+                            <button type="submit" class="btn btn-primary" ng-click="edit(model)" show-policy-if-guest-user="model">{{ 'EDIT' | translate }}</button>
                             <a class="btn btn-primary" ng-href="#/charts/preview/{{ model.id}}">{{ 'PREVIEW' | translate }}</a>
                         </div>
                     </div>

@@ -83,6 +83,7 @@
             }
         };
     }]);
+
     app.directive('selectTwoTags', ['$parse', function($parse, $scope) {
         return {
             restrict: 'A',
@@ -125,6 +126,7 @@
             }
         };
     }]);
+
     app.directive('selectTwo', ['$parse', function($parse, $scope) {
         return {
             restrict: 'A',
@@ -467,6 +469,7 @@
     app.filter('urlEncode', [function() {
         return window.encodeURIComponent;
     }]);
+
     app.filter('capitalize', function() {
         return function(input) {
             return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
@@ -665,4 +668,39 @@
             }
         };
     });
+
+    app.filter('filterIfGuestUser', function ($rootScope, ROLES) {
+        return function (models) { 
+            var userObj = $rootScope.adminglob.currentUser;
+
+            if (!userObj || userObj.role !== ROLES.GUEST) {
+                return models;
+            } else {
+                return _.filter(models, function(model) {
+                    return model.createdBy.id === userObj.user;
+                });
+            }
+        };
+    });
+
+    app.directive('showPolicyIfGuestUser', function ($rootScope, ROLES, $q) {
+        return {
+            restrict: 'A',
+            scope: '=model',
+            link: function (scope, element, attrs) {
+                var user = $rootScope.adminglob.currentUser;
+
+                $q.when(scope.model.$promise || scope.model).then(function(model) {
+                    // TODO: Don't use hardcoded IDs
+                    // oWRhpRV --> Under review
+                    // pWRhpRV -- rejected
+                    if(user.role === ROLES.GUEST && model.status.id !== 'oWRhpRV' &&
+                        model.status.id !== 'pWRhpRV') {
+                        element.css('display', 'none');
+                    }
+                });
+            }
+        };
+    });
+
 })();

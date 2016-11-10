@@ -4,9 +4,9 @@
     <section class="content">
       <div class="box-header with-border">
           <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} <b>{{model.name}}</b></h3>
-          <button ng-click="unPublish(model.id, 'datasets')" ng-if="model.status.id == statuses.published" class="pull-right btn btn-primary">{{ 'UNPUBLISH' | translate }}</button>
-          <button ng-click="publish(model.id, 'datasets')" ng-if="model.status.id !== statuses.published" class="pull-right btn btn-primary">{{ 'PUBLISH' | translate }}</button>
-          <a ng-href="#/files/new/{{model.id}}" class="btn btn-default pull-right margin-right-10"><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_FILES' | translate }}</a>
+          <button ng-click="unPublish(model.id, 'datasets')" ng-if="model.status.id == statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'UNPUBLISH' | translate }}</button>
+          <button ng-click="publish(model.id, 'datasets')" ng-if="model.status.id !== statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'PUBLISH' | translate }}</button>
+          <a ng-href="#/files/new/{{model.id}}" class="btn btn-default pull-right margin-right-10" permission permission-except="roles.GUEST"><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_FILES' | translate }}</a>
           <button ng-if="model.files.length > 0" data-toggle="modal" data-target="#viewLinkResources" class="btn btn-default pull-right margin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_FILES' | translate }}</button>
       </div>
         <div class="row">
@@ -79,7 +79,7 @@
                         <button back-button class="btn btn-default pull-left">
                             {{ 'BACK' | translate }}
                         </button>
-                        <button type="submit" class="btn btn-primary pull-right" ng-click="edit(model)">{{ 'EDIT' | translate }}</button>
+                        <button type="submit" class="btn btn-primary pull-right" ng-click="edit(model)" permission permission-except="roles.GUEST">{{ 'EDIT' | translate }}</button>
                     </div>
                 </div>
 
@@ -103,16 +103,16 @@
                         <th class="text-center">{{ 'ACTIONS' | translate }}</th>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="file in model.files">
+                            <tr ng-repeat="file in model.files | filterIfGuestUser">
                                 <td>
                                     <span>{{file.name}}</span>
                                 </td>
                                 <td class="text-center table-btn">
                                     <a target="_blank" class="btn btn-primary" ng-href="#/files/{{file.id}}/view">{{ 'VIEW' | translate }}</a>
-                                    <a target="_blank" class="btn btn-primary" ng-href="#/files/{{file.id}}/edit">{{ 'EDIT' | translate }}</a>
-                                    <a class="btn btn-primary" ng-click="deleteResource(file.id, 'files')">{{ 'DELETE' | translate }}</a>
-                                    <button ng-click="unPublish(file.id, 'files')" ng-if="file.status == statuses.published" class="pull-right btn btn-primary">{{ 'UNPUBLISH' | translate }}</button>
-                                    <button ng-click="publish(file.id, 'files')" ng-if="file.status !== statuses.published" class="pull-right btn btn-primary">{{ 'PUBLISH' | translate }}</button>
+                                    <a target="_blank" class="btn btn-primary" ng-href="#/files/{{file.id}}/edit" permission permission-except="roles.GUEST">{{ 'EDIT' | translate }}</a>
+                                    <a class="btn btn-primary" ng-click="deleteResource(file.id, 'files')" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
+                                    <button ng-click="unPublish(file.id, 'files')" ng-if="file.status == statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'UNPUBLISH' | translate }}</button>
+                                    <button ng-click="publish(file.id, 'files')" ng-if="file.status !== statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'PUBLISH' | translate }}</button>
                                 </td>
                             </tr>
 

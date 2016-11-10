@@ -6,7 +6,7 @@
       <div class="box-header">
           <h3 class="box-title">{{ modelName | translate }}</h3>
           <div class="box-tools">
-              <a ng-href="#/datasets/new" class="btn-primary btn nodecoration pull-right">{{ 'ADD' | translate }} {{ 'DATASET' | translate }} </a>
+              <a ng-href="#/datasets/new" class="btn-primary btn nodecoration pull-right" permission permission-except="roles.GUEST">{{ 'ADD' | translate }} {{ 'DATASET' | translate }} </a>
           </div>
       </div>
         <div class="row">
@@ -36,8 +36,8 @@
                                     </td>
                                     <td class="text-center table-btn">
                                         <a class="btn btn-primary" ng-click="view({id: model.id})">{{ 'VIEW' | translate }}</a>
-                                        <a class="btn btn-primary" ng-click="edit({id: model.id})">{{ 'EDIT' | translate }}</a>
-                                        <a class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete(model)">{{ 'DELETE' | translate }}</a>
+                                        <a class="btn btn-primary" ng-click="edit({id: model.id})" permission permission-except="roles.GUEST">{{ 'EDIT' | translate }}</a>
+                                        <a class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete(model)" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
                                     </td>
                                 </tr>
 
