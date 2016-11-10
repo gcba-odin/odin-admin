@@ -13,7 +13,9 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
     $scope.parameters = {
         skip: 0,
         limit: 20,
-        conditions: ''
+        conditions: '',
+        orderBy: 'createdAt',
+        sort: 'DESC'
     };
 
     $scope.filtersView = [{
@@ -99,6 +101,27 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
         if ($routeParams.filter == 'starred') {
             $scope.q += "&starred=true";
         }
+        modelService.loadAll($scope, function(resp) {
+            usSpinnerService.stop('spinner');
+            if(!resp) {
+                modelService.reloadPage();
+            }
+        });
+    };
+    
+    $scope.findSort = function(type, cond) {
+        usSpinnerService.spin('spinner');
+        $scope.sortType = type; 
+        
+        var sort = 'DESC';
+        if(cond) {
+            sort = 'ASC';
+        }
+        $scope.sortReverse = cond;
+        
+        $scope.parameters.orderBy = type;
+        $scope.parameters.sort = sort;
+        
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if(!resp) {

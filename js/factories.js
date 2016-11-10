@@ -55,6 +55,8 @@
     });
 
     app.factory('modelService', function($location, rest, Flash, Alertify, $window) {
+        orderBy = 'createdAt';
+        sort = 'DESC';
         return {
             insertalScope: {},
             initService: function(modelName, type, scope) {
@@ -97,10 +99,18 @@
                     if (!!scope.q && scope.q != '') {
                         conditions = scope.q;
                     }
+                    
+                    if(!!scope.parameters.orderBy) {
+                        orderBy = scope.parameters.orderBy;
+                    }
+                    
+                    if(!!scope.parameters.sort) {
+                        sort = scope.parameters.sort;
+                    }
 
                     scope.data = rest().get({
                         type: scope.type,
-                        params: pm + "orderBy=createdAt&sort=DESC" + conditions
+                        params: pm + "orderBy="+orderBy+"&sort="+ sort + conditions
                     });
                 });
             },
@@ -127,9 +137,18 @@
                     if (!!scope.q && scope.q != '') {
                         conditions = scope.q;
                     }
+                    
+                    if(!!scope.parameters.orderBy) {
+                        orderBy = scope.parameters.orderBy;
+                    }
+
+                    if(!!scope.parameters.sort) {
+                        sort = scope.parameters.sort;
+                    }
+                    
                     scope.data = rest().get({
                         type: scope.type,
-                        params: pm + "orderBy=createdAt&sort=DESC" + conditions
+                        params: pm + "orderBy="+orderBy+"&sort="+sort + conditions
                     });
                 });
             },
@@ -169,9 +188,18 @@
                             if (!!scope.q && scope.q != '') {
                                 conditions = scope.q;
                             }
+                            
+                            if(!!scope.parameters.orderBy) {
+                                orderBy = scope.parameters.orderBy;
+                            }
+
+                            if(!!scope.parameters.sort) {
+                                sort = scope.parameters.sort;
+                            }
+                            
                             scope.data = rest().get({
                                 type: scope.type,
-                                params: pm + "orderBy=createdAt&sort=DESC" + conditions
+                                params: pm + "orderBy="+orderBy+"&sort=" + sort + conditions
                             });
                         });
                     },
@@ -210,9 +238,17 @@
                 this.loadAll(scope);
             },
             loadAll: function(scope, callback) {
+                if(!!scope.parameters.orderBy) {
+                    orderBy = scope.parameters.orderBy;
+                }
+
+                if(!!scope.parameters.sort) {
+                    sort = scope.parameters.sort;
+                }
+                    
                 scope.data = rest().get({
                     type: scope.type,
-                    params: "orderBy=createdAt&sort=DESC" + scope.q
+                    params: "orderBy="+orderBy+"&sort="+ sort + scope.q
                 }, function(resp) {
                     callback(true);
                 }, function(error) {

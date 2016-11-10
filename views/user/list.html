@@ -18,8 +18,20 @@
                         <table class="table table-hover">
                             <tbody><tr>
                                     <!-- <th>{{ 'ID' | translate }}</th>-->
-                                    <th>{{ 'USER_NAME' | translate }}</th>
-                                    <th>{{ 'EMAIL' | translate }}</th>
+                                    <th>
+                                        <a ng-click="findSort('username', !sortReverse);" class="cursor-pointer">
+                                            {{ 'USER_NAME' | translate }} 
+                                            <span ng-show="sortType == 'username' && !sortReverse" class="fa fa-caret-down"></span>
+                                            <span ng-show="sortType == 'username' && sortReverse" class="fa fa-caret-up"></span>
+                                        </a>
+                                    </th>
+                                    <th>
+                                        <a ng-click="findSort('email', !sortReverse);" class="cursor-pointer">
+                                            {{ 'EMAIL' | translate }}
+                                            <span ng-show="sortType == 'email' && !sortReverse" class="fa fa-caret-down"></span>
+                                            <span ng-show="sortType == 'email' && sortReverse" class="fa fa-caret-up"></span>
+                                        </a>
+                                    </th>
                                     <th>{{ 'STATE' | translate }}</th>
                                     <th class="text-center">{{ 'ACTIONS' | translate }}</th>
                                 </tr>
