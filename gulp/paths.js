@@ -29,7 +29,17 @@ gulp.paths = {
     'index.html',
   ],
   styles: [
-    'css/*.scss',
-    'css/*.css'
+    'css/angular-date-picker.min.css',
+    'css/angular-color-picker.css',
+    'css/ionicons.min.css',
+    'css/font-awesome.css',
+    'css/bootstrap.min.css',
+    'css/selectize.default.css',
+    'css/ng-alertify.css',
+    'css/styles_admin.css',
+    'css/AdminLTE.css',
+    'css/main.css',
+    'css/marca_ba.css',
+    // 'css/*.css'
   ]
 };
