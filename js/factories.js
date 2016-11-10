@@ -50,6 +50,8 @@
                             scope.statuses.unpublished = element.value;
                         } else if (element.key == 'underReviewStatus') {
                             scope.statuses.underReview = element.value;
+                        } else if (element.key == 'rejectedStatus') {
+                            scope.statuses.rejected = element.value;
                         }
                     });
                 });

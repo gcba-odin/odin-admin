@@ -633,4 +633,24 @@
         };
     });
 
+    app.directive('showPolicyIfGuestUser', function ($rootScope, ROLES, $q) {
+        return {
+            restrict: 'A',
+            scope: '=model',
+            link: function (scope, element, attrs) {
+                var user = $rootScope.adminglob.currentUser;
+
+                $q.when(scope.model.$promise || scope.model).then(function(model) {
+                    // TODO: Don't use hardcoded IDs
+                    // oWRhpRV --> Under review
+                    // pWRhpRV -- rejected
+                    if(user.role === ROLES.GUEST && model.status.id !== 'oWRhpRV' &&
+                        model.status.id !== 'pWRhpRV') {
+                        element.css('display', 'none');
+                    }
+                });
+            }
+        };
+    });
+
 })();
