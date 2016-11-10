@@ -238,11 +238,11 @@
                 this.loadAll(scope);
             },
             loadAll: function(scope, callback) {
-                if(!!scope.parameters.orderBy) {
+                if(!!scope.parameters && !!scope.parameters.orderBy) {
                     orderBy = scope.parameters.orderBy;
                 }
 
-                if(!!scope.parameters.sort) {
+                if(!!scope.parameters && !!scope.parameters.sort) {
                     sort = scope.parameters.sort;
                 }
                     

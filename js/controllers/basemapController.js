@@ -55,7 +55,7 @@ function BasemapListController($scope, modelService, configs, usSpinnerService) 
             $scope.parameters.limit = resp.data[0].value;
         }
 
-        $scope.q = "&include=maps&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
+        $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
 
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
@@ -68,7 +68,7 @@ function BasemapListController($scope, modelService, configs, usSpinnerService) 
     $scope.paging = function(event, page, pageSize, total) {
         usSpinnerService.spin('spinner');
         $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
-        $scope.q = "&include=maps&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
+        $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
         
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
