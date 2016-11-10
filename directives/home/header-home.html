@@ -24,18 +24,23 @@
                     <ul class="dropdown-menu">
                         <!-- Menu Footer-->
                         <li class="user-footer">
-                            <div class="pull-left">
-                                <a href="javascript:void(0)" ng-click="main.changeLanguage()" class="btn btn-default btn-flat">{{ 'LANGUAGE' | translate }}</a>
-                            </div>
-                            <div class="pull-right">
-                                <a href="javascript:void(0)" ng-click="main.logout()" class="btn btn-default btn-flat">{{ 'SIGN_OUT' | translate }}</a>
+                            <div class="row">
+                                <div class="col-xs-4 text-center">
+                                    <a href="javascript:void(0)" ng-click="main.changeLanguage()" class="btn btn-default btn-flat">{{ 'LANGUAGE' | translate }}</a>
+                                </div>
+                                <div class="col-xs-4 text-center">
+                                    <a href="#/users/{{adminglob.currentUser.user}}/edit" class="btn btn-default btn-flat">{{ 'MY_PROFILE' | translate }}</a>
+                                </div>
+                                <div class="col-xs-4 text-center">
+                                    <a href="javascript:void(0)" ng-click="main.logout()" class="btn btn-default btn-flat">{{ 'SIGN_OUT' | translate }}</a>
+                                </div>
                             </div>
                         </li>
                     </ul>
                 </li>
                 <li class="treeview">
                     <a ng-href="public/odin-user-manual.pdf" target="_blank" uib-tooltip="Manual de usuario" tooltip-placement="bottom">
-                      <object data="images/icons/manualusuario.svg" type="image/svg+xml" class="img-responsive" style="font-size: 1.6em; height: 1em;">
+                        <object data="images/icons/manualusuario.svg" type="image/svg+xml" class="img-responsive" style="font-size: 1.6em; height: 1em;">
                       </object>
                     </a>
                 </li>

@@ -186,6 +186,7 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'SUBCATEGORY': 'Subcategory',
         'SUBCATEGORIES': 'Subcategories',
         'VIEW_LINK_SUBCATEGORIES': 'View associated subcategories',
+        'MY_PROFILE': 'My profile',
     });
 
     $translateProvider.translations('es', {
@@ -411,6 +412,7 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'SUBCATEGORY': 'Subcategoría',
         'SUBCATEGORIES': 'Subcategorías',
         'VIEW_LINK_SUBCATEGORIES': 'Ver subcategorías asociadas',
+        'MY_PROFILE': 'Mi perfil',
 
     });
     $translateProvider.preferredLanguage('es');
