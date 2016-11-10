@@ -32,7 +32,7 @@ gulp.paths = {
     'css/angular-date-picker.min.css',
     'css/angular-color-picker.css',
     'css/ionicons.min.css',
-    'css/font-awesome.css',
+    'css/font-awesome.min.css',
     'css/bootstrap.min.css',
     'css/selectize.default.css',
     'css/ng-alertify.css',
