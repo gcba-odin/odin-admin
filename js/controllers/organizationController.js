@@ -16,7 +16,7 @@ app.directive('wysihtml5', function () {
             CKEDITOR.replace('textarea');
 
             /*  $scope.$parent.$watch( $attrs.content, function( newValue, oldValue ) {
-             
+
              $scope.editor.innerHTML = newValue;
              $scope.editor.composer.setValue( newValue );
              });*/
@@ -28,13 +28,13 @@ app.directive('wysihtml5', function () {
 function OrganizationListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, configs, usSpinnerService) {
     usSpinnerService.spin('spinner');
     modelService.initService("Organization", "organizations", $scope);
-    
+
     $scope.parameters = {
         skip: 0,
         limit: 20,
         conditions: ''
     };
-    
+
     $scope.filtersView = [{
             name: 'Autor',
             model: 'users',
@@ -42,7 +42,7 @@ function OrganizationListController($scope, $location, rest, $rootScope, Flash, 
             modelInput: 'createdBy',
             multiple: true
         }];
-    
+
     var filtersGet = ['files', 'users'];
 
     $scope.inactiveModel = function(item) {
@@ -52,7 +52,7 @@ function OrganizationListController($scope, $location, rest, $rootScope, Flash, 
     $scope.activeModel = function(item) {
         modelService.restoreList($scope, item, filtersGet);
     };
-    
+
     $scope.confirmDelete = function(item) {
         modelService.confirmDelete(item, {}, filtersGet);
     };
@@ -68,15 +68,14 @@ function OrganizationListController($scope, $location, rest, $rootScope, Flash, 
     $scope.activeClass = function (activeClass) {
         modelService.activeClass(activeClass);
     };
-    
+
     $scope.config_key = 'adminPagination';
     ////factory configs
     configs.findKey($scope, function (resp) {
         if (!!resp.data[0] && !!resp.data[0].value) {
             $scope.parameters.limit = resp.data[0].value;
         }
-        
-        $scope.q = "&include=files,users&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
+        $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
 
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
@@ -89,7 +88,7 @@ function OrganizationListController($scope, $location, rest, $rootScope, Flash, 
     $scope.paging = function(event, page, pageSize, total) {
         usSpinnerService.spin('spinner');
         $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
-        $scope.q = "&include=files,users&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
+        $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
         if(!!$scope.parameters.conditions) {
             $scope.q += $scope.parameters.conditions;
         }
@@ -106,7 +105,7 @@ function OrganizationViewController($scope, Flash, rest, $routeParams, $location
     modelService.initService("Organization", "organizations", $scope);
 
     modelService.findOne($routeParams, $scope);
-    
+
     $scope.inactiveModel = function(item) {
         modelService.deactivateView(item, $scope);
     }
@@ -114,7 +113,7 @@ function OrganizationViewController($scope, Flash, rest, $routeParams, $location
     $scope.activeModel = function(item) {
         modelService.restoreView($scope, item);
     };
-    
+
     $scope.edit = function (model) {
         modelService.edit($scope, model);
     }
@@ -171,13 +170,13 @@ function OrganizationEditController($scope, Flash, rest, $routeParams, model, $l
     $scope.update = function (isValid) {
         usSpinnerService.spin('spinner');
         if (isValid) {
-            
+
             $scope.tempData = {
                 address: $scope.model.address,
                 description: $scope.model.description,
                 name: $scope.model.name
             };
-            
+
             //console.log($scope.model);
             rest().update({
                 type: $scope.type,

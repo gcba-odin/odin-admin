@@ -8,7 +8,7 @@ app.factory('model', function($resource) {
 function CategoryListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, configs, usSpinnerService) {
     usSpinnerService.spin('spinner');
     modelService.initService("Category", "categories", $scope);
-    
+
     $scope.parameters = {
         skip: 0,
         limit: 20,
@@ -22,7 +22,7 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
             modelInput: 'createdBy',
             multiple: true
         }];
-    
+
     var filtersGet = ['datasets'];
 
     $scope.inactiveModel = function(item) {
@@ -32,7 +32,7 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
     $scope.activeModel = function(item) {
         modelService.restoreList($scope, item, filtersGet);
     };
-    
+
     $scope.confirmDelete = function(item) {
         modelService.confirmDelete(item, {}, filtersGet);
     };
@@ -49,15 +49,15 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
         modelService.activeClass(activeClass);
 
     };
-    
+
     $scope.config_key = 'adminPagination';
     ////factory configs
     configs.findKey($scope, function (resp) {
         if (!!resp.data[0] && !!resp.data[0].value) {
             $scope.parameters.limit = resp.data[0].value;
         }
-        
-        $scope.q = "&include=datasets&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
+
+        $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
 
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
@@ -70,7 +70,7 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
     $scope.paging = function(event, page, pageSize, total) {
         usSpinnerService.spin('spinner');
         $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
-        $scope.q = "&include=datasets&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
+        $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
         if(!!$scope.parameters.conditions) {
             $scope.q += $scope.parameters.conditions;
         }
@@ -87,7 +87,7 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
 function CategoryViewController($scope, Flash, rest, $routeParams, $location, $sce, modelService, $rootScope, usSpinnerService) {
     usSpinnerService.spin('spinner');
     modelService.initService("Category", "categories", $scope);
-    
+
     $scope.inactiveModel = function(item) {
         modelService.deactivateView(item, $scope);
     }
@@ -133,7 +133,7 @@ function CategoryCreateController($scope, rest, model, Flash, $location, $rootSc
         $scope.fileModel.name = "";
         $scope.fileModel.type = "";
     };
-    
+
     $scope.clearImage = function() {
         image = null;
         for (var att in  $scope.form.uploadImage.$error) {
@@ -239,7 +239,7 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
         $scope.fileModel.name = "";
         $scope.fileModel.type = "";
     };
-    
+
     $scope.clearImage = function() {
         image = null;
         for (var att in  $scope.form.uploadImage.$error) {
