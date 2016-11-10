@@ -1,13 +1,13 @@
 a {
     color: #19c3e3;
 }
-a:hover {
+a:focus, a:hover {
     color: #fdd306;
+    text-decoration: none;
 }
 
 .active {
     color:  #19c3e3;
-
 }
 
 .box-header .box-title {
