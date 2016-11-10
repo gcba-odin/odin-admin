@@ -13,8 +13,8 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
         skip: 0,
         limit: 20,
         conditions: '',
-        orderBy: 'createdAt',
-        sort: 'DESC'
+        orderBy: 'name',
+        sort: 'ASC'
     };
 
     $scope.filtersView = [{
