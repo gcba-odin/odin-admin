@@ -63,22 +63,36 @@ function UserListController($scope, $location, rest, $rootScope, Flash, Alertify
     };
 }
 
-function UserViewController($scope, Flash, rest, $routeParams, $location, modelService) {
-    modelService.initService("User", "users", $scope);
-
-    modelService.findOne($routeParams, $scope);
+function UserViewController($scope, Flash, rest, $routeParams, $location, modelService, isUserProfile) {
+    $scope.isUserProfile = isUserProfile;
+    modelService.initService('User', 'users', $scope);
+    
+    if ($scope.isUserProfile) {
+        rest().findOne({
+            type: 'users',
+            id: 'me'
+        }, function (user) {
+            $scope.model = user;
+        });
+    } else {
+        modelService.findOne($routeParams, $scope);
+    }
 
     $scope.inactiveModel = function (item) {
         modelService.deactivateView(item, $scope);
-    }
+    };
 
     $scope.activeModel = function (item) {
         modelService.restoreView($scope, item);
     };
 
     $scope.edit = function (model) {
-        modelService.edit($scope, model);
-    }
+        if ($scope.isUserProfile) {
+            $location.path('users/me/edit');
+        } else {
+            modelService.edit($scope, model);
+        }
+    };
 }
 
 function UserCreateController($scope, rest, model, Flash, $location, modelService, usSpinnerService, Alertify) {
@@ -108,7 +122,7 @@ function UserCreateController($scope, rest, model, Flash, $location, modelServic
     };
 }
 
-function UserEditController($scope, Flash, rest, $routeParams, model, $location, modelService, usSpinnerService, Alertify) {
+function UserEditController($rootScope, $scope, Flash, rest, $routeParams, model, $location, modelService, usSpinnerService, Alertify) {
     usSpinnerService.spin('spinner');
     modelService.initService("User", "users", $scope);
 
@@ -137,7 +151,7 @@ function UserEditController($scope, Flash, rest, $routeParams, model, $location,
 
     $scope.load = function () {
         $scope.model = rest().findOne({
-            id: $routeParams.id,
+            id: $routeParams.id ? $routeParams.id : 'me',
             type: $scope.type
         }, function () {
             usSpinnerService.stop('spinner');

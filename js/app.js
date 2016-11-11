@@ -128,15 +128,31 @@
                         except: ROLES.GUEST
                     }
                 }
-            }).when("/users/:id/view", {
+            })
+            .when("/users/me/view", {
                 templateUrl: "views/user/view.html",
                 controller: UserViewController,
-                 data: {
+                resolve: {
+                    isUserProfile:function() {
+                        return true
+                    }
+                }
+            })
+            .when("/users/:id/view", {
+                templateUrl: "views/user/view.html",
+                controller: UserViewController,
+                data: {
                     permissions: {
                         except: ROLES.GUEST
                     }
+                },
+                resolve: {
+                    isUserProfile:function() {
+                        return false;
+                    }
                 }
-            }).when("/users/new", {
+            })
+            .when("/users/new", {
                 templateUrl: "views/user/add.html",
                 controller: UserCreateController,
                 data: {
@@ -144,12 +160,22 @@
                         only: ROLES.SUPERADMIN
                     }
                 }
-            }).when("/users/:id/edit", {
+            })
+            .when("/users/me/edit", {
                 templateUrl: "views/user/edit.html",
                 controller: UserEditController,
                 data: {
                     permissions: {
                         except: ROLES.GUEST
+                    }
+                }
+            })
+            .when("/users/:id/edit", {
+                templateUrl: "views/user/edit.html",
+                controller: UserEditController,
+                data: {
+                    permissions: {
+                        only: ROLES.SUPERADMIN
                     }
                 }
             })
@@ -612,6 +638,7 @@
 
         $middlewareProvider.global(['everyone', 'x-admin']);
     });
+
     app.run(function ($rootScope, EnvironmentConfig, authManager) {
         $rootScope.url = EnvironmentConfig.api;
         authManager.redirectWhenUnauthenticated();

@@ -13,7 +13,7 @@ app.controller("mainController", function($scope, AuthenticationService, $locati
             $scope.language = "english";
             $translate.use("en");
         }
-    }
+    };
 
     this.logout = function() {
         AuthenticationService.ClearCredentials();
@@ -29,9 +29,7 @@ app.controller("mainController", function($scope, AuthenticationService, $locati
         {
             return "active";
         }
-    }
-
-
+    };
 });
 
 
