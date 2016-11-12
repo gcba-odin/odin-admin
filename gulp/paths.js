@@ -2,7 +2,7 @@ var gulp = require('gulp');
 
 gulp.paths = {
   static: [
-    'fonts/**/*',
+    // 'fonts/**/*',
     'images/**/*',
     'img/**/*',
     'uib/**/*',
@@ -27,6 +27,14 @@ gulp.paths = {
     // 'css/**/*',
     'plugins/**',
     'index.html',
+  ],
+  fonts: [
+    'fonts/*.woff',
+    'fonts/*.woff2',
+    'fonts/*.eot',
+    'fonts/*.svg',
+    'fonts/*.ttf',
+    'fonts/*.otf'
   ],
   styles: [
     'css/*.scss',

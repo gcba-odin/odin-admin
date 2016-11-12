@@ -5,5 +5,6 @@ gulp.task('build', [
   'styles',
   'javascript',
   'vendors',
-  'static'
+  'static',
+  'fonts'
 ]);
