@@ -2,19 +2,20 @@ var gulp = require('gulp');
 
 gulp.task('watch', ['serve'], function() {
   // Static Files
-  gulp.watch(gulp.paths.static, { interval: 1000 }, ['static-watch', 'vendors']);
+  gulp.watch(gulp.paths.static, ['static-watch', 'vendors']);
 
   // Vendors
-  gulp.watch(gulp.paths.vendors, { interval: 1000 }, ['vendors-watch']);
+  gulp.watch(gulp.paths.vendors, ['vendors-watch']);
 
   // Javascript
-  gulp.watch(gulp.paths.javascript, { interval: 1000 }, ['javascript-watch']);
+  gulp.watch(gulp.paths.javascript, ['javascript-watch']);
 
   // Style
   gulp.watch(gulp.paths.styles, { interval: 1000 }, ['styles-watch']);
 
   // Fonts
   gulp.watch(gulp.paths.fonts, { interval: 1000 }, ['fonts-watch']);
+
 });
 
 // Watch subtasks
