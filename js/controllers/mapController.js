@@ -278,6 +278,9 @@ function MapPreviewController($scope, modelService, $routeParams, rest, $locatio
 function MapCreateController($scope, modelService, rest, $location, model, $sce, $routeParams, Alertify, usSpinnerService, configs) {
     usSpinnerService.spin('spinner');
     modelService.initService("Map", "maps", $scope);
+    
+    //factory configs
+    configs.statuses($scope);
 
     $scope.model = new model();
     $scope.steps = [];
@@ -471,6 +474,10 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
             cont++;
         }
         $scope.model.properties = $scope.model.properties.toString();
+        
+        if ($scope.statuses.default == $scope.statuses.published) {
+            $scope.model.publishedAt = new Date();
+        }
 
         if (validate(model)) {
             rest().save({

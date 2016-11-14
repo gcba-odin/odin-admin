@@ -253,7 +253,7 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
 
 }
 
-function DatasetCreateController($scope, rest, model, Flash, $location, modelService, flashService, usSpinnerService, Alertify) {
+function DatasetCreateController($scope, rest, model, Flash, $location, modelService, flashService, usSpinnerService, Alertify, configs) {
     modelService.initService("Dataset", "datasets", $scope);
 
     $scope.tagsmodel = rest().get({
@@ -267,6 +267,9 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
     });
 
     $scope.status_default = true;
+    
+    //factory configs
+    configs.statuses($scope);
 
     $scope.model = new model();
     $scope.model.items = [];
@@ -293,7 +296,10 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
         // transform the array of objects into a string of ids
         $scope.model.tags = $scope.model.tags.toString();
         $scope.model.categories = $scope.model.categories.toString();
-
+        
+        if ($scope.statuses.default == $scope.statuses.published) {
+            $scope.model.publishedAt = new Date();
+        }
 
         if (isValid) {
             rest().save({
@@ -394,6 +400,12 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
         $scope.tempData.files = reformatArray($scope.tempData.files).toString();
         $scope.tempData.tags = $scope.tempData.tags.toString();
         $scope.tempData.categories = $scope.tempData.categories.toString();
+        
+        if ($scope.model.status == $scope.statuses.published) {
+            $scope.tempData.publishedAt = new Date();
+        } else {
+            $scope.tempData.publishedAt = null;
+        }
 
         // TODO: chequear cual forma de mandar los items (opcionales) es la correcta
         // $scope.tempData.items

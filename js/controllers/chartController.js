@@ -233,9 +233,12 @@ function ChartPreviewController($scope, modelService, $routeParams, rest, $locat
     };
 }
 
-function ChartCreateController($scope, modelService, rest, $location, model, $sce, $routeParams, Alertify, usSpinnerService) {
+function ChartCreateController($scope, modelService, rest, $location, model, $sce, $routeParams, Alertify, usSpinnerService, configs) {
     usSpinnerService.spin('spinner');
     modelService.initService("Chart", "charts", $scope);
+    
+    //factory configs
+    configs.statuses($scope);
 
     $scope.model = new model();
     $scope.steps = [];
@@ -355,6 +358,10 @@ function ChartCreateController($scope, modelService, rest, $location, model, $sc
             }
         }
         $scope.model.dataSeries = $scope.model.dataSeries.toString();
+        
+        if ($scope.statuses.default == $scope.statuses.published) {
+            $scope.model.publishedAt = new Date();
+        }
 
         if (validate(model)) {
             rest().save({
