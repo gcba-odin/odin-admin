@@ -120,7 +120,7 @@ function TagCreateController($scope, rest, model, Flash, $location, modelService
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if(error.data.data && error.data.data.name) {
+                if(error.data.data && (error.data.data.name || error.data.data.slug)) {
                     Alertify.alert('La etiqueta que quiere guardar ya existe.');
                 } else {
                     Alertify.alert('Hubo un error al crear la etiqueta.');
@@ -147,7 +147,7 @@ function TagEditController($scope, Flash, rest, $routeParams, model, $location, 
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if(error.data.data && error.data.data.name) {
+                if(error.data.data && (error.data.data.name || error.data.data.slug)) {
                     Alertify.alert('La etiqueta que quiere guardar ya existe.');
                 } else {
                     Alertify.alert('Hubo un error al editar la etiqueta.');
