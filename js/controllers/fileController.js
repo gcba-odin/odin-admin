@@ -12,13 +12,9 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
     $scope.parameters = {
         skip: 0,
         limit: 20,
-<<<<<<< HEAD
-        conditions: ''
-=======
         conditions: '',
         orderBy: 'createdAt',
         sort: 'DESC'
->>>>>>> change-asi
     };
 
     $scope.filtersView = [{
@@ -88,9 +84,7 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
             }
         });
     };
-<<<<<<< HEAD
-=======
-    
+
     $scope.findSort = function(type, cond) {
         usSpinnerService.spin('spinner');
         $scope.sortType = type; 
@@ -111,7 +105,6 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
             }
         });
     };
->>>>>>> change-asi
 }
 
 function FileViewController($scope, Flash, rest, $routeParams, $location, modelService, $sce, Alertify, usSpinnerService, $window, configs) {
@@ -307,11 +300,7 @@ function FilePreviewController($scope, Flash, rest, $routeParams, $location, mod
     }
 }
 
-<<<<<<< HEAD
-function FileCreateController($scope, $sce, rest, model, flashService, Flash, $location, Upload, $rootScope, modelService, $routeParams, Alertify, usSpinnerService, $window, configs) {
-=======
 function FileCreateController($scope, $sce, rest, model, flashService, Flash, $location, Upload, $rootScope, modelService, $routeParams, Alertify, usSpinnerService, $window, configs, Idle, session_timeout) {
->>>>>>> change-asi
     $scope.today = moment().format('YYYY-MM-DD');
 
     usSpinnerService.spin('spinner');
@@ -528,10 +517,7 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
     };
 
     $scope.add = function(isValid) {
-<<<<<<< HEAD
-=======
         Idle.setIdle(session_timeout.extended);
->>>>>>> change-asi
         usSpinnerService.spin('spinner');
         $scope.unsave = false;
         $scope.uploadImageProgress = 10;
@@ -585,18 +571,12 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
             url: $rootScope.url + "/files",
             data: data,
         }).then(function(resp) {
-<<<<<<< HEAD
-=======
             Idle.setIdle(session_timeout.base);
->>>>>>> change-asi
             Flash.clear();
             usSpinnerService.stop('spinner');
             $location.url('/files/' + resp.data.data.id + '/view');
         }, function(error) {
-<<<<<<< HEAD
-=======
             Idle.setIdle(session_timeout.base);
->>>>>>> change-asi
             usSpinnerService.stop('spinner');
             // alert(resp.status);
             $scope.unsave = true;
@@ -660,11 +640,7 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
 
 }
 
-<<<<<<< HEAD
-function FileEditController($rootScope, $scope, flashService, Flash, rest, $routeParams, model, $location, modelService, $sce, Upload, usSpinnerService, Alertify, $window, configs) {
-=======
 function FileEditController($rootScope, $scope, flashService, Flash, rest, $routeParams, model, $location, modelService, $sce, Upload, usSpinnerService, Alertify, $window, configs, Idle, session_timeout) {
->>>>>>> change-asi
     $scope.today = moment().format('YYYY-MM-DD');
     usSpinnerService.spin('spinner');
     modelService.initService("File", "files", $scope);
@@ -834,10 +810,7 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
 
     $scope.update = function(isValid) {
         usSpinnerService.spin('spinner');
-<<<<<<< HEAD
-=======
         Idle.setIdle(session_timeout.extended);
->>>>>>> change-asi
 
         $scope.model.optionals = {};
         angular.forEach($scope.model.items, function(element) {
@@ -890,18 +863,12 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
                 data: data,
                 method: 'PUT',
             }).then(function(resp) {
-<<<<<<< HEAD
-=======
                 Idle.setIdle(session_timeout.base);
->>>>>>> change-asi
                 Flash.clear();
                 usSpinnerService.stop('spinner');
                 $location.url('/files/' + resp.data.data.id + '/view');
             }, function(error) {
-<<<<<<< HEAD
-=======
                 Idle.setIdle(session_timeout.base);
->>>>>>> change-asi
                 usSpinnerService.stop('spinner');
                 // alert(resp.status);
                 $scope.unsave = false;

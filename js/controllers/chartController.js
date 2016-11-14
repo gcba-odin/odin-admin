@@ -8,13 +8,9 @@ function ChartListController($scope, modelService, configs, usSpinnerService) {
     $scope.parameters = {
         skip: 0,
         limit: 20,
-<<<<<<< HEAD
-        conditions: ''
-=======
         conditions: '',
         orderBy: 'createdAt',
         sort: 'DESC'
->>>>>>> change-asi
     };
 
     $scope.filtersView = [{
@@ -83,8 +79,6 @@ function ChartListController($scope, modelService, configs, usSpinnerService) {
             }
         });
     };
-<<<<<<< HEAD
-=======
     
     $scope.findSort = function(type, cond) {
         usSpinnerService.spin('spinner');
@@ -106,7 +100,6 @@ function ChartListController($scope, modelService, configs, usSpinnerService) {
             }
         });
     };
->>>>>>> change-asi
 }
 
 function ChartViewController($scope, modelService, $routeParams, rest, $location, $sce, Alertify, usSpinnerService, configs) {
@@ -240,18 +233,12 @@ function ChartPreviewController($scope, modelService, $routeParams, rest, $locat
     };
 }
 
-<<<<<<< HEAD
-function ChartCreateController($scope, modelService, rest, $location, model, $sce, $routeParams, Alertify, usSpinnerService) {
-    usSpinnerService.spin('spinner');
-    modelService.initService("Chart", "charts", $scope);
-=======
 function ChartCreateController($scope, modelService, rest, $location, model, $sce, $routeParams, Alertify, usSpinnerService, configs) {
     usSpinnerService.spin('spinner');
     modelService.initService("Chart", "charts", $scope);
     
     //factory configs
     configs.statuses($scope);
->>>>>>> change-asi
 
     $scope.model = new model();
     $scope.steps = [];
@@ -371,13 +358,10 @@ function ChartCreateController($scope, modelService, rest, $location, model, $sc
             }
         }
         $scope.model.dataSeries = $scope.model.dataSeries.toString();
-<<<<<<< HEAD
-=======
-        
+
         if ($scope.statuses.default == $scope.statuses.published) {
             $scope.model.publishedAt = new Date();
         }
->>>>>>> change-asi
 
         if (validate(model)) {
             rest().save({

@@ -8,13 +8,9 @@ function BasemapListController($scope, modelService, configs, usSpinnerService) 
     $scope.parameters = {
         skip: 0,
         limit: 20,
-<<<<<<< HEAD
-        conditions: ''
-=======
         conditions: '',
         orderBy: 'createdAt',
         sort: 'DESC'
->>>>>>> change-asi
     };
 
     $scope.filtersView = [{
@@ -59,11 +55,7 @@ function BasemapListController($scope, modelService, configs, usSpinnerService) 
             $scope.parameters.limit = resp.data[0].value;
         }
 
-<<<<<<< HEAD
-        $scope.q = "&include=maps&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-=======
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
->>>>>>> change-asi
 
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
@@ -76,15 +68,6 @@ function BasemapListController($scope, modelService, configs, usSpinnerService) 
     $scope.paging = function(event, page, pageSize, total) {
         usSpinnerService.spin('spinner');
         $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
-<<<<<<< HEAD
-        $scope.q = "&include=maps&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-        if (!!$scope.parameters.conditions) {
-            $scope.q += $scope.parameters.conditions;
-        }
-        modelService.loadAll($scope, function(resp) {
-            usSpinnerService.stop('spinner');
-            if (!resp) {
-=======
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
         
         modelService.loadAll($scope, function(resp) {
@@ -115,7 +98,6 @@ function BasemapListController($scope, modelService, configs, usSpinnerService) 
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if(!resp) {
->>>>>>> change-asi
                 modelService.reloadPage();
             }
         });

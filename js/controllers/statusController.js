@@ -11,13 +11,9 @@ function StatusListController($scope, $location, rest, $rootScope, Flash, Alerti
     $scope.parameters = {
         skip: 0,
         limit: 20,
-<<<<<<< HEAD
-        conditions: ''
-=======
         conditions: '',
         orderBy: 'createdAt',
         sort: 'DESC'
->>>>>>> change-asi
     };
     
     $scope.filtersView = [{
@@ -75,8 +71,6 @@ function StatusListController($scope, $location, rest, $rootScope, Flash, Alerti
             }
         });
     };
-<<<<<<< HEAD
-=======
     
     $scope.findSort = function(type, cond) {
         usSpinnerService.spin('spinner');
@@ -98,7 +92,6 @@ function StatusListController($scope, $location, rest, $rootScope, Flash, Alerti
             }
         });
     };
->>>>>>> change-asi
 }
 
 function StatusViewController($scope, Flash, rest, $routeParams, $location, modelService) {

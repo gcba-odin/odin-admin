@@ -13,13 +13,6 @@ function UserListController($scope, $location, rest, $rootScope, Flash, Alertify
     $scope.parameters = {
         skip: 0,
         limit: 20,
-<<<<<<< HEAD
-        conditions: ''
-    };
-
-    $scope.inactiveModel = function(item) {
-        modelService.confirmDelete(item);
-=======
         conditions: '',
         orderBy: 'createdAt',
         sort: 'DESC'
@@ -33,7 +26,6 @@ function UserListController($scope, $location, rest, $rootScope, Flash, Alertify
     
     $scope.inactiveModel = function(item) {
         modelService.deactivateList(item, $scope);
->>>>>>> change-asi
     }
 
     $scope.activeModel = function(item) {
@@ -79,9 +71,7 @@ function UserListController($scope, $location, rest, $rootScope, Flash, Alertify
             }
         });
     };
-<<<<<<< HEAD
-=======
-    
+
     $scope.findSort = function(type, cond) {
         usSpinnerService.spin('spinner');
         $scope.sortType = type; 
@@ -102,7 +92,6 @@ function UserListController($scope, $location, rest, $rootScope, Flash, Alertify
             }
         });
     };
->>>>>>> change-asi
 }
 
 function UserViewController($scope, Flash, rest, $routeParams, $location, modelService) {

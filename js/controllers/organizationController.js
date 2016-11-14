@@ -16,11 +16,6 @@ app.directive('wysihtml5', function () {
             CKEDITOR.replace('textarea');
 
             /*  $scope.$parent.$watch( $attrs.content, function( newValue, oldValue ) {
-<<<<<<< HEAD
-             
-=======
-
->>>>>>> change-asi
              $scope.editor.innerHTML = newValue;
              $scope.editor.composer.setValue( newValue );
              });*/
@@ -32,15 +27,6 @@ app.directive('wysihtml5', function () {
 function OrganizationListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, configs, usSpinnerService) {
     usSpinnerService.spin('spinner');
     modelService.initService("Organization", "organizations", $scope);
-<<<<<<< HEAD
-    
-    $scope.parameters = {
-        skip: 0,
-        limit: 20,
-        conditions: ''
-    };
-    
-=======
 
     $scope.parameters = {
         skip: 0,
@@ -50,7 +36,6 @@ function OrganizationListController($scope, $location, rest, $rootScope, Flash, 
         sort: 'DESC'
     };
 
->>>>>>> change-asi
     $scope.filtersView = [{
             name: 'Autor',
             model: 'users',
@@ -58,11 +43,7 @@ function OrganizationListController($scope, $location, rest, $rootScope, Flash, 
             modelInput: 'createdBy',
             multiple: true
         }];
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> change-asi
     var filtersGet = ['files', 'users'];
 
     $scope.inactiveModel = function(item) {
@@ -72,11 +53,7 @@ function OrganizationListController($scope, $location, rest, $rootScope, Flash, 
     $scope.activeModel = function(item) {
         modelService.restoreList($scope, item, filtersGet);
     };
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> change-asi
     $scope.confirmDelete = function(item) {
         modelService.confirmDelete(item, {}, filtersGet);
     };
@@ -92,23 +69,15 @@ function OrganizationListController($scope, $location, rest, $rootScope, Flash, 
     $scope.activeClass = function (activeClass) {
         modelService.activeClass(activeClass);
     };
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> change-asi
     $scope.config_key = 'adminPagination';
     ////factory configs
     configs.findKey($scope, function (resp) {
         if (!!resp.data[0] && !!resp.data[0].value) {
             $scope.parameters.limit = resp.data[0].value;
         }
-<<<<<<< HEAD
-        
-        $scope.q = "&include=files,users&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-=======
+
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
->>>>>>> change-asi
 
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
@@ -121,11 +90,7 @@ function OrganizationListController($scope, $location, rest, $rootScope, Flash, 
     $scope.paging = function(event, page, pageSize, total) {
         usSpinnerService.spin('spinner');
         $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
-<<<<<<< HEAD
-        $scope.q = "&include=files,users&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-=======
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
->>>>>>> change-asi
         if(!!$scope.parameters.conditions) {
             $scope.q += $scope.parameters.conditions;
         }
@@ -136,8 +101,6 @@ function OrganizationListController($scope, $location, rest, $rootScope, Flash, 
             }
         });
     };
-<<<<<<< HEAD
-=======
     
     $scope.findSort = function(type, cond) {
         usSpinnerService.spin('spinner');
@@ -159,18 +122,13 @@ function OrganizationListController($scope, $location, rest, $rootScope, Flash, 
             }
         });
     };
->>>>>>> change-asi
 }
 
 function OrganizationViewController($scope, Flash, rest, $routeParams, $location, modelService, $sce) {
     modelService.initService("Organization", "organizations", $scope);
 
     modelService.findOne($routeParams, $scope);
-<<<<<<< HEAD
     
-=======
-
->>>>>>> change-asi
     $scope.inactiveModel = function(item) {
         modelService.deactivateView(item, $scope);
     }
@@ -178,11 +136,7 @@ function OrganizationViewController($scope, Flash, rest, $routeParams, $location
     $scope.activeModel = function(item) {
         modelService.restoreView($scope, item);
     };
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> change-asi
     $scope.edit = function (model) {
         modelService.edit($scope, model);
     }
@@ -208,11 +162,8 @@ function OrganizationCreateController($scope, rest, model, Flash, $location, mod
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-<<<<<<< HEAD
-                if(error.data.data && error.data.data.name) {
-=======
+
                 if(error.data.data && (error.data.data.name || error.data.data.slug)) {
->>>>>>> change-asi
                     Alertify.alert('El nombre de la organización ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al crear la organización.');
@@ -243,21 +194,12 @@ function OrganizationEditController($scope, Flash, rest, $routeParams, model, $l
     $scope.update = function (isValid) {
         usSpinnerService.spin('spinner');
         if (isValid) {
-<<<<<<< HEAD
-            
-=======
-
->>>>>>> change-asi
             $scope.tempData = {
                 address: $scope.model.address,
                 description: $scope.model.description,
                 name: $scope.model.name
             };
-<<<<<<< HEAD
             
-=======
-
->>>>>>> change-asi
             //console.log($scope.model);
             rest().update({
                 type: $scope.type,
@@ -268,11 +210,8 @@ function OrganizationEditController($scope, Flash, rest, $routeParams, model, $l
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-<<<<<<< HEAD
-                if(error.data.data && error.data.data.name) {
-=======
+
                 if(error.data.data && (error.data.data.name || error.data.data.slug)) {
->>>>>>> change-asi
                     Alertify.alert('El nombre de la organización ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al editar la organización.');
@@ -302,8 +241,4 @@ function OrganizationEditController($scope, Flash, rest, $routeParams, model, $l
     };
 
     $scope.load();
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> change-asi

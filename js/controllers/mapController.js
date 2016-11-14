@@ -7,13 +7,9 @@ function MapListController($scope, modelService, configs, usSpinnerService) {
     $scope.parameters = {
         skip: 0,
         limit: 20,
-<<<<<<< HEAD
-        conditions: ''
-=======
         conditions: '',
         orderBy: 'createdAt',
         sort: 'DESC'
->>>>>>> change-asi
     };
 
     $scope.filtersView = [{
@@ -82,9 +78,7 @@ function MapListController($scope, modelService, configs, usSpinnerService) {
             }
         });
     };
-<<<<<<< HEAD
-=======
-    
+
     $scope.findSort = function(type, cond) {
         usSpinnerService.spin('spinner');
         $scope.sortType = type; 
@@ -105,7 +99,6 @@ function MapListController($scope, modelService, configs, usSpinnerService) {
             }
         });
     };
->>>>>>> change-asi
 }
 
 function MapViewController($scope, modelService, $routeParams, rest, $location, $sce, configs, usSpinnerService, Alertify) {
@@ -285,12 +278,9 @@ function MapPreviewController($scope, modelService, $routeParams, rest, $locatio
 function MapCreateController($scope, modelService, rest, $location, model, $sce, $routeParams, Alertify, usSpinnerService, configs) {
     usSpinnerService.spin('spinner');
     modelService.initService("Map", "maps", $scope);
-<<<<<<< HEAD
-=======
     
     //factory configs
     configs.statuses($scope);
->>>>>>> change-asi
 
     $scope.model = new model();
     $scope.steps = [];
@@ -484,13 +474,10 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
             cont++;
         }
         $scope.model.properties = $scope.model.properties.toString();
-<<<<<<< HEAD
-=======
         
         if ($scope.statuses.default == $scope.statuses.published) {
             $scope.model.publishedAt = new Date();
         }
->>>>>>> change-asi
 
         if (validate(model)) {
             rest().save({

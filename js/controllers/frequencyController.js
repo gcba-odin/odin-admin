@@ -11,13 +11,9 @@ function updateFrequencyListController($scope, $location, rest, $rootScope, Flas
     $scope.parameters = {
         skip: 0,
         limit: 20,
-<<<<<<< HEAD
-        conditions: ''
-=======
         conditions: '',
         orderBy: 'createdAt',
         sort: 'DESC'
->>>>>>> change-asi
     };
     
     $scope.filtersView = [{
@@ -75,9 +71,7 @@ function updateFrequencyListController($scope, $location, rest, $rootScope, Flas
             }
         });
     };
-<<<<<<< HEAD
-=======
-    
+
     $scope.findSort = function(type, cond) {
         usSpinnerService.spin('spinner');
         $scope.sortType = type; 
@@ -98,7 +92,6 @@ function updateFrequencyListController($scope, $location, rest, $rootScope, Flas
             }
         });
     };
->>>>>>> change-asi
 }
 
 function updateFrequencyViewController($scope, Flash, rest, $routeParams, $location, modelService) {

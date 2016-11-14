@@ -13,13 +13,9 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
     $scope.parameters = {
         skip: 0,
         limit: 20,
-<<<<<<< HEAD
-        conditions: ''
-=======
         conditions: '',
         orderBy: 'createdAt',
         sort: 'DESC'
->>>>>>> change-asi
     };
 
     $scope.filtersView = [{
@@ -112,9 +108,7 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
             }
         });
     };
-<<<<<<< HEAD
-=======
-    
+
     $scope.findSort = function(type, cond) {
         usSpinnerService.spin('spinner');
         $scope.sortType = type; 
@@ -135,7 +129,6 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
             }
         });
     };
->>>>>>> change-asi
 }
 
 function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sce, modelService, Alertify, usSpinnerService, $window, configs) {
@@ -260,11 +253,7 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
 
 }
 
-<<<<<<< HEAD
-function DatasetCreateController($scope, rest, model, Flash, $location, modelService, flashService, usSpinnerService, Alertify) {
-=======
 function DatasetCreateController($scope, rest, model, Flash, $location, modelService, flashService, usSpinnerService, Alertify, configs) {
->>>>>>> change-asi
     modelService.initService("Dataset", "datasets", $scope);
 
     $scope.tagsmodel = rest().get({
@@ -278,12 +267,9 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
     });
 
     $scope.status_default = true;
-<<<<<<< HEAD
-=======
-    
+
     //factory configs
     configs.statuses($scope);
->>>>>>> change-asi
 
     $scope.model = new model();
     $scope.model.items = [];
@@ -310,14 +296,10 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
         // transform the array of objects into a string of ids
         $scope.model.tags = $scope.model.tags.toString();
         $scope.model.categories = $scope.model.categories.toString();
-<<<<<<< HEAD
 
-=======
-        
         if ($scope.statuses.default == $scope.statuses.published) {
             $scope.model.publishedAt = new Date();
         }
->>>>>>> change-asi
 
         if (isValid) {
             rest().save({
@@ -328,11 +310,8 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-<<<<<<< HEAD
-                if (error.data.data && error.data.data.name) {
-=======
+
                 if (error.data.data && (error.data.data.name || error.data.data.slug)) {
->>>>>>> change-asi
                     Alertify.alert('El nombre de dataset ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al crear el dataset.');
@@ -422,15 +401,12 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
         $scope.tempData.files = reformatArray($scope.tempData.files).toString();
         $scope.tempData.tags = $scope.tempData.tags.toString();
         $scope.tempData.categories = $scope.tempData.categories.toString();
-<<<<<<< HEAD
-=======
-        
+
         if ($scope.model.status == $scope.statuses.published) {
             $scope.tempData.publishedAt = new Date();
         } else {
             $scope.tempData.publishedAt = null;
         }
->>>>>>> change-asi
 
         // TODO: chequear cual forma de mandar los items (opcionales) es la correcta
         // $scope.tempData.items
@@ -454,11 +430,8 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-<<<<<<< HEAD
-                if (error.data.data && error.data.data.name) {
-=======
+
                 if (error.data.data && (error.data.data.name || error.data.data.slug)) {
->>>>>>> change-asi
                     Alertify.alert('El nombre de dataset ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al editar el dataset.');

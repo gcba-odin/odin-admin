@@ -11,13 +11,9 @@ function FileTypeListController($scope, $location, rest, $rootScope, Flash, Aler
     $scope.parameters = {
         skip: 0,
         limit: 20,
-<<<<<<< HEAD
-        conditions: ''
-=======
         conditions: '',
         orderBy: 'createdAt',
         sort: 'DESC'
->>>>>>> change-asi
     };
     
     $scope.filtersView = [{
@@ -57,11 +53,7 @@ function FileTypeListController($scope, $location, rest, $rootScope, Flash, Aler
             $scope.parameters.limit = resp.data[0].value;
         }
         
-<<<<<<< HEAD
-        $scope.q = "&include=files&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-=======
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
->>>>>>> change-asi
 
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
@@ -74,11 +66,8 @@ function FileTypeListController($scope, $location, rest, $rootScope, Flash, Aler
     $scope.paging = function(event, page, pageSize, total) {
         usSpinnerService.spin('spinner');
         $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
-<<<<<<< HEAD
-        $scope.q = "&include=files&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-=======
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
->>>>>>> change-asi
+        
         if(!!$scope.parameters.conditions) {
             $scope.q += $scope.parameters.conditions;
         }
@@ -89,9 +78,7 @@ function FileTypeListController($scope, $location, rest, $rootScope, Flash, Aler
             }
         });
     };
-<<<<<<< HEAD
-=======
-    
+
     $scope.findSort = function(type, cond) {
         usSpinnerService.spin('spinner');
         $scope.sortType = type; 
@@ -112,7 +99,6 @@ function FileTypeListController($scope, $location, rest, $rootScope, Flash, Aler
             }
         });
     };
->>>>>>> change-asi
 }
 
 function FileTypeViewController($scope, Flash, rest, $routeParams, $location, modelService, $sce, usSpinnerService) {
@@ -173,11 +159,8 @@ function FileTypeCreateController($scope, $http, rest, model, Flash, $location, 
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-<<<<<<< HEAD
-                if(error.data.data && error.data.data.name) {
-=======
+                
                 if(error.data.data && (error.data.data.name || error.data.data.slug)) {
->>>>>>> change-asi
                     Alertify.alert('El tipo de archivo que quiere guardar ya existe.');
                 } else {
                     Alertify.alert('Hubo un error al crear el tipo de archivo.');
@@ -210,11 +193,8 @@ function FileTypeEditController($scope, $http, Flash, rest, $routeParams, model,
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-<<<<<<< HEAD
-                if(error.data.data && error.data.data.name) {
-=======
+
                 if(error.data.data && (error.data.data.name || error.data.data.slug)) {
->>>>>>> change-asi
                     Alertify.alert('El tipo de archivo que quiere guardar ya existe.');
                 } else {
                     Alertify.alert('Hubo un error al editar el tipo de archivo.');
