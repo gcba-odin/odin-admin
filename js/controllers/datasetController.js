@@ -304,7 +304,7 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if (error.data.data && error.data.data.name) {
+                if (error.data.data && (error.data.data.name || error.data.data.slug)) {
                     Alertify.alert('El nombre de dataset ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al crear el dataset.');
@@ -417,7 +417,7 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if (error.data.data && error.data.data.name) {
+                if (error.data.data && (error.data.data.name || error.data.data.slug)) {
                     Alertify.alert('El nombre de dataset ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al editar el dataset.');
