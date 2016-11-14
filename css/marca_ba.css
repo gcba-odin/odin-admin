@@ -1,0 +1,94 @@
+a {
+    color: #19c3e3;
+}
+a:focus, a:hover {
+    color: #fdd306;
+    text-decoration: none;
+}
+
+.active {
+    color:  #19c3e3;
+}
+
+.box-header .box-title {
+    color: #fdd306;
+}
+
+.btn:hover {
+    border-color: #19c3e3;
+    background-color: #19c3e3;
+    color: #FFFFFF;
+}
+
+.home-box h3 {
+    color: #fdd306;
+}
+.home-box:hover  {
+    background-color: #19c3e3;
+    border-color: #19c3e3;
+}
+
+.home-box:hover h3 {
+    color: #FFFFFF;
+}
+
+
+.logo {
+    background: #fdd306;
+}
+
+.logo .logo-lg img {
+    width: 180px;
+}
+
+.main-header .logo .logo-lg {
+    /*width: 180px;*/
+}
+
+.navbar-icon{
+    color: #19c3e3;
+}
+
+.pagination>.active>a {
+    background-color: #19c3e3;
+    border-color: #19c3e3;
+}
+
+.sidebar-mini.sidebar-collapse .main-header .logo {
+  width: 50px;
+}
+.sidebar-mini.sidebar-collapse .main-header .logo > .logo-mini {
+  display: block;
+  margin-left: -15px;
+  margin-right: -15px;
+  font-size: 18px;
+  /*height: 2.5em;*/
+}
+
+
+.sidebar-toggle{
+    color:  #19c3e3 !important;
+    font-size: 11pt;
+}
+
+.sidebar-toggle:hover {
+    color: #fdd306;
+}
+
+.sidebar-menu .treeview.active>a>.sidebar-svg *, .sidebar-menu .treeview-menu>li.active>a>.sidebar-svg * {
+    fill: #19c3e3;
+
+}
+
+.sidebar-menu .treeview-menu li.active>a {
+    color: #19c3e3;
+
+}
+
+ul.sidebar-menu .treeview.active>a {
+  color:  #19c3e3;
+}
+
+ul.sidebar-menu .treeview.active>a>span {
+  color:  #19c3e3;
+}

@@ -24,10 +24,16 @@
         "validation.match",
         "angular-jwt",
         "vcRecaptcha",
-        "pdf"
+        "pdf",
+        "ngIdle"
           ]);
+          
+    app.constant("session_timeout", {
+        "base": "300", //5 minutes
+        "extended": "600" //10 minutes
+    });
 
-    app.config(function($routeProvider, $httpProvider, $translateProvider, usSpinnerConfigProvider, ChartJsProvider, ConsumerServiceProvider, $middlewareProvider, jwtOptionsProvider, vcRecaptchaServiceProvider) {
+    app.config(function($routeProvider, $httpProvider, $translateProvider, usSpinnerConfigProvider, ChartJsProvider, ConsumerServiceProvider, $middlewareProvider, jwtOptionsProvider, vcRecaptchaServiceProvider, IdleProvider, TitleProvider, session_timeout) {
 
         vcRecaptchaServiceProvider.setDefaults({
             key: '6LetbAcUAAAAABWhGuMbTaYQBferzWoxYvmtx9PS',
@@ -421,14 +427,29 @@
         });
 
         $middlewareProvider.global(['everyone', 'x-admin']);
+        
+        TitleProvider.enabled(false);
+        IdleProvider.idle(session_timeout.base); 
+        IdleProvider.timeout(5); 
     });
     app.run(run);
 
-    function run($rootScope, EnvironmentConfig, authManager) {
+    function run($rootScope, EnvironmentConfig, authManager, Idle, AuthenticationService, $location, $window) {
+        Idle.watch();
         $rootScope.url = EnvironmentConfig.api;
         authManager.redirectWhenUnauthenticated();
         $rootScope.$on('$routeChangeSuccess', function(e, current, pre) {
             $rootScope.actualUrl = current.$$route.originalPath;
+        });
+
+        $rootScope.$on('IdleTimeout', function() {
+            var restrictedPage = $.inArray($location.path(), ['/login', '/register']) === -1;
+            if (restrictedPage) {
+                $window.location.reload();
+                AuthenticationService.ClearCredentials();
+                
+            } 
+            Idle.watch();
         });
     }
 })();

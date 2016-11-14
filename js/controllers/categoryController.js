@@ -8,11 +8,21 @@ app.factory('model', function($resource) {
 function CategoryListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, configs, usSpinnerService) {
     usSpinnerService.spin('spinner');
     modelService.initService("Category", "categories", $scope);
+<<<<<<< HEAD
     
     $scope.parameters = {
         skip: 0,
         limit: 20,
         conditions: ''
+=======
+
+    $scope.parameters = {
+        skip: 0,
+        limit: 20,
+        conditions: '',
+        orderBy: 'name',
+        sort: 'ASC'
+>>>>>>> change-asi
     };
 
     $scope.filtersView = [{
@@ -22,7 +32,11 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
             modelInput: 'createdBy',
             multiple: true
         }];
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> change-asi
     var filtersGet = ['datasets'];
 
     $scope.inactiveModel = function(item) {
@@ -32,7 +46,11 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
     $scope.activeModel = function(item) {
         modelService.restoreList($scope, item, filtersGet);
     };
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> change-asi
     $scope.confirmDelete = function(item) {
         modelService.confirmDelete(item, {}, filtersGet);
     };
@@ -49,15 +67,24 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
         modelService.activeClass(activeClass);
 
     };
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> change-asi
     $scope.config_key = 'adminPagination';
     ////factory configs
     configs.findKey($scope, function (resp) {
         if (!!resp.data[0] && !!resp.data[0].value) {
             $scope.parameters.limit = resp.data[0].value;
         }
+<<<<<<< HEAD
         
         $scope.q = "&include=datasets&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
+=======
+
+        $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
+>>>>>>> change-asi
 
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
@@ -70,10 +97,40 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
     $scope.paging = function(event, page, pageSize, total) {
         usSpinnerService.spin('spinner');
         $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
+<<<<<<< HEAD
         $scope.q = "&include=datasets&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
         if(!!$scope.parameters.conditions) {
             $scope.q += $scope.parameters.conditions;
         }
+=======
+        $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
+        
+        modelService.loadAll($scope, function(resp) {
+            usSpinnerService.stop('spinner');
+            if(!resp) {
+                modelService.reloadPage();
+            }
+        });
+    };
+    
+    $scope.findSort = function(type, cond) {
+        usSpinnerService.spin('spinner');
+        $scope.sortType = type; 
+        
+        var sort = 'DESC';
+        if(cond) {
+            sort = 'ASC';
+        }
+        $scope.sortReverse = cond;
+        
+        $scope.parameters.orderBy = type;
+        $scope.parameters.sort = sort;
+        
+        if(!!$scope.parameters.conditions) {
+            $scope.q += $scope.parameters.conditions;
+        }
+        
+>>>>>>> change-asi
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if(!resp) {
@@ -87,7 +144,11 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
 function CategoryViewController($scope, Flash, rest, $routeParams, $location, $sce, modelService, $rootScope, usSpinnerService) {
     usSpinnerService.spin('spinner');
     modelService.initService("Category", "categories", $scope);
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> change-asi
     $scope.inactiveModel = function(item) {
         modelService.deactivateView(item, $scope);
     }
@@ -133,7 +194,11 @@ function CategoryCreateController($scope, rest, model, Flash, $location, $rootSc
         $scope.fileModel.name = "";
         $scope.fileModel.type = "";
     };
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> change-asi
     $scope.clearImage = function() {
         image = null;
         for (var att in  $scope.form.uploadImage.$error) {
@@ -175,7 +240,11 @@ function CategoryCreateController($scope, rest, model, Flash, $location, $rootSc
                 $location.url('/categories/' + resp.data.data.id + '/view');
             }, function(error) {
                 usSpinnerService.stop('spinner');
+<<<<<<< HEAD
                 if(error.data.data && error.data.data.name) {
+=======
+                if(error.data.data && (error.data.data.name || error.data.data.slug)) {
+>>>>>>> change-asi
                     Alertify.alert('El nombre de la categoría ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al crear la categoría.');
@@ -239,7 +308,11 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
         $scope.fileModel.name = "";
         $scope.fileModel.type = "";
     };
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> change-asi
     $scope.clearImage = function() {
         image = null;
         for (var att in  $scope.form.uploadImage.$error) {
@@ -287,7 +360,11 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
                 $location.url('/categories/' + resp.data.data.id + '/view');
             }, function(error) {
                 usSpinnerService.stop('spinner');
+<<<<<<< HEAD
                 if(error.data.data && error.data.data.name) {
+=======
+                if(error.data.data && (error.data.data.name || error.data.data.slug)) {
+>>>>>>> change-asi
                     Alertify.alert('El nombre de la categoría ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al editar la categoría.');
@@ -357,4 +434,8 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
         $scope.load();
     };
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> change-asi

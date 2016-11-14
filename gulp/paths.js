@@ -2,7 +2,7 @@ var gulp = require('gulp');
 
 gulp.paths = {
   static: [
-    'fonts/**/*',
+    // 'fonts/**/*',
     'images/**/*',
     'img/**/*',
     'uib/**/*',
@@ -28,8 +28,27 @@ gulp.paths = {
     'plugins/**',
     'index.html',
   ],
+  fonts: [
+    'fonts/*.woff',
+    'fonts/*.woff2',
+    'fonts/*.eot',
+    'fonts/*.svg',
+    'fonts/*.ttf',
+    'fonts/*.otf'
+  ],
   styles: [
     'css/*.scss',
     'css/*.css'
+    // 'css/angular-date-picker.min.css',
+    // 'css/angular-color-picker.css',
+    // 'css/ionicons.min.css',
+    // 'node_modules/css/font-awesome.min.css',
+    // 'css/bootstrap.min.css',
+    // 'css/selectize.default.css',
+    // 'css/ng-alertify.css',
+    // 'css/styles_admin.css',
+    // 'css/AdminLTE.css',
+    // 'css/main.css',
+    // 'css/marca_ba.css',
   ]
 };
