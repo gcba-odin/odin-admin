@@ -100,7 +100,7 @@ function FileTypeListController($scope, $location, rest, $rootScope, Flash, Aler
     };
 }
 
-function FileTypeViewController($scope, Flash, rest, $routeParams, $location, modelService, $sce, usSpinnerService) {
+function FileTypeViewController($scope, Flash, rest, $routeParams, $location, modelService, $sce, usSpinnerService, Alertify, $window) {
     usSpinnerService.spin('spinner');
     modelService.initService("File Type", "filetypes", $scope);
 
@@ -121,20 +121,88 @@ function FileTypeViewController($scope, Flash, rest, $routeParams, $location, mo
         return $sce.trustAsHtml(html);
     };
     
-    $scope.model = rest().findOne({
-        id: $routeParams.id,
-        type: $scope.type
-    }, function() {
-        var mimes = [];
-        for (var i = 0; i < $scope.model.mimetype.length; i++) {
-            mimes.push('<span class="label label-primary">' + $scope.model.mimetype[i] + '</span>')
-        }
-        $scope.model.mimetype = mimes.join(" - ");
-        usSpinnerService.stop('spinner');
-    }, function(error) {
-        usSpinnerService.stop('spinner');
-        modelService.reloadPage();
-    });
+    var loadModel = function() {
+        $scope.model = rest().findOne({
+            id: $routeParams.id,
+            type: $scope.type,
+            params: 'include=files'
+        }, function() {
+            var mimes = [];
+            for (var i = 0; i < $scope.model.mimetype.length; i++) {
+                mimes.push('<span class="label label-primary">' + $scope.model.mimetype[i] + '</span>')
+            }
+            $scope.model.mimetype = mimes.join(" - ");
+            usSpinnerService.stop('spinner');
+        }, function(error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
+        });
+    }
+    
+        loadModel();
+    
+    $scope.publish = function (id, type) {
+        usSpinnerService.spin('spinner');
+
+        rest().publish({
+            id: id,
+            type: type,
+        }, {}, function (resp) {
+            usSpinnerService.stop('spinner');
+            loadModel();
+            //var url = '/' + $scope.type;
+            // $location.path(url);
+        }, function (error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
+        });
+    };
+
+    $scope.unPublish = function (id, type) {
+        var text_type = (type == 'files') ? 'recurso' : '';
+        Alertify.confirm('¿Está seguro que quiere despublicar este ' + text_type + '?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().unpublish({
+                    type: $scope.type,
+                    id: id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
+                    //var url = '/' + $scope.type;
+                    // $location.path(url);
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+    
+    $scope.deleteResource = function (id, type) {
+        Alertify.confirm('¿Está seguro que quiere borrar este recurso?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+                rest().delete({
+                    type: type,
+                    id: id
+                }, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    $window.location.reload();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
 }
 
 function FileTypeCreateController($scope, $http, rest, model, Flash, $location, modelService, Alertify, usSpinnerService) {

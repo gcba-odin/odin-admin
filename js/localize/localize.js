@@ -187,7 +187,9 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'SUBCATEGORIES': 'Subcategories',
         'VIEW_LINK_SUBCATEGORIES': 'View associated subcategories',
         'MY_PROFILE': 'My profile',
-        'DENIED_ACCESS': 'Denied access'
+        'DENIED_ACCESS': 'Denied access',
+        'RELATIONSHIPS': 'Relationships',
+        'VIEW_LINK_RELATIONSHIPS': 'View relationships'
     });
 
     $translateProvider.translations('es', {
@@ -414,7 +416,9 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'SUBCATEGORIES': 'Subcategorías',
         'VIEW_LINK_SUBCATEGORIES': 'Ver subcategorías asociadas',
         'MY_PROFILE': 'Mi perfil',
-        'DENIED_ACCESS': 'Acceso denegado'
+        'DENIED_ACCESS': 'Acceso denegado',
+        'RELATIONSHIPS': 'Entidades relacionadas',
+        'VIEW_LINK_RELATIONSHIPS': 'Ver entidades relacionadas'
     });
     $translateProvider.preferredLanguage('es');
 }]);

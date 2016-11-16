@@ -102,19 +102,22 @@ function BasemapListController($scope, modelService, configs, usSpinnerService) 
     };
 }
 
-function BasemapViewController($scope, modelService, $routeParams, rest, $location, $sce, usSpinnerService) {
+function BasemapViewController($scope, modelService, $routeParams, rest, $location, $sce, usSpinnerService, Alertify, $window) {
     usSpinnerService.spin('spinner');
     modelService.initService("Basemap", "basemaps", $scope);
 
-    $scope.model = rest().findOne({
-        id: $routeParams.id,
-        type: $scope.type
-    }, function() {
-        usSpinnerService.stop('spinner');
-    }, function(error) {
-        usSpinnerService.stop('spinner');
-        modelService.reloadPage();
-    });
+    var loadModel = function() {
+        $scope.model = rest().findOne({
+            id: $routeParams.id,
+            type: $scope.type,
+            params: 'include=maps'
+        }, function() {
+            usSpinnerService.stop('spinner');
+        }, function(error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
+        });
+    };
 
     $scope.inactiveModel = function(item) {
         modelService.deactivateView(item, $scope);
@@ -131,6 +134,71 @@ function BasemapViewController($scope, modelService, $routeParams, rest, $locati
 
     $scope.getHtml = function(html) {
         return $sce.trustAsHtml(html);
+    };
+    
+    loadModel();
+    
+    $scope.publish = function (id, type) {
+        usSpinnerService.spin('spinner');
+
+        rest().publish({
+            id: id,
+            type: type,
+        }, {}, function (resp) {
+            usSpinnerService.stop('spinner');
+            loadModel();
+            //var url = '/' + $scope.type;
+            // $location.path(url);
+        }, function (error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
+        });
+    };
+
+    $scope.unPublish = function (id, type) {
+        var text_type = (type == 'charts') ? 'gráfico' : (type == 'maps') ? 'mapa' : 'archivo';
+        Alertify.confirm('¿Está seguro que quiere despublicar este ' + text_type + '?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().unpublish({
+                    type: $scope.type,
+                    id: id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
+                    //var url = '/' + $scope.type;
+                    // $location.path(url);
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+    
+    $scope.deleteResource = function (id, type) {
+        Alertify.confirm('¿Está seguro que quiere borrar este recurso?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+                rest().delete({
+                    type: type,
+                    id: id
+                }, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    $window.location.reload();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
     };
 }
 

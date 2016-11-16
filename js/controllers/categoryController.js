@@ -157,21 +157,88 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
         disabled: true,
     };
 
-    $scope.model = rest().findOne({
-        id: $routeParams.id,
-        type: $scope.type,
-        params: 'include=subcategories'
-    }, function() {
-        var subcategories = [];
-        for (var i = 0; i < $scope.model.subcategories.length; i++) {
-            subcategories.push('<span class="label label-primary">' + $scope.model.subcategories[i].name + '</span>')
-        }
-        $scope.subcategoriesNames = subcategories.join(" - ");
-        usSpinnerService.stop('spinner');
-    }, function(error) {
-        usSpinnerService.stop('spinner');
-        modelService.reloadPage();
-    });
+    var loadModel = function() {
+        $scope.model = rest().findOne({
+            id: $routeParams.id,
+            type: $scope.type,
+            params: 'include=subcategories,datasets'
+        }, function() {
+            var subcategories = [];
+            for (var i = 0; i < $scope.model.subcategories.length; i++) {
+                subcategories.push('<span class="label label-primary">' + $scope.model.subcategories[i].name + '</span>')
+            }
+            $scope.subcategoriesNames = subcategories.join(" - ");
+            usSpinnerService.stop('spinner');
+        }, function(error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
+        });
+    }
+    
+    loadModel();
+    
+    $scope.publish = function (id, type) {
+        usSpinnerService.spin('spinner');
+
+        rest().publish({
+            id: id,
+            type: type,
+        }, {}, function (resp) {
+            usSpinnerService.stop('spinner');
+            loadModel();
+            //var url = '/' + $scope.type;
+            // $location.path(url);
+        }, function (error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
+        });
+    };
+
+    $scope.unPublish = function (id, type) {
+        var text_type = (type == 'datasets') ? 'dataset' : '';
+        Alertify.confirm('¿Está seguro que quiere despublicar este ' + text_type + '?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().unpublish({
+                    type: $scope.type,
+                    id: $scope.model.id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
+                    //var url = '/' + $scope.type;
+                    // $location.path(url);
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+    
+    $scope.deleteResource = function (id, type) {
+        Alertify.confirm('¿Está seguro que quiere borrar este dataset?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+                rest().delete({
+                    type: type,
+                    id: id
+                }, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    $window.location.reload();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
 }
 
 function CategoryCreateController($scope, rest, $routeParams, model, Flash, $location, $rootScope, Alertify, modelService, Upload, usSpinnerService) {
