@@ -21,18 +21,18 @@ function BasemapListController($scope, modelService, configs, usSpinnerService) 
         multiple: true
     }];
 
-    var filtersGet = ['maps'];
+    $scope.filtersInclude = ['maps'];
 
     $scope.inactiveModel = function(item) {
-        modelService.deactivateList(item, $scope, filtersGet);
+        modelService.deactivateList(item, $scope);
     }
 
     $scope.activeModel = function(item) {
-        modelService.restoreList($scope, item, filtersGet);
+        modelService.restoreList($scope, item);
     };
 
     $scope.confirmDelete = function(item) {
-        modelService.confirmDelete(item, {}, filtersGet);
+        modelService.confirmDelete(item, {});
     };
 
     $scope.edit = function(model) {
@@ -69,7 +69,9 @@ function BasemapListController($scope, modelService, configs, usSpinnerService) 
         usSpinnerService.spin('spinner');
         $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-        
+        if(!!$scope.parameters.conditions) {
+            $scope.q += $scope.parameters.conditions;
+        }
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if (!resp) {
@@ -90,10 +92,6 @@ function BasemapListController($scope, modelService, configs, usSpinnerService) 
         
         $scope.parameters.orderBy = type;
         $scope.parameters.sort = sort;
-        
-        if(!!$scope.parameters.conditions) {
-            $scope.q += $scope.parameters.conditions;
-        }
         
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');

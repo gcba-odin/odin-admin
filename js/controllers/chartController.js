@@ -70,8 +70,7 @@ function ChartListController($scope, modelService, configs, usSpinnerService, un
         }
 
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-        $scope.q += $scope.parameters.conditions;
-
+        
         modelService.loadAll($scope, function (resp) {
             usSpinnerService.stop('spinner');
             if (!resp) {

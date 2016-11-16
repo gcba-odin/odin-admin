@@ -24,18 +24,18 @@ function FileTypeListController($scope, $location, rest, $rootScope, Flash, Aler
             multiple: true
         }];
     
-     var filtersGet = ['files'];
+    $scope.filtersInclude = ['files'];
 
     $scope.inactiveModel = function(item) {
-        modelService.deactivateList(item, $scope, filtersGet);
+        modelService.deactivateList(item, $scope);
     }
 
     $scope.activeModel = function(item) {
-        modelService.restoreList($scope, item, filtersGet);
+        modelService.restoreList($scope, item);
     };
     
     $scope.confirmDelete = function(item) {
-        modelService.confirmDelete(item, {}, filtersGet);
+        modelService.confirmDelete(item, {});
     };
 
     $scope.edit = function(model) {
@@ -67,7 +67,6 @@ function FileTypeListController($scope, $location, rest, $rootScope, Flash, Aler
         usSpinnerService.spin('spinner');
         $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-        
         if(!!$scope.parameters.conditions) {
             $scope.q += $scope.parameters.conditions;
         }

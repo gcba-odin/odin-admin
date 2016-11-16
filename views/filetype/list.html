@@ -42,7 +42,7 @@
                                         <!--<a class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)">{{ 'DELETE' | translate }}</a>-->
                                         <a ng-if="model.deletedAt" class="btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="activeModel($event)" permission permission-except="roles.GUEST">{{ 'ACTIVATE' | translate }}</a>
                                         <a ng-if="!model.deletedAt" class="btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="inactiveModel($event)" permission permission-except="roles.GUEST">{{ 'INACTIVATE' | translate }}</a>
-                                        <a ng-if="!model.files.length" class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
+                                        <a uib-tooltip="No puede realizar esta acción. Este {{ 'FILE_TYPE' | translate | lowercase }} tiene relaciones." tooltip-placement="top" tooltip-enable="model.files.length" tooltip-append-to-body="true" ng-disabled="model.files.length" class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="model.files.length ? null : confirmDelete($event)" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
                                     </td>
                                 </tr>
 

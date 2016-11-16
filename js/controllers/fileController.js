@@ -75,8 +75,7 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
         }
 
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-        $scope.q += $scope.parameters.conditions;
-
+        
         modelService.loadAll($scope, function (resp) {
             usSpinnerService.stop('spinner');
             if (!resp) {
@@ -89,7 +88,7 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
         usSpinnerService.spin('spinner');
         $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-        if (!!$scope.parameters.conditions) {
+        if(!!$scope.parameters.conditions) {
             $scope.q += $scope.parameters.conditions;
         }
         modelService.loadAll($scope, function (resp) {
