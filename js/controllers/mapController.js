@@ -7,7 +7,9 @@ function MapListController($scope, modelService, configs, usSpinnerService, unde
     $scope.parameters = {
         skip: 0,
         limit: 20,
-        conditions: ''
+        conditions: '',
+        orderBy: 'createdAt',
+        sort: 'DESC'
     };
 
     $scope.underReview = underReview;
@@ -87,6 +89,27 @@ function MapListController($scope, modelService, configs, usSpinnerService, unde
         modelService.loadAll($scope, function (resp) {
             usSpinnerService.stop('spinner');
             if (!resp) {
+                modelService.reloadPage();
+            }
+        });
+    };
+
+    $scope.findSort = function(type, cond) {
+        usSpinnerService.spin('spinner');
+        $scope.sortType = type; 
+        
+        var sort = 'DESC';
+        if(cond) {
+            sort = 'ASC';
+        }
+        $scope.sortReverse = cond;
+        
+        $scope.parameters.orderBy = type;
+        $scope.parameters.sort = sort;
+        
+        modelService.loadAll($scope, function(resp) {
+            usSpinnerService.stop('spinner');
+            if(!resp) {
                 modelService.reloadPage();
             }
         });
@@ -292,6 +315,9 @@ function MapPreviewController($scope, modelService, $routeParams, rest, $locatio
 function MapCreateController($scope, modelService, rest, $location, model, $sce, $routeParams, Alertify, usSpinnerService, configs) {
     usSpinnerService.spin('spinner');
     modelService.initService("Map", "maps", $scope);
+    
+    //factory configs
+    configs.statuses($scope);
 
     $scope.model = new model();
     $scope.steps = [];
@@ -484,6 +510,10 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
             cont++;
         }
         $scope.model.properties = $scope.model.properties.toString();
+        
+        if ($scope.statuses.default == $scope.statuses.published) {
+            $scope.model.publishedAt = new Date();
+        }
 
         if (validate(model)) {
             rest().save({

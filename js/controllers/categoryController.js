@@ -12,16 +12,18 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
     $scope.parameters = {
         skip: 0,
         limit: 20,
-        conditions: 'include=subcategories'
+        conditions: 'include=subcategories',
+        orderBy: 'name',
+        sort: 'ASC'
     };
 
     $scope.filtersView = [{
-        name: 'Autor',
-        model: 'users',
-        key: 'username',
-        modelInput: 'createdBy',
-        multiple: true
-    }];
+            name: 'Autor',
+            model: 'users',
+            key: 'username',
+            modelInput: 'createdBy',
+            multiple: true
+        }];
 
     var filtersGet = ['datasets'];
 
@@ -71,9 +73,32 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
         usSpinnerService.spin('spinner');
         $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-        if (!!$scope.parameters.conditions) {
+        
+        modelService.loadAll($scope, function(resp) {
+            usSpinnerService.stop('spinner');
+            if(!resp) {
+                modelService.reloadPage();
+            }
+        });
+    };
+    
+    $scope.findSort = function(type, cond) {
+        usSpinnerService.spin('spinner');
+        $scope.sortType = type; 
+        
+        var sort = 'DESC';
+        if(cond) {
+            sort = 'ASC';
+        }
+        $scope.sortReverse = cond;
+        
+        $scope.parameters.orderBy = type;
+        $scope.parameters.sort = sort;
+        
+        if(!!$scope.parameters.conditions) {
             $scope.q += $scope.parameters.conditions;
         }
+
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if (!resp) {
@@ -205,7 +230,8 @@ function CategoryCreateController($scope, rest, $routeParams, model, Flash, $loc
                 $location.url('/categories/' + resp.data.data.id + '/view');
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if (error.data.data && error.data.data.name) {
+
+                if(error.data.data && (error.data.data.name || error.data.data.slug)) {
                     Alertify.alert('El nombre de la categoría ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al crear la categoría.');
@@ -320,7 +346,8 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
                 $location.url('/categories/' + resp.data.data.id + '/view');
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if (error.data.data && error.data.data.name) {
+
+                if(error.data.data && (error.data.data.name || error.data.data.slug)) {
                     Alertify.alert('El nombre de la categoría ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al editar la categoría.');

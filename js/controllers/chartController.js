@@ -8,7 +8,9 @@ function ChartListController($scope, modelService, configs, usSpinnerService, un
     $scope.parameters = {
         skip: 0,
         limit: 20,
-        conditions: ''
+        conditions: '',
+        orderBy: 'createdAt',
+        sort: 'DESC'
     };
 
     $scope.underReview = underReview;
@@ -88,6 +90,27 @@ function ChartListController($scope, modelService, configs, usSpinnerService, un
         modelService.loadAll($scope, function (resp) {
             usSpinnerService.stop('spinner');
             if (!resp) {
+                modelService.reloadPage();
+            }
+        });
+    };
+    
+    $scope.findSort = function(type, cond) {
+        usSpinnerService.spin('spinner');
+        $scope.sortType = type; 
+        
+        var sort = 'DESC';
+        if(cond) {
+            sort = 'ASC';
+        }
+        $scope.sortReverse = cond;
+        
+        $scope.parameters.orderBy = type;
+        $scope.parameters.sort = sort;
+        
+        modelService.loadAll($scope, function(resp) {
+            usSpinnerService.stop('spinner');
+            if(!resp) {
                 modelService.reloadPage();
             }
         });
@@ -247,9 +270,12 @@ function ChartPreviewController($scope, modelService, $routeParams, rest, $locat
     };
 }
 
-function ChartCreateController($scope, modelService, rest, $location, model, $sce, $routeParams, Alertify, usSpinnerService) {
+function ChartCreateController($scope, modelService, rest, $location, model, $sce, $routeParams, Alertify, usSpinnerService, configs) {
     usSpinnerService.spin('spinner');
     modelService.initService("Chart", "charts", $scope);
+    
+    //factory configs
+    configs.statuses($scope);
 
     $scope.model = new model();
     $scope.steps = [];
@@ -368,6 +394,10 @@ function ChartCreateController($scope, modelService, rest, $location, model, $sc
             }
         }
         $scope.model.dataSeries = $scope.model.dataSeries.toString();
+
+        if ($scope.statuses.default == $scope.statuses.published) {
+            $scope.model.publishedAt = new Date();
+        }
 
         if (validate(model)) {
             rest().save({

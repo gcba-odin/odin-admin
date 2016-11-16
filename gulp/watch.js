@@ -12,10 +12,20 @@ gulp.task('watch', ['serve'], function() {
 
   // Style
   gulp.watch(gulp.paths.styles, ['styles-watch']);
+  
+  // Fonts
+  gulp.watch(gulp.paths.fonts, ['fonts-watch']);
+
 });
 
 // Watch subtasks
 gulp.task('static-watch', ['static'], function (done) {
+  gulp.browserSync.reload();
+  done();
+});
+
+// Fonts
+gulp.task('fonts-watch', ['fonts'], function (done) {
   gulp.browserSync.reload();
   done();
 });

@@ -13,7 +13,9 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
     $scope.parameters = {
         skip: 0,
         limit: 20,
-        conditions: ''
+        conditions: '',
+        orderBy: 'createdAt',
+        sort: 'DESC'
     };
 
     $scope.filtersView = [{
@@ -102,6 +104,27 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if (!resp) {
+                modelService.reloadPage();
+            }
+        });
+    };
+
+    $scope.findSort = function(type, cond) {
+        usSpinnerService.spin('spinner');
+        $scope.sortType = type; 
+        
+        var sort = 'DESC';
+        if(cond) {
+            sort = 'ASC';
+        }
+        $scope.sortReverse = cond;
+        
+        $scope.parameters.orderBy = type;
+        $scope.parameters.sort = sort;
+        
+        modelService.loadAll($scope, function(resp) {
+            usSpinnerService.stop('spinner');
+            if(!resp) {
                 modelService.reloadPage();
             }
         });
@@ -237,7 +260,7 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
 
 }
 
-function DatasetCreateController($scope, rest, model, Flash, $location, modelService, flashService, usSpinnerService, Alertify) {
+function DatasetCreateController($scope, rest, model, Flash, $location, modelService, flashService, usSpinnerService, Alertify, configs) {
     modelService.initService("Dataset", "datasets", $scope);
 
     $scope.tagsmodel = rest().get({
@@ -251,6 +274,9 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
     });
 
     $scope.status_default = true;
+
+    //factory configs
+    configs.statuses($scope);
 
     $scope.model = new model();
     $scope.model.items = [];
@@ -281,6 +307,10 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
             $scope.model.subcategories = $scope.model.subcategories.toString();
         }
 
+        if ($scope.statuses.default == $scope.statuses.published) {
+            $scope.model.publishedAt = new Date();
+        }
+
         if (isValid) {
             rest().save({
                 type: $scope.type
@@ -290,7 +320,8 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if (error.data.data && error.data.data.name) {
+
+                if (error.data.data && (error.data.data.name || error.data.data.slug)) {
                     Alertify.alert('El nombre de dataset ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al crear el dataset.');
@@ -381,6 +412,12 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
             $scope.tempData.subcategories = $scope.tempData.subcategories.toString();
         }
 
+        if ($scope.model.status == $scope.statuses.published) {
+            $scope.tempData.publishedAt = new Date();
+        } else {
+            $scope.tempData.publishedAt = null;
+        }
+
         // TODO: chequear cual forma de mandar los items (opcionales) es la correcta
         // $scope.tempData.items
 
@@ -403,7 +440,8 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if (error.data.data && error.data.data.name) {
+
+                if (error.data.data && (error.data.data.name || error.data.data.slug)) {
                     Alertify.alert('El nombre de dataset ya existe.');
                 } else {
                     Alertify.alert('Ha ocurrido un error al editar el dataset.');

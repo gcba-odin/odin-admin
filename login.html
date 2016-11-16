@@ -6,7 +6,8 @@
         <a href="#"><b>Odin</b></a>
     </div> -->
         <!-- <div class="category-image" svg-img="images/odin-sm-color.svg"></div> -->
-        <img src="images/odin-sm-color.svg" alt="" class="center-block img-responsive" style="padding-top:2em;">
+        <!--<img src="images/odin-sm-color.svg" alt="" class="center-block img-responsive" style="padding-top:2em;">-->
+        <img src="images/ba-logo.svg" alt="" class="center-block img-responsive" style="padding-top:2em; width:200px;">
         <!-- /.login-logo -->
         <div class="login-box-body">
             <div class="content-wrapper flash-message">
@@ -14,7 +15,7 @@
             </div>
             <form ng-submit="login()" autocomplete="off" name="form" novalidate>
                 <div class="form-group has-feedback">
-                  <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                  <span class="fa fa-lock form-control-feedback"></span>
                     <input autocomplete="off" type="text" ng-model="vm.username" name="username" id="username" class="form-control" required placeholder="Usuario">
                     <div class="help-block" ng-messages="form.username.$error" ng-if="form.username.$touched">
                         <div ng-messages-include="views/messages.html"></div>
@@ -25,7 +26,7 @@
                     <div class="help-block" ng-messages="form.password.$error" ng-if="form.password.$touched">
                         <div ng-messages-include="views/messages.html"></div>
                     </div>
-                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    <span class="fa fa-user form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
                     <div vc-recaptcha ng-model="vm.od_captcha" on-create="setRecaptchaId(widgetId)"></div>

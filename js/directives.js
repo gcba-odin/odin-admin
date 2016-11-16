@@ -6,7 +6,7 @@
             restrict: "E",
             templateUrl: "directives/search-bar.html",
             scope: "=",
-            controller: function($scope, modelService) {
+            controller: function ($scope, modelService, $timeout) {
 
                 $scope.search = function() {
                     $scope.parameters.skip = 0;
@@ -42,8 +42,17 @@
                     modelService.search($scope);
                 };
 
-                $scope.clearSearch = function() {
-                    $window.location.reload();
+                $scope.clearSearch = function () {
+                    $('.dropdowns-filter').find('select').each(function(){
+                        var selectize = $(this)[0].selectize;
+                        $timeout(function() {
+                            selectize.clear();
+                            selectize.clearOptions();
+                        }, 0);
+                        
+                    });
+                    $scope.searchModel = {};
+                    $scope.search();
                 };
             },
             link: function(scope, element, attrs) {

@@ -2,9 +2,12 @@
     <!-- Logo -->
     <a href="#/" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><img src="images/odin-sm.svg" alt="Odin"></span>
+        <!--<span class="logo-mini"><img src="images/odin-sm.svg" alt="Odin"></span>
+        <!-- logo for regular state and mobile devices 
+        <span class="logo-lg"><img src="images/odin.svg" alt="Odin"></span>-->
+        <span class="logo-mini"><img src="images/ba-logo-mini.png" alt="BA"></span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><img src="images/odin.svg" alt="Odin"></span>
+        <span class="logo-lg"><img src="images/ba-logo.svg" alt="BA"></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -18,7 +21,7 @@
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu avenir-medium" ng-controller="mainController as main">
                     <a href="javascript:void(0)" class="dropdown-toggle active" data-toggle="dropdown">
-                        <span>{{adminglob.currentUser.username}}</span> <i class="fa fa-caret-down" aria-hidden="true"></i>
+                        <span class="navbar-icon" >{{adminglob.currentUser.username}}</span> <i class="navbar-icon fa fa-caret-down" aria-hidden="true"></i>
 
                     </a>
                     <ul class="dropdown-menu">
@@ -45,7 +48,7 @@
                     </a>
                 </li>
                 <li permission permission-only="roles.SUPERADMIN">
-                    <a ng-href="#/configs" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                    <a ng-href="#/configs" data-toggle="control-sidebar"><i class="navbar-icon fa fa-gears"></i></a>
                 </li>
             </ul>
         </div>

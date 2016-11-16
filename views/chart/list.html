@@ -19,7 +19,13 @@
 
                         <table class="table table-hover">
                             <tbody><tr>
-                                    <th>{{ 'NAME' | translate }}</th>
+                                    <th>
+                                        <a ng-click="findSort('name', !sortReverse);" class="cursor-pointer">
+                                            {{'NAME'| translate}}
+                                            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
+                                            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+                                        </a>
+                                    </th>
                                     <th>{{ 'STATE' | translate }}</th>
                                     <th class="text-center">{{ 'ACTIONS' | translate }}</th>
                                 </tr>
