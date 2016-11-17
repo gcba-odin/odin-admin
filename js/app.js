@@ -36,7 +36,7 @@
     app.config(function($routeProvider, $httpProvider, $translateProvider, usSpinnerConfigProvider, ChartJsProvider, ConsumerServiceProvider, $middlewareProvider, jwtOptionsProvider, vcRecaptchaServiceProvider, IdleProvider, TitleProvider, session_timeout) {
 
         vcRecaptchaServiceProvider.setDefaults({
-            key: '6LetbAcUAAAAABWhGuMbTaYQBferzWoxYvmtx9PS',
+            key: '6LcBhAkUAAAAANjrhmqwe62Y61sUKkwYncA-bpaT',
             theme: 'light',
             //            stoken: '--- YOUR GENERATED SECURE TOKEN ---',
             //            size: '---- compact or normal ----',
@@ -437,6 +437,7 @@
     function run($rootScope, EnvironmentConfig, authManager, Idle, AuthenticationService, $location, $window) {
         Idle.watch();
         $rootScope.url = EnvironmentConfig.api;
+        $rootScope.odin_version = EnvironmentConfig.odin_version;
         authManager.redirectWhenUnauthenticated();
         $rootScope.$on('$routeChangeSuccess', function(e, current, pre) {
             $rootScope.actualUrl = current.$$route.originalPath;
