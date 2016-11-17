@@ -506,11 +506,11 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
                 $location.path(url);
             }, function (error) {
                 usSpinnerService.stop('spinner');
-                if (error.data.data && error.data.data.name) {
+                //if (error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre del mapa ya existe.');
-                } else {
-                    Alertify.alert('Ha ocurrido un error al crear el mapa.');
-                }
+                //} else {
+                //    Alertify.alert('Ha ocurrido un error al crear el mapa.');
+                //}
             });
         } else {
             usSpinnerService.stop('spinner');
@@ -718,11 +718,11 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
 
             }, function (error) {
                 usSpinnerService.stop('spinner');
-                if (error.data.data && error.data.data.name) {
+                //if (error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre del mapa ya existe.');
-                } else {
-                    Alertify.alert('Ha ocurrido un error al editar el mapa.');
-                }
+                //} else {
+                //    Alertify.alert('Ha ocurrido un error al editar el mapa.');
+                //}
             });
         } else {
             usSpinnerService.stop('spinner');

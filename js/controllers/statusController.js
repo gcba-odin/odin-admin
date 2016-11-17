@@ -122,11 +122,11 @@ function StatusCreateController($scope, rest, model, Flash, $location, modelServ
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if(error.data.data && error.data.data.name) {
+                //if(error.data.data && error.data.data.name) {
                     Alertify.alert('El estado que quiere guardar ya existe.');
-                } else {
-                    Alertify.alert('Hubo un error al crear el estado.');
-                }
+                //} else {
+                //    Alertify.alert('Hubo un error al crear el estado.');
+                //}
             });
         }
     };
@@ -149,11 +149,11 @@ function StatusEditController($scope, Flash, rest, $routeParams, model, $locatio
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if(error.data.data && error.data.data.name) {
+                //if(error.data.data && error.data.data.name) {
                     Alertify.alert('El estado que quiere guardar ya existe.');
-                } else {
-                    Alertify.alert('Hubo un error al editar el estado.');
-                }
+                //} else {
+                //    Alertify.alert('Hubo un error al editar el estado.');
+                //}
             });
         }
     };

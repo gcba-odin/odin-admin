@@ -163,11 +163,11 @@ function OrganizationCreateController($scope, rest, model, Flash, $location, mod
             }, function(error) {
                 usSpinnerService.stop('spinner');
 
-                if(error.data.data && (error.data.data.name || error.data.data.slug)) {
+                //if(error.data.data && (error.data.data.name || error.data.data.slug)) {
                     Alertify.alert('El nombre de la organización ya existe.');
-                } else {
-                    Alertify.alert('Ha ocurrido un error al crear la organización.');
-                }
+                //} else {
+                //    Alertify.alert('Ha ocurrido un error al crear la organización.');
+                //}
             });
         }
     };
@@ -211,11 +211,11 @@ function OrganizationEditController($scope, Flash, rest, $routeParams, model, $l
             }, function(error) {
                 usSpinnerService.stop('spinner');
 
-                if(error.data.data && (error.data.data.name || error.data.data.slug)) {
+                //if(error.data.data && (error.data.data.name || error.data.data.slug)) {
                     Alertify.alert('El nombre de la organización ya existe.');
-                } else {
-                    Alertify.alert('Ha ocurrido un error al editar la organización.');
-                }
+                //} else {
+                //    Alertify.alert('Ha ocurrido un error al editar la organización.');
+                //}
             });
         }
     };

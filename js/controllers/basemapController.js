@@ -176,11 +176,11 @@ function BasemapCreateController($scope, modelService, rest, $location, model, $
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if (error.data.data && error.data.data.name) {
+                //if (error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre del basemap ya existe.');
-                } else {
-                    Alertify.alert('Ha ocurrido un error al crear el basemap.');
-                }
+                //} else {
+                //    Alertify.alert('Ha ocurrido un error al crear el basemap.');
+                //}
             });
         } else {
             usSpinnerService.stop('spinner');
@@ -250,11 +250,11 @@ function BasemapEditController($scope, modelService, $routeParams, $sce, rest, $
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                if (error.data.data && error.data.data.name) {
+                //if (error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre del basemap ya existe.');
-                } else {
-                    Alertify.alert('Ha ocurrido un error al editar el basemap.');
-                }
+                //} else {
+                //    Alertify.alert('Ha ocurrido un error al editar el basemap.');
+                //}
             });
         } else {
             usSpinnerService.stop('spinner');

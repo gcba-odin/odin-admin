@@ -160,11 +160,11 @@ function FileTypeCreateController($scope, $http, rest, model, Flash, $location, 
             }, function(error) {
                 usSpinnerService.stop('spinner');
                 
-                if(error.data.data && (error.data.data.name || error.data.data.slug)) {
+                //if(error.data.data && (error.data.data.name || error.data.data.slug)) {
                     Alertify.alert('El tipo de archivo que quiere guardar ya existe.');
-                } else {
-                    Alertify.alert('Hubo un error al crear el tipo de archivo.');
-                }
+                //} else {
+                //    Alertify.alert('Hubo un error al crear el tipo de archivo.');
+                //}
             });
         }
     };
@@ -194,11 +194,11 @@ function FileTypeEditController($scope, $http, Flash, rest, $routeParams, model,
             }, function(error) {
                 usSpinnerService.stop('spinner');
 
-                if(error.data.data && (error.data.data.name || error.data.data.slug)) {
+                //if(error.data.data && (error.data.data.name || error.data.data.slug)) {
                     Alertify.alert('El tipo de archivo que quiere guardar ya existe.');
-                } else {
-                    Alertify.alert('Hubo un error al editar el tipo de archivo.');
-                }
+                //} else {
+                //    Alertify.alert('Hubo un error al editar el tipo de archivo.');
+                //}
             });
         }
     };

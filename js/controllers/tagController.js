@@ -121,11 +121,11 @@ function TagCreateController($scope, rest, model, Flash, $location, modelService
             }, function(error) {
                 usSpinnerService.stop('spinner');
 
-                if(error.data.data && (error.data.data.name || error.data.data.slug)) {
+                //if(error.data.data && (error.data.data.name || error.data.data.slug)) {
                     Alertify.alert('La etiqueta que quiere guardar ya existe.');
-                } else {
-                    Alertify.alert('Hubo un error al crear la etiqueta.');
-                }
+                //} else {
+                //    Alertify.alert('Hubo un error al crear la etiqueta.');
+                //}
             });
         }
     };
@@ -149,11 +149,11 @@ function TagEditController($scope, Flash, rest, $routeParams, model, $location, 
             }, function(error) {
                 usSpinnerService.stop('spinner');
 
-                if(error.data.data && (error.data.data.name || error.data.data.slug)) {
+                //if(error.data.data && (error.data.data.name || error.data.data.slug)) {
                     Alertify.alert('La etiqueta que quiere guardar ya existe.');
-                } else {
-                    Alertify.alert('Hubo un error al editar la etiqueta.');
-                }
+                //} else {
+                //    Alertify.alert('Hubo un error al editar la etiqueta.');
+                //}
             });
         }
     };

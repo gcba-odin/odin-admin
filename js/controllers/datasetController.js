@@ -311,11 +311,11 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
             }, function(error) {
                 usSpinnerService.stop('spinner');
 
-                if (error.data.data && (error.data.data.name || error.data.data.slug)) {
+                //if (error.data.data && (error.data.data.name || error.data.data.slug)) {
                     Alertify.alert('El nombre de dataset ya existe.');
-                } else {
-                    Alertify.alert('Ha ocurrido un error al crear el dataset.');
-                }
+                //} else {
+                //    Alertify.alert('Ha ocurrido un error al crear el dataset.');
+                //}
 
             });
         }
@@ -431,11 +431,11 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
             }, function(error) {
                 usSpinnerService.stop('spinner');
 
-                if (error.data.data && (error.data.data.name || error.data.data.slug)) {
+                //if (error.data.data && (error.data.data.name || error.data.data.slug)) {
                     Alertify.alert('El nombre de dataset ya existe.');
-                } else {
-                    Alertify.alert('Ha ocurrido un error al editar el dataset.');
-                }
+                //} else {
+                //    Alertify.alert('Ha ocurrido un error al editar el dataset.');
+                //}
             });
         }
     };

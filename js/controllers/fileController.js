@@ -580,11 +580,11 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
             usSpinnerService.stop('spinner');
             // alert(resp.status);
             $scope.unsave = true;
-            if (error.data.data && error.data.data.name) {
+            //if (error.data.data && error.data.data.name) {
                 Alertify.alert('El nombre del archivo ya existe.');
-            } else {
-                Alertify.alert('Ha ocurrido un error al crear el archivo.');
-            }
+            //} else {
+            //    Alertify.alert('Ha ocurrido un error al crear el archivo.');
+            //}
         }, function(evt) {
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
             $scope.uploadImageProgress = progressPercentage;
@@ -872,11 +872,11 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
                 usSpinnerService.stop('spinner');
                 // alert(resp.status);
                 $scope.unsave = false;
-                if (error.data.data && error.data.data.name) {
+                //if (error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre del archivo ya existe.');
-                } else {
-                    Alertify.alert('Ha ocurrido un error al editar el archivo.');
-                }
+                //} else {
+                //    Alertify.alert('Ha ocurrido un error al editar el archivo.');
+                //}
             }, function(evt) {
                 var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                 $scope.uploadImageProgress = progressPercentage;

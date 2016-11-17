@@ -376,11 +376,11 @@ function ChartCreateController($scope, modelService, rest, $location, model, $sc
                 $location.path(url);
             }, function (error) {
                 usSpinnerService.stop('spinner');
-                if (error.data.data && error.data.data.name) {
+                //if (error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre del gráfico ya existe.');
-                } else {
-                    Alertify.alert('Ha ocurrido un error al crear el gráfico.');
-                }
+                //} else {
+                //    Alertify.alert('Ha ocurrido un error al crear el gráfico.');
+                //}
             });
         } else {
             usSpinnerService.stop('spinner');
@@ -512,11 +512,11 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
                 $location.path(url);
             }, function (error) {
                 usSpinnerService.stop('spinner');
-                if (error.data.data && error.data.data.name) {
+                //if (error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre del gráfico ya existe.');
-                } else {
-                    Alertify.alert('Ha ocurrido un error al editar el gráfico.');
-                }
+                //} else {
+                //    Alertify.alert('Ha ocurrido un error al editar el gráfico.');
+                //}
             });
         } else {
             usSpinnerService.stop('spinner');
