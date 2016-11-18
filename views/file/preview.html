@@ -25,7 +25,11 @@
                         <div class="paging">
                             <paging page="model.contents.meta.page" page-size="params.limit" total="model.contents.meta.count" paging-action="paging('pageClick', page, pageSize, total, model)" hide-if-empty="true"></paging>
                         </div>
-                        <ng-pdf ng-if="model.type.name == 'pdf'" template-url="/views/file/pdfviewer.html" ng-init="pdfUrl = model.url" scale="page-fit"></ng-pdf>
+                        <div class="resource-pdf" ng-if="!!model.url && model.type.name == 'pdf'">
+                            <div class="wrapper">
+                                <ng-pdf template-url="/views/file/pdfviewer.html" ng-init="pdfUrl = model.url" scale="page-fit"></ng-pdf>
+                            </div>
+                        </div>
                     </div>
                     <!-- /.box-body -->
 
