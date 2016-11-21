@@ -301,7 +301,6 @@ function CategoryCreateController($scope, rest, $routeParams, model, Flash, $loc
                 } else {
                     Alertify.alert('Ha ocurrido un error al crear la categoría.');
                 }
-                // alert(resp.status);
             }, function(evt) {
                 usSpinnerService.stop('spinner');
                 //                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
@@ -419,7 +418,6 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
                 } else {
                     Alertify.alert('Ha ocurrido un error al editar la categoría.');
                 }
-                // alert(resp.status);
             }, function(evt) {
                 usSpinnerService.stop('spinner');
                 //                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
