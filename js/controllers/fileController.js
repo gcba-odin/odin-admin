@@ -593,7 +593,6 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
             //'tags': $scope.model.tags ? $scope.model.tags.join(",") : "",
             'layout': $scope.model.layout,
             'updated': $scope.model.updated,
-            'uploadFile': $scope.model.uploadFile,
         };
 
         if ($scope.statuses.default == $scope.statuses.published) {
@@ -603,7 +602,11 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
         if ($scope.model.gatheringDate) {
             data.gatheringDate = $scope.model.gatheringDate.toISOString().slice(0, 10); //.toISOString().slice(0, 10), //new Date().toISOString().slice(0, 19).replace('T', ' ');
         }
-
+        
+        if ($scope.model.uploadFile != null) {
+            data.uploadFile = $scope.model.uploadFile;
+        }
+        
         Upload.upload({
             url: $rootScope.url + "/files",
             data: data,
@@ -874,12 +877,6 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
             //    'gatheringDate': $scope.model.gatheringDate //new Date().toISOString().slice(0, 19).replace('T', ' ');
         }
 
-        if ($scope.model.uploadFile != null) {
-            data.uploadFile = $scope.model.uploadFile;
-        } else if (hard_file != null) {
-            data.uploadFile = hard_file;
-        }
-
         if (!!$scope.model.gatheringDate) {
             data.gatheringDate = $scope.model.gatheringDate.toISOString().slice(0, 10); //.toISOString().slice(0, 10), //new Date().toISOString().slice(0, 19).replace('T', ' ');
         }
@@ -892,6 +889,12 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
             data.publishedAt = new Date();
         } else {
             data.publishedAt = null;
+        }
+        
+        if ($scope.model.uploadFile != null) {
+            data.uploadFile = $scope.model.uploadFile;
+        } else if (hard_file != null) {
+            data.uploadFile = hard_file;
         }
 
         if (isValid) {
