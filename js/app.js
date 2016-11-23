@@ -29,8 +29,8 @@
           ]);
           
     app.constant("session_timeout", {
-        "base": "300", //5 minutes
-        "extended": "600" //10 minutes
+        "base": "1800", //30 minutes
+        "extended": "7200" //2 hours
     });
 
     app.config(function($routeProvider, $httpProvider, $translateProvider, usSpinnerConfigProvider, ChartJsProvider, ConsumerServiceProvider, $middlewareProvider, jwtOptionsProvider, vcRecaptchaServiceProvider, IdleProvider, TitleProvider, session_timeout) {
