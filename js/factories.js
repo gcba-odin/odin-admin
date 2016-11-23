@@ -26,7 +26,8 @@
                     type: 'configs',
                     params: 'key=' + scope.config_key
                 }, function() {
-                    callback(configs);
+                    if(!!callback)
+                        callback(configs);
                 });
                 //return configs;
             },
@@ -267,9 +268,11 @@
                     type: scope.type,
                     params: pm + "orderBy="+orderBy+"&sort="+ sort + scope.q
                 }, function(resp) {
-                    callback(true);
+                    if(!!callback)
+                        callback(true);
                 }, function(error) {
-                    callback(false);
+                    if(!!callback)
+                        callback(false);
                 });
             },
             findOne: function(routeParams, scope) {
