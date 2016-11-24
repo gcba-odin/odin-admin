@@ -44,18 +44,18 @@ function OrganizationListController($scope, $location, rest, $rootScope, Flash, 
             multiple: true
         }];
 
-    var filtersGet = ['files', 'users'];
+    $scope.filtersInclude = ['files', 'users'];
 
     $scope.inactiveModel = function(item) {
-        modelService.deactivateList(item, $scope, filtersGet);
+        modelService.deactivateList(item, $scope);
     }
 
     $scope.activeModel = function(item) {
-        modelService.restoreList($scope, item, filtersGet);
+        modelService.restoreList($scope, item);
     };
 
     $scope.confirmDelete = function(item) {
-        modelService.confirmDelete(item, {}, filtersGet);
+        modelService.confirmDelete(item, {});
     };
 
     $scope.edit = function (model) {
@@ -124,10 +124,22 @@ function OrganizationListController($scope, $location, rest, $rootScope, Flash, 
     };
 }
 
-function OrganizationViewController($scope, Flash, rest, $routeParams, $location, modelService, $sce) {
+function OrganizationViewController($scope, Flash, rest, $routeParams, $location, modelService, $sce, usSpinnerService, Alertify, $window) {
+    usSpinnerService.spin('spinner');
     modelService.initService("Organization", "organizations", $scope);
 
-    modelService.findOne($routeParams, $scope);
+    var loadModel = function() {
+        $scope.model = rest().findOne({
+            id: $routeParams.id,
+            type: $scope.type,
+            params: 'include=files,users'
+        }, function() {
+            usSpinnerService.stop('spinner');
+        }, function(error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
+        });
+    }
     
     $scope.inactiveModel = function(item) {
         modelService.deactivateView(item, $scope);
@@ -143,6 +155,72 @@ function OrganizationViewController($scope, Flash, rest, $routeParams, $location
 
     $scope.getHtml = function (html) {
         return $sce.trustAsHtml(html);
+    };
+   
+    loadModel();
+     
+    $scope.publish = function (id, type) {
+        usSpinnerService.spin('spinner');
+
+        rest().publish({
+            id: id,
+            type: type,
+        }, {}, function (resp) {
+            usSpinnerService.stop('spinner');
+            loadModel();
+            //var url = '/' + $scope.type;
+            // $location.path(url);
+        }, function (error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
+        });
+    };
+
+    $scope.unPublish = function (id, type) {
+        var text_type = (type == 'files') ? 'recurso' : (type == 'users') ? 'usuario' : '';
+        Alertify.confirm('¿Está seguro que quiere despublicar este ' + text_type + '?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().unpublish({
+                    type: type,
+                    id: id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
+                    //var url = '/' + $scope.type;
+                    // $location.path(url);
+                }, function (error) {
+                   usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+
+    $scope.deleteResource = function (id, type) {
+        var text_type = (type == 'files') ? 'recurso' : (type == 'users') ? 'usuario' : '';
+        Alertify.confirm('¿Está seguro que quiere borrar este ' + text_type + '?').then(
+            function onOk() { 
+                usSpinnerService.spin('spinner');
+                rest().delete({
+                    type: type,
+                    id: id
+                }, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    $window.location.reload();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
     };
 }
 

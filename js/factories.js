@@ -78,17 +78,17 @@
                 var url = '/' + scope.type + '/' + model.id + "/edit";
                 $location.path(url);
             },
-            delete: function(scope, model, filters) {
+            delete: function(scope, model) {
                 rest().delete({
                     type: scope.type,
                     id: model.id
                 }, function(resp) {
                     var pm = '';
-                    if (!!filters) {
+                    if (!!scope.filtersInclude) {
                         pm += 'include=';
-                        angular.forEach(filters, function(val, key, fil) {
+                        angular.forEach(scope.filtersInclude, function(val, key, fil) {
                             pm += val;
-                            if (key == (filters.length - 1)) {
+                            if (key == (scope.filtersInclude.length - 1)) {
                                 pm += '&';
                             } else {
                                 pm += ',';
@@ -114,18 +114,18 @@
                     });
                 });
             },
-            restoreList: function(scope, item, filters) {
+            restoreList: function(scope, item) {
                 var model = item.target.dataset;
                 rest().restore({
                     type: scope.type,
                     id: model.id
                 }, {}, function(resp) {
                     var pm = '';
-                    if (!!filters) {
+                    if (!!scope.filtersInclude) {
                         pm += 'include=';
-                        angular.forEach(filters, function(val, key, fil) {
+                        angular.forEach(scope.filtersInclude, function(val, key, fil) {
                             pm += val;
-                            if (key == (filters.length - 1)) {
+                            if (key == (scope.filtersInclude.length - 1)) {
                                 pm += '&';
                             } else {
                                 pm += ',';
@@ -164,7 +164,7 @@
                     });
                 });
             },
-            deactivateList: function(item, scope, filters) {
+            deactivateList: function(item, scope) {
                 var item = item.target.dataset;
                 Alertify.confirm(item.textdelete).then(
                     function onOk() {
@@ -173,11 +173,11 @@
                             id: item.id
                         }, {}, function(resp) {
                             var pm = '';
-                            if (!!filters) {
+                            if (!!scope.filtersInclude) {
                                 pm += 'include=';
-                                angular.forEach(filters, function(val, key, fil) {
+                                angular.forEach(scope.filtersInclude, function(val, key, fil) {
                                     pm += val;
-                                    if (key == (filters.length - 1)) {
+                                    if (key == (scope.filtersInclude.length - 1)) {
                                         pm += '&';
                                     } else {
                                         pm += ',';
@@ -238,6 +238,18 @@
                 this.loadAll(scope);
             },
             loadAll: function(scope, callback) {
+                var pm = '';
+                if (!!scope.filtersInclude) {
+                    pm += 'include=';
+                    angular.forEach(scope.filtersInclude, function(val, key, fil) {
+                        pm += val;
+                        if (key == (scope.filtersInclude.length - 1)) { 
+                            pm += '&';
+                        } else {
+                            pm += ',';
+                        }
+                    });
+                 }
                 if(!!scope.parameters && !!scope.parameters.orderBy) {
                     orderBy = scope.parameters.orderBy;
                 }
@@ -248,7 +260,7 @@
                     
                 scope.data = rest().get({
                     type: scope.type,
-                    params: "orderBy="+orderBy+"&sort="+ sort + scope.q
+                    params: pm+"orderBy="+orderBy+"&sort="+ sort + scope.q
                 }, function(resp) {
                     if(!!callback)
                         callback(true);
@@ -263,7 +275,7 @@
                     type: scope.type
                 });
             },
-            confirmDelete: function(item, scope, filters) {
+            confirmDelete: function(item, scope) {
                 var _this = this;
                 var item = item.target.dataset;
                 Alertify.confirm(item.textdelete).then(
@@ -271,7 +283,7 @@
 
                         _this.delete(_this.insertalScope, {
                             id: item.id
-                        }, filters)
+                        })
                     },
                     function onCancel() {
                         return false

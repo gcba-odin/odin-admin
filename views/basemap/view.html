@@ -5,6 +5,8 @@
     <section class="content">
       <div class="box-header with-border">
           <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} <b>{{model.description}}</b></h3>
+          
+          <button ng-if="model.maps.length > 0"  data-toggle="modal" data-target="#viewLinkRelationships" class="btn btn-default pull-right margin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_RELATIONSHIPS' | translate }}</button>
       </div>
         <div class="row">
             <div class="col-md-12">
@@ -64,6 +66,44 @@
                     </div>
                 </div>
 
+            </div>
+        </div>
+        
+        <!--  Main content-->
+        <div class="modal fade" id="viewLinkRelationships" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">{{ 'RELATIONSHIPS' | translate }}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table">
+                            <thead>
+                                <th>{{ 'NAME' | translate }}</th>
+                                <th>{{ 'TYPE' | translate }}</th>
+                                <th class="text-center">{{ 'ACTIONS' | translate }}</th>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="map in model.maps">
+                                    <td>
+                                        <span>{{map.name}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{'MAP'| translate }}</span>
+                                    </td>
+                                    <td class="text-center table-btn">
+                                        <a target="_blank" class="btn btn-primary" ng-href="#/maps/{{map.id}}/view">{{ 'VIEW' | translate }}</a>
+                                        <a target="_blank" class="btn btn-primary" ng-href="#/maps/{{map.id}}/edit">{{ 'EDIT' | translate }}</a>
+                                        <a class="btn btn-primary" ng-click="deleteResource(map.id, 'maps')">{{ 'DELETE' | translate }}</a>
+                                        <button ng-click="unPublish(map.id, 'maps')" ng-if="map.status.id == statuses.published" class="pull-right btn btn-primary">{{ 'UNPUBLISH' | translate }}</button>
+                                        <button ng-click="publish(map.id, 'maps')" ng-if="map.status.id !== statuses.published" class="pull-right btn btn-primary">{{ 'PUBLISH' | translate }}</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

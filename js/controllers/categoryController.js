@@ -25,18 +25,18 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
             multiple: true
         }];
 
-    var filtersGet = ['datasets'];
+    $scope.filtersInclude = ['datasets'];
 
     $scope.inactiveModel = function(item) {
-        modelService.deactivateList(item, $scope, filtersGet);
+        modelService.deactivateList(item, $scope);
     }
 
     $scope.activeModel = function(item) {
-        modelService.restoreList($scope, item, filtersGet);
+        modelService.restoreList($scope, item);
     };
 
     $scope.confirmDelete = function(item) {
-        modelService.confirmDelete(item, {}, filtersGet);
+        modelService.confirmDelete(item, {});
     };
 
     $scope.edit = function(model) {
@@ -60,7 +60,9 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
         }
 
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-
+        if(!!$scope.parameters.conditions) {
+            $scope.q += $scope.parameters.conditions;
+        }
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if(!resp) {
@@ -95,10 +97,6 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
         $scope.parameters.orderBy = type;
         $scope.parameters.sort = sort;
         
-        if(!!$scope.parameters.conditions) {
-            $scope.q += $scope.parameters.conditions;
-        }
-
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if(!resp) {
@@ -109,7 +107,7 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
 
 }
 
-function CategoryViewController($scope, Flash, rest, $routeParams, $location, $sce, modelService, $rootScope, usSpinnerService) {
+function CategoryViewController($scope, Flash, rest, $routeParams, $location, $sce, modelService, $rootScope, usSpinnerService, Alertify, $window) {
     usSpinnerService.spin('spinner');
     modelService.initService("Category", "categories", $scope);
 
@@ -136,15 +134,83 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
         disabled: true,
     };
 
-    $scope.model = rest().findOne({
-        id: $routeParams.id,
-        type: $scope.type
-    }, function() {
-        usSpinnerService.stop('spinner');
-    }, function(error) {
-        usSpinnerService.stop('spinner');
-        modelService.reloadPage();
-    });
+    var loadModel = function() {
+        $scope.model = rest().findOne({
+            id: $routeParams.id,
+            type: $scope.type,
+            params: 'include=datasets'
+        }, function() {
+            usSpinnerService.stop('spinner');
+        }, function(error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
+        });
+    };
+   
+    loadModel();
+     
+    $scope.publish = function (id, type) {
+        usSpinnerService.spin('spinner');
+
+        rest().publish({
+            id: id,
+            type: type,
+        }, {}, function (resp) {
+            usSpinnerService.stop('spinner');
+            loadModel();
+            //var url = '/' + $scope.type;
+            // $location.path(url);
+        }, function (error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
+        });
+    };
+ 
+    $scope.unPublish = function (id, type) {
+        var text_type = (type == 'datasets') ? 'dataset' : '';
+        Alertify.confirm('¿Está seguro que quiere despublicar este ' + text_type + '?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().unpublish({
+                    type: $scope.type,
+                    id: $scope.model.id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
+                    //var url = '/' + $scope.type;
+                    // $location.path(url);
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+     
+    $scope.deleteResource = function (id, type) {
+        Alertify.confirm('¿Está seguro que quiere borrar este dataset?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+                rest().delete({
+                    type: type,
+                    id: id
+                }, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    $window.location.reload();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
 }
 
 function CategoryCreateController($scope, rest, model, Flash, $location, $rootScope, Alertify, modelService, Upload, usSpinnerService) {

@@ -5,6 +5,8 @@
     <section class="content">
       <div class="box-header with-border">
           <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} <b>{{ 'CATEGORY' | translate }}</b></h3>
+          
+          <button ng-if="model.datasets.length > 0"  data-toggle="modal" data-target="#viewLinkRelationships" class="btn btn-default pull-right margin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_RELATIONSHIPS' | translate }}</button>
       </div>
         <div class="row">
             <div class="col-md-12">
@@ -60,5 +62,41 @@
         </div>
     </section>
     <!--  Main content-->
+         <div class="modal fade" id="viewLinkRelationships" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+             <div class="modal-dialog" role="document">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                         <h4 class="modal-title" id="myModalLabel">{{ 'RELATIONSHIPS' | translate }}</h4>
+                     </div>
+                     <div class="modal-body">
+                         <table class="table">
+                             <thead>
+                                 <th>{{ 'NAME' | translate }}</th>
+                                 <th>{{ 'TYPE' | translate }}</th>
+                                 <th class="text-center">{{ 'ACTIONS' | translate }}</th>
+                             </thead>
+                             <tbody>
+                                 <tr ng-repeat="dataset in model.datasets">
+                                     <td>
+                                         <span>{{dataset.name}}</span>
+                                     </td>
+                                     <td>
+                                         <span>{{'DATASET'| translate }}</span>
+                                     </td>
+                                     <td class="text-center table-btn">
+                                         <a target="_blank" class="btn btn-primary" ng-href="#/datasets/{{dataset.id}}/view">{{ 'VIEW' | translate }}</a>
+                                         <a target="_blank" class="btn btn-primary" ng-href="#/datasets/{{dataset.id}}/edit">{{ 'EDIT' | translate }}</a>
+                                         <a class="btn btn-primary" ng-click="deleteResource(dataset.id, 'datasets')">{{ 'DELETE' | translate }}</a>
+                                         <button ng-click="unPublish(dataset.id, 'datasets')" ng-if="dataset.status.id == statuses.published" class="pull-right btn btn-primary">{{ 'UNPUBLISH' | translate }}</button>
+                                         <button ng-click="publish(dataset.id, 'datasets')" ng-if="dataset.status.id !== statuses.published" class="pull-right btn btn-primary">{{ 'PUBLISH' | translate }}</button>
+                                     </td>
+                                 </tr>
+                             </tbody>
+                         </table>
+                     </div>
+                 </div>
+             </div>
+         </div>
 </div>
 <footer-home></footer-home>

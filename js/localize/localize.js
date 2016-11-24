@@ -180,6 +180,8 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'PARAMETER': 'Parameter',
         'TITLE_PATH': 'Titles path',
         'USE_ATTRS_HEADERS': 'Use attributes as headers',
+        'RELATIONSHIPS': 'Relationships',   
+        'VIEW_LINK_RELATIONSHIPS': 'View relationships'
     });
 
     $translateProvider.translations('es', {
@@ -398,7 +400,10 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'TITLE_PATH': 'Ruta a los titulos de tabla',
         'MIN': 'Mínimo',
         'MAX': 'Máximo',
-        'ATTRIBUTION': 'Attribution'
+        'ATTRIBUTION': 'Attribution',
+        
+        'RELATIONSHIPS': 'Entidades relacionadas',
+        'VIEW_LINK_RELATIONSHIPS': 'Ver entidades relacionadas'
 
 
     });
