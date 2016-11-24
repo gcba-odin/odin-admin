@@ -284,6 +284,12 @@
             confirmDelete: function(item, scope) {
                 var _this = this;
                 var item = item.target.dataset;
+                Alertify.set({
+                    labels: {
+                        ok: 'Ok',
+                        cancel: 'Cancelar'
+                    }
+                });
                 Alertify.confirm(item.textdelete).then(
                     function onOk() {
 
