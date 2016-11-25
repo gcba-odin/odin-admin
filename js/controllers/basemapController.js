@@ -162,7 +162,7 @@ function BasemapViewController($scope, modelService, $routeParams, rest, $locati
                 usSpinnerService.spin('spinner');
 
                 rest().unpublish({
-                    type: $scope.type,
+                    type: type,
                     id: id
                 }, {}, function (resp) {
                     usSpinnerService.stop('spinner');
