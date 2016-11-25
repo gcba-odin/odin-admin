@@ -173,7 +173,7 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
                 usSpinnerService.spin('spinner');
 
                 rest().unpublish({
-                    type: $scope.type,
+                    type: type,
                     id: $scope.model.id
                 }, {}, function (resp) {
                     usSpinnerService.stop('spinner');
