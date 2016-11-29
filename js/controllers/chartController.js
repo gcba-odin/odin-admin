@@ -196,15 +196,14 @@ function ChartPreviewController($scope, modelService, $routeParams, rest, $locat
             };
         }
 
-        var getRandomColor = function () {
-
-            var letters = '0123456789ABCDEF'.split('');
-            var color = '#';
-            for (var i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
-
+        var getRandomColor = function (point) {
+            var palette = ['#88BF48', '#F562A2', '#CCCCCC',
+                           '#F54789', '#FDD306', '#009588', '#666666', '#BC0067',
+                           '#F800FF', '#18B596', '#FFF800', '#00B3E3', '#888888',
+                           '#037DBF', '#AAAAAA', '#00FFC2', '#9D6DB6', '#FF7300',
+                           '#58FF00', '#00F3FF', '#C5D436', '#34485E', '#9B59B6'];
+            
+            return palette[Math.round(point % palette.length)];
         }
 
         $scope.model.colors = [];
@@ -212,8 +211,8 @@ function ChartPreviewController($scope, modelService, $routeParams, rest, $locat
             $scope.model.colors[0] = {
                 backgroundColor: []
             };
-            angular.forEach($scope.model.data.data, function (element) {
-                $scope.model.colors[0].backgroundColor.push(getRandomColor());
+            angular.forEach($scope.model.data.data, function (val, key) {
+                $scope.model.colors[0].backgroundColor.push(getRandomColor(key));
             });
         }
         //load Chart;
