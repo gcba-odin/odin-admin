@@ -189,7 +189,10 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'MY_PROFILE': 'My profile',
         'DENIED_ACCESS': 'Denied access',
         'RELATIONSHIPS': 'Relationships',
-        'VIEW_LINK_RELATIONSHIPS': 'View relationships'
+        'VIEW_LINK_RELATIONSHIPS': 'View relationships',
+        'superadmin': 'SuperAdmin',
+        'admin': 'Admin',
+        'guest': 'Guest'
     });
 
     $translateProvider.translations('es', {
@@ -418,7 +421,10 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'MY_PROFILE': 'Mi perfil',
         'DENIED_ACCESS': 'Acceso denegado',
         'RELATIONSHIPS': 'Entidades relacionadas',
-        'VIEW_LINK_RELATIONSHIPS': 'Ver entidades relacionadas'
+        'VIEW_LINK_RELATIONSHIPS': 'Ver entidades relacionadas',
+        'superadmin': 'SuperAdministrador',
+        'admin': 'Administrador', 
+        'guest': 'Invitado'
     });
     $translateProvider.preferredLanguage('es');
 }]);
