@@ -88,5 +88,41 @@
         </div>
     </section>
     <!--  Main content-->
+   <div class="modal fade" id="viewLinkRelationships" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+             <div class="modal-dialog" role="document">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                         <h4 class="modal-title" id="myModalLabel">{{ 'RELATIONSHIPS' | translate }}</h4>
+                     </div>
+                     <div class="modal-body">
+                         <table class="table">
+                             <thead>
+                                 <th>{{ 'NAME' | translate }}</th>
+                                 <th>{{ 'TYPE' | translate }}</th>
+                                 <th class="text-center">{{ 'ACTIONS' | translate }}</th>
+                             </thead>
+                             <tbody>
+                                 <tr ng-repeat="file in model.files">
+                                     <td>
+                                         <span>{{file.name}}</span>
+                                     </td>
+                                     <td>
+                                         <span>{{'FILE'| translate }}</span>
+                                     </td>
+                                     <td class="text-center table-btn">
+                                         <a target="_blank" class="btn btn-primary" ng-href="#/files/{{file.id}}/view">{{ 'VIEW' | translate }}</a>
+                                         <a target="_blank" class="btn btn-primary" ng-href="#/files/{{file.id}}/edit">{{ 'EDIT' | translate }}</a>
+                                         <a class="btn btn-primary" ng-click="deleteResource(file.id, 'files')">{{ 'DELETE' | translate }}</a>
+                                         <button ng-click="unPublish(file.id, 'files')" ng-if="file.status.id == statuses.published" class="pull-right btn btn-primary">{{ 'UNPUBLISH' | translate }}</button>
+                                         <button ng-click="publish(file.id, 'files')" ng-if="file.status.id !== statuses.published" class="pull-right btn btn-primary">{{ 'PUBLISH' | translate }}</button>
+                                     </td>
+                                 </tr>
+                             </tbody>
+                         </table>
+                     </div>
+                 </div>
+             </div>
+         </div>
 </div>
 <footer-home></footer-home>

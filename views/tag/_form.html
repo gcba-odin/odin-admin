@@ -2,7 +2,7 @@
 <div class="form-group">
     <label for="title" class="col-sm-2 control-label">* {{ 'NAME' | translate }}</label>
     <div class="col-sm-10"  ng-class="{ 'has-error': form.name.$touched && form.name.$invalid }">
-        <input type="text" ng-model="model.name" name="name" class="form-control" id="title" placeholder="{{ 'PLACE' | translate }} {{ 'NAME' | translate }} {{ 'HERE' | translate }}" required />
+        <input restrict-charts type="text" ng-model="model.name" name="name" class="form-control" id="title" placeholder="{{ 'PLACE' | translate }} {{ 'NAME' | translate }} {{ 'HERE' | translate }}" required />
         <div class="help-block" ng-messages="form.name.$error" ng-if="form.name.$touched">
             <div ng-messages-include="views/messages.html"></div>
         </div>

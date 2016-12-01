@@ -34,7 +34,7 @@
                                     <td class="text-center table-btn">
                                         <a class="btn btn-primary" ng-click="view({id: model.id})">{{ 'VIEW' | translate }}</a>
                                         <a class="btn btn-primary" ng-click="edit({id: model.id})" permission permission-except="roles.GUEST">{{ 'EDIT' | translate }}</a>
-                                        <a class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
+                                        <a class="btn btn-primary" data-length="{{model.datasets.length}}" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
                                     </td>
                                 </tr>
 

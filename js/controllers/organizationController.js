@@ -156,9 +156,9 @@ function OrganizationViewController($scope, Flash, rest, $routeParams, $location
     $scope.getHtml = function (html) {
         return $sce.trustAsHtml(html);
     };
-    
-        loadModel();
-    
+   
+    loadModel();
+     
     $scope.publish = function (id, type) {
         usSpinnerService.spin('spinner');
 
@@ -191,7 +191,7 @@ function OrganizationViewController($scope, Flash, rest, $routeParams, $location
                     //var url = '/' + $scope.type;
                     // $location.path(url);
                 }, function (error) {
-                    usSpinnerService.stop('spinner');
+                   usSpinnerService.stop('spinner');
                     modelService.reloadPage();
                 });
             },
@@ -200,7 +200,7 @@ function OrganizationViewController($scope, Flash, rest, $routeParams, $location
             }
         );
     };
-    
+
     $scope.deleteResource = function (id, type) {
         var text_type = (type == 'files') ? 'recurso' : (type == 'users') ? 'usuario' : '';
         Alertify.confirm('¿Está seguro que quiere borrar este ' + text_type + '?').then(

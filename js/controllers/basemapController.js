@@ -56,7 +56,9 @@ function BasemapListController($scope, modelService, configs, usSpinnerService) 
         }
 
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-
+        if(!!$scope.parameters.conditions) {
+            $scope.q += $scope.parameters.conditions;
+        }
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if (!resp) {
@@ -179,7 +181,7 @@ function BasemapViewController($scope, modelService, $routeParams, rest, $locati
             }
         );
     };
-    
+
     $scope.deleteResource = function (id, type) {
         Alertify.confirm('¿Está seguro que quiere borrar este recurso?').then(
             function onOk() {

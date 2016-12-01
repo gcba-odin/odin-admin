@@ -60,7 +60,9 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
         }
 
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-
+        if(!!$scope.parameters.conditions) {
+            $scope.q += $scope.parameters.conditions;
+        }
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if (!resp) {
@@ -107,7 +109,7 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
 
 }
 
-function CategoryViewController($scope, Flash, rest, $routeParams, $location, $sce, modelService, Alertify, $rootScope, usSpinnerService, $window) {
+function CategoryViewController($scope, Flash, rest, $routeParams, $location, $sce, modelService, $rootScope, usSpinnerService, Alertify, $window) {
     usSpinnerService.spin('spinner');
     modelService.initService("Category", "categories", $scope);
 
@@ -173,10 +175,10 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
             usSpinnerService.stop('spinner');
             modelService.reloadPage();
         });
-    }
-    
+    };
+   
     loadModel();
-    
+     
     $scope.publish = function (id, type) {
         usSpinnerService.spin('spinner');
 
@@ -218,7 +220,7 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
             }
         );
     };
-    
+
     $scope.deleteResource = function (id, type) {
         Alertify.confirm('¿Está seguro que quiere borrar este dataset?').then(
             function onOk() {

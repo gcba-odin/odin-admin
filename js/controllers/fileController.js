@@ -605,8 +605,8 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
         
         if ($scope.model.uploadFile != null) {
             data.uploadFile = $scope.model.uploadFile;
-        }
-        
+        } 
+
         Upload.upload({
             url: $rootScope.url + "/files",
             data: data,
@@ -874,7 +874,6 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
             'updated': $scope.model.updated,
             'layout': $scope.model.layout,
             'gatheringDate': null
-            //    'gatheringDate': $scope.model.gatheringDate //new Date().toISOString().slice(0, 19).replace('T', ' ');
         }
 
         if (!!$scope.model.gatheringDate) {

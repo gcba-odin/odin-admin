@@ -185,6 +185,13 @@
                         if (!angular.isUndefined(attrs.dis) && attrs.dis == 'disabled') {
                             this.disable();
                         }
+                        if (attrs.modelname == 'tags') {
+                            this.$control_input.on('keypress', function(e) {
+                                if(/[^ a-zA-ZáäàéëèíïìóöòúüùÁÄÀÉËÈÍÏÌÓÖÒÚÜÙñÑ-]/g.test(e.key)){
+                                    e.preventDefault();  
+                                } 
+                            });
+                        }
                     },
                     onOptionAdd: function(a, item, talvez) {
 
@@ -223,7 +230,7 @@
                                     }
                                 });
                             }
-
+                        
                         }
                     },
                     render: {
@@ -465,6 +472,24 @@
                 });
             }
         };
+    });
+    
+    app.directive('restrictCharts', function() {
+        return {
+            require: 'ngModel',
+            link: function (scope, element, attr, ngModelCtrl) {
+                function fromUser(text) {
+                    var transformedInput = text.replace(/[^ a-zA-ZáäàéëèíïìóöòúüùÁÄÀÉËÈÍÏÌÓÖÒÚÜÙñÑ-]/g, '');
+                    
+                    if(transformedInput !== text) {
+                        ngModelCtrl.$setViewValue(transformedInput);
+                        ngModelCtrl.$render();
+                    }
+                    return transformedInput;  // or return Number(transformedInput)
+                }
+                ngModelCtrl.$parsers.push(fromUser);
+            }
+        }; 
     });
 
     app.controller('ctrlUpload', ['$scope', 'fileUpload', function($scope, fileUpload, $rootScope) {
