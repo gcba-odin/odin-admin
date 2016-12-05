@@ -29,6 +29,8 @@
                                         </a>
                                     </th>
                                     <th>{{ 'STATUS' | translate }}</th>
+                                    <th>{{ 'AUTHOR'| translate }}</th>
+                                    <th>{{ 'CATEGORIES' | translate }}</th>
                                     <th class="text-center">{{ 'ACTIONS' | translate }}</th>
                                 </tr>
                                 <tr ng-if="data.data.length == 0">
@@ -39,6 +41,14 @@
                                     <td>{{model.name}}</td>
                                     <td>
                                         <span ng-if="model.status">{{ model.status.name}} </span>
+                                    </td>
+                                    <td>
+                                        <span ng-if="model.createdBy">{{model.createdBy.username}}</span>
+                                    </td>
+                                    <td>
+                                        <p ng-repeat="cat in model.categories">
+                                            <span class="label label-default bg-primary color-white">{{cat.name}}</span>{{(!$last) ? ' - ' : ''}}
+                                        </p>
                                     </td>
                                     <td class="text-center table-btn">
                                         <a class="btn btn-primary" ng-click="view({id: model.id})">{{ 'VIEW' | translate }}</a>

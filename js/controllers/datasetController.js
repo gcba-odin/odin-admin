@@ -17,6 +17,8 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
         orderBy: 'createdAt',
         sort: 'DESC'
     };
+    
+    $scope.filtersInclude = ['categories'];
 
     $scope.filtersView = [{
         name: 'Estado',

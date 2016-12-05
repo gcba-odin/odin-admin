@@ -193,7 +193,8 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'superadmin': 'SuperAdmin',
         'admin': 'Admin',
         'guest': 'Guest',
-        'VALUE': 'Value'
+        'VALUE': 'Value',
+        'AUTHOR': 'Author'
     });
 
     $translateProvider.translations('es', {
@@ -426,7 +427,8 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'superadmin': 'SuperAdministrador',
         'admin': 'Administrador', 
         'guest': 'Invitado',
-        'VALUE': 'Valor'
+        'VALUE': 'Valor',
+        'AUTHOR': 'Autor'
     });
     $translateProvider.preferredLanguage('es');
 }]);
