@@ -192,7 +192,8 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'VIEW_LINK_RELATIONSHIPS': 'View relationships',
         'superadmin': 'SuperAdmin',
         'admin': 'Admin',
-        'guest': 'Guest'
+        'guest': 'Guest',
+        'VALUE': 'Value'
     });
 
     $translateProvider.translations('es', {
@@ -424,7 +425,8 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'VIEW_LINK_RELATIONSHIPS': 'Ver entidades relacionadas',
         'superadmin': 'SuperAdministrador',
         'admin': 'Administrador', 
-        'guest': 'Invitado'
+        'guest': 'Invitado',
+        'VALUE': 'Valor'
     });
     $translateProvider.preferredLanguage('es');
 }]);
