@@ -293,7 +293,7 @@ function CategoryCreateController($scope, rest, $routeParams, model, Flash, $loc
                 data: data
             }).then(function(resp) {
                 usSpinnerService.stop('spinner');
-                Alertify.success('Se ha creado la categoría con éxito');
+                //Alertify.success('Se ha creado la categoría con éxito');
                 $location.url('/categories/' + resp.data.data.id + '/view');
             }, function(error) {
                 usSpinnerService.stop('spinner');
@@ -410,7 +410,7 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
                 data: data
             }).then(function(resp) {
                 usSpinnerService.stop('spinner');
-                Alertify.success('Se ha editado la categoría con éxito');
+                //Alertify.success('Se ha editado la categoría con éxito');
                 $location.url('/categories/' + resp.data.data.id + '/view');
             }, function(error) {
                 usSpinnerService.stop('spinner');
