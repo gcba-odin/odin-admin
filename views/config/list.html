@@ -14,10 +14,14 @@
                             <tbody>
                                 <tr>
                                     <th>{{ 'DESCRIPTION' | translate }}</th>
+                                    <th>{{ 'VALUE' | translate }}</th>
                                     <th class="text-center">{{ 'ACTIONS' | translate }}</th>
                                 </tr>
                                 <tr ng-repeat="model in data.data">
                                     <td>{{model.description}}</td>
+                                    <td ng-if="model.type == 'model' && !model.multiple" value-config="{{model.value}}" data-model="{{model.model | lowercase}}"></td>
+                                    <td ng-if="model.type != 'model'">{{model.value}}</td>
+                                    <td ng-if="model.type == 'model' && model.multiple"></td>
                                     <td class="text-center table-btn">
                                         <a class="btn btn-primary" ng-click="edit({id: model.id})">{{ 'EDIT' | translate }}</a>
                                     </td>

@@ -588,6 +588,22 @@
         };
     }]);
 
+    app.directive("valueConfig", ["rest", function(rest) {
+        return {
+            restrict: "A",
+            link: function(scope, elem, attrs) {
+                if (attrs.model != '' && attrs.valueConfig != '') {
+                    rest().findOne({
+                        type: attrs.model,
+                        id: attrs.valueConfig
+                    }, function(resp) {
+                        elem[0].textContent = resp.name;
+                    });
+                }
+            }
+        };
+    }]);
+
     app.directive("checkbox", ["$window", function($window) {
         return {
             restrict: "A",
