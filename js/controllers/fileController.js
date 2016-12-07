@@ -17,31 +17,33 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
     };
 
     $scope.underReview = underReview;
+    
+    $scope.filtersView = [{
+        name: 'Autor',
+        model: 'users',
+        key: 'username',
+        modelInput: 'createdBy',
+        multiple: true,
+        condition: ''
+    }, {
+        name: 'Tipo',
+        model: 'filetypes',
+        key: 'name',
+        modelInput: 'type',
+        multiple: true
+    }];
 
     if (underReview) {
         $scope.parameters.conditions = '&status=oWRhpRV';
-        $scope.filtersView = [{
-            name: 'Autor',
-            model: 'users',
-            key: 'username',
-            modelInput: 'createdBy',
-            multiple: true,
-            condition: 'status=oWRhpRV&'
-        }];
+        $scope.filtersView[0].condition = 'status=oWRhpRV&';
     } else {
-        $scope.filtersView = [{
+        $scope.filtersView.push({
             name: 'Estado',
             model: 'statuses',
             key: 'name',
             modelInput: 'status',
             multiple: true
-        }, {
-            name: 'Autor',
-            model: 'users',
-            key: 'username',
-            modelInput: 'createdBy',
-            multiple: true
-        }];
+        });
     }
 
     $scope.confirmDelete = function (item) {

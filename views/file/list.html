@@ -30,6 +30,8 @@
                                     </th>
                                     <th>{{ 'STATUS' | translate }}</th>
                                     <th>WS</th>
+                                    <th>{{ 'AUTHOR'| translate }}</th>
+                                    <th>{{ 'TYPE'| translate }}</th>
                                     <th class="text-center">{{ 'ACTIONS' | translate }}</th>
                                 </tr>
                                 <tr ng-if="data.data.length == 0">
@@ -40,6 +42,12 @@
                                     <td>{{model.status.name}}</td>
                                     <td>
                                         <span class="label label-default {{(!!model.restService || !!model.soapService) ? 'bg-primary color-white' : ''}}" ng-class="">{{(!!model.restService || !!model.soapService) ? 'Si' : 'No'}}</span>
+                                    </td>
+                                    <td>
+                                        <span ng-if="model.createdBy">{{model.createdBy.username}}</span>
+                                    </td>
+                                    <td>
+                                        <span ng-if="model.type" class="label label-default bg-primary color-white">{{model.type.name}}</span>
                                     </td>
                                     <td class="text-center table-btn">
                                         <a class="btn btn-primary" ng-click="view({id: model.id})">{{ 'VIEW' | translate }}</a>

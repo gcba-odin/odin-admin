@@ -24,6 +24,7 @@
                                             <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
                                         </a>
                                     </th>
+                                    <th>{{ 'AUTHOR' | translate }}</th>
                                     <th class="text-center">{{ 'ACTIONS' | translate }}</th>
                                 </tr>
                                 <tr ng-if="data.data.length == 0">
@@ -31,6 +32,9 @@
                                 </tr>
                                 <tr ng-if="data.data.length != 0" ng-repeat="model in data.data">
                                     <td>{{model.name}}</td>
+                                    <td>
+                                        <span ng-if="model.createdBy">{{model.createdBy.username}}</span>
+                                    </td>
                                     <td class="text-center table-btn">
                                         <a class="btn btn-primary" ng-click="view({id: model.id})">{{ 'VIEW' | translate }}</a>
                                         <a class="btn btn-primary" ng-click="edit({id: model.id})" permission permission-except="roles.GUEST">{{ 'EDIT' | translate }}</a>
