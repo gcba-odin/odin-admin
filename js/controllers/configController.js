@@ -7,6 +7,11 @@ app.factory('model', function($resource) {
 function ConfigListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, usSpinnerService) {
     usSpinnerService.spin('spinner');
     modelService.initService("Config", "configs", $scope);
+    
+    $scope.parameters = {
+        orderBy: 'description',
+        sort: 'ASC'
+    };
 
     $scope.confirmDelete = function(item) {
         modelService.confirmDelete(item);

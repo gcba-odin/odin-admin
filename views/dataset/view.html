@@ -100,6 +100,7 @@
                     <table class="table">
                         <thead>
                         <th>{{ 'FILE' | translate }}</th>
+                        <th>{{ 'TYPE' | translate }}</th>
                         <th class="text-center">{{ 'ACTIONS' | translate }}</th>
                         </thead>
                         <tbody>
@@ -107,6 +108,7 @@
                                 <td>
                                     <span>{{file.name}}</span>
                                 </td>
+                                <td ng-if="!!file.type" value-config="{{file.type}}" data-model="filetypes"></td>
                                 <td class="text-center table-btn">
                                     <a target="_blank" class="btn btn-primary" ng-href="#/files/{{file.id}}/view">{{ 'VIEW' | translate }}</a>
                                     <a target="_blank" class="btn btn-primary" ng-href="#/files/{{file.id}}/edit" permission permission-except="roles.GUEST">{{ 'EDIT' | translate }}</a>
