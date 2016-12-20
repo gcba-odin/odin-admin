@@ -54,6 +54,10 @@
                                 <td class="detail-bold">{{ 'UPDATED_AT' | translate }}</td>
                                 <td>{{model.updatedAt| date:'MMM d, y h:mm:ss a'}}</td>
                             </tr>
+                            <tr ng-if="!!model.parent">
+                                <td class="detail-bold">{{ 'PARENT_CATEGORY' | translate }}</td>
+                                <td><a ng-href="#/categories/{{model.parent.id}}/view">{{model.parent.name}}</a></td>
+                            </tr>
                         </table>
                     </div>
                     <!-- /.box-body -->

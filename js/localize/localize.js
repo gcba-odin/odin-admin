@@ -194,7 +194,8 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'admin': 'Admin',
         'guest': 'Guest',
         'VALUE': 'Value',
-        'AUTHOR': 'Author'
+        'AUTHOR': 'Author',
+        'PARENT_CATEGORY': 'Parent category'
     });
 
     $translateProvider.translations('es', {
@@ -428,7 +429,8 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'admin': 'Administrador', 
         'guest': 'Invitado',
         'VALUE': 'Valor',
-        'AUTHOR': 'Autor'
+        'AUTHOR': 'Autor',
+        'PARENT_CATEGORY': 'Categoría padre'
     });
     $translateProvider.preferredLanguage('es');
 }]);
