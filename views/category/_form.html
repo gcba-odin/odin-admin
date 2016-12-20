@@ -4,7 +4,7 @@
         {{ 'NAME' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.name.$touched && form.name.$invalid }">
         <input type="text" ng-model="model.name" name="name" class="form-control" id="name" placeholder="{{ 'PLACE' | translate }} {{ 'NAME' | translate }} {{ 'HERE' | translate }}" required/>
-        <div class="help-block" ng-messages="form.name.$error" ng-if="form.name.$touched">
+        <div class="help-block" ng-messages="form.name.$error" ng-if="form.name.$touched"> 
             <div ng-messages-include="views/messages.html"></div>
         </div>
     </div>
@@ -14,8 +14,8 @@
 <!-- Input color -->
 <div class="form-group">
     <label for="color" class="col-sm-2 control-label">{{ 'COLOR' | translate }}</label>
-    <div class="col-sm-10" ng-class="{ 'has-error': form.color.$touched && form.color.$invalid }">
-        <color-picker ng-model="model.color" options="options_color"></color-picker>
+    <div class="col-sm-10" ng-class="{ 'has-error': form.color.$touched && form.color.$invalid }" uib-tooltip="El color es el que identificará a la categoría en el frontend">
+        <color-picker ng-model="model.color" options="options_color"></color-picker> 
         <div class="help-block" ng-messages="form.color.$error" ng-if="form.color.$touched">
             <div ng-messages-include="views/messages.html"></div>
         </div>
