@@ -89,8 +89,8 @@
 <!-- Input Starred -->
 <div class="form-group">
     <label class="col-sm-2 control-label">* {{ 'STARRED' | translate }}</label>
-    <div class="col-sm-10" ng-class="{ 'has-error': form.starred.$touched && form.starred.$invalid }">
-        <div uib-tooltip="Se visualizará en la sección de datasets destacados en el frontend" tooltip-placement="left">
+    <div class="col-sm-2" ng-class="{ 'has-error': form.starred.$touched && form.starred.$invalid }">
+        <div uib-tooltip="Se visualizará en la sección de datasets destacados en el frontend" tooltip-placement="top">
             <label class="btn btn-default" ng-class="activeClass(model.starred, 1)">
                 <input   type="radio" ng-value="true" name="starred"    ng-model="model.starred" id="option1" autocomplete="off" ng-checked="model.V" required> {{ 'YES' | translate }}
             </label>
@@ -103,6 +103,7 @@
             <div ng-messages-include="views/messages.html"></div>
         </div>
     </div>
+    <div class="col-sm-8"></div>
 </div>
 <!-- end Input Starred -->
 

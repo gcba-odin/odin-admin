@@ -380,6 +380,10 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
             $scope.filter = false;
             hard_file = $files[0];
             $scope.fileModel.type = 'fa-file-text-o';
+        } else if (type == "kml") {
+            $scope.filter = false;
+            hard_file = $files[0];
+            $scope.fileModel.type = 'fa-file-text-o';
         } else {
             $scope.fileModel.type = 'fa-file-text-o';
         }
@@ -755,6 +759,10 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
             hard_file = $files[0];
             //}
         } else if (type == "shp") {
+            $scope.filter = false;
+            hard_file = $files[0];
+            $scope.fileModel.type = 'fa-file-text-o';
+        } else if (type == "kml") {
             $scope.filter = false;
             hard_file = $files[0];
             $scope.fileModel.type = 'fa-file-text-o';

@@ -24,7 +24,7 @@
                             </tr>
                             <tr ng-if="model.createdBy">
                                 <td class="detail-bold">{{ 'CREATED_BY' | translate }} </td>
-                                <td><a ng-href="#/users/{{model.createdBy.id}}/view">{{model.createdBy.username}}</a></td>
+                                <td><a ng-href="#/users/{{model.createdBy.id}}/view" href-policy-if-guest-user>{{model.createdBy.username}}</a></td>
                             </tr>
                             <tr ng-if="model.createdAt">
                                 <td class="detail-bold">{{ 'CREATED_AT' | translate }}</td>

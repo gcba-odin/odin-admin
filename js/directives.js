@@ -753,4 +753,21 @@
         };
     });
 
+    app.directive('hrefPolicyIfGuestUser', function ($rootScope, ROLES, $q) {
+        return {
+            restrict: 'A',
+            scope: '=model',
+            link: function (scope, element, attrs) {
+                element.bind("click", function(e) {
+                    var user = $rootScope.adminglob.currentUser;
+
+                    if(user.role === ROLES.GUEST) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                });
+                
+            }
+        };
+    });
 })();
