@@ -9,12 +9,13 @@
           <button ng-click="publish(model.id, 'files')" ng-if="model.status.id !== statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'PUBLISH' | translate }}</button>
           <button ng-click="reject(model.id, 'files')" ng-if="model.status.id == statuses.underReview" class="pull-right btn btn-primary margin-right-10" permission permission-except="roles.GUEST">{{ 'REJECT' | translate }}</button>
           <!--<a ng-href="#/files/new/{{model.id}}" class="btn btn-default pull-right margin-right-10"><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_RESOURCES' | translate }}</a>-->
-          <div class="dropdown pull-right margin-right-10" ng-if="!!model.url && !!model.type.api">
+          <div class="dropdown pull-right margin-right-10" ng-if="(!!model.url && !!model.type.api) || model.kml">
               <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{ 'NEW_RESOURCES' | translate }}
                   <span class="caret"></span></button>
               <ul class="dropdown-menu dropdown-menu-right">
                   <li><a ng-href="#/maps/new/{{model.id}}" ><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_MAP' | translate }}</a></li>
-                  <li><a ng-href="#/charts/new/{{model.id}}" ><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_CHART' | translate }}</a></li>
+                  
+                  <li ng-if="!model.kml"><a ng-href="#/charts/new/{{model.id}}" ><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_CHART' | translate }}</a></li>
               </ul>
           </div>
 

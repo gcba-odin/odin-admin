@@ -325,6 +325,7 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
     $scope.steps[2] = "undone";
     $scope.stepactive = 0;
     $scope.basemap_view = true;
+    $scope.model.kml = false;
 
     $scope.config_key = 'mapPointsLimit';
     var data_limit_map = 2000;
@@ -364,7 +365,8 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
 
     $scope.file_disabled = 'enabled';
     if (!angular.isUndefined($routeParams.file)) {
-
+        $scope.model.file = $routeParams.file;
+        
         var file_map = rest().findOne({
             type: 'files',
             id: $routeParams.file,
@@ -408,20 +410,21 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
                     }
                     );
             } else {
-                $scope.fileModel = rest().contents({
-                    type: "files",
-                    id: $routeParams.file,
-                    params: "limit=1"
-                }, function () {
-                    $scope.model.file = $routeParams.file;
-
-                    $scope.headersFile = null;
-
-                    generate_headers();
-                }, function (error) {
-                    usSpinnerService.stop('spinner');
-                    modelService.reloadPage();
-                });
+                if($.inArray('application/vnd.google-earth.kml+xml', resp.type.mimetype) == 0) { 
+                    $scope.model.kml = true;
+                } else {
+                    $scope.fileModel = rest().contents({
+                        type: "files",
+                        id: $routeParams.file,
+                        params: "limit=1"
+                    }, function () {
+                        $scope.headersFile = null;
+                        generate_headers();
+                    }, function (error) {
+                        usSpinnerService.stop('spinner');
+                        modelService.reloadPage();
+                    });
+                }
             }
         }, function (error) {
             usSpinnerService.stop('spinner');
@@ -435,7 +438,7 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
 
     $scope.checkstep = function (step) {
         $scope.jump = 1;
-        if ((step == 1) && (!angular.isUndefined($scope.model.link) && $scope.model.link != '')) {
+        if ((step == 1) && ((!angular.isUndefined($scope.model.link) && $scope.model.link != '') || ($scope.model.kml))) {
             $scope.checkstep(2);
             $scope.jump = 2;
         } else if ((step == 1) && (($scope.headersFile == null) || ($scope.fileModel.meta.count > data_limit_map))) {
@@ -445,7 +448,7 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
                 Alertify.alert('El archivo que está queriendo renderizar supera los ' + data_limit_map + ' datos. Intente asociarle un link.');
             }
         } else {
-            if ((step == 1 && ($scope.model.basemap) && ($scope.model.file)) || (step == 2 && ($scope.model.file) && ($scope.model.link || $scope.model.basemap)) || step == 0) {
+            if ((step == 1 && ($scope.model.basemap) && ($scope.model.file)) || (step == 2 && ($scope.model.file || $scope.model.kml) && ($scope.model.link || $scope.model.basemap)) || step == 0) {
 
                 if (step == 0) {
                     $scope.steps[0] = "active";
@@ -528,7 +531,7 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
                     alert_text += 'correctamente.';
                 }
 
-                if (!$scope.model.link) {
+                if (!$scope.model.link && !$scope.model.kml) {
                     alert_text += "<br><br><strong>Detalle:</strong><br><br>Del total de datos procesados, " + resp.data.correct + " se registraron correctamente y " + resp.data.incorrect + " tuvieron error.";
                 }
 
@@ -643,7 +646,7 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
 
     $scope.checkstep = function (step) {
         $scope.jump = 1;
-        if ((step == 1) && (!!$scope.model.link)) {
+        if ((step == 1) && ((!!$scope.model.link)  || ($scope.model.kml))) {
             $scope.checkstep(2);
             $scope.jump = 2;
         } else if ((step == 1) && (($scope.headersFile == null) || ($scope.fileModel.meta.count > data_limit_map))) {
@@ -653,7 +656,7 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
                 Alertify.alert('El archivo que está queriendo renderizar supera los ' + data_limit_map + ' datos. Intente asociarle un link.');
             }
         } else {
-            if ((step == 1 && ($scope.model.basemap) && ($scope.model.file)) || (step == 2 && ($scope.model.file) && ($scope.model.link || $scope.model.basemap)) || step == 0) {
+            if ((step == 1 && ($scope.model.basemap) && ($scope.model.file)) || (step == 2 && (($scope.model.file) || ($scope.model.kml)) && ($scope.model.link || $scope.model.basemap)) || step == 0) {
 
                 if (step == 0) {
                     $scope.steps[0] = "active";
@@ -737,7 +740,7 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
                     alert_text += 'correctamente.';
                 }
 
-                if (!$scope.model.link) {
+                if (!$scope.model.link && !$scope.model.kml) {
                     alert_text += "<br><br><strong>Detalle:</strong><br><br>Del total de datos procesados, " + resp.data.correct + " se registraron correctamente y " + resp.data.incorrect + " tuvieron error.";
                 }
 
@@ -776,7 +779,7 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
             }
             url_map = $scope.model.link;
             $scope.file_disabled = 'enabled';
-            if (!angular.isUndefined($scope.model.file)) {
+            if (!angular.isUndefined($scope.model.file) && !$scope.model.kml) {
                 $scope.fileModel = rest().contents({
                     type: "files",
                     id: $scope.model.file.id,

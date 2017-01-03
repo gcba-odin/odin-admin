@@ -140,6 +140,11 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
                 id: $scope.model.id,
                 type: $scope.type
             });
+            
+            $scope.model.kml = false;
+            if($.inArray('application/vnd.google-earth.kml+xml', $scope.model.type.mimetype) == 0)
+                $scope.model.kml = true;
+            
             usSpinnerService.stop('spinner');
         }, function (error) {
             usSpinnerService.stop('spinner');

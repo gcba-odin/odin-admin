@@ -55,7 +55,7 @@
 <!-- end Input basemap -->
 
 <!-- Input link -->
-<div class="form-group">
+<div class="form-group" ng-if="!model.kml">
     <label for="link" class="col-sm-2 control-label">{{ 'URL' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form1.link.$touched && form1.link.$invalid }">
         <input type="text" ng-model="model.link" name="name" class="form-control" id="link" placeholder="{{ 'PLACE' | translate }} {{ 'URL' | translate }} {{ 'HERE' | translate }}" ng-required="!model.basemap"/>
