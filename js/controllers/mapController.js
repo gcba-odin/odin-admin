@@ -1,6 +1,6 @@
 var app = angular.module('odin.mapsControllers', []);
 
-function MapListController($scope, modelService, configs, usSpinnerService, underReview) {
+function MapListController($scope, modelService, configs, usSpinnerService, underReview, $rootScope, ROLES) {
     usSpinnerService.spin('spinner');
     modelService.initService("Map", "maps", $scope);
     //factory configs
@@ -27,6 +27,10 @@ function MapListController($scope, modelService, configs, usSpinnerService, unde
             //condition: 'status=oWRhpRV&'
         }];
     } else {
+        $scope.parameters.conditions = '';
+        if(!!$rootScope.adminglob.currentUser && $rootScope.adminglob.currentUser.role === ROLES.GUEST) {
+            $scope.parameters.conditions = '&createdBy=' + $rootScope.adminglob.currentUser.user;
+        }
         $scope.filtersView = [{
             name: 'Estado',
             model: 'statuses',

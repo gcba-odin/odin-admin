@@ -218,7 +218,7 @@
                 }).when("/statuses/:id/view", {
             templateUrl: "views/status/view.html",
             controller: StatusViewController
-        }).when("/statuses/new", {
+        })/*.when("/statuses/new", {
             templateUrl: "views/status/add.html",
             controller: StatusCreateController,
             data: {
@@ -234,7 +234,7 @@
                     except: ROLES.GUEST
                 }
             }
-        })
+        })*/
                 //// end  Status
                 ////  File type
                 .when("/filetypes", {
@@ -661,7 +661,9 @@
 
     app.run(run);
 
-    function run($rootScope, EnvironmentConfig, authManager, Idle, AuthenticationService, $location, $window, PermRoleStore, ROLES, Alertify, $translate) {
+    function run($rootScope, EnvironmentConfig, authManager, Idle, AuthenticationService, $location, $window, PermRoleStore, ROLES, Alertify, $translate, $cookieStore) {
+        $rootScope.adminglob = $cookieStore.get('adminglob') || {};
+        $rootScope.globals = $cookieStore.get('globals') || {};
         Idle.watch();
         $rootScope.url = EnvironmentConfig.api;
         $rootScope.odin_version = EnvironmentConfig.odin_version;

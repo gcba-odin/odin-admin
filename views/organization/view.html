@@ -6,7 +6,7 @@
       <div class="box-header with-border">
           <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} <b>{{model.name}}</b></h3>
           
-          <button ng-if="model.files.length > 0 || model.users.length > 0"  data-toggle="modal" data-target="#viewLinkRelationships" class="btn btn-default pull-right margin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_RELATIONSHIPS' | translate }}</button>
+          <button permission permission-except="roles.GUEST" ng-if="model.files.length > 0 || model.users.length > 0"  data-toggle="modal" data-target="#viewLinkRelationships" class="btn btn-default pull-right margin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_RELATIONSHIPS' | translate }}</button>
       </div>
         <div class="row">
             <div class="col-md-12">
@@ -77,7 +77,7 @@
                                     </td>
                                     <td class="text-center table-btn">
                                         <a target="_blank" class="btn btn-primary" ng-href="#/files/{{file.id}}/view">{{ 'VIEW' | translate }}</a>
-                                        <a target="_blank" class="btn btn-primary" ng-href="#/files/{{file.id}}/edit" show-policy-if-guest-user="file">{{ 'EDIT' | translate }}</a>
+                                        <a target="_blank" class="btn btn-primary" ng-href="#/files/{{file.id}}/edit" show-policy-if-guest-user="files">{{ 'EDIT' | translate }}</a>
                                         <a class="btn btn-primary" ng-click="deleteResource(file.id, 'files')" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
                                         <button ng-click="unPublish(file.id, 'files')" ng-if="file.status.id == statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'UNPUBLISH' | translate }}</button>
                                         <button ng-click="publish(file.id, 'files')" ng-if="file.status.id !== statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'PUBLISH' | translate }}</button>
@@ -92,7 +92,7 @@
                                     </td>
                                     <td class="text-center table-btn">
                                         <a target="_blank" class="btn btn-primary" ng-href="#/users/{{user.id}}/view">{{ 'VIEW' | translate }}</a>
-                                        <a target="_blank" class="btn btn-primary" ng-href="#/users/{{user.id}}/edit" show-policy-if-guest-user="user">{{ 'EDIT' | translate }}</a>
+                                        <a target="_blank" class="btn btn-primary" ng-href="#/users/{{user.id}}/edit" show-policy-if-guest-user="users">{{ 'EDIT' | translate }}</a>
                                         <button ng-click="unPublish(user.id, 'users')" ng-if="user.status.id == statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'UNPUBLISH' | translate }}</button>
                                         <button ng-click="publish(user.id, 'users')" ng-if="user.status.id !== statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'PUBLISH' | translate }}</button>
                                     </td>
@@ -104,56 +104,5 @@
             </div>
         </div>
     </section>
-    <!--  Main content-->
-    <div class="modal fade" id="viewLinkRelationships" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-             <div class="modal-dialog" role="document">
-                 <div class="modal-content">
-                     <div class="modal-header">
-                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                         <h4 class="modal-title" id="myModalLabel">{{ 'RELATIONSHIPS' | translate }}</h4>
-                     </div>
-                     <div class="modal-body">
-                         <table class="table">
-                             <thead>
-                                 <th>{{ 'NAME' | translate }}</th>
-                                 <th>{{ 'TYPE' | translate }}</th>
-                                 <th class="text-center">{{ 'ACTIONS' | translate }}</th>
-                             </thead>
-                             <tbody>
-                                 <tr ng-repeat="file in model.files">
-                                     <td>
-                                         <span>{{file.name}}</span>
-                                     </td>
-                                     <td>
-                                         <span>{{'FILE'| translate }}</span>
-                                     </td>
-                                     <td class="text-center table-btn">
-                                         <a target="_blank" class="btn btn-primary" ng-href="#/files/{{file.id}}/view">{{ 'VIEW' | translate }}</a>
-                                         <a target="_blank" class="btn btn-primary" ng-href="#/files/{{file.id}}/edit">{{ 'EDIT' | translate }}</a>
-                                         <a class="btn btn-primary" ng-click="deleteResource(file.id, 'files')">{{ 'DELETE' | translate }}</a>
-                                         <button ng-click="unPublish(file.id, 'files')" ng-if="file.status.id == statuses.published" class="pull-right btn btn-primary">{{ 'UNPUBLISH' | translate }}</button>
-                                         <button ng-click="publish(file.id, 'files')" ng-if="file.status.id !== statuses.published" class="pull-right btn btn-primary">{{ 'PUBLISH' | translate }}</button>
-                                     </td>
-                                 </tr>
-                                 <tr ng-repeat="user in model.users">
-                                     <td>
-                                         <span>{{user.username}}</span>
-                                     </td>
-                                     <td>
-                                         <span>{{'USER'| translate }}</span>
-                                     </td>
-                                     <td class="text-center table-btn">
-                                         <a target="_blank" class="btn btn-primary" ng-href="#/users/{{user.id}}/view">{{ 'VIEW' | translate }}</a>
-                                         <a target="_blank" class="btn btn-primary" ng-href="#/users/{{user.id}}/edit" show-policy-if-guest-user="user">{{ 'EDIT' | translate }}</a>
-                                         <button ng-click="unPublish(user.id, 'users')" ng-if="user.status.id == statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'UNPUBLISH' | translate }}</button>
-                                         <button ng-click="publish(user.id, 'users')" ng-if="user.status.id !== statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'PUBLISH' | translate }}</button>
-                                     </td>
-                                 </tr>
-                             </tbody>
-                         </table>
-                     </div>
-                 </div>
-             </div>
-         </div>
 </div>
 <footer-home></footer-home>

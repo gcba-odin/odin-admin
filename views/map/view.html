@@ -99,7 +99,7 @@
                         </button>
                         <div class="pull-right">
                             <a class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
-                            <button type="submit" class="btn btn-primary" ng-click="edit(model)" show-policy-if-guest-user="model">{{ 'EDIT' | translate }}</button>
+                            <button type="submit" class="btn btn-primary" ng-click="edit(model)" show-policy-if-guest-user="maps">{{ 'EDIT' | translate }}</button>
                             <a class="btn btn-primary" ng-href="#/maps/preview/{{ model.id}}">{{ 'PREVIEW' | translate }}</a>
                         </div>
                     </div>

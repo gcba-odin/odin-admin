@@ -6,7 +6,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} <b>{{model.name}}</b></h3>
 
-            <button ng-if="model.datasets.length > 0"  data-toggle="modal" data-target="#viewLinkRelationships" class="btn btn-default pull-right margin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_RELATIONSHIPS' | translate }}</button>
+            <button permission permission-except="roles.GUEST" ng-if="model.datasets.length > 0"  data-toggle="modal" data-target="#viewLinkRelationships" class="btn btn-default pull-right margin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_RELATIONSHIPS' | translate }}</button>
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -68,10 +68,10 @@
                                 </td>
                                 <td class="text-center table-btn">
                                     <a target="_blank" class="btn btn-primary" ng-href="#/datasets/{{dataset.id}}/view">{{ 'VIEW' | translate }}</a>
-                                    <a target="_blank" class="btn btn-primary" ng-href="#/datasets/{{dataset.id}}/edit">{{ 'EDIT' | translate }}</a>
+                                    <a target="_blank" class="btn btn-primary" ng-href="#/datasets/{{dataset.id}}/edit" show-policy-if-guest-user="datasets">{{ 'EDIT' | translate }}</a>
                                     <a class="btn btn-primary" ng-click="deleteResource(dataset.id, 'datasets')">{{ 'DELETE' | translate }}</a>
-                                    <button ng-click="unPublish(dataset.id, 'datasets')" ng-if="dataset.status.id == statuses.published" class="pull-right btn btn-primary">{{ 'UNPUBLISH' | translate }}</button>
-                                    <button ng-click="publish(dataset.id, 'datasets')" ng-if="dataset.status.id !== statuses.published" class="pull-right btn btn-primary">{{ 'PUBLISH' | translate }}</button>
+                                    <button ng-click="unPublish(dataset.id, 'datasets')" ng-if="dataset.status.id == statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'UNPUBLISH' | translate }}</button>
+                                    <button ng-click="publish(dataset.id, 'datasets')" ng-if="dataset.status.id !== statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'PUBLISH' | translate }}</button>
                                 </td>
                             </tr>
                         </tbody>

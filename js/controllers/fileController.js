@@ -4,7 +4,7 @@ app.factory('model', function ($resource) {
     return $resource();
 });
 
-function FileListController($scope, $location, rest, $rootScope, Flash, Alertify, $routeParams, modelService, configs, usSpinnerService, underReview) {
+function FileListController($scope, $location, rest, $rootScope, Flash, Alertify, $routeParams, modelService, configs, usSpinnerService, underReview, ROLES) {
     usSpinnerService.spin('spinner');
     modelService.initService("File", "files", $scope);
     //factory configs
@@ -40,6 +40,10 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
         $scope.filtersView[0].underReview = true;
     } else {
         $scope.parameters.conditions = '';
+        if(!!$rootScope.adminglob.currentUser && $rootScope.adminglob.currentUser.role === ROLES.GUEST) {
+            $scope.parameters.conditions = '&createdBy=' + $rootScope.adminglob.currentUser.user;
+        }
+        
         $scope.filtersView.push({
             name: 'Estado',
             model: 'statuses',
@@ -193,8 +197,8 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
                 usSpinnerService.spin('spinner');
 
                 rest().unpublish({
-                    type: $scope.type,
-                    id: $scope.model.id
+                    type: type,
+                    id: id
                 }, {}, function (resp) {
                     usSpinnerService.stop('spinner');
                     loadModel();
@@ -218,8 +222,8 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
                 usSpinnerService.spin('spinner');
 
                 rest().reject({
-                    type: $scope.type,
-                    id: $scope.model.id
+                    type: type,
+                    id: id
                 }, {}, function (resp) {
                     usSpinnerService.stop('spinner');
                     loadModel();
@@ -241,8 +245,8 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
                 usSpinnerService.spin('spinner');
 
                 rest().sendReview({
-                    type: $scope.type,
-                    id: $scope.model.id
+                    type: type,
+                    id: id
                 }, {}, function (resp) {
                     usSpinnerService.stop('spinner');
                     loadModel();
@@ -264,8 +268,8 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
                 usSpinnerService.spin('spinner');
 
                 rest().cancel({
-                    type: $scope.type,
-                    id: $scope.model.id
+                    type: type,
+                    id: id
                 }, {}, function (resp) {
                     usSpinnerService.stop('spinner');
                     loadModel();

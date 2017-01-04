@@ -23,7 +23,7 @@
                                     <td ng-if="model.type != 'model'">{{model.value}}</td>
                                     <td ng-if="model.type == 'model' && model.multiple"></td>
                                     <td class="text-center table-btn">
-                                        <a class="btn btn-primary" ng-click="edit({id: model.id})">{{ 'EDIT' | translate }}</a>
+                                        <a ng-if="model.editable" class="btn btn-primary" ng-click="edit({id: model.id})">{{ 'EDIT' | translate }}</a>
                                     </td>
                                 </tr>
 

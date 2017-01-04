@@ -97,8 +97,8 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
         usSpinnerService.spin('spinner');
         $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-        if(!!$scope.parameters.conditions) {
-            $scope.q += $scope.parameters.conditions;
+        if(!!$scope.parameters.conditions_page) {
+            $scope.q += $scope.parameters.conditions_page;
         }
         if ($routeParams.filter == 'starred') {
             $scope.q += "&starred=true";
@@ -215,7 +215,7 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
     $scope.unPublish = function(id, type) {
         var text_type = 'dataset';
         if (type == 'files') {
-            text_type = 'archivo';
+            text_type = 'recurso';
         }
         Alertify.confirm('¿Está seguro que quiere despublicar este ' + text_type + '?').then(
             function onOk() {
@@ -248,6 +248,72 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
                     usSpinnerService.stop('spinner');
                     $window.location.reload();
                 }, function(error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+    
+    $scope.reject = function (id, type) {
+        Alertify.confirm('¿Está seguro que quiere rechazar este recurso?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().reject({
+                    type: type,
+                    id: id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+    
+    $scope.sendReview = function (id, type) {
+        Alertify.confirm('¿Está seguro que quiere enviar a revisión este recurso?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().sendReview({
+                    type: type,
+                    id: id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+    
+    $scope.cancel = function (id, type) {
+        Alertify.confirm('¿Está seguro que quiere cancelar este recurso?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().cancel({
+                    type: type,
+                    id: id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
+                }, function (error) {
                     usSpinnerService.stop('spinner');
                     modelService.reloadPage();
                 });

@@ -1,7 +1,7 @@
 var app = angular.module('odin.chartsControllers', []);
 
 
-function ChartListController($scope, modelService, configs, usSpinnerService, underReview) {
+function ChartListController($scope, modelService, configs, usSpinnerService, underReview, $rootScope, ROLES) {
     usSpinnerService.spin('spinner');
     modelService.initService("Chart", "charts", $scope);
     //factory configs
@@ -28,6 +28,10 @@ function ChartListController($scope, modelService, configs, usSpinnerService, un
             //condition: 'status=oWRhpRV&'
         }];
     } else {
+        $scope.parameters.conditions = '';
+        if(!!$rootScope.adminglob.currentUser && $rootScope.adminglob.currentUser.role === ROLES.GUEST) {
+            $scope.parameters.conditions = '&createdBy=' + $rootScope.adminglob.currentUser.user;
+        }
         $scope.filtersView = [{
             name: 'Estado',
             model: 'statuses',

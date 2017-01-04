@@ -16,10 +16,10 @@
                     var filters = $scope.searchModel.filters;
 
                     $scope.dropdowns.forEach(function(drop) {
-                        if (!!drop.underReview) {
+                        //if (!!drop.underReview) {
                             conditionApplied = true;
-                            $scope.q += drop.condition;
-                        }
+                            //$scope.q += drop.condition;
+                        //}
                     });
 
                     if ($scope.searchModel.q) {
@@ -744,8 +744,10 @@
                     // TODO: Don't use hardcoded IDs
                     // oWRhpRV --> Under review
                     // pWRhpRV -- rejected
+                    // nWRhpRV --> draft
+                    
                     if(user.role === ROLES.GUEST && model.status.id !== 'oWRhpRV' &&
-                        model.status.id !== 'pWRhpRV') {
+                        model.status.id !== 'pWRhpRV' && model.status.id !== 'nWRhpRV') {
                         element.css('display', 'none');
                     }
                 });
