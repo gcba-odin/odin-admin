@@ -596,6 +596,34 @@
                             responseError: handError
                         }
                     },
+                    sendReview: {
+                        url: $url + "/:id/review",
+                        method: 'PATCH',
+                        headers: {
+                            'x-admin-authorization': token,
+                        },
+                        transformResponse: function(data) {
+                            $rootScope.progressbar.complete();
+                            return angular.fromJson(data);
+                        },
+                        interceptor: {
+                            responseError: handError
+                        }
+                    },
+                    cancel: {
+                        url: $url + "/:id/cancel",
+                        method: 'PATCH',
+                        headers: {
+                            'x-admin-authorization': token,
+                        },
+                        transformResponse: function(data) {
+                            $rootScope.progressbar.complete();
+                            return angular.fromJson(data);
+                        },
+                        interceptor: {
+                            responseError: handError
+                        }
+                    },
                     'update': {
                         url: $url + "/:id",
                         method: 'PUT',

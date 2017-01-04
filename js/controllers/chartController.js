@@ -4,6 +4,8 @@ var app = angular.module('odin.chartsControllers', []);
 function ChartListController($scope, modelService, configs, usSpinnerService, underReview) {
     usSpinnerService.spin('spinner');
     modelService.initService("Chart", "charts", $scope);
+    //factory configs
+    configs.statuses($scope);
 
     $scope.parameters = {
         skip: 0,
@@ -16,7 +18,7 @@ function ChartListController($scope, modelService, configs, usSpinnerService, un
     $scope.underReview = underReview;
 
     if (underReview) {
-        $scope.parameters.conditions = '&status=oWRhpRV';
+        $scope.parameters.conditions = '&status=' + $scope.statuses.underReview;
         $scope.filtersView = [{
             name: 'Autor',
             model: 'users',
@@ -189,6 +191,50 @@ function ChartViewController($scope, modelService, $routeParams, rest, $location
                 usSpinnerService.spin('spinner');
 
                 rest().reject({
+                    type: $scope.type,
+                    id: $scope.model.id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+    
+    $scope.sendReview = function () {
+        Alertify.confirm('¿Está seguro que quiere enviar a revisión este gráfico?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().sendReview({
+                    type: $scope.type,
+                    id: $scope.model.id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+    
+    $scope.cancel = function () {
+        Alertify.confirm('¿Está seguro que quiere cancelar este gráfico?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().cancel({
                     type: $scope.type,
                     id: $scope.model.id
                 }, {}, function (resp) {
@@ -395,6 +441,14 @@ function ChartCreateController($scope, modelService, rest, $location, model, $sc
 
         if ($scope.statuses.default == $scope.statuses.published) {
             $scope.model.publishedAt = new Date();
+        }if ($scope.statuses.default == $scope.statuses.published) {
+            $scope.model.publishedAt = new Date();
+        } else if($scope.statuses.default == $scope.statuses.unpublished) {
+            $scope.model.unPublishedAt = new Date();
+        } else if($scope.statuses.default == $scope.statuses.rejected) {
+            $scope.model.rejectedAt = new Date();
+        } else if($scope.statuses.default == $scope.statuses.underReview) {
+            $scope.model.reviewedAt = new Date();
         }
 
         if (validate(model)) {

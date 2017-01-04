@@ -3,6 +3,8 @@ var app = angular.module('odin.mapsControllers', []);
 function MapListController($scope, modelService, configs, usSpinnerService, underReview) {
     usSpinnerService.spin('spinner');
     modelService.initService("Map", "maps", $scope);
+    //factory configs
+    configs.statuses($scope);
 
     $scope.parameters = {
         skip: 0,
@@ -15,7 +17,7 @@ function MapListController($scope, modelService, configs, usSpinnerService, unde
     $scope.underReview = underReview;
 
     if (underReview) {
-        $scope.parameters.conditions = '&status=oWRhpRV';
+        $scope.parameters.conditions = '&status=' + $scope.statuses.underReview;
         $scope.filtersView = [{
             name: 'Autor',
             model: 'users',
@@ -188,6 +190,50 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
                 usSpinnerService.spin('spinner');
 
                 rest().reject({
+                    type: $scope.type,
+                    id: $scope.model.id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+    
+        $scope.sendReview = function () {
+        Alertify.confirm('¿Está seguro que quiere enviar a revisión este gráfico?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().sendReview({
+                    type: $scope.type,
+                    id: $scope.model.id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+    
+    $scope.cancel = function () {
+        Alertify.confirm('¿Está seguro que quiere cancelar este gráfico?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().cancel({
                     type: $scope.type,
                     id: $scope.model.id
                 }, {}, function (resp) {
@@ -512,9 +558,17 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
             cont++;
         }
         $scope.model.properties = $scope.model.properties.toString();
-        
+
         if ($scope.statuses.default == $scope.statuses.published) {
             $scope.model.publishedAt = new Date();
+        } else if($scope.statuses.default == $scope.statuses.unpublished) {
+            $scope.model.unPublishedAt = new Date();
+        } else if($scope.statuses.default == $scope.statuses.rejected) {
+            $scope.model.rejectedAt = new Date();
+        } else if($scope.statuses.default == $scope.statuses.draft) {
+            $scope.model.cancelledAt = new Date();
+        } else if($scope.statuses.default == $scope.statuses.underReview) {
+            $scope.model.reviewedAt = new Date();
         }
 
         if (validate(model)) {

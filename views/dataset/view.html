@@ -46,9 +46,25 @@
                                 <td class="detail-bold">{{ 'CREATED_AT' | translate }}</td>
                                 <td>{{model.createdAt| date:'MMM d, y h:mm:ss a'}}</td>
                             </tr>
-                            <tr ng-if="model.publishedAt">
+                            <tr ng-if="model.status.id == statuses.published">
                                 <td class="detail-bold">{{ 'PUBLISHED_AT' | translate }}</td>
                                 <td>{{model.publishedAt| date:'MMM d, y h:mm:ss a' }}</td>
+                            </tr>
+                            <tr ng-if="model.status.id == statuses.unpublished">
+                                <td class="detail-bold">{{ 'UNPUBLISHED_AT' | translate }}</td>
+                                <td>{{model.unPublishedAt| date:'MMM d, y h:mm:ss a' }}</td>
+                            </tr>
+                            <tr ng-if="model.status.id == statuses.rejected">
+                                <td class="detail-bold">{{ 'REJECTED_AT' | translate }}</td>
+                                <td>{{model.rejectedAt| date:'MMM d, y h:mm:ss a' }}</td>
+                            </tr>
+                            <tr ng-if="model.status.id == statuses.draft && model.cancelledAt">
+                                <td class="detail-bold">{{ 'CANCELLED_AT' | translate }}</td>
+                                <td>{{model.cancelledAt| date:'MMM d, y h:mm:ss a' }}</td>
+                            </tr>
+                            <tr ng-if="model.status.id == statuses.underReview">
+                                <td class="detail-bold">{{ 'REVIEWED_AT' | translate }}</td>
+                                <td>{{model.reviewedAt| date:'MMM d, y h:mm:ss a' }}</td>
                             </tr>
                             <tr ng-if="model.updatedAt">
                                 <td class="detail-bold">{{ 'UPDATED_AT' | translate }}</td>

@@ -195,7 +195,13 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'guest': 'Guest',
         'VALUE': 'Value',
         'AUTHOR': 'Author',
-        'PARENT_CATEGORY': 'Parent category'
+        'PARENT_CATEGORY': 'Parent category',
+        'UNPUBLISHED_AT': 'Unpublished at',
+        'REJECTED_AT': 'Rejected at',
+        'CANCELLED_AT': 'Cancelled at',
+        'REVIEWED_AT': 'Reviewed at',
+        'SEND_TO_REVIEW': 'Send to review',
+        'CANCEL': 'Cancel'
     });
 
     $translateProvider.translations('es', {
@@ -430,7 +436,13 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'guest': 'Invitado',
         'VALUE': 'Valor',
         'AUTHOR': 'Autor',
-        'PARENT_CATEGORY': 'Categoría padre'
+        'PARENT_CATEGORY': 'Categoría padre',
+        'UNPUBLISHED_AT': 'Fecha de despublicación',
+        'REJECTED_AT': 'Fecha de rechazo',
+        'CANCELLED_AT': 'Fecha de cancelación',
+        'REVIEWED_AT': 'Fecha de revisión',
+        'SEND_TO_REVIEW': 'Enviar a revisión',
+        'CANCEL': 'Cancelar'
     });
     $translateProvider.preferredLanguage('es');
 }]);

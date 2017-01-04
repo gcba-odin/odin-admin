@@ -6,9 +6,11 @@
       <div class="box-header with-border">
           <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} {{ model.name}}</h3>
           <button ng-click="unPublish()" ng-if="model.status.id == statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'UNPUBLISH' | translate }}</button>
-          <button ng-click="publish()" ng-if="model.status.id !== statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'PUBLISH' | translate }}</button>
+          <button ng-click="publish()" ng-if="model.status.id !== statuses.published && model.status.id !== statuses.rejected" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'PUBLISH' | translate }}</button>
           <button ng-click="reject()" ng-if="model.status.id == statuses.underReview" class="pull-right btn btn-primary margin-right-10" permission permission-except="roles.GUEST">{{ 'REJECT' | translate }}</button>
-      </div>
+          <button ng-click="sendReview()" ng-if="model.status.id == statuses.draft" class="pull-right btn btn-primary" permission permission-only="roles.GUEST">{{ 'SEND_TO_REVIEW' | translate }}</button>
+          <button ng-click="cancel()" ng-if="model.status.id == statuses.underReview" class="pull-right btn btn-primary margin-right-10" permission permission-only="roles.GUEST" show-policy-if-guest-user="files">{{ 'CANCEL' | translate }}</button>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="box box-primary">
@@ -38,9 +40,25 @@
                                 <td class="detail-bold">{{ 'CREATED_AT' | translate }}</td>
                                 <td>{{model.createdAt| date:'MMM d, y h:mm:ss a'}}</td>
                             </tr>
-                            <tr ng-if="model.publishedAt">
+                            <tr ng-if="model.status.id == statuses.published">
                                 <td class="detail-bold">{{ 'PUBLISHED_AT' | translate }}</td>
                                 <td>{{model.publishedAt| date:'MMM d, y h:mm:ss a' }}</td>
+                            </tr>
+                            <tr ng-if="model.status.id == statuses.unpublished">
+                                <td class="detail-bold">{{ 'UNPUBLISHED_AT' | translate }}</td>
+                                <td>{{model.unPublishedAt| date:'MMM d, y h:mm:ss a' }}</td>
+                            </tr>
+                            <tr ng-if="model.status.id == statuses.rejected">
+                                <td class="detail-bold">{{ 'REJECTED_AT' | translate }}</td>
+                                <td>{{model.rejectedAt| date:'MMM d, y h:mm:ss a' }}</td>
+                            </tr>
+                            <tr ng-if="model.status.id == statuses.draft && model.cancelledAt">
+                                <td class="detail-bold">{{ 'CANCELLED_AT' | translate }}</td>
+                                <td>{{model.cancelledAt| date:'MMM d, y h:mm:ss a' }}</td>
+                            </tr>
+                            <tr ng-if="model.status.id == statuses.underReview">
+                                <td class="detail-bold">{{ 'REVIEWED_AT' | translate }}</td>
+                                <td>{{model.reviewedAt| date:'MMM d, y h:mm:ss a' }}</td>
                             </tr>
                             <tr ng-if="model.updatedAt">
                                 <td class="detail-bold">{{ 'UPDATED_AT' | translate }}</td>

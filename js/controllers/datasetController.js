@@ -311,6 +311,12 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
 
         if ($scope.statuses.default == $scope.statuses.published) {
             $scope.model.publishedAt = new Date();
+        } else if($scope.statuses.default == $scope.statuses.unpublished) {
+            $scope.model.unPublishedAt = new Date();
+        } else if($scope.statuses.default == $scope.statuses.rejected) {
+            $scope.model.rejectedAt = new Date();
+        } else if($scope.statuses.default == $scope.statuses.underReview) {
+            $scope.model.reviewedAt = new Date();
         }
 
         if (isValid) {
@@ -416,8 +422,14 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
 
         if ($scope.model.status == $scope.statuses.published) {
             $scope.tempData.publishedAt = new Date();
-        } else {
-            $scope.tempData.publishedAt = null;
+        } else if($scope.model.status == $scope.statuses.unpublished) {
+            $scope.tempData.unPublishedAt = new Date();
+        } else if($scope.model.status == $scope.statuses.rejected) {
+            $scope.tempData.rejectedAt = new Date();
+        } else if($scope.model.status == $scope.statuses.draft) {
+            $scope.tempData.cancelledAt = new Date();
+        } else if($scope.model.status == $scope.statuses.underReview) {
+            $scope.tempData.reviewedAt = new Date();
         }
 
         // TODO: chequear cual forma de mandar los items (opcionales) es la correcta

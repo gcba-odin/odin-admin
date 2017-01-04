@@ -443,11 +443,21 @@
                 // Configs
                 .when("/configs", {
                     templateUrl: "views/config/list.html",
-                    controller: ConfigListController
+                    controller: ConfigListController,
+                    data: {
+                        permissions: {
+                            except: ROLES.GUEST
+                        }
+                    }
                 })
                 .when("/configs/:id/view", {
                     templateUrl: "views/config/view.html",
-                    controller: ConfigViewController
+                    controller: ConfigViewController,
+                    data: {
+                        permissions: {
+                            except: ROLES.GUEST
+                        }
+                    }
                 })
                 .when("/configs/new", {
                     templateUrl: "views/config/add.html",
