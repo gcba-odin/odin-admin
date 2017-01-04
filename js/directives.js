@@ -7,16 +7,16 @@
             templateUrl: "directives/search-bar.html",
             scope: "=",
             controller: function ($scope, modelService, $timeout) {
-
+                
                 $scope.search = function() {
                     $scope.parameters.skip = 0;
-                    $scope.parameters.conditions = '';
+                    $scope.parameters.conditions_page = '';
                     $scope.q = "&";
                     var conditionApplied = false;
                     var filters = $scope.searchModel.filters;
 
                     $scope.dropdowns.forEach(function(drop) {
-                        if (drop.condition) {
+                        if (!!drop.underReview) {
                             conditionApplied = true;
                             $scope.q += drop.condition;
                         }
@@ -35,7 +35,7 @@
                         }
                     }
                     $scope.q += conditionApplied ? 'condition=AND' : 'condition=OR';
-                    $scope.parameters.conditions = $scope.q;
+                    $scope.parameters.conditions_page = $scope.q;
                     if ((!angular.isUndefined($scope.parameters.skip)) && (!angular.isUndefined($scope.parameters.limit))) {
                         $scope.q += "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
                     }

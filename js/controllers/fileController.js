@@ -35,8 +35,9 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
 
     if (underReview) {
         $scope.parameters.conditions = '&status=oWRhpRV';
-        $scope.filtersView[0].condition = 'status=oWRhpRV&';
+        $scope.filtersView[0].underReview = true;
     } else {
+        $scope.parameters.conditions = '';
         $scope.filtersView.push({
             name: 'Estado',
             model: 'statuses',
@@ -90,8 +91,8 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
         usSpinnerService.spin('spinner');
         $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-        if(!!$scope.parameters.conditions) {
-            $scope.q += $scope.parameters.conditions;
+        if(!!$scope.parameters.conditions_page) {
+            $scope.q += $scope.parameters.conditions_page;
         }
         modelService.loadAll($scope, function (resp) {
             usSpinnerService.stop('spinner');

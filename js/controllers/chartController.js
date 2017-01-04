@@ -23,7 +23,7 @@ function ChartListController($scope, modelService, configs, usSpinnerService, un
             key: 'username',
             modelInput: 'createdBy',
             multiple: true,
-            condition: 'status=oWRhpRV&'
+            //condition: 'status=oWRhpRV&'
         }];
     } else {
         $scope.filtersView = [{
@@ -83,8 +83,8 @@ function ChartListController($scope, modelService, configs, usSpinnerService, un
         usSpinnerService.spin('spinner');
         $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-        if (!!$scope.parameters.conditions) {
-            $scope.q += $scope.parameters.conditions;
+        if(!!$scope.parameters.conditions_page) {
+            $scope.q += $scope.parameters.conditions_page;
         }
         modelService.loadAll($scope, function (resp) {
             usSpinnerService.stop('spinner');

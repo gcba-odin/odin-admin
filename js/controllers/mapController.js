@@ -22,7 +22,7 @@ function MapListController($scope, modelService, configs, usSpinnerService, unde
             key: 'username',
             modelInput: 'createdBy',
             multiple: true,
-            condition: 'status=oWRhpRV&'
+            //condition: 'status=oWRhpRV&'
         }];
     } else {
         $scope.filtersView = [{
@@ -82,8 +82,8 @@ function MapListController($scope, modelService, configs, usSpinnerService, unde
         usSpinnerService.spin('spinner');
         $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-        if(!!$scope.parameters.conditions) {
-            $scope.q += $scope.parameters.conditions;
+        if(!!$scope.parameters.conditions_page) {
+            $scope.q += $scope.parameters.conditions_page;
         }
         modelService.loadAll($scope, function (resp) {
             usSpinnerService.stop('spinner');
@@ -240,7 +240,7 @@ function MapPreviewController($scope, modelService, $routeParams, rest, $locatio
 
     //calculate center automatically from geoJson
     $scope.centerJSON = function () {
-        leafletData.getMap().then(function (map) {
+        leafletData.getMap('mapid').then(function (map) {
             var latlngs = [];
             for (var i in $scope.geojson.data.features) {
                 var coord = $scope.geojson.data.features[i].geometry.coordinates;
