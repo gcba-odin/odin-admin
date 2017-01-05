@@ -146,6 +146,12 @@ function TagViewController($scope, Flash, rest, $routeParams, $location, modelSe
  
     $scope.unPublish = function (id, type) {
         var text_type = (type == 'datasets') ? 'dataset' : '';
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere despublicar este ' + text_type + '?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');
@@ -170,6 +176,12 @@ function TagViewController($scope, Flash, rest, $routeParams, $location, modelSe
     };
      
     $scope.deleteResource = function (id, type) {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere borrar este dataset?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');

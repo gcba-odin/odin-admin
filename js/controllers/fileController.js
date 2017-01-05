@@ -41,7 +41,8 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
     } else {
         $scope.parameters.conditions = '';
         if(!!$rootScope.adminglob.currentUser && $rootScope.adminglob.currentUser.role === ROLES.GUEST) {
-            $scope.parameters.conditions = '&createdBy=' + $rootScope.adminglob.currentUser.user;
+            var current_us = $rootScope.adminglob.currentUser.user;
+            $scope.parameters.conditions = '&createdBy=' + current_us + '&owner=' + current_us;
         }
         
         $scope.filtersView.push({
@@ -192,6 +193,12 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
 
     $scope.unPublish = function (id, type) {
         var text_type = (type == 'charts') ? 'gráfico' : (type == 'maps') ? 'mapa' : 'recurso';
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere despublicar este ' + text_type + '?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');
@@ -217,6 +224,12 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
 
     $scope.reject = function (id, type) {
         var text_type = (type == 'charts') ? 'gráfico' : (type == 'maps') ? 'mapa' : 'recurso';
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere rechazar este ' + text_type + '?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');
@@ -240,6 +253,12 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
     
     $scope.sendReview = function (id, type) {
         var text_type = (type == 'charts') ? 'gráfico' : (type == 'maps') ? 'mapa' : 'recurso';
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere enviar a revisión este ' + text_type + '?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');
@@ -263,6 +282,12 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
     
     $scope.cancel = function (id, type) {
         var text_type = (type == 'charts') ? 'gráfico' : (type == 'maps') ? 'mapa' : 'recurso';
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere cancelar este ' + text_type + '?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');
@@ -287,6 +312,12 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
     loadModel();
 
     $scope.confirmDelete = function (item) {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere borrar este recurso?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');
@@ -309,6 +340,12 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
     };
 
     $scope.deleteResource = function (id, type) {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere borrar este recurso?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');
@@ -751,7 +788,7 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
 
 }
 
-function FileEditController($rootScope, $scope, flashService, Flash, rest, $routeParams, model, $location, modelService, $sce, Upload, usSpinnerService, Alertify, $window, configs, Idle, session_timeout) {
+function FileEditController($rootScope, $scope, flashService, Flash, rest, $routeParams, model, $location, modelService, $sce, Upload, usSpinnerService, Alertify, $window, configs, Idle, session_timeout, ROLES) {
     $scope.today = moment().format('YYYY-MM-DD');
     usSpinnerService.spin('spinner');
     modelService.initService("File", "files", $scope);
@@ -964,7 +1001,11 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
         } else if($scope.model.status == $scope.statuses.unpublished) {
             data.unPublishedAt = new Date();
         } else if($scope.model.status == $scope.statuses.rejected) {
-            data.rejectedAt = new Date();
+            if(!!$rootScope.adminglob.currentUser && $rootScope.adminglob.currentUser.role === ROLES.GUEST) {
+                data.status = $scope.statuses.draft;
+            } else {
+                data.rejectedAt = new Date();
+            }
         } else if($scope.model.status == $scope.statuses.draft) {
             data.cancelledAt = new Date();
         } else if($scope.model.status == $scope.statuses.underReview) {

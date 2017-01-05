@@ -226,7 +226,7 @@
                     except: ROLES.GUEST
                 }
             }
-        }).when("/statuses/:id/edit", {
+        })*/.when("/statuses/:id/edit", {
             templateUrl: "views/status/edit.html",
             controller: StatusEditController,
             data: {
@@ -234,7 +234,7 @@
                     except: ROLES.GUEST
                 }
             }
-        })*/
+        })
                 //// end  Status
                 ////  File type
                 .when("/filetypes", {

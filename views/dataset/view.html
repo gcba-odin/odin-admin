@@ -7,7 +7,7 @@
           <button ng-click="unPublish(model.id, 'datasets')" ng-if="model.status.id == statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'UNPUBLISH' | translate }}</button>
           <button ng-click="publish(model.id, 'datasets')" ng-if="model.status.id !== statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'PUBLISH' | translate }}</button>
           <a ng-href="#/files/new/{{model.id}}" class="btn btn-default pull-right margin-right-10" permission permission-except="roles.GUEST"><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_FILES' | translate }}</a>
-          <button permission permission-except="roles.GUEST" ng-if="model.files.length > 0" data-toggle="modal" data-target="#viewLinkResources" class="btn btn-default pull-right margin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_FILES' | translate }}</button>
+          <button ng-if="model.files.length > 0" data-toggle="modal" data-target="#viewLinkResources" class="btn btn-default pull-right margin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_FILES' | translate }}</button>
       </div>
         <div class="row">
             <div class="col-md-12">
@@ -46,25 +46,13 @@
                                 <td class="detail-bold">{{ 'CREATED_AT' | translate }}</td>
                                 <td>{{model.createdAt| date:'MMM d, y h:mm:ss a'}}</td>
                             </tr>
-                            <tr ng-if="model.status.id == statuses.published">
+                            <tr ng-if="!!model.publishedAt">
                                 <td class="detail-bold">{{ 'PUBLISHED_AT' | translate }}</td>
                                 <td>{{model.publishedAt| date:'MMM d, y h:mm:ss a' }}</td>
                             </tr>
-                            <tr ng-if="model.status.id == statuses.unpublished">
+                            <tr ng-if="!!model.unPublishedAt">
                                 <td class="detail-bold">{{ 'UNPUBLISHED_AT' | translate }}</td>
                                 <td>{{model.unPublishedAt| date:'MMM d, y h:mm:ss a' }}</td>
-                            </tr>
-                            <tr ng-if="model.status.id == statuses.rejected">
-                                <td class="detail-bold">{{ 'REJECTED_AT' | translate }}</td>
-                                <td>{{model.rejectedAt| date:'MMM d, y h:mm:ss a' }}</td>
-                            </tr>
-                            <tr ng-if="model.status.id == statuses.draft && model.cancelledAt">
-                                <td class="detail-bold">{{ 'CANCELLED_AT' | translate }}</td>
-                                <td>{{model.cancelledAt| date:'MMM d, y h:mm:ss a' }}</td>
-                            </tr>
-                            <tr ng-if="model.status.id == statuses.underReview">
-                                <td class="detail-bold">{{ 'REVIEWED_AT' | translate }}</td>
-                                <td>{{model.reviewedAt| date:'MMM d, y h:mm:ss a' }}</td>
                             </tr>
                             <tr ng-if="model.updatedAt">
                                 <td class="detail-bold">{{ 'UPDATED_AT' | translate }}</td>
@@ -120,7 +108,7 @@
                         <th class="text-center">{{ 'ACTIONS' | translate }}</th>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="file in model.files | filterIfGuestUser">
+                            <tr ng-repeat="file in model.files">
                                 <td>
                                     <span>{{file.name}}</span>
                                 </td>

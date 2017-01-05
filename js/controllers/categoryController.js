@@ -122,6 +122,12 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
     $scope.confirmDelete = function(item) {
         // modelService.confirmDelete(item, {});
         var item = item.target.dataset;
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm(item.textdelete).then(
             function onOk() {
                 usSpinnerService.spin('spinner');
@@ -196,6 +202,12 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
 
     $scope.unPublish = function (id, type) {
         var text_type = (type == 'datasets') ? 'dataset' : '';
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere despublicar este ' + text_type + '?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');
@@ -220,6 +232,12 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
     };
 
     $scope.deleteResource = function (id, type) {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere borrar este dataset?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');

@@ -29,7 +29,8 @@ function MapListController($scope, modelService, configs, usSpinnerService, unde
     } else {
         $scope.parameters.conditions = '';
         if(!!$rootScope.adminglob.currentUser && $rootScope.adminglob.currentUser.role === ROLES.GUEST) {
-            $scope.parameters.conditions = '&createdBy=' + $rootScope.adminglob.currentUser.user;
+            var current_us = $rootScope.adminglob.currentUser.user;
+            $scope.parameters.conditions = '&createdBy=' + current_us + '&owner=' + current_us;
         }
         $scope.filtersView = [{
             name: 'Estado',
@@ -168,6 +169,12 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
     };
 
     $scope.unPublish = function () {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere despublicar este recurso?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');
@@ -189,6 +196,12 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
     };
 
     $scope.reject = function () {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere rechazar este mapa?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');
@@ -211,6 +224,12 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
     };
     
         $scope.sendReview = function () {
+            Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere enviar a revisión este gráfico?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');
@@ -233,6 +252,12 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
     };
     
     $scope.cancel = function () {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere cancelar este gráfico?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');

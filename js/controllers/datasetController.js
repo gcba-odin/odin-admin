@@ -41,6 +41,12 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
     }];
 
     $scope.confirmDelete = function(item) {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere borrar este dataset?<br> Al hacerlo, se borrarán todos los recursos asociados').then(
             function onOk() {
                 $scope.deleteModel(item);
@@ -133,15 +139,20 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
     };
 }
 
-function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sce, modelService, Alertify, usSpinnerService, $window, configs) {
+function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sce, modelService, Alertify, usSpinnerService, $window, configs, $rootScope, ROLES) {
     usSpinnerService.spin('spinner');
     modelService.initService("Dataset", "datasets", $scope);
 
     var loadModel = function() {
+        var params = '';
+        if(!!$rootScope.adminglob.currentUser && $rootScope.adminglob.currentUser.role === ROLES.GUEST) {
+            var current_us = $rootScope.adminglob.currentUser.user;
+            params = '&files.createdBy=' + current_us + '&files.owner=' + current_us;
+        }
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type,
-            params: "include=tags,files,categories,subcategories"
+            params: "include=tags,files,categories,subcategories" + params
         }, function() {
             var tags = [];
             for (var i = 0; i < $scope.model.tags.length; i++) {
@@ -217,6 +228,12 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
         if (type == 'files') {
             text_type = 'recurso';
         }
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere despublicar este ' + text_type + '?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');
@@ -238,6 +255,12 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
     };
 
     $scope.deleteResource = function(id, type) {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere borrar este recurso?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');
@@ -259,6 +282,12 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
     };
     
     $scope.reject = function (id, type) {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere rechazar este recurso?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');
@@ -281,6 +310,12 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
     };
     
     $scope.sendReview = function (id, type) {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere enviar a revisión este recurso?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');
@@ -303,6 +338,12 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
     };
     
     $scope.cancel = function (id, type) {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere cancelar este recurso?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');

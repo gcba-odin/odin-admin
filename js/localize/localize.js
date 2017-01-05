@@ -201,7 +201,7 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'CANCELLED_AT': 'Cancelled at',
         'REVIEWED_AT': 'Reviewed at',
         'SEND_TO_REVIEW': 'Send to review',
-        'CANCEL': 'Cancel'
+        'CANCEL': 'Cancel review'
     });
 
     $translateProvider.translations('es', {
@@ -442,7 +442,7 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'CANCELLED_AT': 'Fecha de cancelación',
         'REVIEWED_AT': 'Fecha de revisión',
         'SEND_TO_REVIEW': 'Enviar a revisión',
-        'CANCEL': 'Cancelar'
+        'CANCEL': 'Cancelar revisión'
     });
     $translateProvider.preferredLanguage('es');
 }]);

@@ -86,10 +86,10 @@
                                             <td class="detail-bold">{{ 'DATASET' | translate }}</td>
                                             <td>{{model.dataset.name| selectFilterArray:'dataset'}}</td>
                                         </tr>
-                                        <tr ng-if="model.status">
+                                        <!--<tr ng-if="!!model.status">
                                             <td class="detail-bold">{{ 'STATUS' | translate }}</td>
                                             <td>{{model.status| selectFilterArray:'status'}}</td>
-                                        </tr>
+                                        </tr>-->
                                         <tr ng-if="model.organization">
                                             <td class="detail-bold">{{ 'ORGANIZATION' | translate }}</td>
                                             <td>{{model.organization.name| selectFilterArray:'organization'}}</td>

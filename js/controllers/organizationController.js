@@ -178,6 +178,12 @@ function OrganizationViewController($scope, Flash, rest, $routeParams, $location
 
     $scope.unPublish = function (id, type) {
         var text_type = (type == 'files') ? 'recurso' : (type == 'users') ? 'usuario' : '';
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere despublicar este ' + text_type + '?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');
@@ -203,6 +209,12 @@ function OrganizationViewController($scope, Flash, rest, $routeParams, $location
 
     $scope.deleteResource = function (id, type) {
         var text_type = (type == 'files') ? 'recurso' : (type == 'users') ? 'usuario' : '';
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere borrar este ' + text_type + '?').then(
             function onOk() { 
                 usSpinnerService.spin('spinner');
