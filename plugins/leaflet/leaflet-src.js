@@ -6246,9 +6246,9 @@ L.icon = function (options) {
 L.Icon.Default = L.Icon.extend({
 
 	options: {
-		iconUrl:       '/plugins/leaflet/images/marker-icon.png',
-		iconRetinaUrl: '/plugins/leaflet/images/marker-icon-2x.png',
-		shadowUrl:     '/plugins/leaflet/images/marker-shadow.png',
+		iconUrl:       '/admin/plugins/leaflet/images/marker-icon.png',
+		iconRetinaUrl: '/admin/plugins/leaflet/images/marker-icon-2x.png',
+		shadowUrl:     '/admin/plugins/leaflet/images/marker-shadow.png',
 		iconSize:    [25, 41],
 		iconAnchor:  [12, 41],
 		popupAnchor: [1, -34],
