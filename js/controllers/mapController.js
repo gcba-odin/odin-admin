@@ -319,9 +319,23 @@ function MapPreviewController($scope, modelService, $routeParams, rest, $locatio
             var latlngs = [];
             for (var i in $scope.geojson.data.features) {
                 var coord = $scope.geojson.data.features[i].geometry.coordinates;
+                var typeGeometry = $scope.geojson.data.features[i].geometry.type;
                 for (var j in coord) {
-                    latlngs.push(L.GeoJSON.coordsToLatLng(coord));
-                }
+                    if(typeGeometry == 'Point') {
+                        latlngs.push(L.GeoJSON.coordsToLatLng(coord));
+                    } else if(typeGeometry == 'LineString' || typeGeometry == 'Polygon') {
+                        for (var k in j) {
+                            if(typeGeometry == 'LineString') {
+                                latlngs.push(L.GeoJSON.coordsToLatLng(coord[j]));
+                            } else if(typeGeometry == 'Polygon') {
+                                for (var h in coord[j][k]) {
+                                    latlngs.push(L.GeoJSON.coordsToLatLng(coord[j][k]));
+                                }
+                            }
+                        }
+                    }            
+                } 
+
             }
             if (latlngs.length > 0)
                 map.fitBounds(latlngs);
@@ -364,8 +378,11 @@ function MapPreviewController($scope, modelService, $routeParams, rest, $locatio
                         angular.forEach(feature.properties, function (value, key) {
                             html += '<strong>' + key + '</strong>: ' + value + '<br><br>';
                         });
+                        var custom_options = {
+                            'maxHeight': '200'
+                        };
                         if (html != '') {
-                            layer.bindPopup(html);
+                            layer.bindPopup(html, custom_options);
                         }
                     }
                 }
