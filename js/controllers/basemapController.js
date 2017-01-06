@@ -56,9 +56,7 @@ function BasemapListController($scope, modelService, configs, usSpinnerService) 
         }
 
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-        if(!!$scope.parameters.conditions) {
-            $scope.q += $scope.parameters.conditions;
-        }
+        
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if (!resp) {
@@ -71,7 +69,9 @@ function BasemapListController($scope, modelService, configs, usSpinnerService) 
         usSpinnerService.spin('spinner');
         $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-        
+        if(!!$scope.parameters.conditions_page) {
+            $scope.q += $scope.parameters.conditions_page;
+        }
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if (!resp) {
@@ -135,9 +135,9 @@ function BasemapViewController($scope, modelService, $routeParams, rest, $locati
     $scope.getHtml = function(html) {
         return $sce.trustAsHtml(html);
     };
-   
+    
     loadModel();
-     
+    
     $scope.publish = function (id, type) {
         usSpinnerService.spin('spinner');
 
@@ -154,9 +154,15 @@ function BasemapViewController($scope, modelService, $routeParams, rest, $locati
             modelService.reloadPage();
         });
     };
- 
+
     $scope.unPublish = function (id, type) {
         var text_type = (type == 'charts') ? 'gráfico' : (type == 'maps') ? 'mapa' : 'archivo';
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere despublicar este ' + text_type + '?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');
@@ -179,8 +185,14 @@ function BasemapViewController($scope, modelService, $routeParams, rest, $locati
             }
         );
     };
-     
+
     $scope.deleteResource = function (id, type) {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere borrar este recurso?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');
@@ -242,11 +254,11 @@ function BasemapCreateController($scope, modelService, rest, $location, model, $
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                //if (error.data.data && error.data.data.name) {
+                if (error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre del basemap ya existe.');
-                //} else {
-                //    Alertify.alert('Ha ocurrido un error al crear el basemap.');
-                //}
+                } else {
+                    Alertify.alert('Ha ocurrido un error al crear el basemap.');
+                }
             });
         } else {
             usSpinnerService.stop('spinner');
@@ -316,11 +328,11 @@ function BasemapEditController($scope, modelService, $routeParams, $sce, rest, $
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                //if (error.data.data && error.data.data.name) {
+                if (error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre del basemap ya existe.');
-                //} else {
-                //    Alertify.alert('Ha ocurrido un error al editar el basemap.');
-                //}
+                } else {
+                    Alertify.alert('Ha ocurrido un error al editar el basemap.');
+                }
             });
         } else {
             usSpinnerService.stop('spinner');

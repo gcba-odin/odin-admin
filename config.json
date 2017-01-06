@@ -1,8 +1,8 @@
 {
   "local": {
     "EnvironmentConfig": {
-      "api": "http://localhost:3000",
-      "odin_version": "0.1.5"
+      "api": "http://localhost:3000", 
+      "odin_version": "0.2.0"
     }
   },
   "staging": {

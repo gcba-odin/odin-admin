@@ -3,11 +3,11 @@
     <breadcrumbs data-type="{{ 'VIEW' | translate }}" data-model-name="{{ 'BASEMAP' | translate }}" data-model="{{type}}"></breadcrumbs>
     <!-- Main content -->
     <section class="content">
-      <div class="box-header with-border">
-          <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} <b>{{model.description}}</b></h3>
-          
-          <button ng-if="model.maps.length > 0"  data-toggle="modal" data-target="#viewLinkRelationships" class="btn btn-default pull-right margin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_RELATIONSHIPS' | translate }}</button>
-      </div>
+        <div class="box-header with-border">
+            <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} <b>{{model.description}}</b></h3>
+
+            <button permission permission-except="roles.GUEST" ng-if="model.maps.length > 0"  data-toggle="modal" data-target="#viewLinkRelationships" class="btn btn-default pull-right margin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_RELATIONSHIPS' | translate }}</button>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="box box-primary">
@@ -23,7 +23,7 @@
                             </tr>
                             <tr ng-if="model.tms">
                                 <td class="detail-bold">{{ 'TMS' | translate }}</td>
-                                <td>{{model.tms ? 'Si' : 'No'}}</td>
+                                <td><span class="label label-default {{model.tms ? 'bg-primary color-white' : ''}}">{{model.tms ? 'Si' : 'No'}}</span></td>
                             </tr>
                             <tr ng-if="model.minZoom">
                                 <td class="detail-bold">{{ 'MIN' | translate }}</td>
@@ -39,7 +39,7 @@
                             </tr>
                             <tr ng-if="model.createdBy">
                                 <td class="detail-bold">{{ 'CREATED_BY' | translate }} </td>
-                                <td><a ng-href="#/users/{{model.createdBy.id}}/view">{{model.createdBy.username}}</a></td>
+                                <td><a ng-href="#/users/{{model.createdBy.id}}/view" href-policy-if-guest-user>{{model.createdBy.username}}</a></td>
                             </tr>
                             <tr ng-if="model.createdAt">
                                 <td class="detail-bold">{{ 'CREATED_AT' | translate }}</td>
@@ -60,15 +60,14 @@
                         <button back-button class="btn btn-default pull-left">
                             {{ 'BACK' | translate }}
                         </button>
-                        <button type="submit" class="btn btn-primary pull-right" ng-click="edit(model)">{{ 'EDIT' | translate }}</button>
-                        <a ng-if="model.deletedAt" class="pull-right btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="activeModel($event)">{{ 'ACTIVATE' | translate }}</a>
-                        <a ng-if="!model.deletedAt" class="pull-right btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="inactiveModel($event)">{{ 'INACTIVATE' | translate }}</a>
+                        <button type="submit" class="btn btn-primary pull-right" ng-click="edit(model)" permission permission-except="roles.GUEST">{{ 'EDIT' | translate }}</button>
+                        <a ng-if="model.deletedAt" class="pull-right btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="activeModel($event)" permission permission-except="roles.GUEST">{{ 'ACTIVATE' | translate }}</a>
+                        <a ng-if="!model.deletedAt" class="pull-right btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="inactiveModel($event)" permission permission-except="roles.GUEST">{{ 'INACTIVATE' | translate }}</a>
                     </div>
                 </div>
 
             </div>
         </div>
-        
         <!--  Main content-->
         <div class="modal fade" id="viewLinkRelationships" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
@@ -82,7 +81,7 @@
                             <thead>
                                 <th>{{ 'NAME' | translate }}</th>
                                 <th>{{ 'TYPE' | translate }}</th>
-                                <th class="text-center">{{ 'ACTIONS' | translate }}</th>
+                                <th class="text-center box-actions">{{ 'ACTIONS' | translate }}</th>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="map in model.maps">
@@ -92,12 +91,12 @@
                                     <td>
                                         <span>{{'MAP'| translate }}</span>
                                     </td>
-                                    <td class="text-center table-btn">
+                                    <td class="text-center box-actions">
                                         <a target="_blank" class="btn btn-primary" ng-href="#/maps/{{map.id}}/view">{{ 'VIEW' | translate }}</a>
-                                        <a target="_blank" class="btn btn-primary" ng-href="#/maps/{{map.id}}/edit">{{ 'EDIT' | translate }}</a>
-                                        <a class="btn btn-primary" ng-click="deleteResource(map.id, 'maps')">{{ 'DELETE' | translate }}</a>
-                                        <button ng-click="unPublish(map.id, 'maps')" ng-if="map.status.id == statuses.published" class="pull-right btn btn-primary">{{ 'UNPUBLISH' | translate }}</button>
-                                        <button ng-click="publish(map.id, 'maps')" ng-if="map.status.id !== statuses.published" class="pull-right btn btn-primary">{{ 'PUBLISH' | translate }}</button>
+                                        <a target="_blank" class="btn btn-primary" ng-href="#/maps/{{map.id}}/edit" show-policy-if-guest-user="maps">{{ 'EDIT' | translate }}</a>
+                                        <a class="btn btn-primary" ng-click="deleteResource(map.id, 'maps')" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
+                                        <button ng-click="unPublish(map.id, 'maps')" ng-if="map.status.id == statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'UNPUBLISH' | translate }}</button>
+                                        <button ng-click="publish(map.id, 'maps')" ng-if="map.status.id !== statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'PUBLISH' | translate }}</button>
                                     </td>
                                 </tr>
                             </tbody>

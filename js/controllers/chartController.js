@@ -1,10 +1,12 @@
 var app = angular.module('odin.chartsControllers', []);
 
 
-function ChartListController($scope, modelService, configs, usSpinnerService) {
+function ChartListController($scope, modelService, configs, usSpinnerService, underReview, $rootScope, ROLES) {
     usSpinnerService.spin('spinner');
     modelService.initService("Chart", "charts", $scope);
-    
+    //factory configs
+    configs.statuses($scope);
+
     $scope.parameters = {
         skip: 0,
         limit: 20,
@@ -13,7 +15,25 @@ function ChartListController($scope, modelService, configs, usSpinnerService) {
         sort: 'DESC'
     };
 
-    $scope.filtersView = [{
+    $scope.underReview = underReview;
+
+    if (underReview) {
+        $scope.parameters.conditions = '&status=' + $scope.statuses.underReview;
+        $scope.filtersView = [{
+            name: 'Autor',
+            model: 'users',
+            key: 'username',
+            modelInput: 'createdBy',
+            multiple: true,
+            //condition: 'status=oWRhpRV&'
+        }];
+    } else {
+        $scope.parameters.conditions = '';
+        if(!!$rootScope.adminglob.currentUser && $rootScope.adminglob.currentUser.role === ROLES.GUEST) {
+            var current_us = $rootScope.adminglob.currentUser.user;
+            $scope.parameters.conditions = '&createdBy=' + current_us + '&owner=' + current_us;
+        }
+        $scope.filtersView = [{
             name: 'Estado',
             model: 'statuses',
             key: 'name',
@@ -26,6 +46,7 @@ function ChartListController($scope, modelService, configs, usSpinnerService) {
             modelInput: 'createdBy',
             multiple: true
         }];
+    }
 
     $scope.confirmDelete = function (item) {
         modelService.confirmDelete(item);
@@ -47,19 +68,19 @@ function ChartListController($scope, modelService, configs, usSpinnerService) {
         modelService.activeClass(activeClass);
 
     };
-    
+
     $scope.config_key = 'adminPagination';
     ////factory configs
     configs.findKey($scope, function (resp) {
         if (!!resp.data[0] && !!resp.data[0].value) {
             $scope.parameters.limit = resp.data[0].value;
         }
-        
-        $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
 
-        modelService.loadAll($scope, function(resp) {
+        $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
+        
+        modelService.loadAll($scope, function (resp) {
             usSpinnerService.stop('spinner');
-            if(!resp) {
+            if (!resp) {
                 modelService.reloadPage();
             }
         });
@@ -69,12 +90,12 @@ function ChartListController($scope, modelService, configs, usSpinnerService) {
         usSpinnerService.spin('spinner');
         $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-        if(!!$scope.parameters.conditions) {
-            $scope.q += $scope.parameters.conditions;
+        if(!!$scope.parameters.conditions_page) {
+            $scope.q += $scope.parameters.conditions_page;
         }
-        modelService.loadAll($scope, function(resp) {
+        modelService.loadAll($scope, function (resp) {
             usSpinnerService.stop('spinner');
-            if(!resp) {
+            if (!resp) {
                 modelService.reloadPage();
             }
         });
@@ -110,9 +131,9 @@ function ChartViewController($scope, modelService, $routeParams, rest, $location
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type
-        }, function() {
+        }, function () {
             usSpinnerService.stop('spinner');
-        }, function(error) {
+        }, function (error) {
             usSpinnerService.stop('spinner');
             modelService.reloadPage();
         });
@@ -149,23 +170,113 @@ function ChartViewController($scope, modelService, $routeParams, rest, $location
     };
 
     $scope.unPublish = function () {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere despublicar este recurso?').then(
-                function onOk() {
-                    usSpinnerService.spin('spinner');
+            function onOk() {
+                usSpinnerService.spin('spinner');
 
-                    rest().unpublish({
-                        type: $scope.type,
-                        id: $scope.model.id
-                    }, {}, function (resp) {
-                        loadModel();
-                        //var url = '/' + $scope.type;
-                        // $location.path(url);
-                    });
+                rest().unpublish({
+                    type: $scope.type,
+                    id: $scope.model.id
+                }, {}, function (resp) {
+                    loadModel();
+                    //var url = '/' + $scope.type;
+                    // $location.path(url);
+                });
+                usSpinnerService.stop('spinner');
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+
+    $scope.reject = function () {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm('¿Está seguro que quiere rechazar este gráfico?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().reject({
+                    type: $scope.type,
+                    id: $scope.model.id
+                }, {}, function (resp) {
                     usSpinnerService.stop('spinner');
-                },
-                function onCancel() {
-                    return false;
-                }
+                    loadModel();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+    
+    $scope.sendReview = function () {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm('¿Está seguro que quiere enviar a revisión este gráfico?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().sendReview({
+                    type: $scope.type,
+                    id: $scope.model.id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+    
+    $scope.cancel = function () {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm('¿Está seguro que quiere cancelar este gráfico?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().cancel({
+                    type: $scope.type,
+                    id: $scope.model.id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
         );
     };
 
@@ -217,7 +328,7 @@ function ChartPreviewController($scope, modelService, $routeParams, rest, $locat
         }
         //load Chart;
         usSpinnerService.stop('spinner');
-    }, function(error) {
+    }, function (error) {
         usSpinnerService.stop('spinner');
         modelService.reloadPage();
     });
@@ -246,11 +357,10 @@ function ChartCreateController($scope, modelService, rest, $location, model, $sc
     $scope.steps[2] = "undone";
     $scope.stepactive = 0;
 
-    $scope.model.items = [{field: ""}, {field: ""}];
+    $scope.model.items = [{ field: "" }, { field: "" }];
 
     var generate_headers = function () {
-        if ($scope.fileModel.data.length > 0)
-        {
+        if ($scope.fileModel.data.length > 0) {
 
             $scope.headersFile = Object.keys($scope.fileModel.data[0]);
             $scope.headersFile = $scope.headersFile.filter(function (header) {
@@ -285,7 +395,7 @@ function ChartCreateController($scope, modelService, rest, $location, model, $sc
             $scope.headersFile = null;
 
             generate_headers();
-        }, function(error) {
+        }, function (error) {
             usSpinnerService.stop('spinner');
             modelService.reloadPage();
         });
@@ -360,6 +470,14 @@ function ChartCreateController($scope, modelService, rest, $location, model, $sc
 
         if ($scope.statuses.default == $scope.statuses.published) {
             $scope.model.publishedAt = new Date();
+        }if ($scope.statuses.default == $scope.statuses.published) {
+            $scope.model.publishedAt = new Date();
+        } else if($scope.statuses.default == $scope.statuses.unpublished) {
+            $scope.model.unPublishedAt = new Date();
+        } else if($scope.statuses.default == $scope.statuses.rejected) {
+            $scope.model.rejectedAt = new Date();
+        } else if($scope.statuses.default == $scope.statuses.underReview) {
+            $scope.model.reviewedAt = new Date();
         }
 
         if (validate(model)) {
@@ -375,11 +493,11 @@ function ChartCreateController($scope, modelService, rest, $location, model, $sc
                 $location.path(url);
             }, function (error) {
                 usSpinnerService.stop('spinner');
-                //if (error.data.data && error.data.data.name) {
+                if (error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre del gráfico ya existe.');
-                //} else {
-                //    Alertify.alert('Ha ocurrido un error al crear el gráfico.');
-                //}
+                } else {
+                    Alertify.alert('Ha ocurrido un error al crear el gráfico.');
+                }
             });
         } else {
             usSpinnerService.stop('spinner');
@@ -407,8 +525,7 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
     $scope.stepactive = 0;
 
     var generate_headers = function () {
-        if ($scope.fileModel.data.length > 0)
-        {
+        if ($scope.fileModel.data.length > 0) {
 
             $scope.headersFile = Object.keys($scope.fileModel.data[0]);
             $scope.headersFile = $scope.headersFile.filter(function (header) {
@@ -511,11 +628,11 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
                 $location.path(url);
             }, function (error) {
                 usSpinnerService.stop('spinner');
-                //if (error.data.data && error.data.data.name) {
+                if (error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre del gráfico ya existe.');
-                //} else {
-                //    Alertify.alert('Ha ocurrido un error al editar el gráfico.');
-                //}
+                } else {
+                    Alertify.alert('Ha ocurrido un error al editar el gráfico.');
+                }
             });
         } else {
             usSpinnerService.stop('spinner');
@@ -542,7 +659,7 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
                     $scope.headersFile = null;
 
                     generate_headers();
-                }, function(error) {
+                }, function (error) {
                     usSpinnerService.stop('spinner');
                     modelService.reloadPage();
                 });
@@ -561,7 +678,7 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
                     });
                 }
             }
-        }, function(error) {
+        }, function (error) {
             usSpinnerService.stop('spinner');
             modelService.reloadPage();
         });

@@ -1,10 +1,12 @@
 <header-home></header-home>
 <div class="content-wrapper">
-    <breadcrumbs data-model-name="{{ 'MAPS' | translate }}" data-model="{{type}}"></breadcrumbs>
+    <breadcrumbs data-model-name="{{ 'MAPS' | translate }}" data-model="{{type}}" ng-if="!underReview"></breadcrumbs>
+    <breadcrumbs data-model-name="{{ 'UNDER_REVIEW' | translate }}" data-model="{{type}}" ng-if="underReview"></breadcrumbs>
     <!-- Main content -->
     <section class="content">
         <div class="box-header">
             <h3 class="box-title">{{ 'MAPS' | translate }}</h3>
+            <h3 class="box-title" ng-if="underReview">{{ 'UNDER_REVIEW' | translate }}</h3>
         </div>
           <div class="row">
             <div class="col-xs-12">
@@ -22,7 +24,8 @@
                                         </a>
                                     </th>
                                     <th>{{ 'STATE' | translate }}</th>
-                                    <th class="text-center">{{ 'ACTIONS' | translate }}</th>
+                                    <th>{{ 'AUTHOR' | translate }}</th>
+                                    <th class="text-center box-actions">{{ 'ACTIONS' | translate }}</th>
                                 </tr>
                                 <tr ng-if="data.data.length == 0">
                                     <td colspan="3">No se encuentran datos para mostrar.</td>
@@ -30,10 +33,13 @@
                                 <tr ng-if="data.data.length != 0" ng-repeat="model in data.data">
                                     <td>{{model.name}}</td>
                                     <td>{{model.status.name}}</td>
-                                    <td class="text-center table-btn">
+                                    <td>
+                                        <span ng-if="model.createdBy">{{model.createdBy.username}}</span>
+                                    </td>
+                                    <td class="text-center box-actions">
                                         <a class="btn btn-primary" ng-click="view({id: model.id})">{{ 'VIEW' | translate }}</a>
-                                        <a class="btn btn-primary" ng-click="edit({id: model.id})">{{ 'EDIT' | translate }}</a>
-                                        <a class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)">{{ 'DELETE' | translate }}</a>
+                                        <a class="btn btn-primary" ng-click="edit({id: model.id})" show-policy-if-guest-user="model">{{ 'EDIT' | translate }}</a>
+                                        <a class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
                                     </td>
                                 </tr>
                             </tbody>

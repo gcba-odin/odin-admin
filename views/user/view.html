@@ -23,6 +23,10 @@
                                 <td class="detail-bold">{{ 'LAST_NAME' | translate }}</td>
                                 <td>{{model.lastName}}</td>
                             </tr>
+                            <tr ng-if="model.role">
+                                <td class="detail-bold">{{ 'ROLE' | translate }}</td>
+                                <td>{{model.role}}</td>
+                            </tr>
                             <tr ng-if="model.email">
                                 <td class="detail-bold">{{ 'EMAIL' | translate }}</td>
                                 <td>{{model.email}}</td>
@@ -33,7 +37,7 @@
                             </tr>
                             <tr ng-if="model.createdBy">
                                 <td class="detail-bold">{{ 'CREATED_BY' | translate }} </td>
-                                <td><a ng-href="#/users/{{model.createdBy.id}}/view">{{model.createdBy.username}}</a></td>
+                                <td><a ng-href="#/users/{{model.createdBy.id}}/view" href-policy-if-guest-user>{{model.createdBy.username}}</a></td>
                             </tr>
                             <tr ng-if="model.createdAt">
                                 <td class="detail-bold">{{ 'CREATED_AT' | translate }}</td>
@@ -52,9 +56,10 @@
                         <button back-button class="btn btn-default pull-left">
                             {{ 'BACK' | translate }}
                         </button>
-                        <button type="submit" class="btn btn-primary pull-right" ng-click="edit(model)">{{ 'EDIT' | translate }}</button>
-                        <a ng-if="model.deletedAt" class="pull-right btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="activeModel($event)">{{ 'ACTIVATE' | translate }}</a>
-                        <a ng-if="!model.deletedAt" class="pull-right btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="inactiveModel($event)">{{ 'INACTIVATE' | translate }}</a>
+                        <button type="submit" class="btn btn-primary pull-right" ng-click="edit(model)" permission permission-only="roles.SUPERADMIN">{{ 'EDIT' | translate }}</button>
+                        <button type="submit" class="btn btn-primary pull-right" ng-show="isUserProfile && adminglob.currentUser.role === roles.ADMIN" ng-click="edit()">{{ 'EDIT' | translate }}</button>
+                        <a ng-if="model.deletedAt" class="pull-right btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="activeModel($event)" permission permission-only="roles.SUPERADMIN">{{ 'ACTIVATE' | translate }}</a>
+                        <a ng-if="!model.deletedAt" class="pull-right btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="inactiveModel($event)" permission permission-only="roles.SUPERADMIN">{{ 'INACTIVATE' | translate }}</a>
                     </div>
                 </div>
 

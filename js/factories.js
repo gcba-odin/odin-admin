@@ -32,23 +32,21 @@
                 //return configs;
             },
             statuses: function(scope) {
+                scope.statuses = {
+                    default: 'nWRhpRV',
+                    published: 'qWRhpRV',
+                    unpublished: 'rWRhpRV',
+                    underReview: 'oWRhpRV',
+                    rejected: 'pWRhpRV',
+                    draft: 'nWRhpRV'
+                };
                 var configs = rest().get({
-                    type: 'configs'
-                }, function() {
-                    scope.statuses = {
-                        default: '',
-                        published: '',
-                        unpublished: ''
-                    };
-                    angular.forEach(configs.data, function(element) {
-                        if (element.key == 'defaultStatus') {
-                            scope.statuses.default = element.value;
-                        } else if (element.key == 'publishedStatus') {
-                            scope.statuses.published = element.value;
-                        } else if (element.key == 'unpublishedStatus') {
-                            scope.statuses.unpublished = element.value;
-                        }
-                    });
+                    type: 'configs',
+                    params: 'key=defaultStatus'
+                }, function(resp) {
+                    if(!!resp.data && !!resp.data[0]) {
+                        scope.statuses.default = resp.data[0].value;
+                    }
                 });
             },
         }
@@ -166,6 +164,12 @@
             },
             deactivateList: function(item, scope) {
                 var item = item.target.dataset;
+                Alertify.set({
+                    labels: {
+                        ok: 'Ok',
+                        cancel: 'Cancelar'
+                    }
+                });
                 Alertify.confirm(item.textdelete).then(
                     function onOk() {
                         rest().deactivate({
@@ -210,6 +214,12 @@
             },
             deactivateView: function(item, scope) {
                 var item = item.target.dataset;
+                Alertify.set({
+                    labels: {
+                        ok: 'Ok',
+                        cancel: 'Cancelar'
+                    }
+                });
                 Alertify.confirm(item.textdelete).then(
                     function onOk() {
                         rest().deactivate({
@@ -238,6 +248,7 @@
                 this.loadAll(scope);
             },
             loadAll: function(scope, callback) {
+                var conditions = '';
                 var pm = '';
                 if (!!scope.filtersInclude) {
                     pm += 'include=';
@@ -249,7 +260,8 @@
                             pm += ',';
                         }
                     });
-                 }
+                }
+                
                 if(!!scope.parameters && !!scope.parameters.orderBy) {
                     orderBy = scope.parameters.orderBy;
                 }
@@ -257,10 +269,14 @@
                 if(!!scope.parameters && !!scope.parameters.sort) {
                     sort = scope.parameters.sort;
                 }
+                
+                if(!!scope.parameters && !!scope.parameters.conditions) {
+                    conditions = scope.parameters.conditions;
+                }
                     
                 scope.data = rest().get({
                     type: scope.type,
-                    params: pm+"orderBy="+orderBy+"&sort="+ sort + scope.q
+                    params: pm + "orderBy="+orderBy+"&sort="+ sort + conditions + scope.q
                 }, function(resp) {
                     if(!!callback)
                         callback(true);
@@ -578,24 +594,66 @@
                         responseError: handError
                     }
                 },
-                'update': {
-                    url: $url + "/:id",
-                    method: 'PUT',
-                    headers: {
-                        'x-admin-authorization': token,
-                    },
-                    interceptor: {
-                        responseError: handError
-                    },
-                    transformResponse: function(data) {
-                        if (data) {
-                            if (!!JSON.parse(data).message) {
-                                flashService.showSuccess(JSON.parse(data).message);
-                            }
+                    reject: {
+                        url: $url + "/:id/reject",
+                        method: 'PATCH',
+                        headers: {
+                            'x-admin-authorization': token,
+                        },
+                        transformResponse: function(data) {
                             $rootScope.progressbar.complete();
                             return angular.fromJson(data);
-                        } else {
+                        },
+                        interceptor: {
+                            responseError: handError
+                        }
+                    },
+                    sendReview: {
+                        url: $url + "/:id/review",
+                        method: 'PATCH',
+                        headers: {
+                            'x-admin-authorization': token,
+                        },
+                        transformResponse: function(data) {
                             $rootScope.progressbar.complete();
+                            return angular.fromJson(data);
+                        },
+                        interceptor: {
+                            responseError: handError
+                        }
+                    },
+                    cancel: {
+                        url: $url + "/:id/cancel",
+                        method: 'PATCH',
+                        headers: {
+                            'x-admin-authorization': token,
+                        },
+                        transformResponse: function(data) {
+                            $rootScope.progressbar.complete();
+                            return angular.fromJson(data);
+                        },
+                        interceptor: {
+                            responseError: handError
+                        }
+                    },
+                    'update': {
+                        url: $url + "/:id",
+                        method: 'PUT',
+                        headers: {
+                            'x-admin-authorization': token,
+                        },
+                        interceptor: {
+                            responseError: handError
+                        },
+                        transformResponse: function(data) {
+                            if (data) {
+                                if (!!JSON.parse(data).message) {
+                                    flashService.showSuccess(JSON.parse(data).message);
+                                }
+                                $rootScope.progressbar.complete();
+                                return angular.fromJson(data);
+                            } else {
+                                $rootScope.progressbar.complete();
                         }
                     }
                 }
@@ -613,10 +671,6 @@
                     $location.path('login');
                 }
             }
-            var $http = $http || $injector.get("$http");
-            $http(e.config);
-
-            //flashService.showError(" Route: <a target='_blank' href='"+e.config.url+"'>"+e.config.url+"</a> <br>"+params);
         }
 
         function validationErrors(data) {

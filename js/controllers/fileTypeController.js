@@ -67,9 +67,8 @@ function FileTypeListController($scope, $location, rest, $rootScope, Flash, Aler
         usSpinnerService.spin('spinner');
         $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-        
-        if(!!$scope.parameters.conditions) {
-            $scope.q += $scope.parameters.conditions;
+        if(!!$scope.parameters.conditions_page) {
+            $scope.q += $scope.parameters.conditions_page;
         }
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
@@ -138,72 +137,84 @@ function FileTypeViewController($scope, Flash, rest, $routeParams, $location, mo
             usSpinnerService.stop('spinner');
             modelService.reloadPage();
         });
+    }
+    
+        loadModel();
+    
+    $scope.publish = function (id, type) {
+        usSpinnerService.spin('spinner');
+
+        rest().publish({
+            id: id,
+            type: type,
+        }, {}, function (resp) {
+            usSpinnerService.stop('spinner');
+            loadModel();
+            //var url = '/' + $scope.type;
+            // $location.path(url);
+        }, function (error) {
+            usSpinnerService.stop('spinner');
+            modelService.reloadPage();
+        });
     };
-   
-   loadModel();
-     
-     $scope.publish = function (id, type) {
-         usSpinnerService.spin('spinner');
- 
-         rest().publish({
-             id: id,
-             type: type,
-         }, {}, function (resp) {
-             usSpinnerService.stop('spinner');
-             loadModel();
-             //var url = '/' + $scope.type;
-             // $location.path(url);
-         }, function (error) {
-             usSpinnerService.stop('spinner');
-             modelService.reloadPage();
-         });
-     };
- 
-     $scope.unPublish = function (id, type) {
-         var text_type = (type == 'files') ? 'recurso' : '';
-         Alertify.confirm('¿Está seguro que quiere despublicar este ' + text_type + '?').then(
-             function onOk() {
-                 usSpinnerService.spin('spinner');
- 
-                 rest().unpublish({
-                     type: type,
-                     id: id
-                 }, {}, function (resp) {
-                     usSpinnerService.stop('spinner');
-                     loadModel();
-                     //var url = '/' + $scope.type;
-                     // $location.path(url);
-                 }, function (error) {
-                     usSpinnerService.stop('spinner');
-                     modelService.reloadPage();
-                 });
-             },
-             function onCancel() {
-                 return false;
-             }
-         );
-     };
-     
-     $scope.deleteResource = function (id, type) {
-         Alertify.confirm('¿Está seguro que quiere borrar este recurso?').then(
-             function onOk() {
-                 usSpinnerService.spin('spinner');
-                 rest().delete({
-                     type: type,
-                     id: id
-                 }, function (resp) {
-                     usSpinnerService.stop('spinner');
-                     $window.location.reload();
-                 }, function (error) {
-                     usSpinnerService.stop('spinner');
-                     modelService.reloadPage();
-                 });
-             },
-             function onCancel() {
-                 return false;
-             }
-         );
-     };
+
+    $scope.unPublish = function (id, type) {
+        var text_type = (type == 'files') ? 'recurso' : '';
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm('¿Está seguro que quiere despublicar este ' + text_type + '?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().unpublish({
+                    type: type,
+                    id: id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
+                    //var url = '/' + $scope.type;
+                    // $location.path(url);
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+    
+    $scope.deleteResource = function (id, type) {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm('¿Está seguro que quiere borrar este recurso?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+                rest().delete({
+                    type: type,
+                    id: id
+                }, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    $window.location.reload();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
 }
 
 function FileTypeCreateController($scope, $http, rest, model, Flash, $location, modelService, Alertify, usSpinnerService) {
@@ -228,11 +239,11 @@ function FileTypeCreateController($scope, $http, rest, model, Flash, $location, 
             }, function(error) {
                 usSpinnerService.stop('spinner');
                 
-                //if(error.data.data && (error.data.data.name || error.data.data.slug)) {
+                if(error.data.data && (error.data.data.name || error.data.data.slug)) {
                     Alertify.alert('El tipo de archivo que quiere guardar ya existe.');
-                //} else {
-                //    Alertify.alert('Hubo un error al crear el tipo de archivo.');
-                //}
+                } else {
+                    Alertify.alert('Hubo un error al crear el tipo de archivo.');
+                }
             });
         }
     };
@@ -262,11 +273,11 @@ function FileTypeEditController($scope, $http, Flash, rest, $routeParams, model,
             }, function(error) {
                 usSpinnerService.stop('spinner');
 
-                //if(error.data.data && (error.data.data.name || error.data.data.slug)) {
+                if(error.data.data && (error.data.data.name || error.data.data.slug)) {
                     Alertify.alert('El tipo de archivo que quiere guardar ya existe.');
-                //} else {
-                //    Alertify.alert('Hubo un error al editar el tipo de archivo.');
-                //}
+                } else {
+                    Alertify.alert('Hubo un error al editar el tipo de archivo.');
+                }
             });
         }
     };

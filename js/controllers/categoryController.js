@@ -25,7 +25,7 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
             multiple: true
         }];
 
-    $scope.filtersInclude = ['datasets'];
+    $scope.filtersInclude = ['datasets', 'subcategories'];
 
     $scope.inactiveModel = function(item) {
         modelService.deactivateList(item, $scope);
@@ -36,7 +36,7 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
     };
 
     $scope.confirmDelete = function(item) {
-        modelService.confirmDelete(item, {});
+        modelService.confirmDelete(item, {}); 
     };
 
     $scope.edit = function(model) {
@@ -54,18 +54,16 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
 
     $scope.config_key = 'adminPagination';
     ////factory configs
-    configs.findKey($scope, function (resp) {
+    configs.findKey($scope, function(resp) {
         if (!!resp.data[0] && !!resp.data[0].value) {
             $scope.parameters.limit = resp.data[0].value;
         }
 
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-        if(!!$scope.parameters.conditions) {
-            $scope.q += $scope.parameters.conditions;
-        }
+        
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
-            if(!resp) {
+            if (!resp) {
                 modelService.reloadPage();
             }
         });
@@ -75,7 +73,9 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
         usSpinnerService.spin('spinner');
         $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-        
+        if(!!$scope.parameters.conditions_page) {
+            $scope.q += $scope.parameters.conditions_page;
+        }
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if(!resp) {
@@ -99,7 +99,7 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
         
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
-            if(!resp) {
+            if (!resp) {
                 modelService.reloadPage();
             }
         });
@@ -117,6 +117,35 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
 
     $scope.activeModel = function(item) {
         modelService.restoreView($scope, item);
+    };
+
+    $scope.confirmDelete = function(item) {
+        // modelService.confirmDelete(item, {});
+        var item = item.target.dataset;
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm(item.textdelete).then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+                rest().delete({
+                    id: item.id,
+                    type: 'categories'
+                }, function(resp) {
+                    usSpinnerService.stop('spinner');
+                    $window.location.reload();
+                }, function(error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
     };
 
     $scope.edit = function(model) {
@@ -138,8 +167,13 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type,
-            params: 'include=datasets'
+            params: 'include=subcategories,datasets'
         }, function() {
+            var subcategories = [];
+            for (var i = 0; i < $scope.model.subcategories.length; i++) {
+                subcategories.push('<span class="label label-primary">' + $scope.model.subcategories[i].name + '</span>')
+            }
+            $scope.subcategoriesNames = subcategories.join(" - ");
             usSpinnerService.stop('spinner');
         }, function(error) {
             usSpinnerService.stop('spinner');
@@ -165,9 +199,15 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
             modelService.reloadPage();
         });
     };
- 
+
     $scope.unPublish = function (id, type) {
         var text_type = (type == 'datasets') ? 'dataset' : '';
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere despublicar este ' + text_type + '?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');
@@ -190,8 +230,14 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
             }
         );
     };
-     
+
     $scope.deleteResource = function (id, type) {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere borrar este dataset?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');
@@ -213,7 +259,7 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
     };
 }
 
-function CategoryCreateController($scope, rest, model, Flash, $location, $rootScope, Alertify, modelService, Upload, usSpinnerService) {
+function CategoryCreateController($scope, rest, $routeParams, model, Flash, $location, $rootScope, Alertify, modelService, Upload, usSpinnerService) {
     modelService.initService("Category", "categories", $scope);
 
     $scope.fileModel = [];
@@ -227,7 +273,7 @@ function CategoryCreateController($scope, rest, model, Flash, $location, $rootSc
 
     $scope.clearImage = function() {
         image = null;
-        for (var att in  $scope.form.uploadImage.$error) {
+        for (var att in $scope.form.uploadImage.$error) {
             if ($scope.form.uploadImage.$error.hasOwnProperty(att)) {
                 $scope.form.uploadImage.$setValidity(att, true);
             }
@@ -255,6 +301,7 @@ function CategoryCreateController($scope, rest, model, Flash, $location, $rootSc
                 'description': $scope.model.description,
                 'color': $scope.model.color,
                 'uploadImage': $scope.model.uploadImage,
+                'parent': $scope.model.parent
             };
 
             Upload.upload({
@@ -262,21 +309,20 @@ function CategoryCreateController($scope, rest, model, Flash, $location, $rootSc
                 data: data
             }).then(function(resp) {
                 usSpinnerService.stop('spinner');
-                Alertify.success('Se ha creado la categoría con éxito');
+                //Alertify.success('Se ha creado la categoría con éxito');
                 $location.url('/categories/' + resp.data.data.id + '/view');
             }, function(error) {
                 usSpinnerService.stop('spinner');
 
-                //if(error.data.data && (error.data.data.name || error.data.data.slug)) {
+                if(error.data.data && (error.data.data.name || error.data.data.slug)) {
                     Alertify.alert('El nombre de la categoría ya existe.');
-                //} else {
-                //    Alertify.alert('Ha ocurrido un error al crear la categoría.');
-                //}
-                // alert(resp.status);
+                } else {
+                    Alertify.alert('Ha ocurrido un error al crear la categoría.');
+                }
             }, function(evt) {
                 usSpinnerService.stop('spinner');
-//                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-//                $scope.uploadImageProgress = progressPercentage;
+                //                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                //                $scope.uploadImageProgress = progressPercentage;
             });
         } else {
             usSpinnerService.stop('spinner');
@@ -311,6 +357,9 @@ function CategoryCreateController($scope, rest, model, Flash, $location, $rootSc
         placeholder: 'Seleccione un color',
     };
 
+    if (!angular.isUndefined($routeParams.category)) {
+        $scope.model.parent = $routeParams.category;
+    }
 }
 
 function valorCheckbox(valor) {
@@ -334,7 +383,7 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
 
     $scope.clearImage = function() {
         image = null;
-        for (var att in  $scope.form.uploadImage.$error) {
+        for (var att in $scope.form.uploadImage.$error) {
             if ($scope.form.uploadImage.$error.hasOwnProperty(att)) {
                 $scope.form.uploadImage.$setValidity(att, true);
             }
@@ -367,7 +416,9 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
 
             if (image != null) {
                 data.uploadImage = $scope.model.uploadImage;
-            }
+            } /*else {
+                data.uploadImage = null; 
+            }*/
 
             Upload.upload({
                 url: $rootScope.url + "/categories/" + $scope.model.id,
@@ -375,21 +426,20 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
                 data: data
             }).then(function(resp) {
                 usSpinnerService.stop('spinner');
-                Alertify.success('Se ha editado la categoría con éxito');
+                //Alertify.success('Se ha editado la categoría con éxito');
                 $location.url('/categories/' + resp.data.data.id + '/view');
             }, function(error) {
                 usSpinnerService.stop('spinner');
 
-                //if(error.data.data && (error.data.data.name || error.data.data.slug)) {
+                if(error.data.data && (error.data.data.name || error.data.data.slug)) {
                     Alertify.alert('El nombre de la categoría ya existe.');
-                //} else {
-                //    Alertify.alert('Ha ocurrido un error al editar la categoría.');
-                //}
-                // alert(resp.status);
+                } else {
+                    Alertify.alert('Ha ocurrido un error al editar la categoría.');
+                }
             }, function(evt) {
                 usSpinnerService.stop('spinner');
-//                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-//                $scope.uploadImageProgress = progressPercentage;
+                //                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                //                $scope.uploadImageProgress = progressPercentage;
             });
         } else {
             usSpinnerService.stop('spinner');

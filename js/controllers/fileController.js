@@ -1,13 +1,14 @@
 var app = angular.module('odin.fileControllers', ['ngFileUpload']);
 
-app.factory('model', function($resource) {
+app.factory('model', function ($resource) {
     return $resource();
 });
 
-
-function FileListController($scope, $location, rest, $rootScope, Flash, Alertify, $routeParams, modelService, configs, usSpinnerService) {
+function FileListController($scope, $location, rest, $rootScope, Flash, Alertify, $routeParams, modelService, configs, usSpinnerService, underReview, ROLES) {
     usSpinnerService.spin('spinner');
     modelService.initService("File", "files", $scope);
+    //factory configs
+    configs.statuses($scope);
 
     $scope.parameters = {
         skip: 0,
@@ -17,28 +18,51 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
         sort: 'DESC'
     };
 
+    $scope.underReview = underReview;
+    
     $scope.filtersView = [{
-        name: 'Estado',
-        model: 'statuses',
-        key: 'name',
-        modelInput: 'status',
-        multiple: true
-    }, {
         name: 'Autor',
         model: 'users',
         key: 'username',
         modelInput: 'createdBy',
+        multiple: true,
+        condition: ''
+    }, {
+        name: 'Tipo',
+        model: 'filetypes',
+        key: 'name',
+        modelInput: 'type',
         multiple: true
     }];
-    $scope.confirmDelete = function(item) {
+
+    if (underReview) {
+        $scope.parameters.conditions = '&status=' + $scope.statuses.underReview;
+        $scope.filtersView[0].underReview = true;
+    } else {
+        $scope.parameters.conditions = '';
+        if(!!$rootScope.adminglob.currentUser && $rootScope.adminglob.currentUser.role === ROLES.GUEST) {
+            var current_us = $rootScope.adminglob.currentUser.user;
+            $scope.parameters.conditions = '&createdBy=' + current_us + '&owner=' + current_us;
+        }
+        
+        $scope.filtersView.push({
+            name: 'Estado',
+            model: 'statuses',
+            key: 'name',
+            modelInput: 'status',
+            multiple: true
+        });
+    }
+
+    $scope.confirmDelete = function (item) {
         modelService.confirmDelete(item);
     }
 
-    $scope.deleteModel = function(model) {
+    $scope.deleteModel = function (model) {
         modelService.delete($scope, model);
     };
 
-    $scope.edit = function(model) {
+    $scope.edit = function (model) {
         var type = $scope;
 
         if (!!model.restService || !!model.soapService) {
@@ -49,20 +73,20 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
         modelService.edit(type, model);
     }
 
-    $scope.view = function(model) {
+    $scope.view = function (model) {
         modelService.view($scope, model);
     }
 
     $scope.config_key = 'adminPagination';
     ////factory configs
-    configs.findKey($scope, function(resp) {
+    configs.findKey($scope, function (resp) {
         if (!!resp.data[0] && !!resp.data[0].value) {
             $scope.parameters.limit = resp.data[0].value;
         }
 
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-
-        modelService.loadAll($scope, function(resp) {
+        
+        modelService.loadAll($scope, function (resp) {
             usSpinnerService.stop('spinner');
             if (!resp) {
                 modelService.reloadPage();
@@ -70,14 +94,14 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
         });
     });
 
-    $scope.paging = function(event, page, pageSize, total) {
+    $scope.paging = function (event, page, pageSize, total) {
         usSpinnerService.spin('spinner');
         $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-        if (!!$scope.parameters.conditions) {
-            $scope.q += $scope.parameters.conditions;
+        if(!!$scope.parameters.conditions_page) {
+            $scope.q += $scope.parameters.conditions_page;
         }
-        modelService.loadAll($scope, function(resp) {
+        modelService.loadAll($scope, function (resp) {
             usSpinnerService.stop('spinner');
             if (!resp) {
                 modelService.reloadPage();
@@ -107,31 +131,50 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
     };
 }
 
-function FileViewController($scope, Flash, rest, $routeParams, $location, modelService, $sce, Alertify, usSpinnerService, $window, configs) {
+function FileViewController($scope, Flash, rest, $routeParams, $location, modelService, $sce, Alertify, usSpinnerService, $window, configs, $filter) {
     usSpinnerService.spin('spinner');
     modelService.initService("File", "files", $scope);
-    $scope.getHtml = function(html) {
+    $scope.getHtml = function (html) {
         return $sce.trustAsHtml(html);
     };
+    $scope.view_ok = true;
 
-    var loadModel = function() {
+    var loadModel = function () {
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type,
             //params: "include=tags"
-        }, function() {
+        }, function () {
             $scope.model.resources = rest().resources({
                 id: $scope.model.id,
                 type: $scope.type
+            }, function(resp) {
+                if(!!resp.data.maps) {
+                    var maps_guest = $filter('filterIfGuestUser')(resp.data.maps);
+                    if(maps_guest.length == 0) {
+                        $scope.view_ok = false;
+                    }
+                }
+                if(!!resp.data.charts) {
+                    var charts_guest = $filter('filterIfGuestUser')(resp.data.charts);
+                    if(charts_guest.length == 0) {
+                        $scope.view_ok = false;
+                    }
+                }
             });
+            
+            $scope.model.kml = false;
+            if($.inArray('application/vnd.google-earth.kml+xml', $scope.model.type.mimetype) == 0)
+                $scope.model.kml = true;
+            
             usSpinnerService.stop('spinner');
-        }, function(error) {
+        }, function (error) {
             usSpinnerService.stop('spinner');
             modelService.reloadPage();
         });
     };
 
-    $scope.edit = function(model) {
+    $scope.edit = function (model) {
         var type = $scope;
 
         if (!!model.restService || !!model.soapService) {
@@ -145,38 +188,131 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
     //factory configs
     configs.statuses($scope);
 
-    $scope.publish = function(id, type) {
+    $scope.publish = function (id, type) {
         usSpinnerService.spin('spinner');
 
         rest().publish({
             id: id,
             type: type,
-        }, {}, function(resp) {
+        }, {}, function (resp) {
             usSpinnerService.stop('spinner');
             loadModel();
             //var url = '/' + $scope.type;
             // $location.path(url);
-        }, function(error) {
+        }, function (error) {
             usSpinnerService.stop('spinner');
             modelService.reloadPage();
         });
     };
 
-    $scope.unPublish = function(id, type) {
-        var text_type = (type == 'charts') ? 'gráfico' : (type == 'maps') ? 'mapa' : 'archivo';
+    $scope.unPublish = function (id, type) {
+        var text_type = (type == 'charts') ? 'gráfico' : (type == 'maps') ? 'mapa' : 'recurso';
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere despublicar este ' + text_type + '?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');
 
                 rest().unpublish({
-                    type: $scope.type,
-                    id: $scope.model.id
-                }, {}, function(resp) {
+                    type: type,
+                    id: id
+                }, {}, function (resp) {
                     usSpinnerService.stop('spinner');
                     loadModel();
                     //var url = '/' + $scope.type;
                     // $location.path(url);
-                }, function(error) {
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+
+    $scope.reject = function (id, type) {
+        var text_type = (type == 'charts') ? 'gráfico' : (type == 'maps') ? 'mapa' : 'recurso';
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm('¿Está seguro que quiere rechazar este ' + text_type + '?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().reject({
+                    type: type,
+                    id: id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+    
+    $scope.sendReview = function (id, type) {
+        var text_type = (type == 'charts') ? 'gráfico' : (type == 'maps') ? 'mapa' : 'recurso';
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm('¿Está seguro que quiere enviar a revisión este ' + text_type + '?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().sendReview({
+                    type: type,
+                    id: id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+    
+    $scope.cancel = function (id, type) {
+        var text_type = (type == 'charts') ? 'gráfico' : (type == 'maps') ? 'mapa' : 'recurso';
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm('¿Está seguro que quiere cancelar este ' + text_type + '?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().cancel({
+                    type: type,
+                    id: id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
+                }, function (error) {
                     usSpinnerService.stop('spinner');
                     modelService.reloadPage();
                 });
@@ -189,18 +325,24 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
 
     loadModel();
 
-    $scope.confirmDelete = function(item) {
-        Alertify.confirm('¿Está seguro que quiere borrar este archivo?').then(
+    $scope.confirmDelete = function (item) {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm('¿Está seguro que quiere borrar este recurso?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');
                 rest().delete({
                     type: $scope.type,
                     id: $scope.model.id
-                }, function(resp) {
+                }, function (resp) {
                     usSpinnerService.stop('spinner');
                     var url = "/" + $scope.type;
                     $location.path(url);
-                }, function(error) {
+                }, function (error) {
                     usSpinnerService.stop('spinner');
                     modelService.reloadPage();
                 });
@@ -211,17 +353,23 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
         );
     };
 
-    $scope.deleteResource = function(id, type) {
+    $scope.deleteResource = function (id, type) {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere borrar este recurso?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');
                 rest().delete({
                     type: type,
                     id: id
-                }, function(resp) {
+                }, function (resp) {
                     usSpinnerService.stop('spinner');
                     $window.location.reload();
-                }, function(error) {
+                }, function (error) {
                     usSpinnerService.stop('spinner');
                     modelService.reloadPage();
                 });
@@ -244,27 +392,27 @@ function FilePreviewController($scope, Flash, rest, $routeParams, $location, mod
     $scope.model = rest().findOne({
         id: $routeParams.id,
         type: $scope.type
-    }, function(resp) {
+    }, function (resp) {
         if (resp.type.api) {
             $scope.model.contents = rest().contents({
                 id: $scope.model.id,
                 type: $scope.type,
                 params: 'limit=' + $scope.params.limit
-            }, function() {
+            }, function () {
                 usSpinnerService.stop('spinner');
-            }, function(error) {
+            }, function (error) {
                 usSpinnerService.stop('spinner');
                 modelService.reloadPage();
             });
         } else {
             usSpinnerService.stop('spinner');
         }
-    }, function(error) {
+    }, function (error) {
         usSpinnerService.stop('spinner');
         modelService.reloadPage();
     });
 
-    $scope.paging = function(event, page, pageSize, total, resource) {
+    $scope.paging = function (event, page, pageSize, total, resource) {
         usSpinnerService.spin('spinner');
         var skip = (page - 1) * $scope.params.limit;
         //$scope.q = "&skip=" + skip + "&limit=" + $scope.limit;
@@ -272,9 +420,9 @@ function FilePreviewController($scope, Flash, rest, $routeParams, $location, mod
             id: resource.id,
             type: 'files',
             params: "skip=" + skip + "&limit=" + $scope.params.limit
-        }, function() {
+        }, function () {
             usSpinnerService.stop('spinner');
-        }, function(error) {
+        }, function (error) {
             usSpinnerService.stop('spinner');
             modelService.reloadPage();
         });
@@ -306,7 +454,7 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
     usSpinnerService.spin('spinner');
     modelService.initService("File", "files", $scope);
 
-    $scope.clearUpload = function() {
+    $scope.clearUpload = function () {
         $scope.fileModel.name = "";
         $scope.fileModel.type = "";
         $scope.fileModel.mimetype = "";
@@ -319,7 +467,7 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
     var hard_file = null;
     var f_types = [];
 
-    $scope.beforeChange = function($files) {
+    $scope.beforeChange = function ($files) {
         $scope.filter = true;
         $scope.fileModel.name = $files[0].name;
         $scope.fileModel.mimetype = $files[0].type;
@@ -341,23 +489,27 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
             $scope.filter = false;
             hard_file = $files[0];
             $scope.fileModel.type = 'fa-file-text-o';
+        } else if (type == "kml") {
+            $scope.filter = false;
+            hard_file = $files[0];
+            $scope.fileModel.type = 'fa-file-text-o';
         } else {
             $scope.fileModel.type = 'fa-file-text-o';
         }
     }
 
-    var datasetHasLayout = function(id, callback) {
+    var datasetHasLayout = function (id, callback) {
         var dataset_file = rest().findOne({
             id: id,
             type: 'datasets',
             params: 'include=files'
-        }, function() {
+        }, function () {
             var datab = {
                 ret: false,
                 file: {}
             };
             if (!!dataset_file.files) {
-                angular.forEach(dataset_file.files, function(element) {
+                angular.forEach(dataset_file.files, function (element) {
                     if (element.layout) {
                         datab.ret = true;
                         datab.file.id = element.id;
@@ -377,6 +529,7 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
     $scope.model.uploadFile = '';
     $scope.model.updated = false;
     $scope.model.layout = false;
+    $scope.model.status = $scope.statuses.default;
 
     $scope.steps = [];
     $scope.steps[0] = "active";
@@ -405,18 +558,18 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
 
     // get organization by default on config
     $scope.config_key = 'defaultOrganization';
-    configs.findKey($scope, function(resp) {
+    configs.findKey($scope, function (resp) {
         if (!!resp.data[0] && !!resp.data[0].value) {
             rest().findOne({
                 type: 'organizations',
                 id: resp.data[0].value
-            }, function(organization) {
+            }, function (organization) {
                 $scope.model.organization = {
                     'id': resp.data[0].value,
                     'name': organization.name
                 }
             });
-            
+
         }
     });
 
@@ -431,7 +584,7 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
     }
 
     $scope.fileModel = []
-    $scope.checkstep = function(step) {
+    $scope.checkstep = function (step) {
         if ($scope.model.uploadFile == null && step == 1 && $scope.fileModel.name && $scope.filter) {
             var text_mimetype = '';
             if (!!$scope.fileModel.mimetype && $scope.fileModel.mimetype != '') {
@@ -447,11 +600,11 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
             Alertify
                 .confirm("Archivo no permitido. Revise que el tipo del archivo" + text_mimetype + " que desea crear se encuentre en la sección 'Tipos de Archivos'.")
 
-            .then(
+                .then(
                 function onOk() {
                     $location.path('filetypes');
                 }
-            );
+                );
         } else {
             if (($scope.fileModel.name && step == 1 && ($scope.model.uploadFile != null || hard_file != null)) || ($scope.fileModel.name && step == 2 && $scope.form.$valid && ($scope.model.uploadFile != null || hard_file != null)) || step == 0) {
 
@@ -465,7 +618,7 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
                     $scope.steps[2] = "undone";
                 } else {
                     if ($scope.model.layout) {
-                        datasetHasLayout($scope.model.dataset, function(resp) {
+                        datasetHasLayout($scope.model.dataset, function (resp) {
                             if (resp.ret) {
                                 Alertify.set({
                                     labels: {
@@ -476,7 +629,7 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
                                 Alertify
                                     .confirm("El dataset seleccionado ya cuenta con una Guía de Datos. El archivo es <a target='_blank' href='#/files/" + resp.file.id + "/view'>" + resp.file.name + "</a><br>¿Desea cambiarlo? Los archivos no se sobreescribirán.")
 
-                                .then(
+                                    .then(
                                     function onOk() {
                                         //nothing
                                     },
@@ -484,7 +637,7 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
                                         $scope.model.layout = false;
                                         //$scope.checkstep(step - 1);
                                     }
-                                );
+                                    );
                             }
                         });
                     }
@@ -498,7 +651,7 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
             }
         }
     }
-    $scope.step = function(step) {
+    $scope.step = function (step) {
         if (($scope.fileModel.name && step == 1) || ($scope.fileModel.name && step == 2) || step == 0 && ($scope.model.uploadFile != null || hard_file != null)) {
             var step = $scope.steps[step];
             if (step == "undone") {
@@ -512,7 +665,7 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
         }
 
     }
-    $scope.getHtml = function(html) {
+    $scope.getHtml = function (html) {
         return $sce.trustAsHtml(html);
     };
 
@@ -560,6 +713,12 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
 
         if ($scope.statuses.default == $scope.statuses.published) {
             data.publishedAt = new Date();
+        } else if($scope.statuses.default == $scope.statuses.unpublished) {
+            data.unPublishedAt = new Date();
+        } else if($scope.statuses.default == $scope.statuses.rejected) {
+            data.rejectedAt = new Date();
+        } else if($scope.statuses.default == $scope.statuses.underReview) {
+            data.reviewedAt = new Date();
         }
 
         if ($scope.model.gatheringDate) {
@@ -583,12 +742,12 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
             usSpinnerService.stop('spinner');
             // alert(resp.status);
             $scope.unsave = true;
-            //if (error.data.data && error.data.data.name) {
-                Alertify.alert('El nombre del archivo ya existe.');
-            //} else {
-            //    Alertify.alert('Ha ocurrido un error al crear el archivo.');
-            //}
-        }, function(evt) {
+            if (error.data.data && error.data.data.name) {
+                Alertify.alert('El nombre del recurso ya existe.');
+            } else {
+                Alertify.alert('Ha ocurrido un error al crear el recurso.');
+            }
+        }, function (evt) {
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
             $scope.uploadImageProgress = progressPercentage;
             $scope.unsave = true;
@@ -602,7 +761,7 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
 
     $scope.inputs = [];
     var i = 0;
-    $scope.addInput = function() {
+    $scope.addInput = function () {
         if ($scope.model.items.length < 10) {
             var newItemNo = $scope.model.items.length + 1;
             $scope.model.items.push({
@@ -611,29 +770,29 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
         }
 
     }
-    $scope.deleteIndexInput = function(index, field) {
+    $scope.deleteIndexInput = function (index, field) {
         $scope.model.items.splice(index, 1);
     }
 
-    $scope.increment = function(a) {
+    $scope.increment = function (a) {
         return a + 1;
     }
 
-    $scope.itemName = function(a) {
+    $scope.itemName = function (a) {
         return "optional" + (parseInt(a) + 1);
     }
 
-    var loadFileTypes = function() {
+    var loadFileTypes = function () {
         var fileTypes = rest().get({
             type: 'fileTypes'
-        }, function() {
+        }, function () {
 
-            angular.forEach(fileTypes.data, function(element) {
+            angular.forEach(fileTypes.data, function (element) {
                 f_types.push(element.mimetype);
             });
             $scope.fileTypes = f_types.toString();
             usSpinnerService.stop('spinner');
-        }, function() {
+        }, function () {
             usSpinnerService.stop('spinner');
             modelService.reloadPage();
         });
@@ -643,7 +802,7 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
 
 }
 
-function FileEditController($rootScope, $scope, flashService, Flash, rest, $routeParams, model, $location, modelService, $sce, Upload, usSpinnerService, Alertify, $window, configs, Idle, session_timeout) {
+function FileEditController($rootScope, $scope, flashService, Flash, rest, $routeParams, model, $location, modelService, $sce, Upload, usSpinnerService, Alertify, $window, configs, Idle, session_timeout, ROLES) {
     $scope.today = moment().format('YYYY-MM-DD');
     usSpinnerService.spin('spinner');
     modelService.initService("File", "files", $scope);
@@ -667,24 +826,24 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
 
     $scope.fileModel = [];
 
-    $scope.clearUpload = function() {
+    $scope.clearUpload = function () {
         $scope.fileModel.name = "";
         $scope.fileModel.type = "";
         $scope.fileModel.mimetype = "";
     }
 
-    var datasetHasLayout = function(id, callback) {
+    var datasetHasLayout = function (id, callback) {
         var dataset_file = rest().findOne({
             id: id,
             type: 'datasets',
             params: 'include=files'
-        }, function() {
+        }, function () {
             var datab = {
                 ret: false,
                 file: {}
             };
             if (!!dataset_file.files) {
-                angular.forEach(dataset_file.files, function(element) {
+                angular.forEach(dataset_file.files, function (element) {
                     if (($scope.model.id != element.id) && (element.layout)) {
                         datab.ret = true;
                         datab.file.id = element.id;
@@ -696,7 +855,7 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
         });
     };
 
-    $scope.beforeChange = function($files) {
+    $scope.beforeChange = function ($files) {
         $scope.mostrar = false;
         $scope.filter = true;
         $scope.fileModel.name = $files[0].name;
@@ -719,13 +878,17 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
             $scope.filter = false;
             hard_file = $files[0];
             $scope.fileModel.type = 'fa-file-text-o';
+        } else if (type == "kml") {
+            $scope.filter = false;
+            hard_file = $files[0];
+            $scope.fileModel.type = 'fa-file-text-o';
         } else {
             $scope.fileModel.type = 'fa-file-text-o';
         }
         $scope.mostrar = true;
     }
 
-    $scope.checkstep = function(step) {
+    $scope.checkstep = function (step) {
         if ($scope.model.uploadFile == null && step == 1 && $scope.fileModel.name && $scope.filter && $scope.mostrar) {
             var text_mimetype = '';
             if (!!$scope.fileModel.mimetype && $scope.fileModel.mimetype != '') {
@@ -741,11 +904,11 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
             Alertify
                 .confirm("Archivo no permitido. Revise que el tipo del archivo" + text_mimetype + " que desea crear se encuentre en la sección 'Tipos de Archivos'.")
 
-            .then(
+                .then(
                 function onOk() {
                     $location.path('filetypes');
                 }
-            );
+                );
         } else {
             if (($scope.fileModel.name && step == 1 && ((!$scope.mostrar) || ($scope.mostrar && ($scope.model.uploadFile != null || hard_file != null)))) || ($scope.fileModel.name && step == 2 && ((!$scope.mostrar) || ($scope.mostrar && ($scope.model.uploadFile != null || hard_file != null)))) || step == 0) {
 
@@ -759,7 +922,7 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
                     $scope.steps[2] = "undone";
                 } else {
                     if ($scope.model.layout) {
-                        datasetHasLayout($scope.model.dataset, function(resp) {
+                        datasetHasLayout($scope.model.dataset, function (resp) {
                             if (resp.ret) {
                                 Alertify.set({
                                     labels: {
@@ -770,7 +933,7 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
                                 Alertify
                                     .confirm("El dataset seleccionado ya cuenta con una Guía de Datos. El archivo es <a target='_blank' href='#/files/" + resp.file.id + "/view'>" + resp.file.name + "</a><br>¿Desea cambiarlo? Los archivos no se sobreescribirán.")
 
-                                .then(
+                                    .then(
                                     function onOk() {
                                         //nothing
                                     },
@@ -778,7 +941,7 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
                                         $scope.model.layout = false;
                                         //$scope.checkstep(step - 1);
                                     }
-                                );
+                                    );
                             }
                         });
                     }
@@ -791,7 +954,7 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
             }
         }
     }
-    $scope.step = function(step) {
+    $scope.step = function (step) {
         if (($scope.fileModel.name && step == 1) || ($scope.fileModel.name && step == 2) || step == 0 && ((!$scope.mostrar) || ($scope.mostrar && ($scope.model.uploadFile != null || hard_file != null)))) {
             var step = $scope.steps[step];
             if (step == "undone") {
@@ -806,17 +969,17 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
 
     }
 
-    $scope.getHtml = function(html) {
+    $scope.getHtml = function (html) {
         return $sce.trustAsHtml(html);
     };
 
 
-    $scope.update = function(isValid) {
+    $scope.update = function (isValid) {
         usSpinnerService.spin('spinner');
         Idle.setIdle(session_timeout.extended);
 
         $scope.model.optionals = {};
-        angular.forEach($scope.model.items, function(element) {
+        angular.forEach($scope.model.items, function (element) {
             $scope.model.optionals[element.field1] = element.field2;
         });
 
@@ -837,7 +1000,6 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
             'updated': $scope.model.updated,
             'layout': $scope.model.layout,
             'gatheringDate': null
-                //    'gatheringDate': $scope.model.gatheringDate //new Date().toISOString().slice(0, 19).replace('T', ' ');
         }
 
         if (!!$scope.model.gatheringDate) {
@@ -850,8 +1012,18 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
 
         if ($scope.model.status == $scope.statuses.published) {
             data.publishedAt = new Date();
-        } else {
-            data.publishedAt = null;
+        } else if($scope.model.status == $scope.statuses.unpublished) {
+            data.unPublishedAt = new Date();
+        } else if($scope.model.status == $scope.statuses.rejected) {
+            if(!!$rootScope.adminglob.currentUser && $rootScope.adminglob.currentUser.role === ROLES.GUEST) {
+                data.status = $scope.statuses.draft;
+            } else {
+                data.rejectedAt = new Date();
+            }
+        } else if($scope.model.status == $scope.statuses.draft) {
+            data.cancelledAt = new Date();
+        } else if($scope.model.status == $scope.statuses.underReview) {
+            data.reviewedAt = new Date();
         }
         
         if ($scope.model.uploadFile != null) {
@@ -875,12 +1047,12 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
                 usSpinnerService.stop('spinner');
                 // alert(resp.status);
                 $scope.unsave = false;
-                //if (error.data.data && error.data.data.name) {
-                    Alertify.alert('El nombre del archivo ya existe.');
-                //} else {
-                //    Alertify.alert('Ha ocurrido un error al editar el archivo.');
-                //}
-            }, function(evt) {
+                if (error.data.data && error.data.data.name) {
+                    Alertify.alert('El nombre del recurso ya existe.');
+                } else {
+                    Alertify.alert('Ha ocurrido un error al editar el recurso.');
+                }
+            }, function (evt) {
                 var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                 $scope.uploadImageProgress = progressPercentage;
                 $scope.unsave = false;
@@ -893,12 +1065,12 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
 
     };
 
-    $scope.load = function() {
+    $scope.load = function () {
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type,
             //params: "include=tags"
-        }, function() {
+        }, function () {
             if (!!$scope.model.updateFrequency) {
                 $scope.model.updateFrequency = $scope.model.updateFrequency.id;
             }
@@ -918,7 +1090,7 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
             }
 
             $scope.model.items = [];
-            angular.forEach($scope.model.optionals, function(val, key) {
+            angular.forEach($scope.model.optionals, function (val, key) {
                 $scope.model.items.push({
                     field1: key,
                     field2: val,
@@ -939,7 +1111,7 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
                 $scope.fileModel.type = 'fa-file-text-o';
             }
             usSpinnerService.stop('spinner');
-        }, function(error) {
+        }, function (error) {
             usSpinnerService.stop('spinner');
             modelService.reloadPage();
         });
@@ -947,7 +1119,7 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
 
     $scope.inputs = [];
     var i = 0;
-    $scope.addInput = function() {
+    $scope.addInput = function () {
         if ($scope.model.items.length < 10) {
             var newItemNo = $scope.model.items.length + 1;
             $scope.model.items.push({
@@ -956,30 +1128,30 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
         }
 
     }
-    $scope.deleteIndexInput = function(index, field) {
+    $scope.deleteIndexInput = function (index, field) {
         $scope.model.items.splice(index, 1);
     }
 
-    $scope.increment = function(a) {
+    $scope.increment = function (a) {
         return a + 1;
     }
 
-    $scope.itemName = function(a) {
+    $scope.itemName = function (a) {
         return "optional" + (parseInt(a) + 1);
     }
 
     $scope.load();
 
-    var loadFileTypes = function() {
+    var loadFileTypes = function () {
         var fileTypes = rest().get({
             type: 'fileTypes'
-        }, function() {
+        }, function () {
             $scope.fileTypes = [];
-            angular.forEach(fileTypes.data, function(element) {
+            angular.forEach(fileTypes.data, function (element) {
                 $scope.fileTypes.push(element.mimetype);
             });
             $scope.fileTypes = $scope.fileTypes.toString();
-        }, function() {
+        }, function () {
             usSpinnerService.stop('spinner');
             modelService.reloadPage();
         });

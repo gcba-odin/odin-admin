@@ -6,7 +6,7 @@
       <div class="box-header">
           <h3 class="box-title">{{ 'FILE_TYPES' | translate }}</h3>
           <div class="box-tools">
-              <a ng-href="#/{{type}}/new" class="btn-primary btn nodecoration pull-right">{{ 'ADD' | translate }} {{ 'FILE_TYPES' | translate }}</a>
+              <a ng-href="#/{{type}}/new" class="btn-primary btn nodecoration pull-right" permission permission-except="roles.GUEST">{{ 'ADD' | translate }} {{ 'FILE_TYPES' | translate }}</a>
           </div>
       </div>
         <div class="row">
@@ -26,7 +26,8 @@
                                         </a>
                                     </th>
                                     <th>{{ 'STATE' | translate }}</th>
-                                    <th class="text-center">{{ 'ACTIONS' | translate }}</th>
+                                    <th>{{ 'AUTHOR' | translate }}</th>
+                                    <th class="text-center box-actions">{{ 'ACTIONS' | translate }}</th>
                                 </tr>
                                 <tr ng-if="data.data.length == 0">
                                     <td colspan="3">No se encuentran datos para mostrar.</td>
@@ -34,15 +35,18 @@
                                 <tr ng-if="data.data.length != 0" ng-repeat="model in data.data">
                                     <td>{{model.name}}</td>
                                     <td>
-                                        <span class="label label-default" ng-class="activeClass(model.deletedAt)">{{model.deletedAt ? 'Inactivo' : 'Activo'}}</span>
+                                        <span class="label label-default {{model.deletedAt ? '' : 'bg-primary color-white'}}">{{model.deletedAt ? 'Inactivo' : 'Activo'}}</span>
                                     </td>
-                                    <td class="text-center table-btn">
+                                    <td>
+                                        <span ng-if="model.createdBy">{{model.createdBy.username}}</span>
+                                    </td>
+                                    <td class="text-center box-actions">
                                         <a class="btn btn-primary" ng-click="view({id: model.id})">{{ 'VIEW' | translate }}</a>
-                                        <a class="btn btn-primary" ng-click="edit({id: model.id})">{{ 'EDIT' | translate }}</a>
+                                        <a class="btn btn-primary" ng-click="edit({id: model.id})" permission permission-except="roles.GUEST">{{ 'EDIT' | translate }}</a>
                                         <!--<a class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)">{{ 'DELETE' | translate }}</a>-->
-                                        <a ng-if="model.deletedAt" class="btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="activeModel($event)">{{ 'ACTIVATE' | translate }}</a>
-                                        <a ng-if="!model.deletedAt" class="btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="inactiveModel($event)">{{ 'INACTIVATE' | translate }}</a>
-                                        <a uib-tooltip="No puede realizar esta acción. Este {{ 'FILE_TYPE' | translate | lowercase }} tiene relaciones." tooltip-placement="top" tooltip-enable="model.files.length" tooltip-append-to-body="true" ng-disabled="model.files.length" class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="model.files.length ? null : confirmDelete($event)">{{ 'DELETE' | translate }}</a>
+                                        <a ng-if="model.deletedAt" class="btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="activeModel($event)" permission permission-except="roles.GUEST">{{ 'ACTIVATE' | translate }}</a>
+                                        <a ng-if="!model.deletedAt" class="btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="inactiveModel($event)" permission permission-except="roles.GUEST">{{ 'INACTIVATE' | translate }}</a>
+                                        <a uib-tooltip="No puede realizar esta acción. Este {{ 'FILE_TYPE' | translate | lowercase }} tiene relaciones." tooltip-placement="top" tooltip-enable="model.files.length" tooltip-append-to-body="true" ng-disabled="model.files.length" class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="model.files.length ? null : confirmDelete($event)" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
                                     </td>
                                 </tr>
 

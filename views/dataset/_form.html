@@ -39,7 +39,7 @@
 <div class="form-group">
     <label for="categories" class="col-sm-2 control-label">* {{ 'CATEGORIES' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.categories.$touched && form.categories.$invalid }">
-        <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="categories" data-model="{{model.categories}}" select-two-ajax name="categories" id="categories" ng-model="model.categories" required class="selectize-width" multiple></select>
+        <select placeholder="{{ 'SELECT_ONE' | translate }}" values="changedValues" subcats="hasSubcategories" data-onchange="true" data-key="name" data-condition="parent=null" data-modelname="categories" data-model="{{model.categories}}" select-two-ajax name="categories" id="categories" ng-model="model.categories" required class="selectize-width" multiple></select>
 
         <div class="help-block" ng-messages="form.categories.$error" ng-if="form.categories.$touched">
             <div ng-messages-include="views/messages.html"></div>
@@ -47,6 +47,19 @@
     </div>
 </div>
 <!-- end Input categories -->
+
+<!-- Input subcategories -->
+<div class="form-group" ng-show="hasSubcategories">
+    <label for="subcategories" class="col-sm-2 control-label">{{ 'SUBCATEGORIES' | translate }}</label>
+    <div class="col-sm-10" ng-class="{ 'has-error': form.subcategories.$touched && form.subcategories.$invalid }">
+        <select placeholder="{{ 'SELECT_ONE' | translate }}" data-onfocus="true" data-key="name" data-condition="parent={{changedValues}}" data-modelname="categories" data-model="{{model.subcategories}}" select-two-ajax name="subcategories" id="subcategories" ng-model="model.subcategories" class="selectize-width" multiple></select>
+
+        <div class="help-block" ng-messages="form.subcategories.$error" ng-if="form.subcategories.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input subcategories -->
 
 <!-- Input owner -->
 <div class="form-group">
@@ -76,8 +89,8 @@
 <!-- Input Starred -->
 <div class="form-group">
     <label class="col-sm-2 control-label">* {{ 'STARRED' | translate }}</label>
-    <div class="col-sm-10" ng-class="{ 'has-error': form.starred.$touched && form.starred.$invalid }">
-        <div uib-tooltip="Se visualizará en la sección de datasets destacados en el frontend" tooltip-placement="left">
+    <div class="col-sm-2" ng-class="{ 'has-error': form.starred.$touched && form.starred.$invalid }">
+        <div uib-tooltip="Se visualizará en la sección de datasets destacados en el frontend" tooltip-placement="top">
             <label class="btn btn-default" ng-class="activeClass(model.starred, 1)">
                 <input   type="radio" ng-value="true" name="starred"    ng-model="model.starred" id="option1" autocomplete="off" ng-checked="model.V" required> {{ 'YES' | translate }}
             </label>
@@ -90,6 +103,7 @@
             <div ng-messages-include="views/messages.html"></div>
         </div>
     </div>
+    <div class="col-sm-8"></div>
 </div>
 <!-- end Input Starred -->
 

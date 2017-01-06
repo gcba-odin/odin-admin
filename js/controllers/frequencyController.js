@@ -61,8 +61,8 @@ function updateFrequencyListController($scope, $location, rest, $rootScope, Flas
         usSpinnerService.spin('spinner');
         $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-        if(!!$scope.parameters.conditions) {
-            $scope.q += $scope.parameters.conditions;
+        if(!!$scope.parameters.conditions_page) {
+            $scope.q += $scope.parameters.conditions_page;
         }
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
@@ -121,11 +121,11 @@ function updateFrequencyCreateController($scope, rest, model, Flash, $location, 
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                //if(error.data.data && error.data.data.name) {
+                if(error.data.data && error.data.data.name) {
                     Alertify.alert('La frequencia que quiere guardar ya existe.');
-                //} else {
-                //    Alertify.alert('Hubo un error al crear la frecuencia.');
-                //}
+                } else {
+                    Alertify.alert('Hubo un error al crear la frecuencia.');
+                }
             });
         }
     };
@@ -148,11 +148,11 @@ function updateFrequencyEditController($scope, Flash, rest, $routeParams, model,
                 $location.path(url);
             }, function(error) {
                 usSpinnerService.stop('spinner');
-                //if(error.data.data && error.data.data.name) {
+                if(error.data.data && error.data.data.name) {
                     Alertify.alert('La frequencia que quiere guardar ya existe.');
-                //} else {
-                //    Alertify.alert('Hubo un error al editar la frecuencia.');
-                //}
+                } else {
+                    Alertify.alert('Hubo un error al editar la frecuencia.');
+                }
             });
         }
     };

@@ -12,7 +12,7 @@ gulp.task('watch', ['serve'], function() {
 
   // Style
   gulp.watch(gulp.paths.styles, ['styles-watch']);
-
+  
   // Fonts
   gulp.watch(gulp.paths.fonts, ['fonts-watch']);
 

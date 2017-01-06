@@ -33,8 +33,8 @@
                                     <!-- <h1>{{ 'FILES' | translate }}</h1> -->
                                     <div class="form-control file-upload" ngf-select ng-model="model.uploadFile" name="uploadFile" ngf-pattern="'{{fileTypes}}'"
                                          ngf-accept="'{{fileTypes}}'"
-                                         ngf-max-size="2000MB" ngf-min-height="100"
-                                         ngf-resize="{width: 100, height: 100}"   ngf-before-model-change="beforeChange($files)"><i class="fa fa-link fa-flip-horizontal" aria-hidden="true"></i> {{'ATTACH_FILE' | translate}}<!---<i class="fa fa-plus add-image-button" aria-hidden="true"></i>---></div>
+                                         ngf-max-size="4000MB" ngf-min-height="100"
+                                         ngf-before-model-change="beforeChange($files)"><i class="fa fa-link fa-flip-horizontal" aria-hidden="true"></i> {{'ATTACH_FILE' | translate}}<!---<i class="fa fa-plus add-image-button" aria-hidden="true"></i>---></div>
                                 <!-- </div> -->
                                 <div class="panel-body docuemnts-upload">
                                     <div class="row" ng-if="fileModel.name" >
@@ -55,7 +55,7 @@
                     </div>
                     <div class="row" ng-show="stepactive == 1">
                         <div class="col-xs-12">
-                            <form autocomplete="off" enctype="multipart/form-data" class="form-horizontal" name="form" autocomplete="false" role="form" ng-submit="add(form.$valid)" novalidate>
+                            <form autocomplete="off" enctype="multipart/form-data" class="form-horizontal" name="form" autocomplete="false" role="form" novalidate>
                                 <div class="box-body" ng-include="'views/file/_form.html'"></div>
 
                             </form>
@@ -86,10 +86,10 @@
                                             <td class="detail-bold">{{ 'DATASET' | translate }}</td>
                                             <td>{{model.dataset.name| selectFilterArray:'dataset'}}</td>
                                         </tr>
-                                        <tr ng-if="model.status">
+                                        <!--<tr ng-if="!!model.status">
                                             <td class="detail-bold">{{ 'STATUS' | translate }}</td>
                                             <td>{{model.status| selectFilterArray:'status'}}</td>
-                                        </tr>
+                                        </tr>-->
                                         <tr ng-if="model.organization">
                                             <td class="detail-bold">{{ 'ORGANIZATION' | translate }}</td>
                                             <td>{{model.organization.name| selectFilterArray:'organization'}}</td>

@@ -13,7 +13,7 @@ app.controller("mainController", function($scope, AuthenticationService, $locati
             $scope.language = "english";
             $translate.use("en");
         }
-    }
+    };
 
     this.logout = function() {
         AuthenticationService.ClearCredentials();
@@ -29,9 +29,7 @@ app.controller("mainController", function($scope, AuthenticationService, $locati
         {
             return "active";
         }
-    }
-
-
+    };
 });
 
 
@@ -69,7 +67,7 @@ function LoginController($location, AuthenticationService, $scope, vcRecaptchaSe
             vm.dataLoading = true;
             AuthenticationService.Login(data, function(response) {
                 if (!response.code) {
-                    AuthenticationService.SetCredentials(vm.username, vm.password, response.data.token, response.data.user);
+                    AuthenticationService.SetCredentials(vm.username, vm.password, response.data.token, response.data.user, response.data.role);
                     $location.path('/');
                 } else {
                     vcRecaptchaService.reload(recaptchaId);

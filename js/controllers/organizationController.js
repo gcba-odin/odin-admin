@@ -91,8 +91,8 @@ function OrganizationListController($scope, $location, rest, $rootScope, Flash, 
         usSpinnerService.spin('spinner');
         $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-        if(!!$scope.parameters.conditions) {
-            $scope.q += $scope.parameters.conditions;
+        if(!!$scope.parameters.conditions_page) {
+            $scope.q += $scope.parameters.conditions_page;
         }
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
@@ -178,6 +178,12 @@ function OrganizationViewController($scope, Flash, rest, $routeParams, $location
 
     $scope.unPublish = function (id, type) {
         var text_type = (type == 'files') ? 'recurso' : (type == 'users') ? 'usuario' : '';
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere despublicar este ' + text_type + '?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');
@@ -203,6 +209,12 @@ function OrganizationViewController($scope, Flash, rest, $routeParams, $location
 
     $scope.deleteResource = function (id, type) {
         var text_type = (type == 'files') ? 'recurso' : (type == 'users') ? 'usuario' : '';
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere borrar este ' + text_type + '?').then(
             function onOk() { 
                 usSpinnerService.spin('spinner');
@@ -241,11 +253,11 @@ function OrganizationCreateController($scope, rest, model, Flash, $location, mod
             }, function(error) {
                 usSpinnerService.stop('spinner');
 
-                //if(error.data.data && (error.data.data.name || error.data.data.slug)) {
+                if(error.data.data && (error.data.data.name || error.data.data.slug)) {
                     Alertify.alert('El nombre de la organización ya existe.');
-                //} else {
-                //    Alertify.alert('Ha ocurrido un error al crear la organización.');
-                //}
+                } else {
+                    Alertify.alert('Ha ocurrido un error al crear la organización.');
+                }
             });
         }
     };
@@ -289,11 +301,11 @@ function OrganizationEditController($scope, Flash, rest, $routeParams, model, $l
             }, function(error) {
                 usSpinnerService.stop('spinner');
 
-                //if(error.data.data && (error.data.data.name || error.data.data.slug)) {
+                if(error.data.data && (error.data.data.name || error.data.data.slug)) {
                     Alertify.alert('El nombre de la organización ya existe.');
-                //} else {
-                //    Alertify.alert('Ha ocurrido un error al editar la organización.');
-                //}
+                } else {
+                    Alertify.alert('Ha ocurrido un error al editar la organización.');
+                }
             });
         }
     };

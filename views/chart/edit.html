@@ -14,13 +14,13 @@
 
                             <ul class="steps">
                                 <li ng-class="step(0)" ng-click="checkstep(0)" class=" col-xs-4">
-                                    <p>{{ 'DATA_OF_CHART' | translate }}</p>
+                                    <p>{{ 'DATA_OF_CHART' | translate | uppercase }}</p>
                                 </li>
                                 <li ng-class="step(1)" ng-click="checkstep(1)" class=" col-xs-4">
-                                    <p>{{ 'SELECT_FIELDS' | translate }}</p>
+                                    <p>{{ 'SELECT_FIELDS' | translate | uppercase }}</p>
                                 </li>
                                 <li ng-class="step(2)" ng-click="checkstep(2)" class=" col-xs-4">
-                                    <p>{{ 'REVISION' | translate }}</p>
+                                    <p>{{ 'REVISION' | translate | uppercase }}</p>
                                 </li>
                             </ul>
 
@@ -28,7 +28,7 @@
                     </div>
                     <div class="row" ng-show="stepactive == 0">
                         <div class="col-xs-12">
-                            <form autocomplete="off" class="form-horizontal" name="form" autocomplete="false" role="form" ng-submit="add(form.$valid)" novalidate>
+                            <form autocomplete="off" class="form-horizontal" name="form" autocomplete="false" role="form" novalidate>
                                 <div class="box-body" ng-include="'views/chart/_form_step1.html'"></div>
 
                             </form>
@@ -36,7 +36,7 @@
                     </div>
                     <div class="row" ng-show="stepactive == 1">
                         <div class="col-xs-12">
-                            <form autocomplete="off" enctype="multipart/form-data" class="form-horizontal" name="form" autocomplete="false" role="form" ng-submit="add(form.$valid)" novalidate>
+                            <form autocomplete="off" enctype="multipart/form-data" class="form-horizontal" name="form" autocomplete="false" role="form" novalidate>
                                 <div class="box-body" ng-include="'views/chart/_form_step2.html'"></div>
                             </form>
                         </div>

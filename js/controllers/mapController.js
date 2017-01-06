@@ -1,8 +1,10 @@
 var app = angular.module('odin.mapsControllers', []);
 
-function MapListController($scope, modelService, configs, usSpinnerService) {
+function MapListController($scope, modelService, configs, usSpinnerService, underReview, $rootScope, ROLES) {
     usSpinnerService.spin('spinner');
     modelService.initService("Map", "maps", $scope);
+    //factory configs
+    configs.statuses($scope);
 
     $scope.parameters = {
         skip: 0,
@@ -12,7 +14,25 @@ function MapListController($scope, modelService, configs, usSpinnerService) {
         sort: 'DESC'
     };
 
-    $scope.filtersView = [{
+    $scope.underReview = underReview;
+
+    if (underReview) {
+        $scope.parameters.conditions = '&status=' + $scope.statuses.underReview;
+        $scope.filtersView = [{
+            name: 'Autor',
+            model: 'users',
+            key: 'username',
+            modelInput: 'createdBy',
+            multiple: true,
+            //condition: 'status=oWRhpRV&'
+        }];
+    } else {
+        $scope.parameters.conditions = '';
+        if(!!$rootScope.adminglob.currentUser && $rootScope.adminglob.currentUser.role === ROLES.GUEST) {
+            var current_us = $rootScope.adminglob.currentUser.user;
+            $scope.parameters.conditions = '&createdBy=' + current_us + '&owner=' + current_us;
+        }
+        $scope.filtersView = [{
             name: 'Estado',
             model: 'statuses',
             key: 'name',
@@ -25,6 +45,7 @@ function MapListController($scope, modelService, configs, usSpinnerService) {
             modelInput: 'createdBy',
             multiple: true
         }];
+    }
 
     $scope.confirmDelete = function (item) {
         modelService.confirmDelete(item);
@@ -53,12 +74,12 @@ function MapListController($scope, modelService, configs, usSpinnerService) {
         if (!!resp.data[0] && !!resp.data[0].value) {
             $scope.parameters.limit = resp.data[0].value;
         }
-        
-        $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
 
-        modelService.loadAll($scope, function(resp) {
+        $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
+        
+        modelService.loadAll($scope, function (resp) {
             usSpinnerService.stop('spinner');
-            if(!resp) {
+            if (!resp) {
                 modelService.reloadPage();
             }
         });
@@ -68,12 +89,12 @@ function MapListController($scope, modelService, configs, usSpinnerService) {
         usSpinnerService.spin('spinner');
         $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-        if(!!$scope.parameters.conditions) {
-            $scope.q += $scope.parameters.conditions;
+        if(!!$scope.parameters.conditions_page) {
+            $scope.q += $scope.parameters.conditions_page;
         }
-        modelService.loadAll($scope, function(resp) {
+        modelService.loadAll($scope, function (resp) {
             usSpinnerService.stop('spinner');
-            if(!resp) {
+            if (!resp) {
                 modelService.reloadPage();
             }
         });
@@ -109,9 +130,9 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type
-        }, function() {
+        }, function () {
             usSpinnerService.stop('spinner');
-        }, function(error) {
+        }, function (error) {
             usSpinnerService.stop('spinner');
             modelService.reloadPage();
         });
@@ -148,23 +169,113 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
     };
 
     $scope.unPublish = function () {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere despublicar este recurso?').then(
-                function onOk() {
-                    usSpinnerService.spin('spinner');
+            function onOk() {
+                usSpinnerService.spin('spinner');
 
-                    rest().unpublish({
-                        type: $scope.type,
-                        id: $scope.model.id
-                    }, {}, function (resp) {
-                        loadModel();
-                        //var url = '/' + $scope.type;
-                        // $location.path(url);
-                    });
+                rest().unpublish({
+                    type: $scope.type,
+                    id: $scope.model.id
+                }, {}, function (resp) {
+                    loadModel();
+                    //var url = '/' + $scope.type;
+                    // $location.path(url);
+                });
+                usSpinnerService.stop('spinner');
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+
+    $scope.reject = function () {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm('¿Está seguro que quiere rechazar este mapa?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().reject({
+                    type: $scope.type,
+                    id: $scope.model.id
+                }, {}, function (resp) {
                     usSpinnerService.stop('spinner');
-                },
-                function onCancel() {
-                    return false;
-                }
+                    loadModel();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+    
+        $scope.sendReview = function () {
+            Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm('¿Está seguro que quiere enviar a revisión este gráfico?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().sendReview({
+                    type: $scope.type,
+                    id: $scope.model.id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+    
+    $scope.cancel = function () {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm('¿Está seguro que quiere cancelar este gráfico?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().cancel({
+                    type: $scope.type,
+                    id: $scope.model.id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
         );
     };
 
@@ -176,6 +287,7 @@ function MapPreviewController($scope, modelService, $routeParams, rest, $locatio
     modelService.initService("Map", "maps", $scope);
 
     //modelService.findOne($routeParams, $scope);
+    L.Icon.Default.imagePath = '/admin/plugins/leaflet/images/';
 
     $scope.tiles = {
         url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -197,22 +309,36 @@ function MapPreviewController($scope, modelService, $routeParams, rest, $locatio
         } else {
             usSpinnerService.stop('spinner');
         }
-    }, function(error) {
+    }, function (error) {
         usSpinnerService.stop('spinner');
         modelService.reloadPage();
     });
-    
+
     //calculate center automatically from geoJson
-    $scope.centerJSON = function() {
-        leafletData.getMap().then(function(map) {
+    $scope.centerJSON = function () {
+        leafletData.getMap('mapid').then(function (map) {
             var latlngs = [];
             for (var i in $scope.geojson.data.features) {
                 var coord = $scope.geojson.data.features[i].geometry.coordinates;
+                var typeGeometry = $scope.geojson.data.features[i].geometry.type;
                 for (var j in coord) {
-                    latlngs.push(L.GeoJSON.coordsToLatLng(coord));
-                }
+                    if(typeGeometry == 'Point') {
+                        latlngs.push(L.GeoJSON.coordsToLatLng(coord));
+                    } else if(typeGeometry == 'LineString' || typeGeometry == 'Polygon') {
+                        for (var k in j) {
+                            if(typeGeometry == 'LineString') {
+                                latlngs.push(L.GeoJSON.coordsToLatLng(coord[j]));
+                            } else if(typeGeometry == 'Polygon') {
+                                for (var h in coord[j][k]) {
+                                    latlngs.push(L.GeoJSON.coordsToLatLng(coord[j][k]));
+                                }
+                            }
+                        }
+                    }            
+                } 
+
             }
-            if(latlngs.length > 0)
+            if (latlngs.length > 0)
                 map.fitBounds(latlngs);
         });
     };
@@ -253,8 +379,11 @@ function MapPreviewController($scope, modelService, $routeParams, rest, $locatio
                         angular.forEach(feature.properties, function (value, key) {
                             html += '<strong>' + key + '</strong>: ' + value + '<br><br>';
                         });
+                        var custom_options = {
+                            'maxHeight': '200'
+                        };
                         if (html != '') {
-                            layer.bindPopup(html);
+                            layer.bindPopup(html, custom_options);
                         }
                     }
                 }
@@ -289,6 +418,7 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
     $scope.steps[2] = "undone";
     $scope.stepactive = 0;
     $scope.basemap_view = true;
+    $scope.model.kml = false;
 
     $scope.config_key = 'mapPointsLimit';
     var data_limit_map = 2000;
@@ -303,8 +433,7 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
     });
 
     var generate_headers = function () {
-        if ($scope.fileModel.data.length > 0)
-        {
+        if ($scope.fileModel.data.length > 0) {
 
             $scope.headersFile = Object.keys($scope.fileModel.data[0]);
             $scope.headersFile = $scope.headersFile.filter(function (header) {
@@ -329,7 +458,8 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
 
     $scope.file_disabled = 'enabled';
     if (!angular.isUndefined($routeParams.file)) {
-
+        $scope.model.file = $routeParams.file;
+        
         var file_map = rest().findOne({
             type: 'files',
             id: $routeParams.file,
@@ -356,39 +486,40 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
                 $scope.basemap_view = false;
                 Alertify.set({
                     labels:
-                            {
-                                ok: 'Ir a editar mapa',
-                                cancel: 'Continuar'
-                            }
+                    {
+                        ok: 'Ir a editar mapa',
+                        cancel: 'Continuar'
+                    }
                 });
                 Alertify
-                        .confirm('Usted ya tiene un mapa generado con basemap. Podrá editarlo o continuar para crear un mapa a través de URL.')
+                    .confirm('Usted ya tiene un mapa generado con basemap. Podrá editarlo o continuar para crear un mapa a través de URL.')
 
-                        .then(
-                                function onOk() {
-                                    $location.path('maps/' + map_exist.id + '/edit');
-                                },
-                                function onCancel() {
-                                    //continue
-                                }
-                        );
+                    .then(
+                    function onOk() {
+                        $location.path('maps/' + map_exist.id + '/edit');
+                    },
+                    function onCancel() {
+                        //continue
+                    }
+                    );
             } else {
-                $scope.fileModel = rest().contents({
-                    type: "files",
-                    id: $routeParams.file,
-                    params: "limit=1"
-                }, function () {
-                    $scope.model.file = $routeParams.file;
-
-                    $scope.headersFile = null;
-
-                    generate_headers();
-                }, function(error) {
-                    usSpinnerService.stop('spinner');
-                    modelService.reloadPage();
-                });
+                if($.inArray('application/vnd.google-earth.kml+xml', resp.type.mimetype) == 0) { 
+                    $scope.model.kml = true;
+                } else {
+                    $scope.fileModel = rest().contents({
+                        type: "files",
+                        id: $routeParams.file,
+                        params: "limit=1"
+                    }, function () {
+                        $scope.headersFile = null;
+                        generate_headers();
+                    }, function (error) {
+                        usSpinnerService.stop('spinner');
+                        modelService.reloadPage();
+                    });
+                }
             }
-        }, function(error) {
+        }, function (error) {
             usSpinnerService.stop('spinner');
             modelService.reloadPage();
         });
@@ -400,7 +531,7 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
 
     $scope.checkstep = function (step) {
         $scope.jump = 1;
-        if ((step == 1) && (!angular.isUndefined($scope.model.link) && $scope.model.link != '')) {
+        if ((step == 1) && ((!angular.isUndefined($scope.model.link) && $scope.model.link != '') || ($scope.model.kml))) {
             $scope.checkstep(2);
             $scope.jump = 2;
         } else if ((step == 1) && (($scope.headersFile == null) || ($scope.fileModel.meta.count > data_limit_map))) {
@@ -410,7 +541,7 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
                 Alertify.alert('El archivo que está queriendo renderizar supera los ' + data_limit_map + ' datos. Intente asociarle un link.');
             }
         } else {
-            if ((step == 1 && ($scope.model.basemap) && ($scope.model.file)) || (step == 2 && ($scope.model.file) && ($scope.model.link || $scope.model.basemap)) || step == 0) {
+            if ((step == 1 && ($scope.model.basemap) && ($scope.model.file)) || (step == 2 && ($scope.model.file || $scope.model.kml) && ($scope.model.link || $scope.model.basemap)) || step == 0) {
 
                 if (step == 0) {
                     $scope.steps[0] = "active";
@@ -474,9 +605,17 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
             cont++;
         }
         $scope.model.properties = $scope.model.properties.toString();
-        
+
         if ($scope.statuses.default == $scope.statuses.published) {
             $scope.model.publishedAt = new Date();
+        } else if($scope.statuses.default == $scope.statuses.unpublished) {
+            $scope.model.unPublishedAt = new Date();
+        } else if($scope.statuses.default == $scope.statuses.rejected) {
+            $scope.model.rejectedAt = new Date();
+        } else if($scope.statuses.default == $scope.statuses.draft) {
+            $scope.model.cancelledAt = new Date();
+        } else if($scope.statuses.default == $scope.statuses.underReview) {
+            $scope.model.reviewedAt = new Date();
         }
 
         if (validate(model)) {
@@ -493,7 +632,7 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
                     alert_text += 'correctamente.';
                 }
 
-                if (!$scope.model.link) {
+                if (!$scope.model.link && !$scope.model.kml) {
                     alert_text += "<br><br><strong>Detalle:</strong><br><br>Del total de datos procesados, " + resp.data.correct + " se registraron correctamente y " + resp.data.incorrect + " tuvieron error.";
                 }
 
@@ -506,11 +645,11 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
                 $location.path(url);
             }, function (error) {
                 usSpinnerService.stop('spinner');
-                //if (error.data.data && error.data.data.name) {
+                if (error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre del mapa ya existe.');
-                //} else {
-                //    Alertify.alert('Ha ocurrido un error al crear el mapa.');
-                //}
+                } else {
+                    Alertify.alert('Ha ocurrido un error al crear el mapa.');
+                }
             });
         } else {
             usSpinnerService.stop('spinner');
@@ -545,9 +684,9 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
 
     $scope.basemaps = rest().get({
         type: 'basemaps'
-    }, function(){
+    }, function () {
         usSpinnerService.stop('spinner');
-    }, function(error) {
+    }, function (error) {
         usSpinnerService.stop('spinner');
         modelService.reloadPage();
     });
@@ -581,8 +720,7 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
     var url_map = '';
 
     var generate_headers = function () {
-        if ($scope.fileModel.data.length > 0)
-        {
+        if ($scope.fileModel.data.length > 0) {
 
             $scope.headersFile = Object.keys($scope.fileModel.data[0]);
             $scope.headersFile = $scope.headersFile.filter(function (header) {
@@ -609,7 +747,7 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
 
     $scope.checkstep = function (step) {
         $scope.jump = 1;
-        if ((step == 1) && (!!$scope.model.link)) {
+        if ((step == 1) && ((!!$scope.model.link)  || ($scope.model.kml))) {
             $scope.checkstep(2);
             $scope.jump = 2;
         } else if ((step == 1) && (($scope.headersFile == null) || ($scope.fileModel.meta.count > data_limit_map))) {
@@ -619,7 +757,7 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
                 Alertify.alert('El archivo que está queriendo renderizar supera los ' + data_limit_map + ' datos. Intente asociarle un link.');
             }
         } else {
-            if ((step == 1 && ($scope.model.basemap) && ($scope.model.file)) || (step == 2 && ($scope.model.file) && ($scope.model.link || $scope.model.basemap)) || step == 0) {
+            if ((step == 1 && ($scope.model.basemap) && ($scope.model.file)) || (step == 2 && (($scope.model.file) || ($scope.model.kml)) && ($scope.model.link || $scope.model.basemap)) || step == 0) {
 
                 if (step == 0) {
                     $scope.steps[0] = "active";
@@ -703,7 +841,7 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
                     alert_text += 'correctamente.';
                 }
 
-                if (!$scope.model.link) {
+                if (!$scope.model.link && !$scope.model.kml) {
                     alert_text += "<br><br><strong>Detalle:</strong><br><br>Del total de datos procesados, " + resp.data.correct + " se registraron correctamente y " + resp.data.incorrect + " tuvieron error.";
                 }
 
@@ -718,11 +856,11 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
 
             }, function (error) {
                 usSpinnerService.stop('spinner');
-                //if (error.data.data && error.data.data.name) {
+                if (error.data.data && error.data.data.name) {
                     Alertify.alert('El nombre del mapa ya existe.');
-                //} else {
-                //    Alertify.alert('Ha ocurrido un error al editar el mapa.');
-                //}
+                } else {
+                    Alertify.alert('Ha ocurrido un error al editar el mapa.');
+                }
             });
         } else {
             usSpinnerService.stop('spinner');
@@ -742,7 +880,7 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
             }
             url_map = $scope.model.link;
             $scope.file_disabled = 'enabled';
-            if (!angular.isUndefined($scope.model.file)) {
+            if (!angular.isUndefined($scope.model.file) && !$scope.model.kml) {
                 $scope.fileModel = rest().contents({
                     type: "files",
                     id: $scope.model.file.id,
@@ -753,7 +891,7 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
                     $scope.headersFile = null;
 
                     generate_headers();
-                }, function(error) {
+                }, function (error) {
                     usSpinnerService.stop('spinner');
                     modelService.reloadPage();
                 });
@@ -775,16 +913,16 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
                     counter++;
                 });
             }
-        }, function(error) {
+        }, function (error) {
             usSpinnerService.stop('spinner');
             modelService.reloadPage();
         });
 
         $scope.basemaps = rest().get({
             type: 'basemaps'
-        }, function(){
+        }, function () {
             usSpinnerService.stop('spinner');
-        }, function(error) {
+        }, function (error) {
             usSpinnerService.stop('spinner');
             modelService.reloadPage();
         });

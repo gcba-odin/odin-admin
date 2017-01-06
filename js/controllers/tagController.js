@@ -66,8 +66,8 @@ function TagListController($scope, $location, rest, $rootScope, Flash, Alertify,
         usSpinnerService.spin('spinner');
         $scope.parameters.skip = (page - 1) * $scope.parameters.limit;
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-        if(!!$scope.parameters.conditions) {
-            $scope.q += $scope.parameters.conditions;
+        if(!!$scope.parameters.conditions_page) {
+            $scope.q += $scope.parameters.conditions_page;
         }
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
@@ -146,6 +146,12 @@ function TagViewController($scope, Flash, rest, $routeParams, $location, modelSe
  
     $scope.unPublish = function (id, type) {
         var text_type = (type == 'datasets') ? 'dataset' : '';
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere despublicar este ' + text_type + '?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');
@@ -170,6 +176,12 @@ function TagViewController($scope, Flash, rest, $routeParams, $location, modelSe
     };
      
     $scope.deleteResource = function (id, type) {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
         Alertify.confirm('¿Está seguro que quiere borrar este dataset?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');
@@ -207,11 +219,11 @@ function TagCreateController($scope, rest, model, Flash, $location, modelService
             }, function(error) {
                 usSpinnerService.stop('spinner');
 
-                //if(error.data.data && (error.data.data.name || error.data.data.slug)) {
+                if(error.data.data && (error.data.data.name || error.data.data.slug)) {
                     Alertify.alert('La etiqueta que quiere guardar ya existe.');
-                //} else {
-                //    Alertify.alert('Hubo un error al crear la etiqueta.');
-                //}
+                } else {
+                    Alertify.alert('Hubo un error al crear la etiqueta.');
+                }
             });
         }
     };
@@ -235,11 +247,11 @@ function TagEditController($scope, Flash, rest, $routeParams, model, $location, 
             }, function(error) {
                 usSpinnerService.stop('spinner');
 
-                //if(error.data.data && (error.data.data.name || error.data.data.slug)) {
+                if(error.data.data && (error.data.data.name || error.data.data.slug)) {
                     Alertify.alert('La etiqueta que quiere guardar ya existe.');
-                //} else {
-                //    Alertify.alert('Hubo un error al editar la etiqueta.');
-                //}
+                } else {
+                    Alertify.alert('Hubo un error al editar la etiqueta.');
+                }
             });
         }
     };

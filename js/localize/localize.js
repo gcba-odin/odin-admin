@@ -180,8 +180,28 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'PARAMETER': 'Parameter',
         'TITLE_PATH': 'Titles path',
         'USE_ATTRS_HEADERS': 'Use attributes as headers',
-        'RELATIONSHIPS': 'Relationships',   
-        'VIEW_LINK_RELATIONSHIPS': 'View relationships'
+        'UNDER_REVIEW': 'Under review',
+        'REJECT': 'Reject',
+        'ROLE': 'Role',
+        'SUBCATEGORY': 'Subcategory',
+        'SUBCATEGORIES': 'Subcategories',
+        'VIEW_LINK_SUBCATEGORIES': 'View associated subcategories',
+        'MY_PROFILE': 'My profile',
+        'DENIED_ACCESS': 'Denied access',
+        'RELATIONSHIPS': 'Relationships',
+        'VIEW_LINK_RELATIONSHIPS': 'View relationships',
+        'superadmin': 'SuperAdmin',
+        'admin': 'Admin',
+        'guest': 'Guest',
+        'VALUE': 'Value',
+        'AUTHOR': 'Author',
+        'PARENT_CATEGORY': 'Parent category',
+        'UNPUBLISHED_AT': 'Unpublished at',
+        'REJECTED_AT': 'Rejected at',
+        'CANCELLED_AT': 'Cancelled at',
+        'REVIEWED_AT': 'Reviewed at',
+        'SEND_TO_REVIEW': 'Send to review',
+        'CANCEL': 'Cancel review'
     });
 
     $translateProvider.translations('es', {
@@ -401,11 +421,28 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'MIN': 'Mínimo',
         'MAX': 'Máximo',
         'ATTRIBUTION': 'Attribution',
-        
+        'UNDER_REVIEW': 'En revisión',
+        'REJECT': 'Rechazar',
+        'ROLE': 'Rol',
+        'SUBCATEGORY': 'Subcategoría',
+        'SUBCATEGORIES': 'Subcategorías',
+        'VIEW_LINK_SUBCATEGORIES': 'Ver subcategorías asociadas',
+        'MY_PROFILE': 'Mi perfil',
+        'DENIED_ACCESS': 'Acceso denegado',
         'RELATIONSHIPS': 'Entidades relacionadas',
-        'VIEW_LINK_RELATIONSHIPS': 'Ver entidades relacionadas'
-
-
+        'VIEW_LINK_RELATIONSHIPS': 'Ver entidades relacionadas',
+        'superadmin': 'SuperAdministrador',
+        'admin': 'Administrador', 
+        'guest': 'Invitado',
+        'VALUE': 'Valor',
+        'AUTHOR': 'Autor',
+        'PARENT_CATEGORY': 'Categoría padre',
+        'UNPUBLISHED_AT': 'Fecha de despublicación',
+        'REJECTED_AT': 'Fecha de rechazo',
+        'CANCELLED_AT': 'Fecha de cancelación',
+        'REVIEWED_AT': 'Fecha de revisión',
+        'SEND_TO_REVIEW': 'Enviar a revisión',
+        'CANCEL': 'Cancelar revisión'
     });
     $translateProvider.preferredLanguage('es');
 }]);
