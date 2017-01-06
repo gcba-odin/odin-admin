@@ -164,6 +164,12 @@
             },
             deactivateList: function(item, scope) {
                 var item = item.target.dataset;
+                Alertify.set({
+                    labels: {
+                        ok: 'Ok',
+                        cancel: 'Cancelar'
+                    }
+                });
                 Alertify.confirm(item.textdelete).then(
                     function onOk() {
                         rest().deactivate({
@@ -208,6 +214,12 @@
             },
             deactivateView: function(item, scope) {
                 var item = item.target.dataset;
+                Alertify.set({
+                    labels: {
+                        ok: 'Ok',
+                        cancel: 'Cancelar'
+                    }
+                });
                 Alertify.confirm(item.textdelete).then(
                     function onOk() {
                         rest().deactivate({
