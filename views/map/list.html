@@ -30,7 +30,7 @@
                                 <tr ng-if="data.data.length == 0">
                                     <td colspan="3">No se encuentran datos para mostrar.</td>
                                 </tr>
-                                <tr ng-if="data.data.length != 0" ng-repeat="model in data.data | filterIfGuestUser">
+                                <tr ng-if="data.data.length != 0" ng-repeat="model in data.data">
                                     <td>{{model.name}}</td>
                                     <td>{{model.status.name}}</td>
                                     <td>

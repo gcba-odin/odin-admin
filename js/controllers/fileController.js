@@ -131,12 +131,13 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
     };
 }
 
-function FileViewController($scope, Flash, rest, $routeParams, $location, modelService, $sce, Alertify, usSpinnerService, $window, configs) {
+function FileViewController($scope, Flash, rest, $routeParams, $location, modelService, $sce, Alertify, usSpinnerService, $window, configs, $filter) {
     usSpinnerService.spin('spinner');
     modelService.initService("File", "files", $scope);
     $scope.getHtml = function (html) {
         return $sce.trustAsHtml(html);
     };
+    $scope.view_ok = true;
 
     var loadModel = function () {
         $scope.model = rest().findOne({
@@ -147,6 +148,19 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
             $scope.model.resources = rest().resources({
                 id: $scope.model.id,
                 type: $scope.type
+            }, function(resp) {
+                if(!!resp.data.maps) {
+                    var maps_guest = $filter('filterIfGuestUser')(resp.data.maps);
+                    if(maps_guest.length == 0) {
+                        $scope.view_ok = false;
+                    }
+                }
+                if(!!resp.data.charts) {
+                    var charts_guest = $filter('filterIfGuestUser')(resp.data.charts);
+                    if(charts_guest.length == 0) {
+                        $scope.view_ok = false;
+                    }
+                }
             });
             
             $scope.model.kml = false;

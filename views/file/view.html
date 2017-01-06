@@ -21,7 +21,7 @@
               </ul>
           </div>
 
-          <button ng-if="!!model.resources.data.maps || !!model.resources.data.charts"  data-toggle="modal" data-target="#viewLinkResources" class="btn btn-default pull-right margin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_VISUALIZATIONS' | translate }}</button>
+          <button ng-if="(!!model.resources.data.maps || !!model.resources.data.charts) && view_ok"  data-toggle="modal" data-target="#viewLinkResources" class="btn btn-default pull-right margin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_VISUALIZATIONS' | translate }}</button>
       </div>
         <div class="row">
             <div class="col-md-12">
@@ -194,7 +194,7 @@
                         <th class="text-center box-actions">{{ 'ACTIONS' | translate }}</th>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="map in model.resources.data.maps">
+                            <tr ng-repeat="map in model.resources.data.maps | filterIfGuestUser">
                                 <td>
                                     <span>{{map.name}}</span>
                                 </td>
@@ -212,7 +212,7 @@
                                     <button ng-click="cancel(map.id, 'maps')" ng-if="map.status.id == statuses.underReview" class="pull-right btn btn-primary margin-right-10" permission permission-only="roles.GUEST" show-policy-if-guest-user="maps">{{ 'CANCEL' | translate }}</button>
                                 </td>
                             </tr>
-                            <tr ng-repeat="chart in model.resources.data.charts">
+                            <tr ng-repeat="chart in model.resources.data.charts | filterIfGuestUser">
                                 <td>
                                     <span>{{chart.name}}</span>
                                 </td>
