@@ -32,12 +32,12 @@
                                     <th>WS</th>
                                     <th>{{ 'AUTHOR'| translate }}</th>
                                     <th>{{ 'TYPE'| translate }}</th>
-                                    <th class="text-center">{{ 'ACTIONS' | translate }}</th>
+                                    <th class="text-center box-actions">{{ 'ACTIONS' | translate }}</th>
                                 </tr>
                                 <tr ng-if="data.data.length == 0">
                                     <td colspan="3">No se encuentran datos para mostrar.</td>
                                 </tr>
-                                <tr ng-if="data.data.length != 0" ng-repeat="model in data.data | filterIfGuestUser">
+                                <tr ng-if="data.data.length != 0" ng-repeat="model in data.data">
                                     <td>{{model.name}}</td>
                                     <td>{{model.status.name}}</td>
                                     <td>
@@ -49,7 +49,7 @@
                                     <td>
                                         <span ng-if="model.type" class="label label-default bg-primary color-white">{{model.type.name}}</span>
                                     </td>
-                                    <td class="text-center table-btn">
+                                    <td class="text-center box-actions">
                                         <a class="btn btn-primary" ng-click="view({id: model.id})">{{ 'VIEW' | translate }}</a>
                                         <a class="btn btn-primary" ng-click="edit(model)" show-policy-if-guest-user="model">{{ 'EDIT' | translate }}</a>
                                         <a class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>

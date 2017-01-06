@@ -81,7 +81,7 @@
                             <thead>
                                 <th>{{ 'NAME' | translate }}</th>
                                 <th>{{ 'TYPE' | translate }}</th>
-                                <th class="text-center">{{ 'ACTIONS' | translate }}</th>
+                                <th class="text-center box-actions">{{ 'ACTIONS' | translate }}</th>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="map in model.maps">
@@ -91,7 +91,7 @@
                                     <td>
                                         <span>{{'MAP'| translate }}</span>
                                     </td>
-                                    <td class="text-center table-btn">
+                                    <td class="text-center box-actions">
                                         <a target="_blank" class="btn btn-primary" ng-href="#/maps/{{map.id}}/view">{{ 'VIEW' | translate }}</a>
                                         <a target="_blank" class="btn btn-primary" ng-href="#/maps/{{map.id}}/edit" show-policy-if-guest-user="maps">{{ 'EDIT' | translate }}</a>
                                         <a class="btn btn-primary" ng-click="deleteResource(map.id, 'maps')" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>

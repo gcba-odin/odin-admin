@@ -56,7 +56,7 @@
                         <thead>
                         <th>{{ 'NAME' | translate }}</th>
                         <th>{{ 'TYPE' | translate }}</th>
-                        <th class="text-center">{{ 'ACTIONS' | translate }}</th>
+                        <th class="text-center box-actions">{{ 'ACTIONS' | translate }}</th>
                         </thead>
                         <tbody>
                             <tr ng-repeat="dataset in model.datasets">
@@ -66,7 +66,7 @@
                                 <td>
                                     <span>{{'DATASET'| translate }}</span>
                                 </td>
-                                <td class="text-center table-btn">
+                                <td class="text-center box-actions">
                                     <a target="_blank" class="btn btn-primary" ng-href="#/datasets/{{dataset.id}}/view">{{ 'VIEW' | translate }}</a>
                                     <a target="_blank" class="btn btn-primary" ng-href="#/datasets/{{dataset.id}}/edit" show-policy-if-guest-user="datasets">{{ 'EDIT' | translate }}</a>
                                     <a class="btn btn-primary" ng-click="deleteResource(dataset.id, 'datasets')">{{ 'DELETE' | translate }}</a>

@@ -33,7 +33,7 @@
                                     </th>
                                     <th>{{ 'STATE' | translate }}</th>
                                     <th>{{ 'ROLE' | translate }}</th>
-                                    <th class="text-center">{{ 'ACTIONS' | translate }}</th>
+                                    <th class="text-center box-actions">{{ 'ACTIONS' | translate }}</th>
                                 </tr>
                                 <tr ng-if="data.data.length == 0">
                                     <td colspan="3">No se encuentran datos para mostrar.</td>
@@ -47,7 +47,7 @@
                                     <td>
                                         <span>{{model.role | translate}}</span>
                                     </td>
-                                    <td class="text-center table-btn">
+                                    <td class="text-center box-actions">
                                         <a class="btn btn-primary" ng-click="view({id: model.id})">{{ 'VIEW' | translate }}</a>
                                         <a class="btn btn-primary" ng-click="edit({id: model.id})" permission permission-only="roles.SUPERADMIN">{{ 'EDIT' | translate }}</a>
                                         <!--<a class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)">{{ 'DELETE' | translate }}</a>-->

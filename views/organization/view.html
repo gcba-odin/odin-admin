@@ -65,7 +65,7 @@
                             <thead>
                                 <th>{{ 'NAME' | translate }}</th>
                                 <th>{{ 'TYPE' | translate }}</th>
-                                <th class="text-center">{{ 'ACTIONS' | translate }}</th>
+                                <th class="text-center box-actions">{{ 'ACTIONS' | translate }}</th>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="file in model.files">
@@ -75,7 +75,7 @@
                                     <td>
                                         <span>{{'FILE'| translate }}</span>
                                     </td>
-                                    <td class="text-center table-btn">
+                                    <td class="text-center box-actions">
                                         <a target="_blank" class="btn btn-primary" ng-href="#/files/{{file.id}}/view">{{ 'VIEW' | translate }}</a>
                                         <a target="_blank" class="btn btn-primary" ng-href="#/files/{{file.id}}/edit" show-policy-if-guest-user="files">{{ 'EDIT' | translate }}</a>
                                         <a class="btn btn-primary" ng-click="deleteResource(file.id, 'files')" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
@@ -90,7 +90,7 @@
                                     <td>
                                         <span>{{'USER'| translate }}</span>
                                     </td>
-                                    <td class="text-center table-btn">
+                                    <td class="text-center box-actions">
                                         <a target="_blank" class="btn btn-primary" ng-href="#/users/{{user.id}}/view">{{ 'VIEW' | translate }}</a>
                                         <a target="_blank" class="btn btn-primary" ng-href="#/users/{{user.id}}/edit" show-policy-if-guest-user="users">{{ 'EDIT' | translate }}</a>
                                         <button ng-click="unPublish(user.id, 'users')" ng-if="user.status.id == statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'UNPUBLISH' | translate }}</button>

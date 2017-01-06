@@ -284,12 +284,21 @@ div.form-group div.has-error p {
     padding: 1em 1em 1em 2em !important;
 }
 
-.table-btn .btn:first-child {
+/*.table-btn .btn:first-child {
     margin-right: 1.5em;
 }
 
 .table-btn .btn:last-child {
     margin-left: 1.5em;
+}*/
+.box-actions {
+    //min-width: 13em;
+    max-width: 16em;
+}
+
+.box-actions > .btn {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
 }
 
 .detail-bold {
