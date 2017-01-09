@@ -419,6 +419,7 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
     $scope.stepactive = 0;
     $scope.basemap_view = true;
     $scope.model.kml = false;
+    $scope.status_default = true;
 
     $scope.config_key = 'mapPointsLimit';
     var data_limit_map = 2000;
@@ -704,6 +705,10 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
     $scope.steps[2] = "undone";
     $scope.stepactive = 0;
     $scope.basemap_view = true;
+    $scope.status_default = false;
+    
+    //factory configs
+    configs.statuses($scope);
 
     $scope.config_key = 'mapPointsLimit';
     var data_limit_map = 2000;
@@ -824,6 +829,18 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
             cont++;
         }
         $scope.model.properties = $scope.model.properties.toString();
+        
+        if ($scope.model.status == $scope.statuses.published) {
+            $scope.model.publishedAt = new Date();
+        } else if($scope.model.status == $scope.statuses.unpublished) {
+            $scope.model.unPublishedAt = new Date();
+        } else if($scope.model.status == $scope.statuses.rejected) {
+            $scope.model.rejectedAt = new Date();
+        } else if($scope.model.status == $scope.statuses.draft) {
+            $scope.model.cancelledAt = new Date();
+        } else if($scope.model.status == $scope.statuses.underReview) {
+            $scope.model.reviewedAt = new Date();
+        }
 
         if (validate(model)) {
 
@@ -877,6 +894,9 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
         }, function () {
             if (!!$scope.model.basemap) {
                 $scope.model.basemap = $scope.model.basemap.id;
+            }
+            if (!!$scope.model.status) {
+                $scope.model.status = $scope.model.status.id;
             }
             url_map = $scope.model.link;
             $scope.file_disabled = 'enabled';

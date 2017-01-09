@@ -131,13 +131,14 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
     };
 }
 
-function FileViewController($scope, Flash, rest, $routeParams, $location, modelService, $sce, Alertify, usSpinnerService, $window, configs, $filter) {
+function FileViewController($scope, Flash, rest, $routeParams, $location, modelService, $sce, Alertify, usSpinnerService, $window, configs, $filter, $rootScope, ROLES) {
     usSpinnerService.spin('spinner');
     modelService.initService("File", "files", $scope);
     $scope.getHtml = function (html) {
         return $sce.trustAsHtml(html);
     };
     $scope.view_ok = true;
+    $scope.permission_block = false;
 
     var loadModel = function () {
         $scope.model = rest().findOne({
@@ -166,6 +167,10 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
             $scope.model.kml = false;
             if($.inArray('application/vnd.google-earth.kml+xml', $scope.model.type.mimetype) == 0)
                 $scope.model.kml = true;
+            
+            if($rootScope.adminglob.currentUser.role === ROLES.GUEST && $scope.model.status.id == $scope.statuses.rejected) {
+                $scope.permission_block = true;
+            }
             
             usSpinnerService.stop('spinner');
         }, function (error) {

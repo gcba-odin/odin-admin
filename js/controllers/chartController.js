@@ -356,6 +356,7 @@ function ChartCreateController($scope, modelService, rest, $location, model, $sc
     $scope.steps[1] = "undone";
     $scope.steps[2] = "undone";
     $scope.stepactive = 0;
+    $scope.status_default = true;
 
     $scope.model.items = [{ field: "" }, { field: "" }];
 
@@ -512,7 +513,7 @@ function ChartCreateController($scope, modelService, rest, $location, model, $sc
 }
 
 
-function ChartEditController($scope, modelService, $routeParams, $sce, rest, $location, model, Alertify, usSpinnerService) {
+function ChartEditController($scope, modelService, $routeParams, $sce, rest, $location, model, Alertify, usSpinnerService, configs) {
     usSpinnerService.spin('spinner');
     modelService.initService("Chart", "charts", $scope);
 
@@ -523,6 +524,10 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
     $scope.steps[1] = "undone";
     $scope.steps[2] = "undone";
     $scope.stepactive = 0;
+    $scope.status_default = false;
+    
+    //factory configs
+    configs.statuses($scope);
 
     var generate_headers = function () {
         if ($scope.fileModel.data.length > 0) {
@@ -612,6 +617,18 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
             }
         }
         $scope.model.dataSeries = $scope.model.dataSeries.toString();
+        
+        if ($scope.model.status == $scope.statuses.published) {
+            $scope.model.publishedAt = new Date();
+        } else if($scope.model.status == $scope.statuses.unpublished) {
+            $scope.model.unPublishedAt = new Date();
+        } else if($scope.model.status == $scope.statuses.rejected) {
+            $scope.model.rejectedAt = new Date();
+        } else if($scope.model.status == $scope.statuses.draft) {
+            $scope.model.cancelledAt = new Date();
+        } else if($scope.model.status == $scope.statuses.underReview) {
+            $scope.model.reviewedAt = new Date();
+        }
 
         if (validate(model)) {
 
@@ -648,6 +665,9 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
             type: $scope.type,
         }, function () {
             $scope.file_disabled = 'enabled';
+            if (!!$scope.model.status) {
+                $scope.model.status = $scope.model.status.id;
+            }
             if (!angular.isUndefined($scope.model.file)) {
                 $scope.fileModel = rest().contents({
                     type: "files",

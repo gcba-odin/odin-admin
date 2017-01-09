@@ -63,6 +63,10 @@
                                                 <a target="_blank" ng-href="{{model.link}}">{{model.link}}</a>
                                             </td>
                                         </tr>
+                                        <tr ng-if="model.status">
+                                            <td class="detail-bold">{{ 'STATUS' | translate }}</td>
+                                            <td>{{model.status| selectFilterArray:'status'}}</td>
+                                        </tr>
                                         <tr ng-if="model.basemap && !model.link">
                                             <td class="detail-bold">{{ 'BASE_MAP' | translate }}</td>
                                             <td>{{model.basemap| selectFilterArray:'basemap'}}</td>
