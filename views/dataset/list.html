@@ -1,10 +1,10 @@
 <header-home></header-home>
 <div class="content-wrapper">
-    <breadcrumbs data-model-name="{{ 'DATASETS' | translate }}" data-model="{{type}}"></breadcrumbs>
+    <breadcrumbs data-model-name="{{ (!starred) ? 'DATASETS' : 'STARRED_DATASETS' | translate }}" data-model="{{type}}"></breadcrumbs>
     <!-- Main content -->
     <section class="content">
       <div class="box-header">
-          <h3 class="box-title">{{ modelName | translate }}</h3>
+          <h3 class="box-title">{{ (!starred) ? modelName : 'STARRED_DATASETS' | translate }}</h3>
           <div class="box-tools">
               <a ng-href="#/datasets/new" class="btn-primary btn nodecoration pull-right" permission permission-except="roles.GUEST">{{ 'ADD' | translate }} {{ 'DATASET' | translate }} </a>
           </div>
@@ -14,7 +14,7 @@
                 <div class="box">
                     <div class="box-body table-responsive no-padding">
 
-                        <div ng-show="!starred">
+                        <div>
                             <search-bar data-search="{required:true,name:'Nombre',condition:'{{condition}}'}" data-filters="{{filtersView}}"></search-bar>
                         </div>
                         <table class="table table-hover">

@@ -8,8 +8,8 @@ app.factory('model', function($resource) {
 
 function DatasetListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, $routeParams, configs, usSpinnerService) {
     usSpinnerService.spin('spinner');
-    modelService.initService("Dataset", "datasets", $scope);
-
+    modelService.initService('Dataset', "datasets", $scope);
+    
     $scope.parameters = {
         skip: 0,
         limit: 20,
@@ -17,6 +17,13 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
         orderBy: 'createdAt',
         sort: 'DESC'
     };
+    
+    $scope.starred = false;
+    if($routeParams.filter == 'starred') {
+        $scope.parameters.conditions = '&starred=true';
+        $scope.starred = true;
+        $rootScope.actualUrl = '/datasets/starred';
+    } 
     
     $scope.filtersInclude = ['categories'];
 
@@ -30,7 +37,7 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
         name: 'Autor',
         model: 'users',
         key: 'username',
-        modelInput: 'owner',
+        modelInput: 'createdBy',
         multiple: true
     }, {
         name: 'Categoria',
@@ -39,7 +46,7 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
         modelInput: 'categories',
         multiple: true
     }];
-
+    
     $scope.confirmDelete = function(item) {
         Alertify.set({
             labels: {
@@ -78,19 +85,6 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
 
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
 
-        $scope.starred = false;
-        $scope.condition = 'OR';
-        if ($routeParams.filter == 'starred') {
-            $scope.starred = true;
-            $rootScope.actualUrl = '/datasets/starred';
-            $scope.q += "&starred=true";
-            //$scope.modelName = 'Starred datasets';
-            angular.forEach($scope.filtersView, function(element) {
-                element.multiple = false;
-            });
-            //$scope.condition = 'AND';
-        }
-
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if (!resp) {
@@ -106,9 +100,7 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
         if(!!$scope.parameters.conditions_page) {
             $scope.q += $scope.parameters.conditions_page;
         }
-        if ($routeParams.filter == 'starred') {
-            $scope.q += "&starred=true";
-        }
+        
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if (!resp) {
