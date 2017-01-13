@@ -153,7 +153,7 @@
         };
     }]);
 
-    app.directive('selectTwoAjax', ['$timeout', '$parse', '$cookieStore', '$http', 'jwtHelper', '$location', 'Alertify', function($timeout, $parse, $cookieStore, $http, jwtHelper, $location, Alertify, $scope, $rootScope) {
+    app.directive('selectTwoAjax', ['$timeout', '$parse', '$cookieStore', '$http', 'jwtHelper', '$location', 'Alertify', '$rootScope', function($timeout, $parse, $cookieStore, $http, jwtHelper, $location, Alertify, $rootScope) {
         return {
             restrict: 'A',
             scope: {
@@ -298,6 +298,7 @@
                                         success: function(res) {
                                             scope.$apply(function() {
                                                 scope.subcats = res.data.length > 0;
+                                                $rootScope.hasSubs = scope.subcats;
                                             });
                                         }
                                     });
@@ -305,6 +306,7 @@
                                 } else {
                                     scope.values = "";
                                     scope.subcats = false;
+                                    $rootScope.hasSubs = false;
                                 }
                             });
                         }

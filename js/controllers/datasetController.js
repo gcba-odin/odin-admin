@@ -381,7 +381,7 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
 
     $scope.model = new model();
     $scope.model.items = [];
-
+    
     $scope.model.owner = { 'id': $scope.adminglob.currentUser.user, 'username': $scope.adminglob.currentUser.username };
 
     $scope.add = function(isValid) {
@@ -404,7 +404,7 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
         // transform the array of objects into a string of ids
         $scope.model.tags = $scope.model.tags.toString();
         $scope.model.categories = $scope.model.categories.toString();
-        if ($scope.model.subcategories) {
+        if (!!$scope.model.subcategories && $scope.model.subcategories.length > 0) {
             $scope.model.subcategories = $scope.model.subcategories.toString();
         }
 
@@ -462,7 +462,7 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
     }
 }
 
-function DatasetEditController($scope, Flash, rest, $routeParams, model, $location, modelService, usSpinnerService, configs, Alertify) {
+function DatasetEditController($scope, Flash, rest, $routeParams, model, $location, modelService, usSpinnerService, configs, Alertify, $rootScope) {
     usSpinnerService.spin('spinner');
     modelService.initService("Dataset", "datasets", $scope);
 
@@ -473,6 +473,7 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
     var tagstemporal = [];
     $scope.tempData = [];
     $scope.publishAt = "";
+    $rootScope.hasSubs = false;
 
     //factory configs
     configs.statuses($scope);
@@ -497,6 +498,7 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
         var optionsTemp = [];
 
         $scope.tempData = angular.copy($scope.model);
+        
         for (var o = 0; o < 10; o++) {
             var verified = verifyOptional($scope.model.items, o);
 
@@ -515,8 +517,11 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
         $scope.tempData.files = reformatArray($scope.tempData.files).toString();
         $scope.tempData.tags = $scope.tempData.tags.toString();
         $scope.tempData.categories = $scope.tempData.categories.toString();
-        if ($scope.tempData.subcategories) {
-            $scope.tempData.subcategories = $scope.tempData.subcategories.toString();
+
+        if (!!$rootScope.hasSubs && !!$scope.model.subcategories && $scope.model.subcategories.length > 0) {
+            $scope.tempData.subcategories = $scope.model.subcategories.toString();
+        } else {
+            $scope.tempData.subcategories = [];
         }
 
         if ($scope.model.status == $scope.statuses.published) {
@@ -579,6 +584,12 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
                 if (!$scope.model.starred) {
                     $scope.model.starred = false;
                 }
+//                if(!!$scope.model.subcategories) {
+////                    angular.forEach($scope.model.subcategories, function(element) {
+////                        $scope.data_subcategories.push(element.id);
+////                    });
+//                    $scope.data_subcategories = $scope.model.subcategories;
+//                } 
                 $scope.model.items = [];
                 $scope.publishAt = $scope.model.publishAt;
                 angular.forEach($scope.model.optionals, function(val, key) {
