@@ -39,7 +39,7 @@
 <!-- end Input lastName -->
 
 <!-- Input role -->
-<div class="form-group">
+<div class="form-group" permission permission-only="roles.SUPERADMIN">
     <label for="role" class="col-sm-2 control-label">* {{ 'ROLE' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.role.$touched && form.role.$invalid }" uib-tooltip-template="'views/user/role_tooltip_template.html'" tooltip-placement="top" data-html="true">
         <select placeholder="{{ 'SELECT_ONE' | translate }}" class="selectize-input items required full has-options has-items" data-key="name"

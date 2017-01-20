@@ -57,6 +57,10 @@
                                             <td class="detail-bold">{{ 'DESCRIPTION' | translate }}</td>
                                             <td ng-bind-html="getHtml(model.description)"></td>
                                         </tr>
+                                        <tr ng-if="model.status">
+                                            <td class="detail-bold">{{ 'STATUS' | translate }}</td>
+                                            <td>{{model.status| selectFilterArray:'status'}}</td>
+                                        </tr>
                                         <tr ng-if="model.notes">
                                             <td class="detail-bold">{{ 'NOTES' | translate }}</td>
                                             <td ng-bind-html="getHtml(model.notes)"></td>

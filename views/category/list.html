@@ -51,15 +51,17 @@
                                         <a class="btn btn-primary" ng-click="edit({id: model.id})" permission permission-except="roles.GUEST">{{ 'EDIT' | translate }}</a>
                                         <a ng-if="model.deletedAt" class="btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="activeModel($event)" permission permission-except="roles.GUEST">{{ 'ACTIVATE' | translate }}</a>
                                         <a ng-if="!model.deletedAt" class="btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="inactiveModel($event)" permission permission-except="roles.GUEST">{{ 'INACTIVATE' | translate }}</a>
-                                        <a uib-tooltip="No puede realizar esta acción. Esta {{ 'CATEGORY' | translate | lowercase }} tiene relaciones." tooltip-placement="top" tooltip-enable="model.datasets.length" tooltip-append-to-body="true" ng-disabled="model.datasets.length" class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="model.datasets.length ? null : confirmDelete($event)" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
+                                        <a uib-tooltip="No puede realizar esta acción. Esta {{ 'CATEGORY' | translate | lowercase }} tiene relaciones." tooltip-placement="top" tooltip-enable="model.datasets.length || model.subcategories.length" tooltip-append-to-body="true" ng-disabled="model.datasets.length || model.subcategories.length" class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="(model.datasets.length || model.subcategories.length) ? null : confirmDelete($event)" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
                                 </tr>
 
                             </tbody>
                         </table>
-                        <paging class="text-center" page="data.meta.page" page-size="parameters.limit" total="data.meta.count"
-                            paging-action="paging('pageClick', page, pageSize, total)"
-                            show-prev-next="true"
-                            show-first-last="true" hide-if-empty="true"></paging>
+                        <div class="text-center">
+                            <paging class="text-center" page="data.meta.page" page-size="parameters.limit" total="data.meta.count"
+                                paging-action="paging('pageClick', page, pageSize, total)"
+                                show-prev-next="true"
+                                show-first-last="true" hide-if-empty="true"></paging>
+                        </div>
                     </div>
                     <!-- /.box-body -->
                 </div>

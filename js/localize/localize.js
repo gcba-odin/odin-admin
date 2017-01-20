@@ -201,7 +201,8 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'CANCELLED_AT': 'Cancelled at',
         'REVIEWED_AT': 'Reviewed at',
         'SEND_TO_REVIEW': 'Send to review',
-        'CANCEL': 'Cancel review'
+        'CANCEL': 'Cancel review',
+        'STARRED_DATASETS': 'Starred datasets'
     });
 
     $translateProvider.translations('es', {
@@ -442,7 +443,8 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'CANCELLED_AT': 'Fecha de cancelación',
         'REVIEWED_AT': 'Fecha de revisión',
         'SEND_TO_REVIEW': 'Enviar a revisión',
-        'CANCEL': 'Cancelar revisión'
+        'CANCEL': 'Cancelar revisión',
+        'STARRED_DATASETS': 'Datasets destacados'
     });
     $translateProvider.preferredLanguage('es');
 }]);

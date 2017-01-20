@@ -46,8 +46,8 @@
 <!-- Input minZoom -->
 <div class="form-group">
     <label for="minZoom" class="col-sm-2 control-label">{{ 'MIN' | translate }}</label>
-    <div class="col-sm-10" ng-class="{ 'has-error': form.minZoom.$touched && form.minZoom.$invalid }" uib-tooltip="Valores posibles de 0 a 18. Se pueden modificar en las configuraciones." tooltip-placement="left">
-        <input type="number" ng-model="model.minZoom" min="0" max="18" class="form-control" id="minZoom" placeholder="{{ 'PLACE' | translate }} {{ 'MIN' | translate }} {{ 'HERE' | translate }}" />
+    <div class="col-sm-10" ng-class="{ 'has-error': form.minZoom.$touched && form.minZoom.$invalid }" uib-tooltip="Valores posibles de {{baseMin}} a {{baseMax}}. Se pueden modificar en las configuraciones." tooltip-placement="left">
+        <input type="number" ng-model="model.minZoom" min="{{baseMin}}" max="{{model.maxZoom}}" class="form-control" id="minZoom" placeholder="{{ 'PLACE' | translate }} {{ 'MIN' | translate }} {{ 'HERE' | translate }}" />
         <div class="help-block" ng-messages="form.minZoom.$error" ng-if="form.minZoom.$touched">
             <div ng-messages-include="views/messages.html"></div>
         </div>
@@ -58,8 +58,8 @@
 <!-- Input maxZoom -->
 <div class="form-group">
     <label for="maxZoom" class="col-sm-2 control-label">{{ 'MAX' | translate }}</label>
-    <div class="col-sm-10" ng-class="{ 'has-error': form.maxZoom.$touched && form.maxZoom.$invalid }" uib-tooltip="Valores posibles de 0 a 18. Se pueden modificar en las configuraciones." tooltip-placement="left">
-        <input type="number" ng-model="model.maxZoom" min="0" max="18" class="form-control" id="maxZoom" placeholder="{{ 'PLACE' | translate }} {{ 'MAX' | translate }} {{ 'HERE' | translate }}" />
+    <div class="col-sm-10" ng-class="{ 'has-error': form.maxZoom.$touched && form.maxZoom.$invalid }" uib-tooltip="Valores posibles de {{baseMin}} a {{baseMax}}. Se pueden modificar en las configuraciones." tooltip-placement="left">
+        <input type="number" ng-model="model.maxZoom" min="{{model.minZoom}}" max="{{baseMax}}" class="form-control" id="maxZoom" placeholder="{{ 'PLACE' | translate }} {{ 'MAX' | translate }} {{ 'HERE' | translate }}" />
         <div class="help-block" ng-messages="form.maxZoom.$error" ng-if="form.maxZoom.$touched">
             <div ng-messages-include="views/messages.html"></div>
         </div>

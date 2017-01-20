@@ -293,7 +293,7 @@ div.form-group div.has-error p {
 }*/
 .box-actions {
     //min-width: 13em;
-    max-width: 16em;
+    width: 40%;
 }
 
 .box-actions > .btn {

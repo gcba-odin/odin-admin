@@ -214,12 +214,33 @@ function BasemapViewController($scope, modelService, $routeParams, rest, $locati
     };
 }
 
-function BasemapCreateController($scope, modelService, rest, $location, model, $sce, $routeParams, Alertify, usSpinnerService) {
+function BasemapCreateController($scope, modelService, rest, $location, model, $sce, $routeParams, Alertify, usSpinnerService, configs) {
 
     modelService.initService("Basemap", "basemaps", $scope);
 
     $scope.model = new model();
     $scope.model.items = [];
+    $scope.baseMin = 0;
+    $scope.baseMax = 18;
+    
+    $scope.config_key = 'minZoom';
+    ////factory configs
+    configs.findKey($scope, function(resp) {
+        if (!!resp.data[0] && !!resp.data[0].value) {
+            $scope.baseMin = parseInt(resp.data[0].value);
+        }
+        
+        $scope.model.minZoom = $scope.baseMin;
+        
+        $scope.config_key = 'maxZoom';
+        ////factory configs
+        configs.findKey($scope, function(resp) {
+            if (!!resp.data[0] && !!resp.data[0].value) {
+                $scope.baseMax = parseInt(resp.data[0].value);
+            }
+            $scope.model.maxZoom = $scope.baseMax;
+        });
+    });
 
     $scope.add = function(model) {
         usSpinnerService.spin('spinner');
@@ -299,11 +320,30 @@ function BasemapCreateController($scope, modelService, rest, $location, model, $
 }
 
 
-function BasemapEditController($scope, modelService, $routeParams, $sce, rest, $location, model, Alertify, usSpinnerService) {
+function BasemapEditController($scope, modelService, $routeParams, $sce, rest, $location, model, Alertify, usSpinnerService, configs) {
     usSpinnerService.spin('spinner');
     modelService.initService("Basemap", "basemaps", $scope);
 
     $scope.model = new model();
+    
+    $scope.baseMin = 0;
+    $scope.baseMax = 18;
+    
+    $scope.config_key = 'minZoom';
+    ////factory configs
+    configs.findKey($scope, function(resp) {
+        if (!!resp.data[0] && !!resp.data[0].value) {
+            $scope.baseMin = parseInt(resp.data[0].value);
+        }
+        
+        $scope.config_key = 'maxZoom';
+        ////factory configs
+        configs.findKey($scope, function(resp) {
+            if (!!resp.data[0] && !!resp.data[0].value) {
+                $scope.baseMax = parseInt(resp.data[0].value);
+            }
+        });
+    });
 
     $scope.update = function(model) {
 
