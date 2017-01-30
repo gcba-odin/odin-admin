@@ -84,7 +84,7 @@
                                 <th class="text-center box-actions">{{ 'ACTIONS' | translate }}</th>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="map in model.maps">
+                                <tr ng-repeat="map in model.maps | orderBy: 'name'">
                                     <td>
                                         <span>{{map.name}}</span>
                                     </td>

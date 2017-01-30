@@ -1,7 +1,7 @@
 var app = angular.module('odin.basemapsControllers', []);
 
 
-function BasemapListController($scope, modelService, configs, usSpinnerService) {
+function BasemapListController($scope, modelService, configs, usSpinnerService, $rootScope, ROLES) {
     usSpinnerService.spin('spinner');
     modelService.initService("Basemap", "basemaps", $scope);
 
@@ -18,8 +18,13 @@ function BasemapListController($scope, modelService, configs, usSpinnerService) 
         model: 'users',
         key: 'username',
         modelInput: 'createdBy',
-        multiple: true
+        multiple: true,
+        permission: true,
     }];
+
+    if(!!$rootScope.adminglob.currentUser && $rootScope.adminglob.currentUser.role === ROLES.GUEST) {
+        $scope.filtersView[0].permission = false;
+    }
 
     $scope.filtersInclude = ['maps'];
 

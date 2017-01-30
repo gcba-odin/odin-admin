@@ -26,14 +26,20 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
         key: 'username',
         modelInput: 'createdBy',
         multiple: true,
-        condition: ''
+        condition: '',
+        permission: true,
     }, {
         name: 'Tipo',
         model: 'filetypes',
         key: 'name',
         modelInput: 'type',
-        multiple: true
+        multiple: true,
+        permission: true,
     }];
+
+    if(!!$rootScope.adminglob.currentUser && $rootScope.adminglob.currentUser.role === ROLES.GUEST) {
+        $scope.filtersView[0].permission = false;
+    }
 
     if (underReview) {
         $scope.parameters.conditions = '&status=' + $scope.statuses.underReview;

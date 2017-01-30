@@ -93,7 +93,7 @@
                             <th class="text-center box-actions">{{ 'ACTIONS' | translate }}</th>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="subcategory in model.subcategories">
+                            <tr ng-repeat="subcategory in model.subcategories  | orderBy: 'name'">
                                 <td>
                                     <span>{{subcategory.name}}</span>
                                 </td>
@@ -135,7 +135,7 @@
                                 <th class="text-center box-actions">{{ 'ACTIONS' | translate }}</th>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="dataset in model.datasets">
+                                <tr ng-repeat="dataset in model.datasets  | orderBy: 'name'">
                                     <td>
                                         <span>{{dataset.name}}</span>
                                     </td>

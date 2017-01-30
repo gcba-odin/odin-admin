@@ -7,7 +7,7 @@
             </div>
             <div class="col-md-7">
                 <div class="row">
-                    <div class="col-md-4 dropdowns-filter" ng-repeat="drop in dropdowns">
+                    <div class="col-md-4 dropdowns-filter" ng-repeat="drop in dropdowns" ng-if="!!drop.permission">
                         <label for="{{drop.model}}">{{drop.name}}
                             {{drop.tags}}</label>
                         <select ng-if="drop.multiple" placeholder="{{ 'SELECT_TO' | translate:{resource:drop.name} }}" data-key="{{drop.key}}" data-modelname="{{drop.model}}" select-two-ajax name="{{drop.model}}" id="{{drop.model}}" ng-model="searchModel.filters[drop.modelInput]"

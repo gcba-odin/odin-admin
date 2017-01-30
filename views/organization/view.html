@@ -68,7 +68,7 @@
                                 <th class="text-center box-actions">{{ 'ACTIONS' | translate }}</th>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="file in model.files">
+                                <tr ng-repeat="file in model.files | orderBy: 'name'">
                                     <td>
                                         <span>{{file.name}}</span>
                                     </td>
@@ -83,7 +83,7 @@
                                         <button ng-click="publish(file.id, 'files')" ng-if="file.status.id !== statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'PUBLISH' | translate }}</button>
                                     </td>
                                 </tr>
-                                <tr ng-repeat="user in model.users">
+                                <tr ng-repeat="user in model.users | orderBy: 'username'">
                                     <td>
                                         <span>{{user.username}}</span>
                                     </td>

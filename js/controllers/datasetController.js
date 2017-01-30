@@ -6,7 +6,7 @@ app.factory('model', function($resource) {
 
 
 
-function DatasetListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, $routeParams, configs, usSpinnerService) {
+function DatasetListController($scope, $rootScope, Alertify, modelService, $routeParams, configs, usSpinnerService, ROLES) {
     usSpinnerService.spin('spinner');
     modelService.initService('Dataset', "datasets", $scope);
     
@@ -32,20 +32,27 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
         model: 'statuses',
         key: 'name',
         modelInput: 'status',
-        multiple: true
+        multiple: true,
+        permission: true,
     }, {
         name: 'Autor',
         model: 'users',
         key: 'username',
         modelInput: 'createdBy',
-        multiple: true
+        multiple: true,
+        permission: true,
     }, {
         name: 'Categoria',
         model: 'categories',
         key: 'name',
         modelInput: 'categories',
-        multiple: true
+        multiple: true,
+        permission: true,
     }];
+
+    if(!!$rootScope.adminglob.currentUser && $rootScope.adminglob.currentUser.role === ROLES.GUEST) {
+        $scope.filtersView[1].permission = false;
+    }
     
     $scope.confirmDelete = function(item) {
         Alertify.set({

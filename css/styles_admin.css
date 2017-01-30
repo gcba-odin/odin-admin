@@ -496,7 +496,15 @@ div.panel-heading {
 
 .modal-dialog {
     width: 1000px;
+    //height: 90%;
 }
+/*.modal-content {
+    height: 90%;
+}
+.modal-body {
+    height: 90%;
+    overflow-y: scroll;
+}*/
 
 .sidebar {
     min-height: 700px;

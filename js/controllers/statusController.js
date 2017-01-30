@@ -4,7 +4,7 @@ app.factory('model', function($resource) {
     return $resource();
 });
 
-function StatusListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, configs, usSpinnerService) {
+function StatusListController($scope, modelService, configs, usSpinnerService) {
     usSpinnerService.spin('spinner');
     modelService.initService("Status", "statuses", $scope);
     
@@ -15,14 +15,6 @@ function StatusListController($scope, $location, rest, $rootScope, Flash, Alerti
         orderBy: 'createdAt',
         sort: 'DESC'
     };
-    
-    $scope.filtersView = [{
-            name: 'Autor',
-            model: 'users',
-            key: 'username',
-            modelInput: 'createdBy',
-            multiple: true
-        }];
 
     $scope.confirmDelete = function(item) {
         modelService.confirmDelete(item);

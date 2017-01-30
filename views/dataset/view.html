@@ -108,7 +108,7 @@
                         <th class="text-center box-actions">{{ 'ACTIONS' | translate }}</th>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="file in model.files">
+                            <tr ng-repeat="file in model.files  | orderBy: 'name'">
                                 <td>
                                     <span>{{file.name}}</span>
                                 </td>
