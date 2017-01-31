@@ -556,6 +556,8 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
     $scope.stepactive = 0;
     $scope.status_default = false;
     
+    var prev_status = null;
+    
     //factory configs
     configs.statuses($scope);
 
@@ -648,15 +650,15 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
         }
         $scope.model.dataSeries = $scope.model.dataSeries.toString();
         
-        if ($scope.model.status == $scope.statuses.published) {
+        if (prev_status != $scope.model.status && $scope.model.status == $scope.statuses.published) {
             $scope.model.publishedAt = new Date();
-        } else if($scope.model.status == $scope.statuses.unpublished) {
+        } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.unpublished) {
             $scope.model.unPublishedAt = new Date();
-        } else if($scope.model.status == $scope.statuses.rejected) {
+        } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.rejected) {
             $scope.model.rejectedAt = new Date();
-        } else if($scope.model.status == $scope.statuses.draft) {
+        } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.draft) {
             $scope.model.cancelledAt = new Date();
-        } else if($scope.model.status == $scope.statuses.underReview) {
+        } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.underReview) {
             $scope.model.reviewedAt = new Date();
         }
 
@@ -697,6 +699,7 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
             $scope.file_disabled = 'enabled';
             if (!!$scope.model.status) {
                 $scope.model.status = $scope.model.status.id;
+                prev_status = $scope.model.status;
             }
             if (!angular.isUndefined($scope.model.file)) {
                 $scope.fileModel = rest().contents({

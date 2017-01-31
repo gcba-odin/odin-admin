@@ -37,6 +37,7 @@
                             {{ 'BACK' | translate }}
                         </button>
                         <button type="button" class="btn btn-primary pull-right" ng-click="edit(model)" permission permission-except="roles.GUEST">{{ 'EDIT' | translate }} </button>
+                        <a class="btn btn-primary pull-right" data-length="{{model.datasets.length}}" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
                     </div>
                 </div>
 

@@ -62,5 +62,27 @@
             controllerAs: "footerHome"
         };
     });
+    app.directive("countUnderreview", function(rest) {
+        return {
+            restrict: "A",
+            controller: function($scope, configs) {
+                //factory statuses
+                configs.statuses($scope);
+                
+            },
+            link: function(scope, element, attrs) {
+                var data = rest().get({
+                    type: attrs.countUnderreview,
+                    params: 'status=' + scope.statuses.underReview
+                }, function(resp){
+                    var cant = 0;
+                    if(!!resp.data) 
+                        cant = resp.data.length;
+                    element[0].innerHTML = '(' + cant + ')';
+                });
+            },
+            controllerAs: "countUnderreview"
+        };
+    });
 
 })();

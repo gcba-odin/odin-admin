@@ -80,7 +80,7 @@ a:focus, a:hover {
 
 }
 
-.sidebar-menu .treeview-menu li.active>a {
+.sidebar-menu .treeview-menu li.active>a, .sidebar-menu .treeview-menu li.active>a>span {
     color: #19c3e3;
 
 }

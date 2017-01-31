@@ -380,7 +380,7 @@
     app.directive('selectStaticAjax', ['$parse', '$cookieStore', 'jwtHelper', '$location', function($parse, $cookieStore, jwtHelper, $location, $scope) {
         return {
             restrict: 'A',
-            template: '<option value="{{ opt.id }}" ng-repeat="opt in options">{{ opt.name }}</option>',
+            template: '<option value="{{ opt.id }}" ng-repeat="opt in options">{{ opt.name | translate }}</option>',
             link: function(scope, element, attrs, rootScope) {
 
                 scope.options = [{

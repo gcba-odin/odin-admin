@@ -206,6 +206,37 @@ function TagViewController($scope, Flash, rest, $routeParams, $location, modelSe
             }
         );
     };
+    $scope.confirmDelete = function (item) {
+        var text = '¿Está seguro que quiere borrar esta etiqueta?';
+        if (!!item.target.dataset.length && item.target.dataset.length > 0) {
+            text = 'Esta etiqueta tiene datasets asociados. Verifique aquí las asociaciones. <br><br>¿Está seguro de realizar esta acción?';
+        }
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm(text).then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+                rest().delete({
+                    type: $scope.type,
+                    id: $scope.model.id
+                }, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    var url = "/" + $scope.type;
+                    $location.path(url);
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
 }
 
 function TagCreateController($scope, rest, model, Flash, $location, modelService, Alertify, usSpinnerService) {

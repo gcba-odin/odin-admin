@@ -363,6 +363,34 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
             }
         );
     };
+    
+    $scope.confirmDelete = function (item) {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm('¿Está seguro que quiere borrar este dataset?<br> Al hacerlo, se borrarán todos los recursos asociados').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+                rest().delete({
+                    type: $scope.type,
+                    id: $scope.model.id
+                }, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    var url = "/" + $scope.type;
+                    $location.path(url);
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
 
     loadModel();
 
@@ -481,6 +509,8 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
     $scope.tempData = [];
     $scope.publishAt = "";
     $rootScope.hasSubs = false;
+    
+    var prev_status = null;
 
     //factory configs
     configs.statuses($scope);
@@ -531,15 +561,15 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
             $scope.tempData.subcategories = [];
         }
 
-        if ($scope.model.status == $scope.statuses.published) {
+        if (prev_status != $scope.model.status && $scope.model.status == $scope.statuses.published) {
             $scope.tempData.publishedAt = new Date();
-        } else if($scope.model.status == $scope.statuses.unpublished) {
+        } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.unpublished) {
             $scope.tempData.unPublishedAt = new Date();
-        } else if($scope.model.status == $scope.statuses.rejected) {
+        } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.rejected) {
             $scope.tempData.rejectedAt = new Date();
-        } else if($scope.model.status == $scope.statuses.draft) {
+        } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.draft) {
             $scope.tempData.cancelledAt = new Date();
-        } else if($scope.model.status == $scope.statuses.underReview) {
+        } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.underReview) {
             $scope.tempData.reviewedAt = new Date();
         }
 
@@ -587,6 +617,7 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
             }, function() {
                 if (!!$scope.model.status) {
                     $scope.model.status = $scope.model.status.id;
+                    prev_status = $scope.model.status;
                 }
                 if (!$scope.model.starred) {
                     $scope.model.starred = false;

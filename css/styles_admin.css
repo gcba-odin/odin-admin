@@ -128,7 +128,7 @@ ul.sidebar-menu .treeview.active>a, ul.sidebar-menu .treeview.active>a>span {
     min-width: 16em !important;
 }
 
-.sidebar-menu .treeview-menu li.active>a {
+.sidebar-menu .treeview-menu li.active>a, .sidebar-menu .treeview-menu li.active>a>span {
     color: #ff386a;
 }
 

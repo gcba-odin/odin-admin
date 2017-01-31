@@ -56,7 +56,8 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
             model: 'statuses',
             key: 'name',
             modelInput: 'status',
-            multiple: true
+            multiple: true,
+            permission: true
         });
     }
 
@@ -820,6 +821,7 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
     $scope.model = new model();
 
     $scope.status_default = false;
+    var prev_status = null;
 
     //factory configs
     configs.statuses($scope);
@@ -1021,19 +1023,19 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
             data.fileName = $scope.model.fileName;
         }
 
-        if ($scope.model.status == $scope.statuses.published) {
+        if (prev_status != $scope.model.status && $scope.model.status == $scope.statuses.published) {
             data.publishedAt = new Date();
-        } else if($scope.model.status == $scope.statuses.unpublished) {
+        } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.unpublished) {
             data.unPublishedAt = new Date();
-        } else if($scope.model.status == $scope.statuses.rejected) {
+        } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.rejected) {
             if(!!$rootScope.adminglob.currentUser && $rootScope.adminglob.currentUser.role === ROLES.GUEST) {
                 data.status = $scope.statuses.draft;
             } else {
                 data.rejectedAt = new Date();
             }
-        } else if($scope.model.status == $scope.statuses.draft) {
+        } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.draft) {
             data.cancelledAt = new Date();
-        } else if($scope.model.status == $scope.statuses.underReview) {
+        } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.underReview) {
             data.reviewedAt = new Date();
         }
         
@@ -1087,6 +1089,7 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
             }
             if (!!$scope.model.status) {
                 $scope.model.status = $scope.model.status.id;
+                prev_status = $scope.model.status;
             }
             if (!!$scope.model.gatheringDate) {
                 $scope.model.gatheringDate = $scope.model.gatheringDate ? moment($scope.model.gatheringDate).utc() : null;

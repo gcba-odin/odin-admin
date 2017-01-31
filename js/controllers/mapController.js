@@ -736,6 +736,7 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
     $scope.stepactive = 0;
     $scope.basemap_view = true;
     $scope.status_default = false;
+    var prev_status = null;
     
     //factory configs
     configs.statuses($scope);
@@ -860,15 +861,15 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
         }
         $scope.model.properties = $scope.model.properties.toString();
         
-        if ($scope.model.status == $scope.statuses.published) {
+        if (prev_status != $scope.model.status && $scope.model.status == $scope.statuses.published) {
             $scope.model.publishedAt = new Date();
-        } else if($scope.model.status == $scope.statuses.unpublished) {
+        } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.unpublished) {
             $scope.model.unPublishedAt = new Date();
-        } else if($scope.model.status == $scope.statuses.rejected) {
+        } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.rejected) {
             $scope.model.rejectedAt = new Date();
-        } else if($scope.model.status == $scope.statuses.draft) {
+        } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.draft) {
             $scope.model.cancelledAt = new Date();
-        } else if($scope.model.status == $scope.statuses.underReview) {
+        } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.underReview) {
             $scope.model.reviewedAt = new Date();
         }
 
@@ -927,6 +928,7 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
             }
             if (!!$scope.model.status) {
                 $scope.model.status = $scope.model.status.id;
+                prev_status = $scope.model.status;
             }
             url_map = $scope.model.link;
             $scope.file_disabled = 'enabled';

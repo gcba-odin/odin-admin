@@ -219,14 +219,14 @@
             templateUrl: "views/status/view.html",
             controller: StatusViewController
         })/*.when("/statuses/new", {
-            templateUrl: "views/status/add.html",
-            controller: StatusCreateController,
-            data: {
-                permissions: {
-                    except: ROLES.GUEST
-                }
-            }
-        })*/.when("/statuses/:id/edit", {
+         templateUrl: "views/status/add.html",
+         controller: StatusCreateController,
+         data: {
+         permissions: {
+         except: ROLES.GUEST
+         }
+         }
+         })*/.when("/statuses/:id/edit", {
             templateUrl: "views/status/edit.html",
             controller: StatusEditController,
             data: {
@@ -334,6 +334,20 @@
                     templateUrl: "views/file/preview.html",
                     controller: FilePreviewController
                 })
+                .when("/files/underreview", {
+                    templateUrl: "views/file/list.html",
+                    controller: FileListController,
+                    resolve: {
+                        underReview: function () {
+                            return true;
+                        }
+                    },
+                    data: {
+                        permissions: {
+                            except: ROLES.GUEST
+                        }
+                    }
+                })
                 //// file
 
                 ////  Categories
@@ -343,12 +357,30 @@
                 }).when("/categories/:id/view", {
             templateUrl: "views/category/view.html",
             controller: CategoryViewController
+        }).when("/categories/new", {
+            templateUrl: "views/category/add.html",
+            controller: CategoryCreateController,
+            data: {
+                permissions: {
+                    except: ROLES.GUEST
+                }
+            },
+            resolve: {
+                subcategory: function () {
+                    return false;
+                }
+            }
         }).when("/categories/new/:category?", {
             templateUrl: "views/category/add.html",
             controller: CategoryCreateController,
             data: {
                 permissions: {
                     except: ROLES.GUEST
+                }
+            },
+            resolve: {
+                subcategory: function () {
+                    return true;
                 }
             }
         }).when("/categories/:id/edit", {
@@ -357,6 +389,19 @@
             data: {
                 permissions: {
                     except: ROLES.GUEST
+                }
+            }
+        }).when("/subcategories/new", {
+            templateUrl: "views/category/add.html",
+            controller: CategoryCreateController,
+            data: {
+                permissions: {
+                    except: ROLES.GUEST
+                }
+            },
+            resolve: {
+                subcategory: function () {
+                    return true;
                 }
             }
         })
@@ -412,6 +457,20 @@
                     templateUrl: "views/map/preview.html",
                     controller: MapPreviewController
                 })
+                .when("/maps/underreview", {
+                    templateUrl: "views/map/list.html",
+                    controller: MapListController,
+                    resolve: {
+                        underReview: function () {
+                            return true;
+                        }
+                    },
+                    data: {
+                        permissions: {
+                            except: ROLES.GUEST
+                        }
+                    }
+                })
 
                 // Charts
                 .when("/charts", {
@@ -438,6 +497,20 @@
                 .when("/charts/preview/:id", {
                     templateUrl: "views/chart/preview.html",
                     controller: ChartPreviewController
+                })
+                .when("/charts/underreview", {
+                    templateUrl: "views/chart/list.html",
+                    controller: ChartListController,
+                    resolve: {
+                        underReview: function () {
+                            return true;
+                        }
+                    },
+                    data: {
+                        permissions: {
+                            except: ROLES.GUEST
+                        }
+                    }
                 })
 
                 // Configs
@@ -551,49 +624,6 @@
                 }
             }
         })
-
-                // Under Review
-                .when("/underreview/files", {
-                    templateUrl: "views/file/list.html",
-                    controller: FileListController,
-                    resolve: {
-                        underReview: function () {
-                            return true;
-                        }
-                    },
-                    data: {
-                        permissions: {
-                            except: ROLES.GUEST
-                        }
-                    }
-                }).when("/underreview/charts", {
-            templateUrl: "views/chart/list.html",
-            controller: ChartListController,
-            resolve: {
-                underReview: function () {
-                    return true;
-                }
-            },
-            data: {
-                permissions: {
-                    except: ROLES.GUEST
-                }
-            }
-        }).when("/underreview/maps", {
-            templateUrl: "views/map/list.html",
-            controller: MapListController,
-            resolve: {
-                underReview: function () {
-                    return true;
-                }
-            },
-            data: {
-                permissions: {
-                    except: ROLES.GUEST
-                }
-            }
-        })
-
                 .otherwise({
                     redirectTo: '/'
                 });

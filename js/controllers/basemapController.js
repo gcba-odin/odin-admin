@@ -217,6 +217,34 @@ function BasemapViewController($scope, modelService, $routeParams, rest, $locati
             }
         );
     };
+    
+    $scope.confirmDelete = function (item) {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm('¿Está seguro que quiere borrar este mapa base?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+                rest().delete({
+                    type: $scope.type,
+                    id: $scope.model.id
+                }, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    var url = "/" + $scope.type;
+                    $location.path(url);
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
 }
 
 function BasemapCreateController($scope, modelService, rest, $location, model, $sce, $routeParams, Alertify, usSpinnerService, configs) {
