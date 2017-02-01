@@ -204,6 +204,7 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'CANCEL': 'Cancel review',
         'STARRED_DATASETS': 'Starred datasets',
         'ADD_SUBCATEGORY': 'Add subcategory',
+        'ACTIVE_INACTIVE': 'Active/Inactive'
     });
 
     $translateProvider.translations('es', {
@@ -447,6 +448,7 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'CANCEL': 'Cancelar revisión',
         'STARRED_DATASETS': 'Datasets destacados',
         'ADD_SUBCATEGORY': 'Crear subcategoría',
+        'ACTIVE_INACTIVE': 'Activo/Inactivo'
     });
     $translateProvider.preferredLanguage('es');
 }]);

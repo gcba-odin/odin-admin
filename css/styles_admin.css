@@ -506,6 +506,11 @@ div.panel-heading {
     overflow-y: scroll;
 }*/
 
+.active_inactive {
+    text-align: center;
+    width: 15%;
+}
+
 .sidebar {
     min-height: 700px;
 }

@@ -27,7 +27,7 @@
                                             <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
                                         </a>
                                     </th>
-                                    <th>{{ 'STATE' | translate }}</th>
+                                    <th class="active_inactive">{{ 'ACTIVE_INACTIVE' | translate }}</th>
                                     <th>{{ 'SUBCATEGORY' | translate }}</th>
                                     <th>{{ 'AUTHOR' | translate }}</th>
                                     <th class="text-center box-actions">{{ 'ACTIONS' | translate }}</th>
@@ -38,7 +38,7 @@
                                 </tr>
                                 <tr ng-if="data.data.length != 0" ng-repeat="model in data.data">
                                     <td>{{model.name}}</td>
-                                    <td>
+                                    <td class="text-center">
                                         <span class="label label-default {{model.deletedAt ? '' : 'bg-primary color-white'}}" ng-class="">{{model.deletedAt ? 'Inactivo' : 'Activo'}}</span>
                                     </td> 
                                     <td>
