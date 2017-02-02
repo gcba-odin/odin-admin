@@ -137,3 +137,8 @@ ul.sidebar-menu .treeview.active>a>span {
 .steps li.active a:after, .steps li.active p:after {
     border-left: 12px solid #19c3e3;
 }
+
+.login-box {
+    box-shadow: 0px 0px 5px 0px #ffb600;
+    background-color: white;
+}

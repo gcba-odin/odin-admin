@@ -84,7 +84,7 @@
             ,
             corners: 1 // Corner roundness (0..1)
             ,
-            color: '#ff386a' // #rgb or #rrggbb or array of colors
+            color: '#19c3e3' //Odin: '#ff386a' // MarcaBA: '#19c3e3'
             ,
             opacity: 0.3 // Opacity of the lines
             ,
