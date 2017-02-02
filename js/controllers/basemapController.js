@@ -255,6 +255,7 @@ function BasemapCreateController($scope, modelService, rest, $location, model, $
     $scope.model.items = [];
     $scope.baseMin = 0;
     $scope.baseMax = 18;
+    $scope.model.tms = false;
     
     $scope.config_key = 'minZoom';
     ////factory configs

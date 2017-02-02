@@ -205,7 +205,7 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
         }, function() {
             var subcategories = [];
             for (var i = 0; i < $scope.model.subcategories.length; i++) {
-                subcategories.push('<span class="label label-primary">' + $scope.model.subcategories[i].name + '</span>')
+                subcategories.push('<span class="label label-primary condition-active">' + $scope.model.subcategories[i].name + '</span>')
             }
             $scope.subcategoriesNames = subcategories.join(" - ");
             usSpinnerService.stop('spinner');

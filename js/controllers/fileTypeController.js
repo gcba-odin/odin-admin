@@ -134,7 +134,7 @@ function FileTypeViewController($scope, Flash, rest, $routeParams, $location, mo
         }, function() {
             var mimes = [];
             for (var i = 0; i < $scope.model.mimetype.length; i++) {
-                mimes.push('<span class="label label-primary">' + $scope.model.mimetype[i] + '</span>')
+                mimes.push('<span class="label label-primary condition-active">' + $scope.model.mimetype[i] + '</span>')
             }
             $scope.model.mimetype = mimes.join(" - ");
             usSpinnerService.stop('spinner');

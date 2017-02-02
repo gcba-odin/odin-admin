@@ -39,10 +39,10 @@
                                 <tr ng-if="data.data.length != 0" ng-repeat="model in data.data">
                                     <td>{{model.name}}</td>
                                     <td class="text-center">
-                                        <span class="label label-default {{model.deletedAt ? '' : 'bg-primary color-white'}}" ng-class="">{{model.deletedAt ? 'Inactivo' : 'Activo'}}</span>
+                                        <span class="label label-default {{model.deletedAt ? '' : 'bg-primary condition-active'}}" ng-class="">{{model.deletedAt ? 'Inactivo' : 'Activo'}}</span>
                                     </td> 
                                     <td>
-                                        <span class="label label-default {{!!model.parent ? 'bg-primary color-white' : ''}}" ng-class="">{{!!model.parent ? 'Si' : 'No'}}</span>
+                                        <span class="label label-default {{!!model.parent ? 'bg-primary condition-active' : ''}}" ng-class="">{{!!model.parent ? 'Si' : 'No'}}</span>
                                     </td>
                                     <td>
                                         <span ng-if="model.createdBy">{{model.createdBy.username}}</span>

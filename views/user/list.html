@@ -42,7 +42,7 @@
                                     <td>{{model.username}}</td>
                                     <td>{{model.email}}</td>
                                     <td class="text-center">
-                                        <span class="label label-default {{model.deletedAt ? '' : 'bg-primary color-white'}}">{{model.deletedAt ? 'Inactivo' : 'Activo'}}</span>
+                                        <span class="label label-default {{model.deletedAt ? '' : 'bg-primary condition-active'}}">{{model.deletedAt ? 'Inactivo' : 'Activo'}}</span>
                                     </td>
                                     <td>
                                         <span>{{model.role | translate}}</span>

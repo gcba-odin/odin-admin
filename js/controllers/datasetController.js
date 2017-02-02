@@ -155,7 +155,7 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
         }, function() {
             var tags = [];
             for (var i = 0; i < $scope.model.tags.length; i++) {
-                tags.push('<span class="label label-primary">' + $scope.model.tags[i].name + '</span>')
+                tags.push('<span class="label label-primary condition-active">' + $scope.model.tags[i].name + '</span>')
             }
             $scope.model.tags = tags.join(" - ");
 
@@ -163,12 +163,12 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
             var subcategories = [];
 
             for (var i = 0; i < $scope.model.categories.length; i++) {
-                categories.push('<span class="label label-primary">' + $scope.model.categories[i].name + '</span>')
+                categories.push('<span class="label label-primary condition-active">' + $scope.model.categories[i].name + '</span>')
             }
             $scope.model.categories = categories.join(" - ");
 
             for (var i = 0; i < $scope.model.subcategories.length; i++) {
-                subcategories.push('<span class="label label-primary">' + $scope.model.subcategories[i].name + '</span>')
+                subcategories.push('<span class="label label-primary condition-active">' + $scope.model.subcategories[i].name + '</span>')
             }
             $scope.model.subcategories = subcategories.join(" - ");
 
@@ -416,6 +416,7 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
 
     $scope.model = new model();
     $scope.model.items = [];
+    $scope.model.starred = false;
     
     $scope.model.owner = { 'id': $scope.adminglob.currentUser.user, 'username': $scope.adminglob.currentUser.username };
 
