@@ -317,7 +317,7 @@ function MapPreviewController($scope, modelService, $routeParams, rest, $locatio
     modelService.initService("Map", "maps", $scope);
 
     //modelService.findOne($routeParams, $scope);
-    L.Icon.Default.imagePath = '/plugins/leaflet/images/';
+    L.Icon.Default.imagePath = '/admin/plugins/leaflet/images/';
 
     $scope.tiles = {
         url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
