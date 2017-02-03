@@ -6,5 +6,6 @@ gulp.task('build', [
   'javascript',
   'vendors',
   'static',
-  'fonts'
+  'fonts',
+  //'base-url'
 ]);

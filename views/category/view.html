@@ -5,7 +5,7 @@
     <section class="content">
         <div class="box-header with-border">
             <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} <b>{{ !model.parent ? 'CATEGORY' : 'SUBCATEGORY' | translate }}</b></h3>
-            <a ng-href="#/categories/new/{{model.id}}" ng-if="!model.parent" class="btn-primary btn pull-right" permission permission-except="roles.GUEST">{{ 'ADD' | translate }} {{ 'SUBCATEGORY' | translate }}</a>
+            <a ng-href="categories/new/{{model.id}}" ng-if="!model.parent" class="btn-primary btn pull-right" permission permission-except="roles.GUEST">{{ 'ADD' | translate }} {{ 'SUBCATEGORY' | translate }}</a>
             <button permission permission-except="roles.GUEST" ng-if="model.subcategories.length > 0" data-toggle="modal" data-target="#viewLinkSubcategories" class="btn btn-default pull-right margin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_SUBCATEGORIES' | translate }}</button>
             <button permission permission-except="roles.GUEST" ng-if="model.datasets.length > 0 || model.datasetsSubcategories.length > 0"  data-toggle="modal" data-target="#viewLinkRelationships" class="btn btn-default pull-right margin-right-10"><i class="fa fa-eye" aria-hidden="true"></i> {{ 'VIEW_LINK_RELATIONSHIPS' | translate }}</button>
         </div>
@@ -44,7 +44,7 @@
                             </tr>
                             <tr ng-if="model.createdBy">
                                 <td class="detail-bold">{{ 'CREATED_BY' | translate }} </td>
-                                <td><a ng-href="#/users/{{model.createdBy.id}}/view" href-policy-if-guest-user>{{model.createdBy.username}}</a></td>
+                                <td><a ng-href="users/{{model.createdBy.id}}/view" href-policy-if-guest-user>{{model.createdBy.username}}</a></td>
                             </tr>
                             <tr ng-if="model.createdAt">
                                 <td class="detail-bold">{{ 'CREATED_AT' | translate }}</td>
@@ -56,7 +56,7 @@
                             </tr>
                             <tr ng-if="!!model.parent">
                                 <td class="detail-bold">{{ 'PARENT_CATEGORY' | translate }}</td>
-                                <td><a ng-href="#/categories/{{model.parent.id}}/view">{{model.parent.name}}</a></td>
+                                <td><a ng-href="categories/{{model.parent.id}}/view">{{model.parent.name}}</a></td>
                             </tr>
                         </table>
                     </div>
@@ -102,8 +102,8 @@
                                     <span class="label label-default">{{subcategory.deletedAt ? 'Inactivo' : 'Activo'}}</span>
                                 </td>
                                 <td class="text-center box-actions">
-                                    <a target="_blank" class="btn btn-primary" ng-href="#/categories/{{subcategory.id}}/view">{{ 'VIEW' | translate }}</a>
-                                    <a target="_blank" class="btn btn-primary" ng-href="#/categories/{{subcategory.id}}/edit"  permission permission-except="roles.GUEST">{{ 'EDIT' | translate }}</a>
+                                    <a target="_blank" class="btn btn-primary" ng-href="categories/{{subcategory.id}}/view">{{ 'VIEW' | translate }}</a>
+                                    <a target="_blank" class="btn btn-primary" ng-href="categories/{{subcategory.id}}/edit"  permission permission-except="roles.GUEST">{{ 'EDIT' | translate }}</a>
                                     <a ng-if="!subcategory.datasets.length" class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{subcategory.id}}"
                                         ng-click="confirmDelete($event)"  permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
                                     <a ng-if="subcategory.deletedAt" class="btn btn-primary pull-right" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{subcategory.id}}"
@@ -144,8 +144,8 @@
                                         <span>{{'DATASET'| translate }}</span>
                                     </td>
                                     <td class="text-center box-actions">
-                                        <a target="_blank" class="btn btn-primary" ng-href="#/datasets/{{dataset.id}}/view">{{ 'VIEW' | translate }}</a>
-                                        <a target="_blank" class="btn btn-primary" ng-href="#/datasets/{{dataset.id}}/edit"  permission permission-except="roles.GUEST">{{ 'EDIT' | translate }}</a>
+                                        <a target="_blank" class="btn btn-primary" ng-href="datasets/{{dataset.id}}/view">{{ 'VIEW' | translate }}</a>
+                                        <a target="_blank" class="btn btn-primary" ng-href="datasets/{{dataset.id}}/edit"  permission permission-except="roles.GUEST">{{ 'EDIT' | translate }}</a>
                                         <a class="btn btn-primary" ng-click="deleteResource(dataset.id, 'datasets')" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
                                         <button ng-click="unPublish(dataset.id, 'datasets')" ng-if="dataset.status.id == statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'UNPUBLISH' | translate }}</button>
                                         <button ng-click="publish(dataset.id, 'datasets')" ng-if="dataset.status.id !== statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'PUBLISH' | translate }}</button>
@@ -159,8 +159,8 @@
                                         <span>{{'DATASET'| translate }}</span>
                                     </td>
                                     <td class="text-center box-actions">
-                                        <a target="_blank" class="btn btn-primary" ng-href="#/datasets/{{dataset.id}}/view">{{ 'VIEW' | translate }}</a>
-                                        <a target="_blank" class="btn btn-primary" ng-href="#/datasets/{{dataset.id}}/edit"  permission permission-except="roles.GUEST">{{ 'EDIT' | translate }}</a>
+                                        <a target="_blank" class="btn btn-primary" ng-href="datasets/{{dataset.id}}/view">{{ 'VIEW' | translate }}</a>
+                                        <a target="_blank" class="btn btn-primary" ng-href="datasets/{{dataset.id}}/edit"  permission permission-except="roles.GUEST">{{ 'EDIT' | translate }}</a>
                                         <a class="btn btn-primary" ng-click="deleteResource(dataset.id, 'datasets')" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
                                         <button ng-click="unPublish(dataset.id, 'datasets')" ng-if="dataset.status.id == statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'UNPUBLISH' | translate }}</button>
                                         <button ng-click="publish(dataset.id, 'datasets')" ng-if="dataset.status.id !== statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'PUBLISH' | translate }}</button>

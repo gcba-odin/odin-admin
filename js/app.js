@@ -37,7 +37,9 @@
         "extended": "7200" //2 hours
     });
 
-    app.config(function ($routeProvider, $httpProvider, $translateProvider, usSpinnerConfigProvider, ChartJsProvider, ConsumerServiceProvider, $middlewareProvider, jwtOptionsProvider, vcRecaptchaServiceProvider, ROLES, IdleProvider, TitleProvider, session_timeout) {
+    app.config(function ($routeProvider, $httpProvider, $translateProvider, usSpinnerConfigProvider, ChartJsProvider, ConsumerServiceProvider, $middlewareProvider, jwtOptionsProvider, vcRecaptchaServiceProvider, ROLES, IdleProvider, TitleProvider, session_timeout, $locationProvider) {
+
+        $locationProvider.html5Mode(true);
 
         vcRecaptchaServiceProvider.setDefaults({
             key: '6LcBhAkUAAAAANjrhmqwe62Y61sUKkwYncA-bpaT',
@@ -84,7 +86,7 @@
             ,
             corners: 1 // Corner roundness (0..1)
             ,
-            color: '#ff386a' //Odin: '#ff386a' // MarcaBA: '#19c3e3'
+            color: '#19c3e3' //Odin: '#ff386a' // MarcaBA: '#19c3e3'
             ,
             opacity: 0.3 // Opacity of the lines
             ,
@@ -691,12 +693,13 @@
 
     app.run(run);
 
-    function run($rootScope, EnvironmentConfig, authManager, Idle, AuthenticationService, $location, $window, PermRoleStore, ROLES, Alertify, $translate, $cookieStore) {
+    function run($rootScope, EnvironmentConfig, authManager, Idle, AuthenticationService, $location, $window, PermRoleStore, ROLES, Alertify, $translate, $cookieStore, BaseHTML5) {
         $rootScope.adminglob = $cookieStore.get('adminglob') || {};
         $rootScope.globals = $cookieStore.get('globals') || {};
         Idle.watch();
         $rootScope.url = EnvironmentConfig.api;
         $rootScope.odin_version = EnvironmentConfig.odin_version;
+        $rootScope.baseHtml5 = BaseHTML5.url;
         authManager.redirectWhenUnauthenticated();
         $rootScope.$on('$routeChangeSuccess', function (e, current, pre) {
             $rootScope.actualUrl = current.$$route.originalPath;
