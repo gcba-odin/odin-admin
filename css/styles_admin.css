@@ -64,8 +64,9 @@ a {
     color: #ff386a;
 }
 
-a:hover {
+a:focus, a:hover {
     color: #ffb600;
+    text-decoration: none;
 }
 
 .logo img {
@@ -140,6 +141,9 @@ ul.sidebar-menu .treeview.active>a, ul.sidebar-menu .treeview.active>a>span {
 div.wrapper li.dropdown.user.user-menu.avenir-medium.ng-scope>a>span {
     text-transform: capitalize;
     font-family: avenir-black;
+}
+div.navbar-custom-menu>ul>li>a:hover, div.navbar-custom-menu>ul>li>a:focus,  div.navbar-custom-menu>ul>li>a:active{
+    color: #ffb600;
 }
 
 footer, footer a {
