@@ -411,16 +411,34 @@
         };
     }]);
 
-    app.directive('selectTwoDefault', ['$parse', function($parse, $scope) {
+    app.directive('selectTwoDefault', ['$parse', '$filter', function($parse, $filter, $scope) {
 
         return {
             restrict: 'A',
             link: function(scope, element, attrs) {
                 var selectize = $(element).selectize({
+                    items: attrs.model.split(',') || [],
                     create: false,
-                    placeholder: attrs.placeholder,
-                })[0].selectize;
-
+                    maxItems: null,
+                    render: {
+                        item: function(item, escape) {
+                            var name = $filter('translate')(item.text);
+                            return '<div>' +
+                                '<span class="title">' +
+                                '<span class="name">' + escape(name) + '</span>' +
+                                '</span><br>' +
+                                '</div>';
+                        },
+                        option: function(item, escape) {
+                            var name = $filter('translate')(item.text);
+                            return '<div>' +
+                                '<span class="title">' +
+                                '<span class="name">' + escape(name) + '</span>' +
+                                '</span><br>' +
+                                '</div>';
+                        }
+                    },
+                });
             }
 
         };

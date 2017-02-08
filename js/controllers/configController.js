@@ -96,7 +96,7 @@ function ConfigEditController($scope, Flash, rest, $routeParams, model, $locatio
     usSpinnerService.spin('spinner');
     modelService.initService("Config", "configs", $scope);
 
-
+    
     $scope.model = new model();
     $scope.update = function(isValid) {
         usSpinnerService.spin('spinner');

@@ -24,13 +24,17 @@
                                     <th>{{ 'VALUE' | translate }}</th>
                                     <th class="text-center box-actions">{{ 'ACTIONS' | translate }}</th>
                                 </tr>
-                                <tr ng-repeat="model in data.data" ng-if="!model.parent">
+                                <tr ng-repeat="model in data.data | orderBy: 'description | translate'" ng-if="!model.parent">
                                     <td>{{model.description | translate}}</td>
                                     <td ng-if="model.type == 'model' && !model.multiple" value-config="{{model.value}}" data-model="{{model.model| lowercase}}"></td>
                                     <td ng-if="model.type != 'model'">
                                         <span class="{{(model.value == 'true' || model.value == 'false') ? (model.value == 'true') ? 'label label-default bg-primary condition-active' : 'label label-default ' : ''}}">{{(model.value == 'true') ? 'Habilitado' : (model.value == 'false') ? 'Deshabilitado' : model.value}}</span>
                                     </td>
-                                    <td ng-if="model.type == 'model' && model.multiple"></td>
+                                    <td ng-if="model.type == 'model' && model.multiple">
+                                        <div ng-repeat="mult in model.value.split(',')">
+                                            <span class="label label-default bg-primary condition-active">{{mult | uppercase | translate}}</span>
+                                        </div>
+                                    </td>
                                     <td class="text-center box-actions">
                                         <a ng-disabled="(adminglob.currentUser.role == 'admin' && !model.editable)" uib-tooltip="Su perfil de usuario no tiene permisos de edición." tooltip-placement="top" tooltip-enable="(adminglob.currentUser.role == 'admin' && !model.editable)" class="btn btn-primary" ng-click="(adminglob.currentUser.role == 'admin' && !model.editable) ? null : edit({id: model.id})">{{ 'EDIT' | translate }}</a>
                                     </td>
