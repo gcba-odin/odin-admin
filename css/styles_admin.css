@@ -601,3 +601,27 @@ div.panel-heading {
 .pdf-controls .pdf-right {
     line-height: 54px;
 }
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+    color: #fff;
+    cursor: default;
+    background-color: #FF386a;
+    border: 1px solid #FF386a;
+    border-bottom-color: transparent;
+    box-shadow: 0px 0px 5px 0px #ffb600;
+}
+
+.nav-tabs>li>a {
+    color: #555;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+}
+
+.nav-tabs>li>a:hover {
+    color: #fff;
+    background-color: #ffb600;
+    border: 1px solid #ffb600;
+    border-bottom-color: transparent;
+    box-shadow: 0px 0px 5px 0px #ffb600;
+}

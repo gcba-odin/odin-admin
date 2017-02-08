@@ -1,3 +1,4 @@
+<script type="text/javascript" src="/plugins/redirect.js"></script>
 <header class="main-header">
     <!-- Logo -->
     <a href="{{baseUrl}}" class="logo">
@@ -66,7 +67,7 @@
 
                     </a>
                 </li>
-                <li permission permission-only="roles.SUPERADMIN">
+                <li permission permission-except="roles.GUEST">
                     <a ng-href="configs" data-toggle="control-sidebar"><i class="navbar-icon fa fa-gears"></i></a>
                 </li>
             </ul>
