@@ -1,5 +1,6 @@
 (function () {
     var app = angular.module('odin', ["odin.config",
+        "odin.version",
         "ngRoute",
         "permission",
         "permission.ng",
@@ -693,12 +694,12 @@
 
     app.run(run);
 
-    function run($rootScope, EnvironmentConfig, authManager, Idle, AuthenticationService, $location, $window, PermRoleStore, ROLES, Alertify, $translate, $cookieStore, BaseHTML5) {
+    function run($rootScope, EnvironmentConfig, authManager, Idle, AuthenticationService, $location, $window, PermRoleStore, ROLES, Alertify, $translate, $cookieStore, BaseHTML5, odin_version) {
         $rootScope.adminglob = $cookieStore.get('adminglob') || {};
         $rootScope.globals = $cookieStore.get('globals') || {};
         Idle.watch();
         $rootScope.url = EnvironmentConfig.api;
-        $rootScope.odin_version = EnvironmentConfig.odin_version;
+        $rootScope.odin_version = odin_version;
         $rootScope.baseHtml5 = BaseHTML5.url;
         authManager.redirectWhenUnauthenticated();
         $rootScope.$on('$routeChangeSuccess', function (e, current, pre) {
