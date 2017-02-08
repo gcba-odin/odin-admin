@@ -4,13 +4,17 @@ app.factory('model', function($resource) {
     return $resource();
 });
 
-function ConfigListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, usSpinnerService) {
+function ConfigListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, usSpinnerService, $cookieStore) {
     usSpinnerService.spin('spinner');
     modelService.initService("Config", "configs", $scope);
     
+    $scope.tab_active = $cookieStore.get('tab_active') || 0;
+    var conf = ['site', 'visualizations', 'integrations'];
+    
     $scope.parameters = {
         orderBy: 'description',
-        sort: 'ASC'
+        sort: 'ASC',
+        conditions: '&category=' + conf[$scope.tab_active]
     };
 
     $scope.confirmDelete = function(item) {
@@ -28,6 +32,19 @@ function ConfigListController($scope, $location, rest, $rootScope, Flash, Alerti
     $scope.view = function(model) {
         modelService.view($scope, model);
     }
+    
+    $scope.changeTab = function(category) {
+        $cookieStore.put('tab_active', category);
+        usSpinnerService.spin('spinner');
+        
+        $scope.parameters.conditions = '&category=' + conf[category];
+        modelService.loadAll($scope, function(resp) {
+            usSpinnerService.stop('spinner');
+            if(!resp) {
+                modelService.reloadPage();
+            }
+        });
+    };
 
     modelService.loadAll($scope, function(resp) {
         usSpinnerService.stop('spinner');
@@ -75,7 +92,7 @@ function ConfigCreateController($scope, rest, model, Flash, $location, modelServ
     };
 }
 
-function ConfigEditController($scope, Flash, rest, $routeParams, model, $location, modelService, Alertify, usSpinnerService, $filter) {
+function ConfigEditController($scope, Flash, rest, $routeParams, model, $location, modelService, Alertify, usSpinnerService, $filter, $parse) {
     usSpinnerService.spin('spinner');
     modelService.initService("Config", "configs", $scope);
 
@@ -84,10 +101,28 @@ function ConfigEditController($scope, Flash, rest, $routeParams, model, $locatio
     $scope.update = function(isValid) {
         usSpinnerService.spin('spinner');
         if (isValid) {
+            var value = ($scope.model.value === true) ? 'true' : ($scope.model.value === false) ? 'false' : $scope.model.value;
+            var data = {
+                value: value
+            };
+
             rest().update({
                 type: $scope.type,
                 id: $scope.model.id
-            }, $scope.model, function(resp) {
+            }, data, function(resp) {
+                if($scope.model.value === true) {
+                    angular.forEach($scope.model.subconfigs, function(element) {
+                        var data_sub = {
+                            value: element.value
+                        };
+                        rest().update({
+                            type: $scope.type,
+                            id: element.id
+                        }, data_sub, function(resp) {
+                            
+                        });
+                    });
+                }
                 usSpinnerService.stop('spinner');
                 var url = '/' + $scope.type;
                 $location.path(url);
@@ -106,8 +141,14 @@ function ConfigEditController($scope, Flash, rest, $routeParams, model, $locatio
 
         $scope.model = rest().findOne({
             id: $routeParams.id,
-            type: $scope.type
+            type: $scope.type,
+            params: 'include=subconfigs'
         }, function() {
+            if($scope.model.value == 'true') {
+                $scope.model.value = true;
+            } else if($scope.model.value == 'false'){
+                $scope.model.value = false;
+            }
             if (!!$scope.model.model) {
                 $scope.value = rest().findOne({
                     id: $scope.model.value,
