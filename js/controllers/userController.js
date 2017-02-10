@@ -96,6 +96,10 @@ function UserViewController($scope, Flash, rest, $routeParams, $location, modelS
     $scope.isUserProfile = isUserProfile;
     modelService.initService('User', 'users', $scope);
     
+    $scope.current = {
+        'id': $scope.adminglob.currentUser.user,
+    };
+    
     if ($scope.isUserProfile) {
         rest().findOne({
             type: 'users',
