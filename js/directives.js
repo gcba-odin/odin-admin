@@ -314,52 +314,38 @@
 //                            });
                         }
                     },
-//                    onItemRemove: function (value) {
-//                        if (attrs.onchange) {
-//                            if(value) {
-//                        
-//                                // Check if there are subcategories associated
-//                                $.ajax({
-//                                    headers: {
-//                                        'Authorization': 'Bearer ' + token_auth,
-//                                        'x-admin-authorization': token,
-//                                    },
-//                                    url: scope.$root.url + '/' + attrs.modelname + '?condition=AND&deletedAt=null&parent=' + value,
-//                                    type: 'GET',
-//                                    success: function(res) {
-//                                        var subs_parent = [];
-//                                        if(!!res.data && res.data.length > 0) {
-//                                            $.each(res.data, function(key, value_data) {
-//                                                subs_parent.push(value_data.id);
-//                                            });
-//                                            if(!!attrs.subcategories) {
-//                                                var json_subs = JSON.parse(attrs.subcategories);
-//                                                for (obj in json_subs) {
-//                                                    if($.inArray(json_subs[obj], subs_parent) == 0) {
-//                                                        console.log('incluido');
-//                                                        delete attrs.subcategories[obj];
-//                                                    }
-//                                                }
-////                                                $.each(json_subs, function(key, value_sub) {
-////                                                    if($.inArray(value_sub, subs_parent) == 0) {
-////                                                        console.log('incluido');
-////                                                    }
-//////                                                    if (self.items.indexOf(key) == -1) {
-//////                                                        delete self.options[key];
-//////                                                    }
-////                                                });
-//                                                
-//                                            }
-//                                        }
-////                                        scope.$apply(function() {
-////                                            scope.subcats = res.data.length > 0;
-////                                            $rootScope.hasSubs = scope.subcats;
-////                                        });
-//                                    }
-//                                });
-//                            }
-//                        }
-//                    }
+                    onItemRemove: function (value) {
+                        if (attrs.onchange) {
+                            if(value) {
+                                var select_subs = $('#subcategories')[0].selectize;
+                                // Check if there are subcategories associated
+                                $.ajax({
+                                    headers: {
+                                        'Authorization': 'Bearer ' + token_auth,
+                                        'x-admin-authorization': token,
+                                    },
+                                    url: scope.$root.url + '/' + attrs.modelname + '?condition=AND&deletedAt=null&parent=' + value,
+                                    type: 'GET',
+                                    success: function(res) {
+                                        var subs_parent = [];
+                                        if(!!res.data && res.data.length > 0) {
+                                            $.each(res.data, function(key, value_data) {
+                                                subs_parent.push(value_data.id);
+                                            });
+                                            if(!!select_subs.items) {
+                                                for (obj in select_subs.items) {
+                                                    if($.inArray(select_subs.items[obj], subs_parent) == 0) {
+                                                        select_subs.removeOption(select_subs.items[obj]);
+                                                        select_subs.refreshOptions();
+                                                    }
+                                                }                                                
+                                            }
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    }
                 };
 
                 if (attrs.multiple) {
