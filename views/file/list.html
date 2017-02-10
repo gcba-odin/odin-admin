@@ -1,3 +1,4 @@
+<script type="text/javascript" src="/plugins/redirect.js"></script>
 <header-home ng-cloak></header-home>
 <div class="content-wrapper" ng-cloak>
     <breadcrumbs data-model-name="{{ 'FILES' | translate }}" data-model="{{type}}" ng-if="!underReview"></breadcrumbs>
@@ -9,7 +10,7 @@
           <h3 class="box-title">{{ 'FILES' | translate }}</h3>
           <h3 class="box-title" ng-if="underReview">{{ 'UNDER_REVIEW' | translate }}</h3>
           <div class="box-tools" ng-if="!underReview">
-              <a ng-href="#/files/new" class="btn btn-primary pull-right">{{ 'ADD' | translate }} {{ 'FILE' | translate }} </a>
+              <a ng-href="files/new" class="btn btn-primary pull-right">{{ 'ADD' | translate }} {{ 'FILE' | translate }} </a>
           </div>
       </div>
         <div class="row">

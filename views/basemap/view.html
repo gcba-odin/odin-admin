@@ -1,3 +1,4 @@
+<script type="text/javascript" src="/plugins/redirect.js"></script>
 <header-home></header-home>
 <div class="content-wrapper">
     <breadcrumbs data-type="{{ 'VIEW' | translate }}" data-model-name="{{ 'BASEMAP' | translate }}" data-model="{{type}}"></breadcrumbs>
@@ -39,7 +40,7 @@
                             </tr>
                             <tr ng-if="model.createdBy">
                                 <td class="detail-bold">{{ 'CREATED_BY' | translate }} </td>
-                                <td><a ng-href="#/users/{{model.createdBy.id}}/view" href-policy-if-guest-user>{{model.createdBy.username}}</a></td>
+                                <td><a ng-href="users/{{model.createdBy.id}}/view" href-policy-if-guest-user>{{model.createdBy.username}}</a></td>
                             </tr>
                             <tr ng-if="model.createdAt">
                                 <td class="detail-bold">{{ 'CREATED_AT' | translate }}</td>
@@ -93,8 +94,8 @@
                                         <span>{{'MAP'| translate }}</span>
                                     </td>
                                     <td class="text-center box-actions">
-                                        <a target="_blank" class="btn btn-primary" ng-href="#/maps/{{map.id}}/view">{{ 'VIEW' | translate }}</a>
-                                        <a target="_blank" class="btn btn-primary" ng-href="#/maps/{{map.id}}/edit" show-policy-if-guest-user="maps">{{ 'EDIT' | translate }}</a>
+                                        <a target="_blank" class="btn btn-primary" ng-href="maps/{{map.id}}/view">{{ 'VIEW' | translate }}</a>
+                                        <a target="_blank" class="btn btn-primary" ng-href="maps/{{map.id}}/edit" show-policy-if-guest-user="maps">{{ 'EDIT' | translate }}</a>
                                         <a class="btn btn-primary" ng-click="deleteResource(map.id, 'maps')" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
                                         <button ng-click="unPublish(map.id, 'maps')" ng-if="map.status.id == statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'UNPUBLISH' | translate }}</button>
                                         <button ng-click="publish(map.id, 'maps')" ng-if="map.status.id !== statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'PUBLISH' | translate }}</button>

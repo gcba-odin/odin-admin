@@ -312,12 +312,12 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
     loadModel();
 }
 
-function MapPreviewController($scope, modelService, $routeParams, rest, $location, $sce, leafletData, usSpinnerService,configs) {
+function MapPreviewController($scope, modelService, $routeParams, rest, $location, $sce, leafletData, usSpinnerService,configs, $rootScope) {
     usSpinnerService.spin('spinner');
     modelService.initService("Map", "maps", $scope);
 
     //modelService.findOne($routeParams, $scope);
-    L.Icon.Default.imagePath = '/admin/plugins/leaflet/images/';
+    L.Icon.Default.imagePath = $rootScope.baseHtml5 + 'plugins/leaflet/images/';
 
     $scope.tiles = {
         url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',

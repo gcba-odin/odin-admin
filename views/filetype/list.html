@@ -1,3 +1,4 @@
+<script type="text/javascript" src="/plugins/redirect.js"></script>
 <header-home></header-home>
 <div class="content-wrapper">
     <breadcrumbs data-model-name="{{ 'FILE_TYPES' | translate }}" data-model="{{type}}"></breadcrumbs>
@@ -6,7 +7,7 @@
       <div class="box-header">
           <h3 class="box-title">{{ 'FILE_TYPES' | translate }}</h3>
           <div class="box-tools">
-              <a ng-href="#/{{type}}/new" class="btn-primary btn nodecoration pull-right" permission permission-except="roles.GUEST">{{ 'ADD' | translate }} {{ 'FILE_TYPES' | translate }}</a>
+              <a ng-href="{{type}}/new" class="btn-primary btn nodecoration pull-right" permission permission-except="roles.GUEST">{{ 'ADD' | translate }} {{ 'FILE_TYPES' | translate }}</a>
           </div>
       </div>
         <div class="row">

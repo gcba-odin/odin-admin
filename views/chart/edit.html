@@ -1,3 +1,4 @@
+<script type="text/javascript" src="/plugins/redirect.js"></script>
 <header-home></header-home>
 <div class="content-wrapper">
     <breadcrumbs data-type="{{ 'EDIT' | translate }}" data-model-name="{{ 'CHARTS' | translate }}" data-model="{{type}}"></breadcrumbs>
@@ -41,7 +42,7 @@
                             </form>
                         </div>
                     </div>
-                    <div class="row" ng-show="stepactive == 2">
+                    <div class="row" ng-if="stepactive == 2">
                         <div class="col-md-12">
                             <div class="box box-primary">
                                 <div class="box-header with-border">

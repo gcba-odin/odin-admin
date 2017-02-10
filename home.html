@@ -1,3 +1,4 @@
+<script type="text/javascript" src="/plugins/redirect.js"></script>
 <header-home></header-home>
 <div class="content-wrapper">
 
@@ -19,7 +20,7 @@
                           </div>
                             <p class="message timeline-label">
 
-                                <a class="name" ng-href="#/users/{{log.user.id}}/view">
+                                <a class="name" ng-href="users/{{log.user.id}}/view">
                                     <small class="text-muted pull-right">
                                         <i class="fa fa-clock-o"></i>
                                         {{log.createdAt| date: "MMM d, y h:mm:ss a"}}</small>
@@ -28,7 +29,7 @@
                                 <span>{{log.action + 'D'| uppercase | translate | lowercase }}</span> <!-- class="label label-default" ng-class="setClassLog(log.action)" -->
 
                                 {{log.target| uppercase| translate | generalize | translate | lowercase}}
-                                <a ng-href="#/{{log.target}}s/{{log.resource}}/view" ng-if="log.action == 'create' || log.action == 'update'">
+                                <a ng-href="{{log.target}}s/{{log.resource}}/view" ng-if="log.action == 'create' || log.action == 'update'">
                                     {{log.target| uppercase | translate | lowercase}}
                                 </a>
                                 <span ng-if="log.action == 'delete'">
@@ -47,7 +48,7 @@
             <div class="col-lg-3 col-xs-6">
                 <!-- home box -->
                 <div class="home-box border-secondary">
-                      <a href="#/datasets" >
+                      <a href="datasets" >
                         <h3 class="text-center">{{datasetsCount.data.count}} {{'DATASETS'| translate}}</h3>
                       </a>
                 </div>
@@ -57,7 +58,7 @@
             <div class="col-lg-3 col-xs-6">
                 <!-- home box -->
                 <div class="home-box border-secondary">
-                      <a href="#/files" >
+                      <a href="files" >
                         <h3 class="text-center">{{filesCount.data.count}} {{'FILES'| translate}}</h3>
                       </a>
                 </div>
@@ -68,7 +69,7 @@
             <div class="col-lg-3 col-xs-6">
                 <!-- home box -->
                 <div class="home-box border-secondary">
-                      <a href="#/organizations" >
+                      <a href="organizations" >
                         <h3 class="text-center">{{organizationsCount.data.count}} {{'ORGANIZATIONS'| translate}}</h3>
                       </a>
                 </div>
@@ -79,7 +80,7 @@
             <div class="col-lg-3 col-xs-6">
                 <!-- home box -->
                 <div class="home-box border-secondary">
-                      <a href="#/users">
+                      <a href="users">
                         <h3 class="text-center">{{usersCount.data.count}} {{'USERS'| translate}}</h3>
                       </a>
                 </div>

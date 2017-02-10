@@ -1,3 +1,4 @@
+<script type="text/javascript" src="/plugins/redirect.js"></script>
 <header-home></header-home>
 <div class="content-wrapper">
     <breadcrumbs data-model-name="{{ 'CATEGORIES' | translate }}" data-model="{{type}}"></breadcrumbs>
@@ -6,8 +7,8 @@
       <div class="box-header">
           <h3 class="box-title">{{ 'CATEGORIES' | translate }}</h3>
           <div class="box-tools">
-              <a ng-href="#/subcategories/new" class="btn-primary btn nodecoration pull-right" permission permission-except="roles.GUEST">{{ 'ADD' | translate }} {{ 'SUBCATEGORY' | translate }}</a>
-              <a ng-href="#/categories/new" class="btn-primary btn nodecoration pull-right margin-right-10" permission permission-except="roles.GUEST">{{ 'ADD' | translate }} {{ 'CATEGORY' | translate }}</a>
+              <a ng-href="subcategories/new" class="btn-primary btn nodecoration pull-right" permission permission-except="roles.GUEST">{{ 'ADD' | translate }} {{ 'SUBCATEGORY' | translate }}</a>
+              <a ng-href="categories/new" class="btn-primary btn nodecoration pull-right margin-right-10" permission permission-except="roles.GUEST">{{ 'ADD' | translate }} {{ 'CATEGORY' | translate }}</a>
           </div>
       </div>
       <!-- /.box-header -->

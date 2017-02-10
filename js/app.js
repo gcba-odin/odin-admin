@@ -1,5 +1,6 @@
 (function () {
     var app = angular.module('odin', ["odin.config",
+        "odin.version",
         "ngRoute",
         "permission",
         "permission.ng",
@@ -37,7 +38,9 @@
         "extended": "7200" //2 hours
     });
 
-    app.config(function ($routeProvider, $httpProvider, $translateProvider, usSpinnerConfigProvider, ChartJsProvider, ConsumerServiceProvider, $middlewareProvider, jwtOptionsProvider, vcRecaptchaServiceProvider, ROLES, IdleProvider, TitleProvider, session_timeout) {
+    app.config(function ($routeProvider, $httpProvider, $translateProvider, usSpinnerConfigProvider, ChartJsProvider, ConsumerServiceProvider, $middlewareProvider, jwtOptionsProvider, vcRecaptchaServiceProvider, ROLES, IdleProvider, TitleProvider, session_timeout, $locationProvider) {
+
+        $locationProvider.html5Mode(true);
 
         vcRecaptchaServiceProvider.setDefaults({
             key: '6LcBhAkUAAAAANjrhmqwe62Y61sUKkwYncA-bpaT',
@@ -691,12 +694,13 @@
 
     app.run(run);
 
-    function run($rootScope, EnvironmentConfig, authManager, Idle, AuthenticationService, $location, $window, PermRoleStore, ROLES, Alertify, $translate, $cookieStore) {
+    function run($rootScope, EnvironmentConfig, authManager, Idle, AuthenticationService, $location, $window, PermRoleStore, ROLES, Alertify, $translate, $cookieStore, BaseHTML5, odin_version) {
         $rootScope.adminglob = $cookieStore.get('adminglob') || {};
         $rootScope.globals = $cookieStore.get('globals') || {};
         Idle.watch();
         $rootScope.url = EnvironmentConfig.api;
-        $rootScope.odin_version = EnvironmentConfig.odin_version;
+        $rootScope.odin_version = odin_version;
+        $rootScope.baseHtml5 = BaseHTML5.url;
         authManager.redirectWhenUnauthenticated();
         $rootScope.$on('$routeChangeSuccess', function (e, current, pre) {
             $rootScope.actualUrl = current.$$route.originalPath;
