@@ -696,9 +696,10 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
         $scope.model.optionals = {};
         var cont = 1;
         for (var i = 0; i < $scope.model.items.length; i++) {
-            var values = [];
-            $scope.model["optional" + cont] = "";
-            $scope.model.optionals[$scope.model.items[i].field1] = $scope.model.items[i].field2;
+            if($scope.model.items[i].field1 != '' && $scope.model.items[i].field2 != '') {
+                $scope.model["optional" + cont] = "";
+                $scope.model.optionals[$scope.model.items[i].field1] = $scope.model.items[i].field2;
+            }
             cont++;
         }
 
@@ -993,9 +994,10 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
 
         $scope.model.optionals = {};
         angular.forEach($scope.model.items, function (element) {
-            $scope.model.optionals[element.field1] = element.field2;
+            if(element.field1 != '' && element.field2 != '') 
+                $scope.model.optionals[element.field1] = element.field2;
         });
-
+        
         $scope.uploadImageProgress = 10;
         var data = {
             'name': $scope.model.name,
@@ -1102,13 +1104,31 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
             if (!$scope.model.layout) {
                 $scope.model.layout = false;
             }
-
+            
+            var opts_prev = [];
             $scope.model.items = [];
             angular.forEach($scope.model.optionals, function (val, key) {
+                opts_prev.push(key);
                 $scope.model.items.push({
                     field1: key,
                     field2: val,
                 });
+            });
+            
+            //get optionals by default on config
+            $scope.config_key = 'defaultOptionals';
+            configs.findKey($scope, function(resp) {
+                if (!!resp.data[0] && !!resp.data[0].value) {
+                    var opts = resp.data[0].value.split(',');
+                    angular.forEach(opts, function(element) {
+                        if($.inArray(element, opts_prev) != 0) {
+                            $scope.model.items.push({
+                                field1: element,
+                                field2: ''
+                            });
+                        }
+                    });
+                }
             });
 
             $scope.fileModel.name = $scope.model.name;

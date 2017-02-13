@@ -130,7 +130,7 @@
                                                     <span class="label" ng-class="model.layout ? 'label-primary' : 'label-default'">{{model.layout ? 'Si' : 'No'}}</span>
                                                 </td>
                                             </tr>
-                                            <tr ng-repeat="item in model.items">
+                                            <tr ng-repeat="item in model.items" ng-if="item.field1 != '' && item.field2 != ''">
                                                 <td class="detail-bold">{{item.field1}}</td>
                                                 <td>{{item.field2}}</td>
                                             </tr>
