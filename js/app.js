@@ -708,7 +708,8 @@
 
         var rolesObj = _.reduce(_.values(ROLES), function (roles, roleName) {
             roles[roleName] = function () {
-                return $rootScope.adminglob.currentUser.role === roleName;
+                if(!!$rootScope.adminglob.currentUser)
+                    return $rootScope.adminglob.currentUser.role === roleName;
             };
 
             return roles;
