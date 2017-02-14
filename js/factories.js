@@ -150,15 +150,28 @@
                     });
                 });
             },
-            restoreView: function(scope, item) {
+            restoreView: function(scope, item, prev, type) {
                 var model = item.target.dataset;
                 rest().restore({
-                    type: scope.type,
+                    type: type || scope.type,
                     id: model.id
                 }, {}, function(resp) {
+                    var pm = '';
+                    if (!!scope.filtersInclude) {
+                        pm += 'include=';
+                        angular.forEach(scope.filtersInclude, function(val, key, fil) {
+                            pm += val;
+                            if (key == (scope.filtersInclude.length - 1)) {
+                                pm += '&';
+                            } else {
+                                pm += ',';
+                            }
+                        });
+                    }
                     scope.model = rest().findOne({
-                        id: model.id,
-                        type: scope.type
+                        id: prev || model.id,
+                        type: scope.type,
+                        params: pm
                     });
                 });
             },
@@ -212,7 +225,7 @@
                     }
                 );
             },
-            deactivateView: function(item, scope) {
+            deactivateView: function(item, scope, prev, type) {
                 var item = item.target.dataset;
                 Alertify.set({
                     labels: {
@@ -223,12 +236,25 @@
                 Alertify.confirm(item.textdelete).then(
                     function onOk() {
                         rest().deactivate({
-                            type: scope.type,
+                            type: type || scope.type,
                             id: item.id
                         }, {}, function(resp) {
+                            var pm = '';
+                            if (!!scope.filtersInclude) {
+                                pm += 'include=';
+                                angular.forEach(scope.filtersInclude, function(val, key, fil) {
+                                    pm += val;
+                                    if (key == (scope.filtersInclude.length - 1)) {
+                                        pm += '&';
+                                    } else {
+                                        pm += ',';
+                                    }
+                                });
+                            }
                             scope.model = rest().findOne({
-                                id: item.id,
-                                type: scope.type
+                                id: prev || item.id,
+                                type: scope.type,
+                                params: pm
                             });
                         });
                     },

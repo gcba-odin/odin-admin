@@ -18,6 +18,10 @@
                                 <td class="detail-bold">{{ 'NAME' | translate }}</td>
                                 <td>{{model.name}}</td>
                             </tr>
+                            <tr>
+                                <td class="detail-bold">{{ 'ACTIVE_INACTIVE' | translate }}</td>
+                                <td><span class="label label-default {{model.deletedAt ? '' : 'bg-primary condition-active'}}">{{model.deletedAt ? 'Inactivo' : 'Activo'}}</span></td>
+                            </tr>
                             <tr ng-if="model.description">
                                 <td class="detail-bold">{{ 'DESCRIPTION' | translate }}</td>
                                 <td ng-bind-html="getHtml(model.description)"></td>
@@ -79,10 +83,13 @@
                                     </td>
                                     <td class="text-center box-actions">
                                         <a target="_blank" class="btn btn-primary" ng-href="files/{{file.id}}/view">{{ 'VIEW' | translate }}</a>
-                                        <a target="_blank" class="btn btn-primary" ng-href="files/{{file.id}}/edit" show-policy-if-guest-user="files">{{ 'EDIT' | translate }}</a>
+                                        <a target="_blank" class="btn btn-primary" ng-href="files/{{file.id}}/edit" show-policy-if-guest-user="file">{{ 'EDIT' | translate }}</a>
                                         <a class="btn btn-primary" ng-click="deleteResource(file.id, 'files')" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
-                                        <button ng-click="unPublish(file.id, 'files')" ng-if="file.status.id == statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'UNPUBLISH' | translate }}</button>
-                                        <button ng-click="publish(file.id, 'files')" ng-if="file.status.id !== statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'PUBLISH' | translate }}</button>
+                                        <button ng-click="unPublish(file.id, 'files')" ng-if="file.status == statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'UNPUBLISH' | translate }}</button>
+                                        <button ng-click="publish(file.id, 'files')" ng-if="file.status !== statuses.published && file.status !== statuses.rejected" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'PUBLISH' | translate }}</button>
+                                        <button ng-click="reject(file.id, 'files')" ng-if="file.status == statuses.underReview" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'REJECT' | translate }}</button>
+                                        <button ng-click="sendReview(file.id, 'files')" ng-if="file.status == statuses.draft" class="pull-right btn btn-primary" permission permission-only="roles.GUEST">{{ 'SEND_TO_REVIEW' | translate }}</button>
+                                        <button ng-click="cancel(file.id, 'files')" ng-if="file.status == statuses.underReview" class="pull-right btn btn-primary" permission permission-only="roles.GUEST" show-policy-if-guest-user="files">{{ 'CANCEL' | translate }}</button>
                                     </td>
                                 </tr>
                                 <tr ng-repeat="user in model.users | orderBy: 'username'">
@@ -94,9 +101,9 @@
                                     </td>
                                     <td class="text-center box-actions">
                                         <a target="_blank" class="btn btn-primary" ng-href="users/{{user.id}}/view">{{ 'VIEW' | translate }}</a>
-                                        <a target="_blank" class="btn btn-primary" ng-href="users/{{user.id}}/edit" show-policy-if-guest-user="users">{{ 'EDIT' | translate }}</a>
-                                        <button ng-click="unPublish(user.id, 'users')" ng-if="user.status.id == statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'UNPUBLISH' | translate }}</button>
-                                        <button ng-click="publish(user.id, 'users')" ng-if="user.status.id !== statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'PUBLISH' | translate }}</button>
+                                        <a target="_blank" class="btn btn-primary" ng-href="users/{{user.id}}/edit" show-policy-if-guest-user="user">{{ 'EDIT' | translate }}</a>
+                                        <a ng-if="user.deletedAt && (user.id != current.id)" class="pull-right btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{user.id}}" ng-click="activeModel($event, model.id, 'users')" permission permission-only="roles.SUPERADMIN">{{ 'ACTIVATE' | translate }}</a>
+                                        <a ng-if="!user.deletedAt && (user.id != current.id)" class="pull-right btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{user.id}}" ng-click="inactiveModel($event, model.id, 'users')" permission permission-only="roles.SUPERADMIN">{{ 'INACTIVATE' | translate }}</a>
                                     </td>
                                 </tr>
                             </tbody>

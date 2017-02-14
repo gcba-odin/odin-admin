@@ -132,6 +132,12 @@ function OrganizationListController($scope, $rootScope, modelService, configs, u
 function OrganizationViewController($scope, Flash, rest, $routeParams, $location, modelService, $sce, usSpinnerService, Alertify, $window) {
     usSpinnerService.spin('spinner');
     modelService.initService("Organization", "organizations", $scope);
+    
+    $scope.filtersInclude = ['files', 'users'];
+    
+    $scope.current = {
+        'id': $scope.adminglob.currentUser.user,
+    };
 
     var loadModel = function() {
         $scope.model = rest().findOne({
@@ -146,12 +152,12 @@ function OrganizationViewController($scope, Flash, rest, $routeParams, $location
         });
     }
     
-    $scope.inactiveModel = function(item) {
-        modelService.deactivateView(item, $scope);
+    $scope.inactiveModel = function(item, prev, type) {
+        modelService.deactivateView(item, $scope, prev, type);
     }
 
-    $scope.activeModel = function(item) {
-        modelService.restoreView($scope, item);
+    $scope.activeModel = function(item, prev, type) {
+        modelService.restoreView($scope, item, prev, type);
     };
 
     $scope.edit = function (model) {
@@ -257,6 +263,90 @@ function OrganizationViewController($scope, Flash, rest, $routeParams, $location
                     usSpinnerService.stop('spinner');
                     var url = "/" + $scope.type;
                     $location.path(url);
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+    
+    $scope.reject = function (id, type) {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm('¿Está seguro que quiere rechazar este recurso?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().reject({
+                    type: type,
+                    id: id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+    
+    $scope.sendReview = function (id, type) {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm('¿Está seguro que quiere enviar a revisión este recurso?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().sendReview({
+                    type: type,
+                    id: id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+    
+    $scope.cancel = function (id, type) {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm('¿Está seguro que quiere cancelar este recurso?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().cancel({
+                    type: type,
+                    id: id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
                 }, function (error) {
                     usSpinnerService.stop('spinner');
                     modelService.reloadPage();

@@ -70,10 +70,10 @@
                                 </td>
                                 <td class="text-center box-actions">
                                     <a target="_blank" class="btn btn-primary" ng-href="datasets/{{dataset.id}}/view">{{ 'VIEW' | translate }}</a>
-                                    <a target="_blank" class="btn btn-primary" ng-href="datasets/{{dataset.id}}/edit" show-policy-if-guest-user="datasets">{{ 'EDIT' | translate }}</a>
+                                    <a target="_blank" class="btn btn-primary" ng-href="datasets/{{dataset.id}}/edit" show-policy-if-guest-user="dataset">{{ 'EDIT' | translate }}</a>
                                     <a class="btn btn-primary" ng-click="deleteResource(dataset.id, 'datasets')">{{ 'DELETE' | translate }}</a>
-                                    <button ng-click="unPublish(dataset.id, 'datasets')" ng-if="dataset.status.id == statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'UNPUBLISH' | translate }}</button>
-                                    <button ng-click="publish(dataset.id, 'datasets')" ng-if="dataset.status.id !== statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'PUBLISH' | translate }}</button>
+                                    <button ng-click="unPublish(dataset.id, 'datasets')" ng-if="dataset.status == statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'UNPUBLISH' | translate }}</button>
+                                    <button ng-click="publish(dataset.id, 'datasets')" ng-if="dataset.status !== statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'PUBLISH' | translate }}</button>
                                 </td>
                             </tr>
                         </tbody>
