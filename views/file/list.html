@@ -52,7 +52,7 @@
                                     </td>
                                     <td class="text-center box-actions">
                                         <a class="btn btn-primary" ng-click="view({id: model.id})">{{ 'VIEW' | translate }}</a>
-                                        <a class="btn btn-primary" ng-click="edit(model)" show-policy-if-guest-user="model">{{ 'EDIT' | translate }}</a>
+                                        <a class="btn btn-primary" ng-click="edit(model)" show-policy-if-guest-user="{{model}}">{{ 'EDIT' | translate }}</a>
                                         <a class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
                                     </td>
                                 </tr>
