@@ -243,7 +243,8 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'UPDATEFREQUENCIES': 'Update frequencies',
         'FILETYPES': 'Filetypes',
         'UPDATEFREQUENCY': 'Update frequency',
-        'FILETYPE': 'Filetype'
+        'FILETYPE': 'Filetype',
+        'MIMETYPE': 'Mimetype'
         
     });
 
@@ -528,7 +529,8 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'UPDATEFREQUENCIES': 'Frecuencias de actualización',
         'FILETYPES': 'Tipos de archivos',
         'UPDATEFREQUENCY': 'Frecuencia de actualización',
-        'FILETYPE': 'Tipo de archivo'
+        'FILETYPE': 'Tipo de archivo',
+        'MIMETYPE': 'Mimetype'
     });
     $translateProvider.preferredLanguage('es');
 }]);

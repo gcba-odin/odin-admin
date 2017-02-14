@@ -115,13 +115,15 @@ function CategoryListController($scope, $rootScope, modelService, configs, usSpi
 function CategoryViewController($scope, Flash, rest, $routeParams, $location, $sce, modelService, $rootScope, usSpinnerService, Alertify, $window) {
     usSpinnerService.spin('spinner');
     modelService.initService("Category", "categories", $scope);
+    
+    $scope.filtersInclude = ['datasets', 'subcategories', 'datasetsSubcategories'];
 
-    $scope.inactiveModel = function(item) {
-        modelService.deactivateView(item, $scope);
+    $scope.inactiveModel = function(item, prev) {
+        modelService.deactivateView(item, $scope, prev);
     }
 
-    $scope.activeModel = function(item) {
-        modelService.restoreView($scope, item);
+    $scope.activeModel = function(item, prev) {
+        modelService.restoreView($scope, item, prev);
     };
 
     $scope.confirmDelete = function(item) {

@@ -22,15 +22,19 @@
                                 <td class="detail-bold">{{ 'URL' | translate }}</td>
                                 <td>{{model.url}}</td>
                             </tr>
-                            <tr ng-if="model.tms">
+                            <tr>
+                                <td class="detail-bold">{{ 'ACTIVE_INACTIVE' | translate }}</td>
+                                <td><span class="label label-default {{model.deletedAt ? '' : 'bg-primary condition-active'}}">{{model.deletedAt ? 'Inactivo' : 'Activo'}}</span></td>
+                            </tr>
+                            <tr>
                                 <td class="detail-bold">{{ 'TMS' | translate }}</td>
                                 <td><span class="label label-default {{model.tms ? 'bg-primary condition-active' : ''}}">{{model.tms ? 'Si' : 'No'}}</span></td>
                             </tr>
-                            <tr ng-if="model.minZoom">
+                            <tr>
                                 <td class="detail-bold">{{ 'MIN' | translate }}</td>
                                 <td>{{model.minZoom}}</td>
                             </tr>
-                            <tr ng-if="model.maxZoom">
+                            <tr>
                                 <td class="detail-bold">{{ 'MAX' | translate }}</td>
                                 <td>{{model.maxZoom}}</td>
                             </tr>
@@ -97,8 +101,11 @@
                                         <a target="_blank" class="btn btn-primary" ng-href="maps/{{map.id}}/view">{{ 'VIEW' | translate }}</a>
                                         <a target="_blank" class="btn btn-primary" ng-href="maps/{{map.id}}/edit" show-policy-if-guest-user="maps">{{ 'EDIT' | translate }}</a>
                                         <a class="btn btn-primary" ng-click="deleteResource(map.id, 'maps')" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
-                                        <button ng-click="unPublish(map.id, 'maps')" ng-if="map.status.id == statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'UNPUBLISH' | translate }}</button>
-                                        <button ng-click="publish(map.id, 'maps')" ng-if="map.status.id !== statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'PUBLISH' | translate }}</button>
+                                        <button ng-click="unPublish(map.id, 'maps')" ng-if="map.status == statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'UNPUBLISH' | translate }}</button>
+                                        <button ng-click="publish(map.id, 'maps')" ng-if="map.status !== statuses.published && map.status !== statuses.rejected" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'PUBLISH' | translate }}</button>
+                                        <button ng-click="reject(map.id, 'maps')" ng-if="map.status == statuses.underReview" class="pull-right btn btn-primary margin-right-10" permission permission-except="roles.GUEST">{{ 'REJECT' | translate }}</button>
+                                        <button ng-click="sendReview(map.id, 'maps')" ng-if="map.status == statuses.draft" class="pull-right btn btn-primary" permission permission-only="roles.GUEST">{{ 'SEND_TO_REVIEW' | translate }}</button>
+                                        <button ng-click="cancel(map.id, 'maps')" ng-if="map.status == statuses.underReview" class="pull-right btn btn-primary margin-right-10" permission permission-only="roles.GUEST" show-policy-if-guest-user="maps">{{ 'CANCEL' | translate }}</button>
                                     </td>
                                 </tr>
                             </tbody>

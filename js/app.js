@@ -707,12 +707,14 @@
         });
 
         var rolesObj = _.reduce(_.values(ROLES), function (roles, roleName) {
-            if(!!$rootScope.adminglob.currentUser) {
                 roles[roleName] = function () {
-                    return $rootScope.adminglob.currentUser.role === roleName;
+                    if(!!$rootScope.adminglob.currentUser) {
+                        return $rootScope.adminglob.currentUser.role === roleName;
+                    } else {
+                        return false;
+                    }
                 };
-            }
-
+            
             return roles;
         }, {});
 
