@@ -10,7 +10,7 @@
           <button ng-click="publish(model.id, 'files')" ng-if="model.status.id !== statuses.published && model.status.id !== statuses.rejected" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'PUBLISH' | translate }}</button>
           <button ng-click="reject(model.id, 'files')" ng-if="model.status.id == statuses.underReview" class="pull-right btn btn-primary margin-right-10" permission permission-except="roles.GUEST">{{ 'REJECT' | translate }}</button>
           <button ng-click="sendReview(model.id, 'files')" ng-if="model.status.id == statuses.draft" class="pull-right btn btn-primary" permission permission-only="roles.GUEST">{{ 'SEND_TO_REVIEW' | translate }}</button>
-          <button ng-click="cancel(model.id, 'files')" ng-if="model.status.id == statuses.underReview" class="pull-right btn btn-primary margin-right-10" permission permission-only="roles.GUEST" show-policy-if-guest-user="files">{{ 'CANCEL' | translate }}</button>
+          <button ng-click="cancel(model.id, 'files')" ng-if="model.status.id == statuses.underReview" class="pull-right btn btn-primary margin-right-10" permission permission-only="roles.GUEST" show-policy-if-guest-user="{{model}}">{{ 'CANCEL' | translate }}</button>
           <!--<a ng-href="files/new/{{model.id}}" class="btn btn-default pull-right margin-right-10"><i class="fa fa-plus" aria-hidden="true"></i> {{ 'NEW_RESOURCES' | translate }}</a>-->
           <div class="dropdown pull-right margin-right-10" ng-if="((!!model.url && !!model.type.api) || model.kml) && (!permission_block)">
               <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{ 'NEW_RESOURCES' | translate }}
@@ -170,7 +170,7 @@
                         <div class="pull-right">
                             <a ng-if="!!model.url && (!!model.type.api || model.type.name == 'pdf')" class="btn btn-primary" ng-href="files/{{model.id}}/preview">{{ 'PREVIEW' | translate }}</a>
                             <a class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
-                            <button type="submit" class="btn btn-primary" ng-click="edit(model)" show-policy-if-guest-user="model">{{ 'EDIT' | translate }}</button>
+                            <button type="submit" class="btn btn-primary" ng-click="edit(model)" show-policy-if-guest-user="{{model}}">{{ 'EDIT' | translate }}</button>
                             <a ng-if="!!model.url" class="btn btn-primary" target="_blank" href="{{ model.url}}" download="{{ model.name}}">{{ 'DOWNLOAD' | translate }}</a>
                         </div>
                     </div>
@@ -204,13 +204,13 @@
                                 </td>
                                 <td class="text-center box-actions">
                                     <a target="_blank" class="btn btn-primary" ng-href="maps/{{map.id}}/view">{{ 'VIEW' | translate }}</a>
-                                    <a target="_blank" class="btn btn-primary" ng-href="maps/{{map.id}}/edit" show-policy-if-guest-user="maps">{{ 'EDIT' | translate }}</a>
+                                    <a target="_blank" class="btn btn-primary" ng-href="maps/{{map.id}}/edit" show-policy-if-guest-user="{{map}}">{{ 'EDIT' | translate }}</a>
                                     <a class="btn btn-primary" ng-click="deleteResource(map.id, 'maps')" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
                                     <button ng-click="unPublish(map.id, 'maps')" ng-if="map.status.id == statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'UNPUBLISH' | translate }}</button>
                                     <button ng-click="publish(map.id, 'maps')" ng-if="map.status.id !== statuses.published && map.status.id !== statuses.rejected" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'PUBLISH' | translate }}</button>
                                     <button ng-click="reject(map.id, 'maps')" ng-if="map.status.id == statuses.underReview" class="pull-right btn btn-primary margin-right-10" permission permission-except="roles.GUEST">{{ 'REJECT' | translate }}</button>
                                     <button ng-click="sendReview(map.id, 'maps')" ng-if="map.status.id == statuses.draft" class="pull-right btn btn-primary" permission permission-only="roles.GUEST">{{ 'SEND_TO_REVIEW' | translate }}</button>
-                                    <button ng-click="cancel(map.id, 'maps')" ng-if="map.status.id == statuses.underReview" class="pull-right btn btn-primary margin-right-10" permission permission-only="roles.GUEST" show-policy-if-guest-user="map">{{ 'CANCEL' | translate }}</button>
+                                    <button ng-click="cancel(map.id, 'maps')" ng-if="map.status.id == statuses.underReview" class="pull-right btn btn-primary margin-right-10" permission permission-only="roles.GUEST" show-policy-if-guest-user="{{map}}">{{ 'CANCEL' | translate }}</button>
                                 </td>
                             </tr>
                             <tr ng-repeat="chart in model.resources.data.charts | filterIfGuestUser | orderBy: 'name'">
@@ -222,13 +222,13 @@
                                 </td>
                                 <td class="text-center box-actions">
                                     <a target="_blank" class="btn btn-primary" ng-href="charts/{{chart.id}}/view">{{ 'VIEW' | translate }}</a>
-                                    <a target="_blank" class="btn btn-primary" ng-href="charts/{{chart.id}}/edit" show-policy-if-guest-user="charts">{{ 'EDIT' | translate }}</a>
+                                    <a target="_blank" class="btn btn-primary" ng-href="charts/{{chart.id}}/edit" show-policy-if-guest-user="{{chart}}">{{ 'EDIT' | translate }}</a>
                                     <a class="btn btn-primary" ng-click="deleteResource(chart.id, 'charts')" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
                                     <button ng-click="unPublish(chart.id, 'charts')" ng-if="chart.status.id == statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'UNPUBLISH' | translate }}</button>
                                     <button ng-click="publish(chart.id, 'charts')" ng-if="chart.status.id !== statuses.published && chart.status.id !== statuses.rejected" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'PUBLISH' | translate }}</button>
                                     <button ng-click="reject(chart.id, 'charts')" ng-if="chart.status.id == statuses.underReview" class="pull-right btn btn-primary margin-right-10" permission permission-except="roles.GUEST">{{ 'REJECT' | translate }}</button>
                                     <button ng-click="sendReview(chart.id, 'charts')" ng-if="chart.status.id == statuses.draft" class="pull-right btn btn-primary" permission permission-only="roles.GUEST">{{ 'SEND_TO_REVIEW' | translate }}</button>
-                                    <button ng-click="cancel(chart.id, 'charts')" ng-if="chart.status.id == statuses.underReview" class="pull-right btn btn-primary margin-right-10" permission permission-only="roles.GUEST" show-policy-if-guest-user="chart">{{ 'CANCEL' | translate }}</button>
+                                    <button ng-click="cancel(chart.id, 'charts')" ng-if="chart.status.id == statuses.underReview" class="pull-right btn btn-primary margin-right-10" permission permission-only="roles.GUEST" show-policy-if-guest-user="{{chart}}">{{ 'CANCEL' | translate }}</button>
                                 </td>
                             </tr>
 

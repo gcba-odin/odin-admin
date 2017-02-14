@@ -798,12 +798,20 @@
                 $q.when(scope.model.$promise || scope.model).then(function(model) {
                     // TODO: Don't use hardcoded IDs
                     // oWRhpRV --> Under review
-                    // pWRhpRV -- rejected
-                    // nWRhpRV --> draft
+                    // qWRhpRV --> published
+                    // rWRhpRV --> unpublished
                     
-                    if(user.role === ROLES.GUEST && model.status.id !== 'oWRhpRV' &&
-                        model.status.id !== 'pWRhpRV' && model.status.id !== 'nWRhpRV') {
-                        element.css('display', 'none');
+                    var currentModel = JSON.parse(attrs.showPolicyIfGuestUser) || {};
+                    if(user.role === ROLES.GUEST) {
+                        
+                        if(!!currentModel) {
+                            var status = currentModel.status.id || currentModel.status;
+                            var statuses = ['oWRhpRV', 'qWRhpRV', 'rWRhpRV'];
+
+                            if($.inArray(status, statuses) == 0) {
+                                element.css('display', 'none');
+                            }
+                        }
                     }
                 });
             }
@@ -824,6 +832,21 @@
                     }
                 });
                 
+            }
+        };
+    });
+    
+    app.filter('pluralEntities', function () {
+        return function (input) { 
+            if(!!input) {
+                if(input.slice(-1) == 'y') {
+                    var rest = input.slice(0, input.length - 1);
+                    return rest + 'ies';
+                } else {
+                    return input + 's';
+                }
+            } else {
+                return input;
             }
         };
     });
