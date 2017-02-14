@@ -47,6 +47,7 @@ config.local.json
 # Generated files
 js/config.js
 dist/
+js/version.js
 
 # OS Generated
 .DS_STORE
