@@ -29,7 +29,7 @@
                                 <span>{{log.action + 'D'| uppercase | translate | lowercase }}</span> <!-- class="label label-default" ng-class="setClassLog(log.action)" -->
 
                                 {{log.target| uppercase| translate | generalize | translate | lowercase}}
-                                <a ng-href="{{log.target}}s/{{log.resource}}/view" ng-if="log.action == 'create' || log.action == 'update'">
+                                <a ng-href="{{log.target | pluralEntities}}/{{log.resource}}/view" ng-if="log.action == 'create' || log.action == 'update'">
                                     {{log.target| uppercase | translate | lowercase}}
                                 </a>
                                 <span ng-if="log.action == 'delete'">

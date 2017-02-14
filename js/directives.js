@@ -827,4 +827,19 @@
             }
         };
     });
+    
+    app.filter('pluralEntities', function () {
+        return function (input) { 
+            if(!!input) {
+                if(input.slice(-1) == 'y') {
+                    var rest = input.slice(0, input.length - 1);
+                    return rest + 'ies';
+                } else {
+                    return input + 's';
+                }
+            } else {
+                return input;
+            }
+        };
+    });
 })();
