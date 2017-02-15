@@ -1,3 +1,4 @@
+<script type="text/javascript" src="/admin/plugins/redirect.js"></script>
 <header-home></header-home>
 <div class="content-wrapper">
     <breadcrumbs   data-model-name="{{ 'USERS' | translate }}" data-model="{{type}}"></breadcrumbs>
@@ -6,7 +7,7 @@
       <div class="box-header">
           <h3 class="box-title">{{ 'USERS' | translate }}</h3>
           <div class="box-tools">
-              <a ng-href="#/users/new" class="btn-primary btn nodecoration pull-right" permission permission-only="roles.SUPERADMIN">{{ 'ADD' | translate }} {{ 'USER' | translate }}</a>
+              <a ng-href="users/new" class="btn-primary btn nodecoration pull-right" permission permission-only="roles.SUPERADMIN">{{ 'ADD' | translate }} {{ 'USER' | translate }}</a>
           </div>
       </div>
         <div class="row">
@@ -31,18 +32,18 @@
                                             <span ng-show="sortType == 'email' && sortReverse" class="fa fa-caret-up"></span>
                                         </a>
                                     </th>
-                                    <th>{{ 'STATE' | translate }}</th>
+                                    <th class="active_inactive">{{ 'ACTIVE_INACTIVE' | translate }}</th>
                                     <th>{{ 'ROLE' | translate }}</th>
                                     <th class="text-center box-actions">{{ 'ACTIONS' | translate }}</th>
                                 </tr>
                                 <tr ng-if="data.data.length == 0">
-                                    <td colspan="3">No se encuentran datos para mostrar.</td>
+                                    <td colspan="5">No se encuentran datos para mostrar.</td>
                                 </tr>
                                 <tr ng-if="data.data.length != 0" ng-repeat="model in data.data">
                                     <td>{{model.username}}</td>
                                     <td>{{model.email}}</td>
-                                    <td>
-                                        <span class="label label-default {{model.deletedAt ? '' : 'bg-primary color-white'}}">{{model.deletedAt ? 'Inactivo' : 'Activo'}}</span>
+                                    <td class="text-center">
+                                        <span class="label label-default {{model.deletedAt ? '' : 'bg-primary condition-active'}}">{{model.deletedAt ? 'Inactivo' : 'Activo'}}</span>
                                     </td>
                                     <td>
                                         <span>{{model.role | translate}}</span>

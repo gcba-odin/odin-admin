@@ -5,7 +5,7 @@ app.factory('model', function($resource) {
 });
 
 
-function CategoryListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, configs, usSpinnerService) {
+function CategoryListController($scope, $rootScope, modelService, configs, usSpinnerService, ROLES) {
     usSpinnerService.spin('spinner');
     modelService.initService("Category", "categories", $scope);
 
@@ -18,14 +18,19 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
     };
 
     $scope.filtersView = [{
-            name: 'Autor',
-            model: 'users',
-            key: 'username',
-            modelInput: 'createdBy',
-            multiple: true
-        }];
+        name: 'Autor',
+        model: 'users',
+        key: 'username',
+        modelInput: 'createdBy',
+        multiple: true,
+        permission: true,
+    }];
 
-    $scope.filtersInclude = ['datasets', 'subcategories'];
+    if(!!$rootScope.adminglob.currentUser && $rootScope.adminglob.currentUser.role === ROLES.GUEST) {
+        $scope.filtersView[0].permission = false;
+    }
+
+    $scope.filtersInclude = ['datasets', 'subcategories', 'datasetsSubcategories'];
 
     $scope.inactiveModel = function(item) {
         modelService.deactivateList(item, $scope);
@@ -110,13 +115,15 @@ function CategoryListController($scope, $location, rest, $rootScope, Flash, Aler
 function CategoryViewController($scope, Flash, rest, $routeParams, $location, $sce, modelService, $rootScope, usSpinnerService, Alertify, $window) {
     usSpinnerService.spin('spinner');
     modelService.initService("Category", "categories", $scope);
+    
+    $scope.filtersInclude = ['datasets', 'subcategories', 'datasetsSubcategories'];
 
-    $scope.inactiveModel = function(item) {
-        modelService.deactivateView(item, $scope);
+    $scope.inactiveModel = function(item, prev) {
+        modelService.deactivateView(item, $scope, prev);
     }
 
-    $scope.activeModel = function(item) {
-        modelService.restoreView($scope, item);
+    $scope.activeModel = function(item, prev) {
+        modelService.restoreView($scope, item, prev);
     };
 
     $scope.confirmDelete = function(item) {
@@ -147,6 +154,35 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
             }
         );
     };
+    
+    $scope.confirmDeleteCategory = function (item) {
+        var text = (!!$scope.model.parent) ? 'subcategoría' : 'categoría';
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm('¿Está seguro que quiere borrar esta ' + text + '?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+                rest().delete({
+                    type: $scope.type,
+                    id: $scope.model.id
+                }, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    var url = "/" + $scope.type;
+                    $location.path(url);
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
 
     $scope.edit = function(model) {
         var url = '/' + $scope.type + '/' + model.id + "/edit";
@@ -167,11 +203,11 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type,
-            params: 'include=subcategories,datasets'
+            params: 'include=subcategories,datasets,datasetsSubcategories'
         }, function() {
             var subcategories = [];
             for (var i = 0; i < $scope.model.subcategories.length; i++) {
-                subcategories.push('<span class="label label-primary">' + $scope.model.subcategories[i].name + '</span>')
+                subcategories.push('<span class="label label-primary condition-active">' + $scope.model.subcategories[i].name + '</span>')
             }
             $scope.subcategoriesNames = subcategories.join(" - ");
             usSpinnerService.stop('spinner');
@@ -214,7 +250,7 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
 
                 rest().unpublish({
                     type: type,
-                    id: $scope.model.id
+                    id: id
                 }, {}, function (resp) {
                     usSpinnerService.stop('spinner');
                     loadModel();
@@ -259,12 +295,14 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
     };
 }
 
-function CategoryCreateController($scope, rest, $routeParams, model, Flash, $location, $rootScope, Alertify, modelService, Upload, usSpinnerService) {
+function CategoryCreateController($scope, rest, $routeParams, model, Flash, $location, $rootScope, Alertify, modelService, Upload, usSpinnerService, subcategory) {
     modelService.initService("Category", "categories", $scope);
 
     $scope.fileModel = [];
 
     $scope.mostrar = true;
+    $scope.subcategory = subcategory;
+    $scope.category_disabled = 'enabled';
 
     $scope.clearUpload = function() {
         $scope.fileModel.name = "";
@@ -301,7 +339,7 @@ function CategoryCreateController($scope, rest, $routeParams, model, Flash, $loc
                 'description': $scope.model.description,
                 'color': $scope.model.color,
                 'uploadImage': $scope.model.uploadImage,
-                'parent': $scope.model.parent
+                'parent': $scope.model.category
             };
 
             Upload.upload({
@@ -359,6 +397,11 @@ function CategoryCreateController($scope, rest, $routeParams, model, Flash, $loc
 
     if (!angular.isUndefined($routeParams.category)) {
         $scope.model.parent = $routeParams.category;
+        $scope.model.category = rest().findOne({
+            id: $routeParams.category,
+            type: 'categories'
+        });
+        $scope.category_disabled = 'disabled';
     }
 }
 
@@ -379,6 +422,7 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
     $scope.clearUpload = function() {
         $scope.fileModel.name = "";
         $scope.fileModel.type = "";
+        $scope.model.deleteImage = "true";
     };
 
     $scope.clearImage = function() {
@@ -398,6 +442,7 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
         image = $files[0];
         $scope.fileModel.name = $files[0].name;
         $scope.mostrar = true;
+        $scope.model.deleteImage = "false";
     };
 
 
@@ -411,7 +456,9 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
                 'name': $scope.model.name,
                 'description': $scope.model.description,
                 'color': $scope.model.color,
-                'active': $scope.model.active
+                'active': $scope.model.active,
+                'deleteImage': $scope.model.deleteImage,
+                'fileName': $scope.model.fileName
             };
 
             if (image != null) {
@@ -471,6 +518,7 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
                 type: 'svg',
                 name: $scope.model.fileName
             };
+            $scope.model.deleteImage = "false";
             usSpinnerService.stop('spinner');
         }, function(error) {
             usSpinnerService.stop('spinner');

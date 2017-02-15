@@ -1,3 +1,4 @@
+<script type="text/javascript" src="/admin/plugins/redirect.js"></script>
 <!-- Input name -->
 <div class="form-group">
     <label for="name" class="col-sm-2 control-label">* {{ 'NAME' | translate }}</label>
@@ -29,7 +30,7 @@
     <label for="type" class="col-sm-2 control-label"> {{ 'CHART_TYPES' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.type.$touched && form.type.$invalid }">
 
-        <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="type" data-model="{{model.type}}" name="type" id="type" ng-model="model.type" class="selectize-input items required full has-options has-items"  ng-required="!model.link">
+        <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="type" data-model="{{model.type}}" name="type" id="type" ng-model="model.type" class="selectize-input items required full has-options has-items" ng-required="!model.link" ng-disabled="!!model.link">
             <option value="">Seleccione una opción</option>
             <option value="bar">Barras</option>
             <option value="pie">Tortas</option>
@@ -74,7 +75,7 @@
 <div class="form-group">
     <label for="link" class="col-sm-2 control-label">{{ 'URL' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form.link.$touched && form.link.$invalid }">
-        <input type="text" ng-model="model.link" name="name" class="form-control" id="link" placeholder="{{ 'PLACE' | translate }} {{ 'URL' | translate }} {{ 'HERE' | translate }}" ng-required="!model.type" />
+        <input uib-tooltip="URL para adjuntar un gráfico embebido" tooltip-placement="top" type="text" ng-model="model.link" name="name" class="form-control" id="link" placeholder="{{ 'PLACE' | translate }} {{ 'URL' | translate }} {{ 'HERE' | translate }}" ng-required="!model.type" />
         <div class="help-block" ng-messages="form.link.$error" ng-if="form.link.$touched">
             <div ng-messages-include="views/messages.html"></div>
         </div>

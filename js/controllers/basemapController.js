@@ -1,7 +1,7 @@
 var app = angular.module('odin.basemapsControllers', []);
 
 
-function BasemapListController($scope, modelService, configs, usSpinnerService) {
+function BasemapListController($scope, modelService, configs, usSpinnerService, $rootScope, ROLES) {
     usSpinnerService.spin('spinner');
     modelService.initService("Basemap", "basemaps", $scope);
 
@@ -18,8 +18,13 @@ function BasemapListController($scope, modelService, configs, usSpinnerService) 
         model: 'users',
         key: 'username',
         modelInput: 'createdBy',
-        multiple: true
+        multiple: true,
+        permission: true,
     }];
+
+    if(!!$rootScope.adminglob.currentUser && $rootScope.adminglob.currentUser.role === ROLES.GUEST) {
+        $scope.filtersView[0].permission = false;
+    }
 
     $scope.filtersInclude = ['maps'];
 
@@ -105,6 +110,8 @@ function BasemapListController($scope, modelService, configs, usSpinnerService) 
 function BasemapViewController($scope, modelService, $routeParams, rest, $location, $sce, usSpinnerService, Alertify, $window) {
     usSpinnerService.spin('spinner');
     modelService.initService("Basemap", "basemaps", $scope);
+    
+    $scope.filtersInclude = ['maps'];
 
     var loadModel = function() {
         $scope.model = rest().findOne({
@@ -212,6 +219,118 @@ function BasemapViewController($scope, modelService, $routeParams, rest, $locati
             }
         );
     };
+    
+    $scope.confirmDelete = function (item) {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm('¿Está seguro que quiere borrar este mapa base?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+                rest().delete({
+                    type: $scope.type,
+                    id: $scope.model.id
+                }, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    var url = "/" + $scope.type;
+                    $location.path(url);
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+    
+    $scope.reject = function (id, type) {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm('¿Está seguro que quiere rechazar este mapa?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().reject({
+                    type: type,
+                    id: id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+    
+    $scope.sendReview = function (id, type) {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm('¿Está seguro que quiere enviar a revisión este mapa?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().sendReview({
+                    type: type,
+                    id: id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+    
+    $scope.cancel = function (id, type) {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm('¿Está seguro que quiere cancelar este mapa?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().cancel({
+                    type: type,
+                    id: id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
 }
 
 function BasemapCreateController($scope, modelService, rest, $location, model, $sce, $routeParams, Alertify, usSpinnerService, configs) {
@@ -222,6 +341,7 @@ function BasemapCreateController($scope, modelService, rest, $location, model, $
     $scope.model.items = [];
     $scope.baseMin = 0;
     $scope.baseMax = 18;
+    $scope.model.tms = false;
     
     $scope.config_key = 'minZoom';
     ////factory configs

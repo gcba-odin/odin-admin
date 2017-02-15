@@ -26,14 +26,20 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
         key: 'username',
         modelInput: 'createdBy',
         multiple: true,
-        condition: ''
+        condition: '',
+        permission: true,
     }, {
         name: 'Tipo',
         model: 'filetypes',
         key: 'name',
         modelInput: 'type',
-        multiple: true
+        multiple: true,
+        permission: true,
     }];
+
+    if(!!$rootScope.adminglob.currentUser && $rootScope.adminglob.currentUser.role === ROLES.GUEST) {
+        $scope.filtersView[0].permission = false;
+    }
 
     if (underReview) {
         $scope.parameters.conditions = '&status=' + $scope.statuses.underReview;
@@ -50,7 +56,8 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
             model: 'statuses',
             key: 'name',
             modelInput: 'status',
-            multiple: true
+            multiple: true,
+            permission: true
         });
     }
 
@@ -689,9 +696,10 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
         $scope.model.optionals = {};
         var cont = 1;
         for (var i = 0; i < $scope.model.items.length; i++) {
-            var values = [];
-            $scope.model["optional" + cont] = "";
-            $scope.model.optionals[$scope.model.items[i].field1] = $scope.model.items[i].field2;
+            if($scope.model.items[i].field1 != '' && $scope.model.items[i].field2 != '') {
+                $scope.model["optional" + cont] = "";
+                $scope.model.optionals[$scope.model.items[i].field1] = $scope.model.items[i].field2;
+            }
             cont++;
         }
 
@@ -814,6 +822,7 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
     $scope.model = new model();
 
     $scope.status_default = false;
+    var prev_status = null;
 
     //factory configs
     configs.statuses($scope);
@@ -985,9 +994,10 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
 
         $scope.model.optionals = {};
         angular.forEach($scope.model.items, function (element) {
-            $scope.model.optionals[element.field1] = element.field2;
+            if(element.field1 != '' && element.field2 != '') 
+                $scope.model.optionals[element.field1] = element.field2;
         });
-
+        
         $scope.uploadImageProgress = 10;
         var data = {
             'name': $scope.model.name,
@@ -1015,19 +1025,19 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
             data.fileName = $scope.model.fileName;
         }
 
-        if ($scope.model.status == $scope.statuses.published) {
+        if (prev_status != $scope.model.status && $scope.model.status == $scope.statuses.published) {
             data.publishedAt = new Date();
-        } else if($scope.model.status == $scope.statuses.unpublished) {
+        } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.unpublished) {
             data.unPublishedAt = new Date();
-        } else if($scope.model.status == $scope.statuses.rejected) {
+        } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.rejected) {
             if(!!$rootScope.adminglob.currentUser && $rootScope.adminglob.currentUser.role === ROLES.GUEST) {
                 data.status = $scope.statuses.draft;
             } else {
                 data.rejectedAt = new Date();
             }
-        } else if($scope.model.status == $scope.statuses.draft) {
+        } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.draft) {
             data.cancelledAt = new Date();
-        } else if($scope.model.status == $scope.statuses.underReview) {
+        } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.underReview) {
             data.reviewedAt = new Date();
         }
         
@@ -1081,6 +1091,7 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
             }
             if (!!$scope.model.status) {
                 $scope.model.status = $scope.model.status.id;
+                prev_status = $scope.model.status;
             }
             if (!!$scope.model.gatheringDate) {
                 $scope.model.gatheringDate = $scope.model.gatheringDate ? moment($scope.model.gatheringDate).utc() : null;
@@ -1093,13 +1104,31 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
             if (!$scope.model.layout) {
                 $scope.model.layout = false;
             }
-
+            
+            var opts_prev = [];
             $scope.model.items = [];
             angular.forEach($scope.model.optionals, function (val, key) {
+                opts_prev.push(key);
                 $scope.model.items.push({
                     field1: key,
                     field2: val,
                 });
+            });
+            
+            //get optionals by default on config
+            $scope.config_key = 'defaultOptionals';
+            configs.findKey($scope, function(resp) {
+                if (!!resp.data[0] && !!resp.data[0].value) {
+                    var opts = resp.data[0].value.split(',');
+                    angular.forEach(opts, function(element) {
+                        if($.inArray(element, opts_prev) != 0) {
+                            $scope.model.items.push({
+                                field1: element,
+                                field2: ''
+                            });
+                        }
+                    });
+                }
             });
 
             $scope.fileModel.name = $scope.model.name;

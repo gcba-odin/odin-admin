@@ -1,5 +1,6 @@
 (function () {
     var app = angular.module('odin', ["odin.config",
+        "odin.version",
         "ngRoute",
         "permission",
         "permission.ng",
@@ -37,7 +38,9 @@
         "extended": "7200" //2 hours
     });
 
-    app.config(function ($routeProvider, $httpProvider, $translateProvider, usSpinnerConfigProvider, ChartJsProvider, ConsumerServiceProvider, $middlewareProvider, jwtOptionsProvider, vcRecaptchaServiceProvider, ROLES, IdleProvider, TitleProvider, session_timeout) {
+    app.config(function ($routeProvider, $httpProvider, $translateProvider, usSpinnerConfigProvider, ChartJsProvider, ConsumerServiceProvider, $middlewareProvider, jwtOptionsProvider, vcRecaptchaServiceProvider, ROLES, IdleProvider, TitleProvider, session_timeout, $locationProvider) {
+
+        $locationProvider.html5Mode(true);
 
         vcRecaptchaServiceProvider.setDefaults({
             key: '6LcBhAkUAAAAANjrhmqwe62Y61sUKkwYncA-bpaT',
@@ -84,7 +87,7 @@
             ,
             corners: 1 // Corner roundness (0..1)
             ,
-            color: '#ff386a' // #rgb or #rrggbb or array of colors
+            color: '#19c3e3' //Odin: '#ff386a' // MarcaBA: '#19c3e3'
             ,
             opacity: 0.3 // Opacity of the lines
             ,
@@ -219,14 +222,14 @@
             templateUrl: "views/status/view.html",
             controller: StatusViewController
         })/*.when("/statuses/new", {
-            templateUrl: "views/status/add.html",
-            controller: StatusCreateController,
-            data: {
-                permissions: {
-                    except: ROLES.GUEST
-                }
-            }
-        })*/.when("/statuses/:id/edit", {
+         templateUrl: "views/status/add.html",
+         controller: StatusCreateController,
+         data: {
+         permissions: {
+         except: ROLES.GUEST
+         }
+         }
+         })*/.when("/statuses/:id/edit", {
             templateUrl: "views/status/edit.html",
             controller: StatusEditController,
             data: {
@@ -334,6 +337,20 @@
                     templateUrl: "views/file/preview.html",
                     controller: FilePreviewController
                 })
+                .when("/files/underreview", {
+                    templateUrl: "views/file/list.html",
+                    controller: FileListController,
+                    resolve: {
+                        underReview: function () {
+                            return true;
+                        }
+                    },
+                    data: {
+                        permissions: {
+                            except: ROLES.GUEST
+                        }
+                    }
+                })
                 //// file
 
                 ////  Categories
@@ -343,12 +360,30 @@
                 }).when("/categories/:id/view", {
             templateUrl: "views/category/view.html",
             controller: CategoryViewController
+        }).when("/categories/new", {
+            templateUrl: "views/category/add.html",
+            controller: CategoryCreateController,
+            data: {
+                permissions: {
+                    except: ROLES.GUEST
+                }
+            },
+            resolve: {
+                subcategory: function () {
+                    return false;
+                }
+            }
         }).when("/categories/new/:category?", {
             templateUrl: "views/category/add.html",
             controller: CategoryCreateController,
             data: {
                 permissions: {
                     except: ROLES.GUEST
+                }
+            },
+            resolve: {
+                subcategory: function () {
+                    return true;
                 }
             }
         }).when("/categories/:id/edit", {
@@ -357,6 +392,19 @@
             data: {
                 permissions: {
                     except: ROLES.GUEST
+                }
+            }
+        }).when("/subcategories/new", {
+            templateUrl: "views/category/add.html",
+            controller: CategoryCreateController,
+            data: {
+                permissions: {
+                    except: ROLES.GUEST
+                }
+            },
+            resolve: {
+                subcategory: function () {
+                    return true;
                 }
             }
         })
@@ -412,6 +460,20 @@
                     templateUrl: "views/map/preview.html",
                     controller: MapPreviewController
                 })
+                .when("/maps/underreview", {
+                    templateUrl: "views/map/list.html",
+                    controller: MapListController,
+                    resolve: {
+                        underReview: function () {
+                            return true;
+                        }
+                    },
+                    data: {
+                        permissions: {
+                            except: ROLES.GUEST
+                        }
+                    }
+                })
 
                 // Charts
                 .when("/charts", {
@@ -438,6 +500,20 @@
                 .when("/charts/preview/:id", {
                     templateUrl: "views/chart/preview.html",
                     controller: ChartPreviewController
+                })
+                .when("/charts/underreview", {
+                    templateUrl: "views/chart/list.html",
+                    controller: ChartListController,
+                    resolve: {
+                        underReview: function () {
+                            return true;
+                        }
+                    },
+                    data: {
+                        permissions: {
+                            except: ROLES.GUEST
+                        }
+                    }
                 })
 
                 // Configs
@@ -551,49 +627,6 @@
                 }
             }
         })
-
-                // Under Review
-                .when("/underreview/files", {
-                    templateUrl: "views/file/list.html",
-                    controller: FileListController,
-                    resolve: {
-                        underReview: function () {
-                            return true;
-                        }
-                    },
-                    data: {
-                        permissions: {
-                            except: ROLES.GUEST
-                        }
-                    }
-                }).when("/underreview/charts", {
-            templateUrl: "views/chart/list.html",
-            controller: ChartListController,
-            resolve: {
-                underReview: function () {
-                    return true;
-                }
-            },
-            data: {
-                permissions: {
-                    except: ROLES.GUEST
-                }
-            }
-        }).when("/underreview/maps", {
-            templateUrl: "views/map/list.html",
-            controller: MapListController,
-            resolve: {
-                underReview: function () {
-                    return true;
-                }
-            },
-            data: {
-                permissions: {
-                    except: ROLES.GUEST
-                }
-            }
-        })
-
                 .otherwise({
                     redirectTo: '/'
                 });
@@ -661,22 +694,27 @@
 
     app.run(run);
 
-    function run($rootScope, EnvironmentConfig, authManager, Idle, AuthenticationService, $location, $window, PermRoleStore, ROLES, Alertify, $translate, $cookieStore) {
+    function run($rootScope, EnvironmentConfig, authManager, Idle, AuthenticationService, $location, $window, PermRoleStore, ROLES, Alertify, $translate, $cookieStore, BaseHTML5, odin_version) {
         $rootScope.adminglob = $cookieStore.get('adminglob') || {};
         $rootScope.globals = $cookieStore.get('globals') || {};
         Idle.watch();
         $rootScope.url = EnvironmentConfig.api;
-        $rootScope.odin_version = EnvironmentConfig.odin_version;
+        $rootScope.odin_version = odin_version;
+        $rootScope.baseHtml5 = BaseHTML5.url;
         authManager.redirectWhenUnauthenticated();
         $rootScope.$on('$routeChangeSuccess', function (e, current, pre) {
             $rootScope.actualUrl = current.$$route.originalPath;
         });
 
         var rolesObj = _.reduce(_.values(ROLES), function (roles, roleName) {
-            roles[roleName] = function () {
-                return $rootScope.adminglob.currentUser.role === roleName;
-            };
-
+                roles[roleName] = function () {
+                    if(!!$rootScope.adminglob.currentUser) {
+                        return $rootScope.adminglob.currentUser.role === roleName;
+                    } else {
+                        return false;
+                    }
+                };
+            
             return roles;
         }, {});
 

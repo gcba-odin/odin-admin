@@ -1,3 +1,4 @@
+<script type="text/javascript" src="/admin/plugins/redirect.js"></script>
 <header-home></header-home>
 <div class="content-wrapper">
     <breadcrumbs   data-model-name="{{ 'STATUS' | translate }}" data-model="{{type}}"></breadcrumbs>
@@ -6,7 +7,7 @@
       <div class="box-header">
           <h3 class="box-title">{{ 'STATUSES' | translate }}</h3>
           <!--<div class="box-tools">
-              <a ng-href="#/statuses/new" class="btn-primary btn nodecoration pull-right" permission permission-except="roles.GUEST">{{ 'ADD' | translate }} {{ 'STATUS' | translate }}</a>
+              <a ng-href="statuses/new" class="btn-primary btn nodecoration pull-right" permission permission-except="roles.GUEST">{{ 'ADD' | translate }} {{ 'STATUS' | translate }}</a>
           </div>-->
       </div>
         <div class="row">
@@ -29,9 +30,9 @@
                                     <th class="text-center box-actions">{{ 'ACTIONS' | translate }}</th>
                                 </tr>
                                 <tr ng-if="data.data.length == 0">
-                                    <td colspan="3">No se encuentran datos para mostrar.</td>
+                                    <td colspan="2">No se encuentran datos para mostrar.</td>
                                 </tr>
-                                <tr ng-if="data.data.length != 0" ng-repeat="model in data.data">
+                                <tr ng-if="data.data.length != 0" ng-repeat="model in data.data | orderBy: 'name'">
                                     <td>{{model.name}}</td>
                                     <!--<td>
                                         <span ng-if="model.createdBy">{{model.createdBy.username}}</span>

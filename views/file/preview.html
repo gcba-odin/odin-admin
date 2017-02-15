@@ -1,3 +1,4 @@
+<script type="text/javascript" src="/admin/plugins/redirect.js"></script>
 <header-home></header-home>
 <div class="content-wrapper">
     <breadcrumbs data-type="{{ 'PREVIEW' | translate }}" data-model-name="{{ 'FILES' | translate }}" data-model="{{type}}"></breadcrumbs>
@@ -27,7 +28,7 @@
                         </div>
                         <div class="resource-pdf" ng-if="!!model.url && model.type.name == 'pdf'">
                             <div class="wrapper">
-                                <ng-pdf template-url="/admin/views/file/pdfviewer.html" ng-init="pdfUrl = model.url" scale="page-fit"></ng-pdf>
+                                <ng-pdf template-url="views/file/pdfviewer.html" ng-init="pdfUrl = model.url" scale="page-fit"></ng-pdf>
                             </div>
                         </div>
                     </div>

@@ -1,3 +1,4 @@
+<script type="text/javascript" src="/admin/plugins/redirect.js"></script>
 <header-home></header-home>
 <div class="content-wrapper">
     <breadcrumbs data-type="{{ 'VIEW' | translate }}" data-model-name="{{ 'FREQUENCIES' | translate }}" data-model="{{type}}"></breadcrumbs>
@@ -17,11 +18,11 @@
                             </tr>
                             <tr ng-if="model.owner">
                                 <td class="detail-bold">{{ 'OWNER' | translate }} </td>
-                                <td><a ng-href="#/users/{{model.owner.id}}/view" href-policy-if-guest-user>{{model.owner.username}}</a></td>
+                                <td><a ng-href="users/{{model.owner.id}}/view" href-policy-if-guest-user>{{model.owner.username}}</a></td>
                             </tr>
                             <tr ng-if="model.createdBy">
                                 <td class="detail-bold">{{ 'CREATED_BY' | translate }} </td>
-                                <td><a ng-href="#/users/{{model.createdBy.id}}/view" href-policy-if-guest-user>{{model.createdBy.username}}</a></td>
+                                <td><a ng-href="users/{{model.createdBy.id}}/view" href-policy-if-guest-user>{{model.createdBy.username}}</a></td>
                             </tr>
                             <tr ng-if="model.createdAt">
                                 <td class="detail-bold">{{ 'CREATED_AT' | translate }}</td>
@@ -39,6 +40,7 @@
                             {{ 'BACK' | translate }}
                         </button>
                         <button type="submit" class="btn btn-primary pull-right" ng-click="edit(model)" permission permission-except="roles.GUEST">{{ 'EDIT' | translate }} </button>
+                        <a class="btn btn-primary pull-right" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
                     </div>
                 </div>
 

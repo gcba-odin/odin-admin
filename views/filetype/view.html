@@ -1,3 +1,4 @@
+<script type="text/javascript" src="/admin/plugins/redirect.js"></script>
 <header-home></header-home>
 <div class="content-wrapper">
     <breadcrumbs data-type="{{ 'VIEW' | translate }}" data-model-name="{{ 'FILE_TYPES' | translate }}" data-model="{{type}}"></breadcrumbs>
@@ -19,12 +20,16 @@
                                 <td>{{model.name}}</td>
                             </tr>
                             <tr ng-if="model.mimetype">
-                                <td class="detail-bold">{{ 'mimetype' | translate }}</td>
-                                <td ng-bind-html="getHtml(model.mimetype)"></td>
+                                <td class="detail-bold">{{ 'MIMETYPE' | translate }}</td>
+                                <td ng-bind-html="getHtml(mimetypesName)"></td>
+                            </tr>
+                            <tr>
+                                <td class="detail-bold">{{ 'ACTIVE_INACTIVE' | translate }}</td>
+                                <td><span class="label label-default {{model.deletedAt ? '' : 'bg-primary condition-active'}}">{{model.deletedAt ? 'Inactivo' : 'Activo'}}</span></td>
                             </tr>
                             <tr ng-if="model.createdBy">
                                 <td class="detail-bold">{{ 'CREATED_BY' | translate }} </td>
-                                <td><a ng-href="#/users/{{model.createdBy.id}}/view" href-policy-if-guest-user>{{model.createdBy.username}}</a></td>
+                                <td><a ng-href="users/{{model.createdBy.id}}/view" href-policy-if-guest-user>{{model.createdBy.username}}</a></td>
                             </tr>
                             <tr ng-if="model.createdAt">
                                 <td class="detail-bold">{{ 'CREATED_AT' | translate }}</td>
@@ -44,6 +49,7 @@
                         <button type="submit" class="btn btn-primary pull-right" ng-click="edit(model)" permission permission-except="roles.GUEST">{{ 'EDIT' | translate }}</button>
                         <a ng-if="model.deletedAt" class="pull-right btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="activeModel($event)" permission permission-except="roles.GUEST">{{ 'ACTIVATE' | translate }}</a>
                         <a ng-if="!model.deletedAt" class="pull-right btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="inactiveModel($event)" permission permission-except="roles.GUEST">{{ 'INACTIVATE' | translate }}</a>
+                        <a uib-tooltip="No puede realizar esta acción. Este {{ 'FILE_TYPE' | translate | lowercase }} tiene relaciones." tooltip-placement="top" tooltip-enable="model.files.length" tooltip-append-to-body="true" ng-disabled="model.files.length" class="btn btn-primary pull-right" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="model.files.length ? null : confirmDelete($event)" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
                     </div>
                 </div>
 
@@ -65,7 +71,7 @@
                                 <th class="text-center box-actions">{{ 'ACTIONS' | translate }}</th>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="file in model.files">
+                                <tr ng-repeat="file in model.files | orderBy: 'name'">
                                     <td>
                                         <span>{{file.name}}</span>
                                     </td>
@@ -73,11 +79,14 @@
                                         <span>{{'FILE'| translate }}</span>
                                     </td>
                                     <td class="text-center box-actions">
-                                        <a target="_blank" class="btn btn-primary" ng-href="#/files/{{file.id}}/view">{{ 'VIEW' | translate }}</a>
-                                        <a target="_blank" class="btn btn-primary" ng-href="#/files/{{file.id}}/edit" show-policy-if-guest-user="files">{{ 'EDIT' | translate }}</a>
+                                        <a target="_blank" class="btn btn-primary" ng-href="files/{{file.id}}/view">{{ 'VIEW' | translate }}</a>
+                                        <a target="_blank" class="btn btn-primary" ng-href="files/{{file.id}}/edit" show-policy-if-guest-user="{{file}}">{{ 'EDIT' | translate }}</a>
                                         <a class="btn btn-primary" ng-click="deleteResource(file.id, 'files')" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
-                                        <button ng-click="unPublish(file.id, 'files')" ng-if="file.status.id == statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'UNPUBLISH' | translate }}</button>
-                                        <button ng-click="publish(file.id, 'files')" ng-if="file.status.id !== statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'PUBLISH' | translate }}</button>
+                                        <button ng-click="unPublish(file.id, 'files')" ng-if="file.status == statuses.published" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'UNPUBLISH' | translate }}</button>
+                                        <button ng-click="publish(file.id, 'files')" ng-if="file.status !== statuses.published && file.status !== statuses.rejected" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'PUBLISH' | translate }}</button>
+                                        <button ng-click="reject(file.id, 'files')" ng-if="file.status == statuses.underReview" class="pull-right btn btn-primary margin-right-10" permission permission-except="roles.GUEST">{{ 'REJECT' | translate }}</button>
+                                        <button ng-click="sendReview(file.id, 'files')" ng-if="file.status == statuses.draft" class="pull-right btn btn-primary" permission permission-only="roles.GUEST">{{ 'SEND_TO_REVIEW' | translate }}</button>
+                                        <button ng-click="cancel(file.id, 'files')" ng-if="file.status == statuses.underReview" class="pull-right btn btn-primary margin-right-10" permission permission-only="roles.GUEST" show-policy-if-guest-user="{{file}}">{{ 'CANCEL' | translate }}</button>
                                     </td>
                                 </tr>
                             </tbody>

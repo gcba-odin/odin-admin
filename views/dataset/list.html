@@ -1,3 +1,4 @@
+<script type="text/javascript" src="/admin/plugins/redirect.js"></script>
 <header-home></header-home>
 <div class="content-wrapper">
     <breadcrumbs data-model-name="{{ (!starred) ? 'DATASETS' : 'STARRED_DATASETS' | translate }}" data-model="{{type}}"></breadcrumbs>
@@ -6,7 +7,7 @@
       <div class="box-header">
           <h3 class="box-title">{{ (!starred) ? modelName : 'STARRED_DATASETS' | translate }}</h3>
           <div class="box-tools">
-              <a ng-href="#/datasets/new" class="btn-primary btn nodecoration pull-right" permission permission-except="roles.GUEST">{{ 'ADD' | translate }} {{ 'DATASET' | translate }} </a>
+              <a ng-href="datasets/new" class="btn-primary btn nodecoration pull-right" permission permission-except="roles.GUEST">{{ 'ADD' | translate }} {{ 'DATASET' | translate }} </a>
           </div>
       </div>
         <div class="row">
@@ -34,7 +35,7 @@
                                     <th class="text-center box-actions">{{ 'ACTIONS' | translate }}</th>
                                 </tr>
                                 <tr ng-if="data.data.length == 0">
-                                    <td colspan="3">No se encuentran datos para mostrar.</td>
+                                    <td colspan="5">No se encuentran datos para mostrar.</td>
                                 </tr>
                                 <tr ng-if="data.data.length != 0" ng-repeat="model in data.data">
                                     <!-- <td>{{model.id}}</td>-->
@@ -47,7 +48,7 @@
                                     </td>
                                     <td>
                                         <p ng-repeat="cat in model.categories">
-                                            <span class="label label-default bg-primary color-white">{{cat.name}}</span>{{(!$last) ? ' - ' : ''}}
+                                            <span class="label label-default bg-primary condition-active">{{cat.name}}</span>{{(!$last) ? ' - ' : ''}}
                                         </p>
                                     </td>
                                     <td class="text-center box-actions">

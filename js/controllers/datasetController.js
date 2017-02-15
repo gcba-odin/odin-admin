@@ -6,7 +6,7 @@ app.factory('model', function($resource) {
 
 
 
-function DatasetListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, $routeParams, configs, usSpinnerService) {
+function DatasetListController($scope, $rootScope, Alertify, modelService, $routeParams, configs, usSpinnerService, ROLES) {
     usSpinnerService.spin('spinner');
     modelService.initService('Dataset', "datasets", $scope);
     
@@ -32,20 +32,27 @@ function DatasetListController($scope, $location, rest, $rootScope, Flash, Alert
         model: 'statuses',
         key: 'name',
         modelInput: 'status',
-        multiple: true
+        multiple: true,
+        permission: true,
     }, {
         name: 'Autor',
         model: 'users',
         key: 'username',
         modelInput: 'createdBy',
-        multiple: true
+        multiple: true,
+        permission: true,
     }, {
         name: 'Categoria',
         model: 'categories',
         key: 'name',
         modelInput: 'categories',
-        multiple: true
+        multiple: true,
+        permission: true,
     }];
+
+    if(!!$rootScope.adminglob.currentUser && $rootScope.adminglob.currentUser.role === ROLES.GUEST) {
+        $scope.filtersView[1].permission = false;
+    }
     
     $scope.confirmDelete = function(item) {
         Alertify.set({
@@ -148,7 +155,7 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
         }, function() {
             var tags = [];
             for (var i = 0; i < $scope.model.tags.length; i++) {
-                tags.push('<span class="label label-primary">' + $scope.model.tags[i].name + '</span>')
+                tags.push('<span class="label label-primary condition-active">' + $scope.model.tags[i].name + '</span>')
             }
             $scope.model.tags = tags.join(" - ");
 
@@ -156,12 +163,12 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
             var subcategories = [];
 
             for (var i = 0; i < $scope.model.categories.length; i++) {
-                categories.push('<span class="label label-primary">' + $scope.model.categories[i].name + '</span>')
+                categories.push('<span class="label label-primary condition-active">' + $scope.model.categories[i].name + '</span>')
             }
             $scope.model.categories = categories.join(" - ");
 
             for (var i = 0; i < $scope.model.subcategories.length; i++) {
-                subcategories.push('<span class="label label-primary">' + $scope.model.subcategories[i].name + '</span>')
+                subcategories.push('<span class="label label-primary condition-active">' + $scope.model.subcategories[i].name + '</span>')
             }
             $scope.model.subcategories = subcategories.join(" - ");
 
@@ -356,6 +363,34 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
             }
         );
     };
+    
+    $scope.confirmDelete = function (item) {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm('¿Está seguro que quiere borrar este dataset?<br> Al hacerlo, se borrarán todos los recursos asociados').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+                rest().delete({
+                    type: $scope.type,
+                    id: $scope.model.id
+                }, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    var url = "/" + $scope.type;
+                    $location.path(url);
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
 
     loadModel();
 
@@ -381,6 +416,7 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
 
     $scope.model = new model();
     $scope.model.items = [];
+    $scope.model.starred = false;
     
     $scope.model.owner = { 'id': $scope.adminglob.currentUser.user, 'username': $scope.adminglob.currentUser.username };
 
@@ -474,6 +510,8 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
     $scope.tempData = [];
     $scope.publishAt = "";
     $rootScope.hasSubs = false;
+    
+    var prev_status = null;
 
     //factory configs
     configs.statuses($scope);
@@ -524,15 +562,15 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
             $scope.tempData.subcategories = [];
         }
 
-        if ($scope.model.status == $scope.statuses.published) {
+        if (prev_status != $scope.model.status && $scope.model.status == $scope.statuses.published) {
             $scope.tempData.publishedAt = new Date();
-        } else if($scope.model.status == $scope.statuses.unpublished) {
+        } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.unpublished) {
             $scope.tempData.unPublishedAt = new Date();
-        } else if($scope.model.status == $scope.statuses.rejected) {
+        } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.rejected) {
             $scope.tempData.rejectedAt = new Date();
-        } else if($scope.model.status == $scope.statuses.draft) {
+        } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.draft) {
             $scope.tempData.cancelledAt = new Date();
-        } else if($scope.model.status == $scope.statuses.underReview) {
+        } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.underReview) {
             $scope.tempData.reviewedAt = new Date();
         }
 
@@ -580,6 +618,7 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
             }, function() {
                 if (!!$scope.model.status) {
                     $scope.model.status = $scope.model.status.id;
+                    prev_status = $scope.model.status;
                 }
                 if (!$scope.model.starred) {
                     $scope.model.starred = false;

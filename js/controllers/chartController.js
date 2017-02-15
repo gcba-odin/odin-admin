@@ -25,27 +25,33 @@ function ChartListController($scope, modelService, configs, usSpinnerService, un
             key: 'username',
             modelInput: 'createdBy',
             multiple: true,
+            permission: true,
             //condition: 'status=oWRhpRV&'
         }];
     } else {
-        $scope.parameters.conditions = '';
-        if(!!$rootScope.adminglob.currentUser && $rootScope.adminglob.currentUser.role === ROLES.GUEST) {
-            var current_us = $rootScope.adminglob.currentUser.user;
-            $scope.parameters.conditions = '&createdBy=' + current_us + '&owner=' + current_us;
-        }
         $scope.filtersView = [{
             name: 'Estado',
             model: 'statuses',
             key: 'name',
             modelInput: 'status',
-            multiple: true
+            multiple: true,
+            permission: true,
         }, {
             name: 'Autor',
             model: 'users',
             key: 'username',
             modelInput: 'createdBy',
-            multiple: true
+            multiple: true,
+            permission: true,
         }];
+    
+        $scope.parameters.conditions = '';
+        if(!!$rootScope.adminglob.currentUser && $rootScope.adminglob.currentUser.role === ROLES.GUEST) {
+            var current_us = $rootScope.adminglob.currentUser.user;
+            $scope.parameters.conditions = '&createdBy=' + current_us + '&owner=' + current_us;
+            
+            $scope.filtersView[1].permission = false;
+        }
     }
 
     $scope.confirmDelete = function (item) {
@@ -140,7 +146,31 @@ function ChartViewController($scope, modelService, $routeParams, rest, $location
     };
 
     $scope.confirmDelete = function (item) {
-        modelService.confirmDelete(item);
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm('¿Está seguro que quiere borrar este gráfico?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+                rest().delete({
+                    type: $scope.type,
+                    id: $scope.model.id
+                }, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    var url = "/" + $scope.type;
+                    $location.path(url);
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
     };
 
     $scope.edit = function (model) {
@@ -526,6 +556,8 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
     $scope.stepactive = 0;
     $scope.status_default = false;
     
+    var prev_status = null;
+    
     //factory configs
     configs.statuses($scope);
 
@@ -618,15 +650,15 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
         }
         $scope.model.dataSeries = $scope.model.dataSeries.toString();
         
-        if ($scope.model.status == $scope.statuses.published) {
+        if (prev_status != $scope.model.status && $scope.model.status == $scope.statuses.published) {
             $scope.model.publishedAt = new Date();
-        } else if($scope.model.status == $scope.statuses.unpublished) {
+        } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.unpublished) {
             $scope.model.unPublishedAt = new Date();
-        } else if($scope.model.status == $scope.statuses.rejected) {
+        } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.rejected) {
             $scope.model.rejectedAt = new Date();
-        } else if($scope.model.status == $scope.statuses.draft) {
+        } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.draft) {
             $scope.model.cancelledAt = new Date();
-        } else if($scope.model.status == $scope.statuses.underReview) {
+        } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.underReview) {
             $scope.model.reviewedAt = new Date();
         }
 
@@ -667,6 +699,7 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
             $scope.file_disabled = 'enabled';
             if (!!$scope.model.status) {
                 $scope.model.status = $scope.model.status.id;
+                prev_status = $scope.model.status;
             }
             if (!angular.isUndefined($scope.model.file)) {
                 $scope.fileModel = rest().contents({

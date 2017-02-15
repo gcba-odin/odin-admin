@@ -1,30 +1,41 @@
-<!-- Input description -->
-<div class="form-group">
-    <label for="title" class="col-sm-2 control-label">* {{ 'DESCRIPTION' | translate }}</label>
-    <div class="col-sm-10" ng-class="{ 'has-error': form.description.$touched && form.description.$invalid }">
-        <input type="text" readonly ng-model="model.description" description="description" class="form-control" id="title" placeholder="{{ 'PLACE' | translate }} {{ 'DESCRIPTION' | translate }} {{ 'HERE' | translate }}" required />
-        <div class="help-block" ng-messages="form.description.$error" ng-if="form.description.$touched">
-            <div ng-messages-include="views/messages.html"></div>
-        </div>
-    </div>
-</div>
-<!-- end Input description -->
-<!-- Input updateFrequency -->
+<script type="text/javascript" src="/admin/plugins/redirect.js"></script>
+<!-- Input value -->
 <div class="form-group">
     <label for="valor" class="col-sm-2 control-label">* {{ model.description | translate }}</label>
-    <div class="col-sm-10" ng-class="{ 'has-error': form.updateFrequency.$touched && form.updateFrequency.$invalid }">
+    <div class="col-sm-10" ng-class="{ 'has-error': form.updateFrequency.$touched && form.updateFrequency.$invalid }"  uib-tooltip="{{model.tooltip | translate}}" tooltip-placement="top" tooltip-enable="!!model.tooltip">
         <select ng-if="!model.multiple && model.type == 'model'" placeholder="{{ 'SELECT_ONE' | translate }}" class="selectize-input items required full has-options has-items" data-key="name" data-modelname="{{model.model | lowercase}}" ng-model="model.value" data-model="{{value}}" select-static-ajax name="value" id="valor" class="selectize-width"
-            required>
+             ng-required="model.required">
         </select>
-        <!--<select ng-if="model.multiple && model.type == 'model'" data-key="name" data-modelname="values" data-model="{{model.value}}" select-two-ajax name="value" id="categories" ng-model="model.value" required class="selectize-width" multiple></select>-->
-        <input ng-if="model.type != 'model'" type="text" ng-model="model.value" class="form-control" id="valor" placeholder="{{ 'PLACE' | translate }} {{ 'VALUE' | translate }} {{ 'HERE' | translate }}" required />
+        <select ng-if="model.multiple && model.type == 'model'" select-two-default id="valor" ng-model="model.value" data-model='{{model.value}}'>
+            <option value="user">USER</option>
+            <option value="organization">ORGANIZATION</option>
+            <option value="dataset">DATASET</option>
+            <option value="file">FILE</option>
+            <option value="chart">CHART</option>
+            <option value="map">MAP</option>
+            <option value="category">CATEGORY</option>
+            <option value="status">STATUS</option>
+            <option value="updatefrequency">UPDATEFREQUENCY</option>
+            <option value="filetype">FILETYPE</option>
+            <option value="tag">TAG</option>
+            <option value="basemap">BASEMAP</option>
+        </select>
+        <input ng-if="model.type != 'model' && model.type != 'group'" type="text" ng-model="model.value" class="form-control" id="valor" placeholder="{{ 'PLACE' | translate }} {{ 'VALUE' | translate }} {{ 'HERE' | translate }}"  ng-required="model.required">
+        <input ng-if="model.type == 'group'" type="checkbox" ng-model="model.value" id="valor">
         <div class="help-block" ng-messages="form.updateFrequency.$error" ng-if="form.updateFrequency.$touched">
             <div ng-messages-include="views/messages.html"></div>
         </div>
     </div>
 </div>
-<!-- end Input updateFrequency -->
+<!-- end Input value -->
 
+<div class="form-group" ng-if="model.value" ng-repeat="sub in model.subconfigs | orderBy: 'description | translate'">
+    <label for="{{sub.key}}" class="col-sm-2 control-label">{{(sub.required) ? '*' : ''}} {{ sub.description | translate }}</label>
+    <div class="col-sm-10" ng-class="{ 'has-error': form.updateFrequency.$touched && form.updateFrequency.$invalid }">
+        <input ng-if="sub.type != 'boolean'" type="text" ng-model="sub.value" class="form-control" id="{{sub.key}}" placeholder="{{ 'PLACE' | translate }} {{ 'VALUE' | translate }} {{ 'HERE' | translate }}" ng-required="sub.required"  uib-tooltip="{{sub.tooltip | translate}}" tooltip-placement="top" tooltip-enable="!!sub.tooltip"/>
+        <input ng-if="sub.type == 'boolean'" type="checkbox" ng-model="sub.value" id="{{sub.key}}" uib-tooltip="{{sub.tooltip | translate}}" tooltip-placement="top" tooltip-enable="!!sub.tooltip">
+    </div>
+</div>
 
 <!-- Button save  -->
 <div class="box-footer">

@@ -1,3 +1,4 @@
+<script type="text/javascript" src="/admin/plugins/redirect.js"></script>
 <header-home></header-home>
 <div class="content-wrapper">
     <breadcrumbs data-type="{{ 'VIEW' | translate }}" data-model-name="{{ 'CHARTS' | translate }}" data-model="{{type}}"></breadcrumbs>
@@ -9,7 +10,7 @@
           <button ng-click="publish()" ng-if="model.status.id !== statuses.published && model.status.id !== statuses.rejected" class="pull-right btn btn-primary" permission permission-except="roles.GUEST">{{ 'PUBLISH' | translate }}</button>
           <button ng-click="reject()" ng-if="model.status.id == statuses.underReview" class="pull-right btn btn-primary margin-right-10" permission permission-except="roles.GUEST">{{ 'REJECT' | translate }}</button>
           <button ng-click="sendReview()" ng-if="model.status.id == statuses.draft" class="pull-right btn btn-primary" permission permission-only="roles.GUEST">{{ 'SEND_TO_REVIEW' | translate }}</button>
-          <button ng-click="cancel()" ng-if="model.status.id == statuses.underReview" class="pull-right btn btn-primary margin-right-10" permission permission-only="roles.GUEST" show-policy-if-guest-user="files">{{ 'CANCEL' | translate }}</button>
+          <button ng-click="cancel()" ng-if="model.status.id == statuses.underReview" class="pull-right btn btn-primary margin-right-10" permission permission-only="roles.GUEST" show-policy-if-guest-user="{{model}}">{{ 'CANCEL' | translate }}</button>
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -26,7 +27,7 @@
                             </tr>
                             <tr ng-if="model.file">
                                 <td class="detail-bold">{{ 'FILE' | translate }}</td>
-                                <td><a ng-href="#/files/{{model.file.id}}/view">{{model.file.name}}</a></td>
+                                <td><a ng-href="files/{{model.file.id}}/view">{{model.file.name}}</a></td>
                             </tr>
                             <tr ng-if="model.status">
                                 <td class="detail-bold">{{ 'STATUS' | translate }}</td>
@@ -34,7 +35,7 @@
                             </tr>
                             <tr ng-if="model.createdBy">
                                 <td class="detail-bold">{{ 'CREATED_BY' | translate }} </td>
-                                <td><a ng-href="#/users/{{model.createdBy.id}}/view" href-policy-if-guest-user>{{model.createdBy.username}}</a></td>
+                                <td><a ng-href="users/{{model.createdBy.id}}/view" href-policy-if-guest-user>{{model.createdBy.username}}</a></td>
                             </tr>
                             <tr ng-if="model.createdAt">
                                 <td class="detail-bold">{{ 'CREATED_AT' | translate }}</td>
@@ -95,8 +96,8 @@
                         </button>
                         <div class="pull-right">
                             <a class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="confirmDelete($event)" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
-                            <button type="submit" class="btn btn-primary" ng-click="edit(model)" show-policy-if-guest-user="charts">{{ 'EDIT' | translate }}</button>
-                            <a class="btn btn-primary" ng-href="#/charts/preview/{{ model.id}}">{{ 'PREVIEW' | translate }}</a>
+                            <button type="submit" class="btn btn-primary" ng-click="edit(model)" show-policy-if-guest-user="{{model}}">{{ 'EDIT' | translate }}</button>
+                            <a class="btn btn-primary" ng-href="charts/preview/{{ model.id}}">{{ 'PREVIEW' | translate }}</a>
                         </div>
                     </div>
                 </div>

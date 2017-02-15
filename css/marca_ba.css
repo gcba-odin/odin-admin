@@ -20,6 +20,17 @@ a:focus, a:hover {
     color: #FFFFFF;
 }
 
+.btn-primary:active, .btn-primary:focus, .btn-primary:active:focus, .btn-primary.hover, .btn-default:active, .btn-default:focus, .btn-default:active:focus, .btn-default.hover {
+    background-color: #fdd306 !important;
+    border-color: #FFFFFF;
+    color: #FFFFFF !important;
+}
+
+.condition-active {
+    background-color: #fdd306 !important;
+    color: #5F4600 !important;
+}
+
 .home-box h3 {
     color: #fdd306;
 }
@@ -49,9 +60,31 @@ a:focus, a:hover {
     color: #19c3e3;
 }
 
-.pagination>.active>a {
+/*.pagination > .active > a{
+    background-color: #FF386a;
+    border-color: #FF386a;
+}
+
+.pagination > li > a{
+    color: #FF386a;
+}*/
+
+/*.pagination>.active>a {
     background-color: #19c3e3;
     border-color: #19c3e3;
+}*/
+.pagination > .active > a{
+    background-color: rgba(32, 149, 242, 0.8);
+    border-color: rgba(32, 149, 242, 0.8);
+}
+
+.pagination > li > a{
+    color: rgba(32, 149, 242, 0.8);
+}
+
+.pagination > .active > a:focus, .pagination > .active > a:hover{
+    background-color: #FFb600;
+    border-color: #FFb600;
 }
 
 .sidebar-mini.sidebar-collapse .main-header .logo {
@@ -80,7 +113,7 @@ a:focus, a:hover {
 
 }
 
-.sidebar-menu .treeview-menu li.active>a {
+.sidebar-menu .treeview-menu li.active>a, .sidebar-menu .treeview-menu li.active>a>span {
     color: #19c3e3;
 
 }
@@ -91,4 +124,31 @@ ul.sidebar-menu .treeview.active>a {
 
 ul.sidebar-menu .treeview.active>a>span {
   color:  #19c3e3;
+}
+
+.steps li.active a, .steps li.active p {
+    /*background: #ff386a;*/
+    background: white;
+    border: 3px solid #19c3e3;
+    opacity: 1;
+    color: #19c3e3;
+}
+
+.steps li.active a:after, .steps li.active p:after {
+    border-left: 12px solid #19c3e3;
+}
+
+.login-box {
+    box-shadow: 0px 0px 5px 0px #ffb600;
+    background-color: white;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+    background-color: #19c3e3 !important;
+    border: 1px solid #19c3e3 !important;
+}
+
+.nav-tabs>li>a:hover {
+    background-color: #fdd306 !important;
+    border: 1px solid #fdd306 !important;
 }

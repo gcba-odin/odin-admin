@@ -1,3 +1,4 @@
+<script type="text/javascript" src="/admin/plugins/redirect.js"></script>
 <header-home></header-home>
 <div class="content-wrapper">
     <breadcrumbs data-model-name="{{ 'CATEGORIES' | translate }}" data-model="{{type}}"></breadcrumbs>
@@ -6,7 +7,8 @@
       <div class="box-header">
           <h3 class="box-title">{{ 'CATEGORIES' | translate }}</h3>
           <div class="box-tools">
-              <a ng-href="#/categories/new" class="btn-primary btn nodecoration pull-right" permission permission-except="roles.GUEST">{{ 'ADD' | translate }} {{ 'CATEGORY' | translate }}</a>
+              <a ng-href="subcategories/new" class="btn-primary btn nodecoration pull-right" permission permission-except="roles.GUEST">{{ 'ADD' | translate }} {{ 'SUBCATEGORY' | translate }}</a>
+              <a ng-href="categories/new" class="btn-primary btn nodecoration pull-right margin-right-10" permission permission-except="roles.GUEST">{{ 'ADD' | translate }} {{ 'CATEGORY' | translate }}</a>
           </div>
       </div>
       <!-- /.box-header -->
@@ -26,22 +28,22 @@
                                             <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
                                         </a>
                                     </th>
-                                    <th>{{ 'STATE' | translate }}</th>
+                                    <th class="active_inactive">{{ 'ACTIVE_INACTIVE' | translate }}</th>
                                     <th>{{ 'SUBCATEGORY' | translate }}</th>
                                     <th>{{ 'AUTHOR' | translate }}</th>
                                     <th class="text-center box-actions">{{ 'ACTIONS' | translate }}</th>
                                 </tr>
 
                                 <tr ng-if="data.data.length == 0">
-                                    <td colspan="3">No se encuentran datos para mostrar.</td>
+                                    <td colspan="5">No se encuentran datos para mostrar.</td>
                                 </tr>
                                 <tr ng-if="data.data.length != 0" ng-repeat="model in data.data">
                                     <td>{{model.name}}</td>
-                                    <td>
-                                        <span class="label label-default {{model.deletedAt ? '' : 'bg-primary color-white'}}" ng-class="">{{model.deletedAt ? 'Inactivo' : 'Activo'}}</span>
+                                    <td class="text-center">
+                                        <span class="label label-default {{model.deletedAt ? '' : 'bg-primary condition-active'}}" ng-class="">{{model.deletedAt ? 'Inactivo' : 'Activo'}}</span>
                                     </td> 
                                     <td>
-                                        <span class="label label-default {{!!model.parent ? 'bg-primary color-white' : ''}}" ng-class="">{{!!model.parent ? 'Si' : 'No'}}</span>
+                                        <span class="label label-default {{!!model.parent ? 'bg-primary condition-active' : ''}}" ng-class="">{{!!model.parent ? 'Si' : 'No'}}</span>
                                     </td>
                                     <td>
                                         <span ng-if="model.createdBy">{{model.createdBy.username}}</span>
@@ -51,7 +53,8 @@
                                         <a class="btn btn-primary" ng-click="edit({id: model.id})" permission permission-except="roles.GUEST">{{ 'EDIT' | translate }}</a>
                                         <a ng-if="model.deletedAt" class="btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="activeModel($event)" permission permission-except="roles.GUEST">{{ 'ACTIVATE' | translate }}</a>
                                         <a ng-if="!model.deletedAt" class="btn btn-primary btn-activate" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="inactiveModel($event)" permission permission-except="roles.GUEST">{{ 'INACTIVATE' | translate }}</a>
-                                        <a uib-tooltip="No puede realizar esta acción. Esta {{ 'CATEGORY' | translate | lowercase }} tiene relaciones." tooltip-placement="top" tooltip-enable="model.datasets.length || model.subcategories.length" tooltip-append-to-body="true" ng-disabled="model.datasets.length || model.subcategories.length" class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="(model.datasets.length || model.subcategories.length) ? null : confirmDelete($event)" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
+                                        <a uib-tooltip="No puede realizar esta acción. Esta {{ (!!model.parent) ? 'SUBCATEGORY' : 'CATEGORY' | translate | lowercase }} tiene relaciones." tooltip-placement="top" tooltip-enable="model.datasets.length || model.subcategories.length || model.datasetsSubcategories.length" tooltip-append-to-body="true" ng-disabled="model.datasets.length || model.subcategories.length || model.datasetsSubcategories.length" class="btn btn-primary" data-textdelete="{{ 'DO_THIS_ACTION' | translate }}" data-id="{{model.id}}" ng-click="(model.datasets.length || model.subcategories.length || model.datasetsSubcategories.length) ? null : confirmDelete($event)" permission permission-except="roles.GUEST">{{ 'DELETE' | translate }}</a>
+                                    </td>
                                 </tr>
 
                             </tbody>

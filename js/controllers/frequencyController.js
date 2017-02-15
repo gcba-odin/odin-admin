@@ -4,7 +4,7 @@ app.factory('model', function($resource) {
     return $resource();
 });
 
-function updateFrequencyListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, configs, usSpinnerService) {
+function updateFrequencyListController($scope, $rootScope, modelService, configs, usSpinnerService, ROLES) {
     usSpinnerService.spin('spinner');
     modelService.initService("updateFrequency", "updatefrequencies", $scope);
     
@@ -17,12 +17,17 @@ function updateFrequencyListController($scope, $location, rest, $rootScope, Flas
     };
     
     $scope.filtersView = [{
-            name: 'Autor',
-            model: 'users',
-            key: 'username',
-            modelInput: 'createdBy',
-            multiple: true
-        }];
+        name: 'Autor',
+        model: 'users',
+        key: 'username',
+        modelInput: 'createdBy',
+        multiple: true,
+        permission: true,
+    }];
+
+    if(!!$rootScope.adminglob.currentUser && $rootScope.adminglob.currentUser.role === ROLES.GUEST) {
+        $scope.filtersView[0].permission = false;
+    }
 
     $scope.confirmDelete = function(item) {
         modelService.confirmDelete(item);
@@ -94,7 +99,7 @@ function updateFrequencyListController($scope, $location, rest, $rootScope, Flas
     };
 }
 
-function updateFrequencyViewController($scope, Flash, rest, $routeParams, $location, modelService) {
+function updateFrequencyViewController($scope, Flash, rest, $routeParams, $location, modelService, Alertify, usSpinnerService) {
     modelService.initService("updateFrequency", "updatefrequencies", $scope);
 
     modelService.findOne($routeParams, $scope);
@@ -102,7 +107,35 @@ function updateFrequencyViewController($scope, Flash, rest, $routeParams, $locat
 
     $scope.edit = function(model) {
         modelService.edit($scope, model);
-    }
+    };
+    
+    $scope.confirmDelete = function (item) {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm('¿Está seguro que quiere borrar esta frecuencia de actualización?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+                rest().delete({
+                    type: $scope.type,
+                    id: $scope.model.id
+                }, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    var url = "/" + $scope.type;
+                    $location.path(url);
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
 }
 
 function updateFrequencyCreateController($scope, rest, model, Flash, $location, modelService, Alertify, usSpinnerService) {

@@ -4,7 +4,7 @@ app.factory('model', function($resource) {
     return $resource();
 });
 
-function FileTypeListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, configs, usSpinnerService) {
+function FileTypeListController($scope, $rootScope, modelService, configs, usSpinnerService, ROLES) {
     usSpinnerService.spin('spinner');
     modelService.initService("File Type", "filetypes", $scope);
     
@@ -17,12 +17,17 @@ function FileTypeListController($scope, $location, rest, $rootScope, Flash, Aler
     };
     
     $scope.filtersView = [{
-            name: 'Autor',
-            model: 'users',
-            key: 'username',
-            modelInput: 'createdBy',
-            multiple: true
-        }];
+        name: 'Autor',
+        model: 'users',
+        key: 'username',
+        modelInput: 'createdBy',
+        multiple: true,
+        permission: true,
+    }];
+
+    if(!!$rootScope.adminglob.currentUser && $rootScope.adminglob.currentUser.role === ROLES.GUEST) {
+        $scope.filtersView[0].permission = false;
+    }
     
     $scope.filtersInclude = ['files'];
 
@@ -103,6 +108,8 @@ function FileTypeListController($scope, $location, rest, $rootScope, Flash, Aler
 function FileTypeViewController($scope, Flash, rest, $routeParams, $location, modelService, $sce, usSpinnerService, Alertify, $window) {
     usSpinnerService.spin('spinner');
     modelService.initService("File Type", "filetypes", $scope);
+    
+    $scope.filtersInclude = ['files'];
 
     $scope.inactiveModel = function(item) {
         modelService.deactivateView(item, $scope);
@@ -129,9 +136,9 @@ function FileTypeViewController($scope, Flash, rest, $routeParams, $location, mo
         }, function() {
             var mimes = [];
             for (var i = 0; i < $scope.model.mimetype.length; i++) {
-                mimes.push('<span class="label label-primary">' + $scope.model.mimetype[i] + '</span>')
+                mimes.push('<span class="label label-primary condition-active">' + $scope.model.mimetype[i] + '</span>')
             }
-            $scope.model.mimetype = mimes.join(" - ");
+            $scope.mimetypesName = mimes.join(" - ");
             usSpinnerService.stop('spinner');
         }, function(error) {
             usSpinnerService.stop('spinner');
@@ -205,6 +212,118 @@ function FileTypeViewController($scope, Flash, rest, $routeParams, $location, mo
                 }, function (resp) {
                     usSpinnerService.stop('spinner');
                     $window.location.reload();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+    
+    $scope.confirmDelete = function (item) {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm('¿Está seguro que quiere borrar este tipo de archivo?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+                rest().delete({
+                    type: $scope.type,
+                    id: $scope.model.id
+                }, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    var url = "/" + $scope.type;
+                    $location.path(url);
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+    
+    $scope.reject = function (id, type) {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm('¿Está seguro que quiere rechazar este recurso?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().reject({
+                    type: type,
+                    id: id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+    
+    $scope.sendReview = function (id, type) {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm('¿Está seguro que quiere enviar a revisión este recurso?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().sendReview({
+                    type: type,
+                    id: id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+    
+    $scope.cancel = function (id, type) {
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm('¿Está seguro que quiere cancelar este recurso?').then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+
+                rest().cancel({
+                    type: type,
+                    id: id
+                }, {}, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    loadModel();
                 }, function (error) {
                     usSpinnerService.stop('spinner');
                     modelService.reloadPage();

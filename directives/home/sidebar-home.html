@@ -1,3 +1,4 @@
+<script type="text/javascript" src="/admin/plugins/redirect.js"></script>
 <aside class="main-sidebar">
     <section class="sidebar">
         <ul class="sidebar-menu">
@@ -16,7 +17,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li ng-class="{active: isActive('/users/new')}" permission permission-only="roles.SUPERADMIN">
-                        <a ng-href="#/users/new">
+                        <a ng-href="users/new">
                             <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
                                 y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                                 <path fill="#FFB600" d="M5.27,8.981l1.428,1.427l-2.131,0.718L5.27,8.981z M5.846,8.461l3.931-3.928l1.37,1.367L7.216,9.832
@@ -28,7 +29,7 @@
                         </a>
                     </li>
                     <li ng-class="{active: isActive('/users')}">
-                        <a ng-href="#/users">
+                        <a ng-href="users">
                             <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
                                 y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                                 <path fill="#FFB600" d="M9.66,8.352l2.001,1.792c0.032,0.031,0.048,0.069,0.051,0.112c0.002,0.041-0.01,0.08-0.038,0.116
@@ -80,7 +81,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li ng-class="{active: isActive('/organizations/new')}" permission permission-except="roles.GUEST">
-                        <a ng-href="#/organizations/new">
+                        <a ng-href="organizations/new">
                             <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
                                 y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                                 <path fill="#FFB600" d="M5.27,8.981l1.428,1.427l-2.131,0.718L5.27,8.981z M5.846,8.461l3.931-3.928l1.37,1.367L7.216,9.832
@@ -92,7 +93,7 @@
                         </a>
                     </li>
                     <li ng-class="{active: isActive('/organizations')}">
-                        <a ng-href="#/organizations">
+                        <a ng-href="organizations">
                             <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
                                 y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                                 <path fill="#FFB600" d="M9.66,8.352l2.001,1.792c0.032,0.031,0.048,0.069,0.051,0.112c0.002,0.041-0.01,0.08-0.038,0.116
@@ -145,7 +146,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li ng-class="{active: isActive('/datasets/new')}" permission permission-except="roles.GUEST">
-                        <a ng-href="#/datasets/new">
+                        <a ng-href="datasets/new">
                             <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
                                 y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                                 <path fill="#FFB600" d="M5.27,8.981l1.428,1.427l-2.131,0.718L5.27,8.981z M5.846,8.461l3.931-3.928l1.37,1.367L7.216,9.832
@@ -157,7 +158,7 @@
                         </a>
                     </li>
                     <li ng-class="{active: isActive('/datasets/:filter?')}">
-                        <a ng-href="#/datasets">
+                        <a ng-href="datasets">
                             <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
                                 y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                                 <path fill="#FFB600" d="M9.66,8.352l2.001,1.792c0.032,0.031,0.048,0.069,0.051,0.112c0.002,0.041-0.01,0.08-0.038,0.116
@@ -173,7 +174,7 @@
                         </a>
                     </li>
                     <li ng-class="{active: isActive('/datasets/starred')}">
-                        <a ng-href="#/datasets/starred">
+                        <a ng-href="datasets/starred">
                             <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
                                 y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                                 <path fill="#FFB600" d="M9.66,8.352l2.001,1.792c0.032,0.031,0.048,0.069,0.051,0.112c0.002,0.041-0.01,0.08-0.038,0.116
@@ -192,7 +193,7 @@
             </li>
 
             <!--Resources-->
-            <li ng-class="{active: isActive('/files/new/:dataset?') || isActive('/files') || isActiveEdit('files') || isActive('/webservices/new/:dataset?')}"
+            <li ng-class="{active: isActive('/files/new/:dataset?') || isActive('/files') || isActiveEdit('files') || isActive('/webservices/new/:dataset?') || isActive('/files/underreview')}"
                 class="treeview">
                 <a ng-href="javascript:void(0)">
                     <svg version="1.1" id="files-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -218,20 +219,20 @@
                         </a>
                         <ul class="treeview-menu">
                             <li ng-class="{active: isActive('/files/new/:dataset?')}" class="treeview">
-                                <a ng-href="#/files/new">
+                                <a ng-href="files/new">
                                     {{ 'FROM_FILE' | translate }}
                                 </a>
                             </li>
                             <li ng-class="{active: isActive('/webservices/new/:dataset?')}" class="treeview" permission permission-except="roles.GUEST">
                                 <!--  ng-class="{active: isActive('/files/new/dataset/ws?')}" -->
-                                <a ng-href="#/webservices/new">
+                                <a ng-href="webservices/new">
                                     {{ 'FROM_WEBSERVICE' | translate }}
                                 </a>
                             </li>
                         </ul>
                     </li>
                     <li ng-class="{active: isActive('/files')}">
-                        <a ng-href="#/files">
+                        <a ng-href="files">
                             <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
                                 y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                                 <path fill="#FFB600" d="M9.66,8.352l2.001,1.792c0.032,0.031,0.048,0.069,0.051,0.112c0.002,0.041-0.01,0.08-0.038,0.116
@@ -246,11 +247,27 @@
                             {{ 'VIEW_FILES' | translate }}
                         </a>
                     </li>
+                    <li ng-class="{active: isActive('/files/underreview')}" permission permission-except="roles.GUEST">
+                        <a ng-href="files/underreview">
+                            <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+                                y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
+                                <path fill="#FFB600" d="M9.66,8.352l2.001,1.792c0.032,0.031,0.048,0.069,0.051,0.112c0.002,0.041-0.01,0.08-0.038,0.116
+                                      l-0.651,0.727c-0.032,0.031-0.069,0.049-0.111,0.052c-0.042,0.001-0.081-0.012-0.116-0.04L8.793,9.318
+                                      C8.31,9.676,7.77,9.87,7.171,9.903C6.327,9.949,5.59,9.691,4.958,9.124c-0.632-0.563-0.97-1.268-1.017-2.111
+                                      C3.895,6.17,4.154,5.433,4.719,4.801c0.566-0.632,1.27-0.972,2.113-1.017c0.843-0.049,1.58,0.212,2.213,0.777
+                                      c0.63,0.565,0.97,1.271,1.016,2.113C10.095,7.271,9.961,7.831,9.66,8.352z M5.441,5.451C5.055,5.884,4.876,6.386,4.909,6.96
+                                      C4.94,7.532,5.172,8.012,5.604,8.398S6.539,8.962,7.117,8.93c0.576-0.03,1.057-0.263,1.442-0.691
+                                      c0.384-0.429,0.56-0.933,0.528-1.511C9.055,6.149,8.825,5.671,8.396,5.285c-0.43-0.386-0.934-0.56-1.511-0.528
+                                      C6.309,4.789,5.826,5.021,5.441,5.451z" />
+                            </svg>
+                            {{ 'UNDER_REVIEW' | translate }} <span count-underreview="files"></span>
+                        </a>
+                    </li>
                 </ul>
             </li>
 
             <!--Charts-->
-            <li ng-class="{active: isActive('/charts/new/:file') || isActive('/charts') || isActiveEdit('charts')}" class="treeview">
+            <li ng-class="{active: isActive('/charts/new/:file') || isActive('/charts') || isActiveEdit('charts') || isActive('/charts/underreview')}" class="treeview">
                 <a ng-href="javascript:void(0)">
                     <svg version="1.1" id="chart-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
@@ -279,7 +296,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li ng-class="{active: isActive('/charts')}">
-                        <a ng-href="#/charts">
+                        <a ng-href="charts">
                             <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
                                 y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                                 <path fill="#FFB600" d="M9.66,8.352l2.001,1.792c0.032,0.031,0.048,0.069,0.051,0.112c0.002,0.041-0.01,0.08-0.038,0.116
@@ -294,11 +311,27 @@
                             {{ 'VIEW_CHARTS' | translate }}
                         </a>
                     </li>
+                    <li ng-class="{active: isActive('/charts/underreview')}" permission permission-except="roles.GUEST">
+                        <a ng-href="charts/underreview">
+                            <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+                                y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
+                                <path fill="#FFB600" d="M9.66,8.352l2.001,1.792c0.032,0.031,0.048,0.069,0.051,0.112c0.002,0.041-0.01,0.08-0.038,0.116
+                                      l-0.651,0.727c-0.032,0.031-0.069,0.049-0.111,0.052c-0.042,0.001-0.081-0.012-0.116-0.04L8.793,9.318
+                                      C8.31,9.676,7.77,9.87,7.171,9.903C6.327,9.949,5.59,9.691,4.958,9.124c-0.632-0.563-0.97-1.268-1.017-2.111
+                                      C3.895,6.17,4.154,5.433,4.719,4.801c0.566-0.632,1.27-0.972,2.113-1.017c0.843-0.049,1.58,0.212,2.213,0.777
+                                      c0.63,0.565,0.97,1.271,1.016,2.113C10.095,7.271,9.961,7.831,9.66,8.352z M5.441,5.451C5.055,5.884,4.876,6.386,4.909,6.96
+                                      C4.94,7.532,5.172,8.012,5.604,8.398S6.539,8.962,7.117,8.93c0.576-0.03,1.057-0.263,1.442-0.691
+                                      c0.384-0.429,0.56-0.933,0.528-1.511C9.055,6.149,8.825,5.671,8.396,5.285c-0.43-0.386-0.934-0.56-1.511-0.528
+                                      C6.309,4.789,5.826,5.021,5.441,5.451z" />
+                            </svg>
+                            {{ 'UNDER_REVIEW' | translate }} <span count-underreview="charts"></span>
+                        </a>
+                    </li>
                 </ul>
             </li>
 
             <!--Maps-->
-            <li ng-class="{active: isActive('/maps/new/:file') || isActive('/maps') || isActiveEdit('maps')}" class="treeview">
+            <li ng-class="{active: isActive('/maps/new/:file') || isActive('/maps') || isActiveEdit('maps') || isActive('/maps/underreview')}" class="treeview">
                 <a ng-href="javascript:void(0)">
                     <svg version="1.1" id="map-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
@@ -336,7 +369,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li ng-class="{active: isActive('/maps')}">
-                        <a ng-href="#/maps">
+                        <a ng-href="maps">
                             <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
                                 y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                                 <path fill="#FFB600" d="M9.66,8.352l2.001,1.792c0.032,0.031,0.048,0.069,0.051,0.112c0.002,0.041-0.01,0.08-0.038,0.116
@@ -351,11 +384,27 @@
                             {{ 'VIEW_MAPS' | translate }}
                         </a>
                     </li>
+                    <li ng-class="{active: isActive('/maps/underreview')}" permission permission-except="roles.GUEST">
+                        <a ng-href="maps/underreview">
+                            <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+                                y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
+                                <path fill="#FFB600" d="M9.66,8.352l2.001,1.792c0.032,0.031,0.048,0.069,0.051,0.112c0.002,0.041-0.01,0.08-0.038,0.116
+                                      l-0.651,0.727c-0.032,0.031-0.069,0.049-0.111,0.052c-0.042,0.001-0.081-0.012-0.116-0.04L8.793,9.318
+                                      C8.31,9.676,7.77,9.87,7.171,9.903C6.327,9.949,5.59,9.691,4.958,9.124c-0.632-0.563-0.97-1.268-1.017-2.111
+                                      C3.895,6.17,4.154,5.433,4.719,4.801c0.566-0.632,1.27-0.972,2.113-1.017c0.843-0.049,1.58,0.212,2.213,0.777
+                                      c0.63,0.565,0.97,1.271,1.016,2.113C10.095,7.271,9.961,7.831,9.66,8.352z M5.441,5.451C5.055,5.884,4.876,6.386,4.909,6.96
+                                      C4.94,7.532,5.172,8.012,5.604,8.398S6.539,8.962,7.117,8.93c0.576-0.03,1.057-0.263,1.442-0.691
+                                      c0.384-0.429,0.56-0.933,0.528-1.511C9.055,6.149,8.825,5.671,8.396,5.285c-0.43-0.386-0.934-0.56-1.511-0.528
+                                      C6.309,4.789,5.826,5.021,5.441,5.451z" />
+                            </svg>
+                            {{ 'UNDER_REVIEW' | translate }} <span count-underreview="maps"></span>
+                        </a>
+                    </li>
                 </ul>
             </li>
 
             <!--Categories-->
-            <li ng-class="{active: isActive('/categories/new') || isActive('/categories') || isActiveEdit('categories')}" class="treeview">
+            <li ng-class="{active: isActive('/categories/new') || isActive('/categories') || isActiveEdit('categories') || isActive('/subcategories/new')}" class="treeview">
                 <a ng-href="javascript:void(0)">
                     <svg version="1.1" id="organizations-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
@@ -386,7 +435,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li ng-class="{active: isActive('/categories/new')}" permission permission-except="roles.GUEST">
-                        <a ng-href="#/categories/new">
+                        <a ng-href="categories/new">
                             <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
                                 y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                                 <path fill="#FFB600" d="M5.27,8.981l1.428,1.427l-2.131,0.718L5.27,8.981z M5.846,8.461l3.931-3.928l1.37,1.367L7.216,9.832
@@ -397,8 +446,20 @@
                             {{ 'ADD_CATEGORY' | translate }}
                         </a>
                     </li>
+                    <li ng-class="{active: isActive('/subcategories/new')}" permission permission-except="roles.GUEST">
+                        <a ng-href="subcategories/new">
+                            <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+                                y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
+                                <path fill="#FFB600" d="M5.27,8.981l1.428,1.427l-2.131,0.718L5.27,8.981z M5.846,8.461l3.931-3.928l1.37,1.367L7.216,9.832
+                                      L5.846,8.461z M10.328,3.982l0.601-0.62c0.064-0.058,0.135-0.085,0.211-0.085c0.078,0,0.148,0.027,0.213,0.085l0.979,0.979
+                                      c0.055,0.059,0.083,0.13,0.083,0.213s-0.028,0.153-0.083,0.209l-0.634,0.589L10.328,3.982z"
+                                />
+                            </svg>
+                            {{ 'ADD_SUBCATEGORY' | translate }}
+                        </a>
+                    </li>
                     <li ng-class="{active: isActive('/categories')}">
-                        <a ng-href="#/categories">
+                        <a ng-href="categories">
                             <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
                                 y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                                 <path fill="#FFB600" d="M9.66,8.352l2.001,1.792c0.032,0.031,0.048,0.069,0.051,0.112c0.002,0.041-0.01,0.08-0.038,0.116
@@ -443,7 +504,7 @@
                         </a>
                     </li>-->
                     <li ng-class="{active: isActive('/statuses')}">
-                        <a ng-href="#/statuses">
+                        <a ng-href="statuses">
                             <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
                                 y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                                 <path fill="#FFB600" d="M9.66,8.352l2.001,1.792c0.032,0.031,0.048,0.069,0.051,0.112c0.002,0.041-0.01,0.08-0.038,0.116
@@ -474,7 +535,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li ng-class="{active: isActive('/updatefrequencies/new')}" permission permission-except="roles.GUEST">
-                        <a ng-href="#/updatefrequencies/new">
+                        <a ng-href="updatefrequencies/new">
                             <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
                                 y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                                 <path fill="#FFB600" d="M5.27,8.981l1.428,1.427l-2.131,0.718L5.27,8.981z M5.846,8.461l3.931-3.928l1.37,1.367L7.216,9.832
@@ -486,7 +547,7 @@
                         </a>
                     </li>
                     <li ng-class="{active: isActive('/updatefrequencies')}">
-                        <a ng-href="#/updatefrequencies">
+                        <a ng-href="updatefrequencies">
                             <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
                                 y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                                 <path fill="#FFB600" d="M9.66,8.352l2.001,1.792c0.032,0.031,0.048,0.069,0.051,0.112c0.002,0.041-0.01,0.08-0.038,0.116
@@ -517,7 +578,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li ng-class="{active: isActive('/filetypes/new')}" permission permission-except="roles.GUEST">
-                        <a ng-href="#/filetypes/new">
+                        <a ng-href="filetypes/new">
                             <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
                                 y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                                 <path fill="#FFB600" d="M5.27,8.981l1.428,1.427l-2.131,0.718L5.27,8.981z M5.846,8.461l3.931-3.928l1.37,1.367L7.216,9.832
@@ -529,7 +590,7 @@
                         </a>
                     </li>
                     <li ng-class="{active: isActive('/filetypes')}">
-                        <a ng-href="#/filetypes">
+                        <a ng-href="filetypes">
                             <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
                                 y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                                 <path fill="#FFB600" d="M9.66,8.352l2.001,1.792c0.032,0.031,0.048,0.069,0.051,0.112c0.002,0.041-0.01,0.08-0.038,0.116
@@ -562,7 +623,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li ng-class="{active: isActive('/tags/new')}" permission permission-except="roles.GUEST">
-                        <a ng-href="#/tags/new">
+                        <a ng-href="tags/new">
                             <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
                                 y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                                 <path fill="#FFB600" d="M5.27,8.981l1.428,1.427l-2.131,0.718L5.27,8.981z M5.846,8.461l3.931-3.928l1.37,1.367L7.216,9.832
@@ -574,7 +635,7 @@
                         </a>
                     </li>
                     <li ng-class="{active: isActive('/tags')}">
-                        <a ng-href="#/tags">
+                        <a ng-href="tags">
                             <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
                                 y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                                 <path fill="#FFB600" d="M9.66,8.352l2.001,1.792c0.032,0.031,0.048,0.069,0.051,0.112c0.002,0.041-0.01,0.08-0.038,0.116
@@ -633,7 +694,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li ng-class="{active: isActive('/basemaps/new')}" permission permission-except="roles.GUEST">
-                        <a ng-href="#/basemaps/new">
+                        <a ng-href="basemaps/new">
                             <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
                                 y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                                 <path fill="#FFB600" d="M5.27,8.981l1.428,1.427l-2.131,0.718L5.27,8.981z M5.846,8.461l3.931-3.928l1.37,1.367L7.216,9.832
@@ -645,7 +706,7 @@
                         </a>
                     </li>
                     <li ng-class="{active: isActive('/basemaps')}">
-                        <a ng-href="#/basemaps">
+                        <a ng-href="basemaps">
                             <svg version="1.1" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
                                 y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                                 <path fill="#FFB600" d="M9.66,8.352l2.001,1.792c0.032,0.031,0.048,0.069,0.051,0.112c0.002,0.041-0.01,0.08-0.038,0.116
@@ -663,7 +724,7 @@
                 </ul>
             </li>
 
-            <!--Under Review-->
+            <!--Under Review
             <li ng-class="{active: isActive('/underreview') || isActive('/underreview/files') || isActive('/underreview/charts') || isActive('/underreview/maps')}"
                 class="treeview" permission permission-except="roles.GUEST">
                 <a ng-href="javascript:void(0)">
@@ -772,7 +833,7 @@
                     <span>{{ 'IMPORTER' | translate }}</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li ng-class="{active: isActive('/importer')}"><a ng-href="#/importer"><i class="fa fa-circle-o"></i> {{ 'IMPORT' | translate }}</a></li>
+                    <li ng-class="{active: isActive('/importer')}"><a ng-href="importer"><i class="fa fa-circle-o"></i> {{ 'IMPORT' | translate }}</a></li>
                 </ul>
             </li>
         </ul>

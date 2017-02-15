@@ -4,7 +4,7 @@ app.factory('model', function($resource) {
     return $resource();
 });
 
-function TagListController($scope, $location, rest, $rootScope, Flash, Alertify, modelService, configs, usSpinnerService) {
+function TagListController($scope, $rootScope, modelService, configs, usSpinnerService, ROLES) {
     usSpinnerService.spin('spinner');
     modelService.initService("Tag", "tags", $scope);
     
@@ -17,12 +17,17 @@ function TagListController($scope, $location, rest, $rootScope, Flash, Alertify,
     };
     
     $scope.filtersView = [{
-            name: 'Autor',
-            model: 'users',
-            key: 'username',
-            modelInput: 'createdBy',
-            multiple: true
-        }];
+        name: 'Autor',
+        model: 'users',
+        key: 'username',
+        modelInput: 'createdBy',
+        multiple: true,
+        permission: true,
+    }];
+
+    if(!!$rootScope.adminglob.currentUser && $rootScope.adminglob.currentUser.role === ROLES.GUEST) {
+        $scope.filtersView[0].permission = false;
+    }
     
     $scope.filtersInclude = ['datasets'];
 
@@ -191,6 +196,37 @@ function TagViewController($scope, Flash, rest, $routeParams, $location, modelSe
                 }, function (resp) {
                     usSpinnerService.stop('spinner');
                     $window.location.reload();
+                }, function (error) {
+                    usSpinnerService.stop('spinner');
+                    modelService.reloadPage();
+                });
+            },
+            function onCancel() {
+                return false;
+            }
+        );
+    };
+    $scope.confirmDelete = function (item) {
+        var text = '¿Está seguro que quiere borrar esta etiqueta?';
+        if (!!item.target.dataset.length && item.target.dataset.length > 0) {
+            text = 'Esta etiqueta tiene datasets asociados. Verifique aquí las asociaciones. <br><br>¿Está seguro de realizar esta acción?';
+        }
+        Alertify.set({
+            labels: {
+                ok: 'Ok',
+                cancel: 'Cancelar'
+            }
+        });
+        Alertify.confirm(text).then(
+            function onOk() {
+                usSpinnerService.spin('spinner');
+                rest().delete({
+                    type: $scope.type,
+                    id: $scope.model.id
+                }, function (resp) {
+                    usSpinnerService.stop('spinner');
+                    var url = "/" + $scope.type;
+                    $location.path(url);
                 }, function (error) {
                     usSpinnerService.stop('spinner');
                     modelService.reloadPage();
