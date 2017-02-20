@@ -6,7 +6,7 @@ var gulp = require('gulp'),
     util = require('gulp-util'),
     sourcemaps = require('gulp-sourcemaps');
 
-gulp.task('javascript', ['ng-config', 'ng-version'], function() {
+gulp.task('javascript', ['ng-config', 'ng-version', 'pdf-build'], function() {
   return gulp.src(
       gulp.paths.javascript.filter(function(file) {
         return file.endsWith('.js');
