@@ -18,7 +18,7 @@ gulp.task('javascript', ['ng-config', 'ng-version', 'pdf-build'], function() {
       .pipe(ngAnnotate({
         add: true
       }))
-      .pipe(process.env.NODE_ENV ? uglify() : util.noop())
+      .pipe(uglify())
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(gulp.paths.build));
 });
