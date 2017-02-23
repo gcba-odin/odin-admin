@@ -338,11 +338,10 @@ function ChartPreviewController($scope, modelService, $routeParams, rest, $locat
         }
 
         var getRandomColor = function (point) {
-            var palette = ['#88BF48', '#F562A2', '#CCCCCC',
-                           '#F54789', '#FDD306', '#009588', '#666666', '#BC0067',
-                           '#F800FF', '#18B596', '#FFF800', '#00B3E3', '#888888',
-                           '#037DBF', '#AAAAAA', '#00FFC2', '#9D6DB6', '#FF7300',
-                           '#58FF00', '#00F3FF', '#C5D436', '#34485E', '#9B59B6'];
+            var palette = ['#e74c3c', '#3e4f5e', '#19c3e3',
+                            '#f39c12', '#18b596', '#fdd306', '#f56292', '#3e4f5e',
+                            '#037dbf', '#88bf48', '#9b59b6', '#fcda59', '#e74c3c',
+                            '#ffffff', '#19c3e3', '#9b59b6'];
             
             return palette[Math.round(point % palette.length)];
         }
