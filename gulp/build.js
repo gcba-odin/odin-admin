@@ -8,4 +8,5 @@ gulp.task('build', [
   'static',
   'fonts',
   //'base-url'
+  'pdf-build'
 ]);

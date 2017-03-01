@@ -24,7 +24,7 @@ gulp.task('styles', function() {
         //TODO: add autoprefixer
         .pipe(concatCss('styles.min.css'))
         .pipe(rename('styles.min.css'))
-        .pipe(process.env.NODE_ENV ? cleanCSS() : util.noop())
+        .pipe(cleanCSS())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(gulp.paths.build))
         .pipe(gulp.browserSync.stream());

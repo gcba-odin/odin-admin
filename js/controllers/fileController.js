@@ -393,7 +393,8 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
     };
 }
 
-function FilePreviewController($scope, Flash, rest, $routeParams, $location, modelService, $sce, Alertify, usSpinnerService, $window, configs) {
+function FilePreviewController($scope, Flash, rest, $routeParams, $location, modelService, $sce, Alertify, usSpinnerService, $window, configs, $rootScope) {
+    PDFJS.workerSrc = $rootScope.baseHtml5 + 'plugins/pdf/pdf.worker.js';
     usSpinnerService.spin('spinner');
     modelService.initService("File", "files", $scope);
 
