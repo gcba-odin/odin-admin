@@ -206,7 +206,7 @@ function ChartViewController($scope, modelService, $routeParams, rest, $location
                 cancel: 'Cancelar'
             }
         });
-        Alertify.confirm('¿Está seguro que quiere despublicar este recurso?').then(
+        Alertify.confirm('¿Está seguro que quiere despublicar este gráfico?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');
 

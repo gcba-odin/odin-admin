@@ -57,7 +57,7 @@
     <label for="basemap" class="col-sm-2 control-label"> {{ 'BASE_MAP' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form1.basemap.$touched && form1.basemap.$invalid }" uib-tooltip="Tipo de mapa. Ej: carretera, satelital, etc." tooltip-placement="top">
 
-        <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="basemap" data-model="{{model.basemap}}" name="basemap" id="basemap" ng-model="model.basemap" class="selectize-input items required full has-options has-items" ng-required="!model.link">
+        <select placeholder="{{ 'SELECT_ONE' | translate }}" data-key="name" data-modelname="basemap" data-model="{{model.basemap}}" name="basemap" id="basemap" ng-model="model.basemap" class="selectize-input items required full has-options has-items" ng-required="!model.link" ng-disabled="!!model.link">
             <option value="">Seleccione una opción</option>
             <option value="{{bmap.id}}" ng-repeat="bmap in basemaps.data">{{bmap.name}}</option>
         </select>
@@ -73,7 +73,7 @@
 <div class="form-group" ng-if="!model.kml">
     <label for="link" class="col-sm-2 control-label">{{ 'URL' | translate }}</label>
     <div class="col-sm-10" ng-class="{ 'has-error': form1.link.$touched && form1.link.$invalid }">
-        <input type="text" ng-model="model.link" name="name" class="form-control" id="link" placeholder="{{ 'PLACE' | translate }} {{ 'URL' | translate }} {{ 'HERE' | translate }}" ng-required="!model.basemap"/>
+        <input type="text" ng-model="model.link" name="name" class="form-control" id="link" placeholder="{{ 'PLACE' | translate }} {{ 'URL' | translate }} {{ 'HERE' | translate }}" ng-required="!model.basemap" ng-disabled="!!model.basemap"/>
         <div class="help-block" ng-messages="form1.link.$error" ng-if="form1.link.$touched">
             <div ng-messages-include="views/messages.html"></div>
         </div>
