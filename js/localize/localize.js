@@ -244,8 +244,11 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'FILETYPES': 'Filetypes',
         'UPDATEFREQUENCY': 'Update frequency',
         'FILETYPE': 'Filetype',
-        'MIMETYPE': 'Mimetype'
-        
+        'MIMETYPE': 'Mimetype',
+        'DATASET_REQUEST': 'Requests',
+        'VIEW_DATASET_REQUEST': 'View requests',
+        'DATASET_REQUESTS': 'Requests',
+        'ABOUT': 'About'
     });
 
     $translateProvider.translations('es', {
@@ -530,7 +533,11 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'FILETYPES': 'Tipos de archivos',
         'UPDATEFREQUENCY': 'Frecuencia de actualización',
         'FILETYPE': 'Tipo de archivo',
-        'MIMETYPE': 'Mimetype'
+        'MIMETYPE': 'Mimetype',
+        'DATASET_REQUEST': 'Peticiones',
+        'VIEW_DATASET_REQUEST': 'Ver peticiones',
+        'DATASET_REQUESTS': 'Peticiones',
+        'ABOUT': '¿De qué se trata?'
     });
     $translateProvider.preferredLanguage('es');
 }]);
