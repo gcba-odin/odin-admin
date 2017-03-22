@@ -205,7 +205,7 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
                 cancel: 'Cancelar'
             }
         });
-        Alertify.confirm('¿Está seguro que quiere despublicar este recurso?').then(
+        Alertify.confirm('¿Está seguro que quiere despublicar este mapa?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');
 
@@ -260,7 +260,7 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
                 cancel: 'Cancelar'
             }
         });
-        Alertify.confirm('¿Está seguro que quiere enviar a revisión este gráfico?').then(
+        Alertify.confirm('¿Está seguro que quiere enviar a revisión este mapa?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');
 
@@ -288,7 +288,7 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
                 cancel: 'Cancelar'
             }
         });
-        Alertify.confirm('¿Está seguro que quiere cancelar este gráfico?').then(
+        Alertify.confirm('¿Está seguro que quiere cancelar este mapa?').then(
             function onOk() {
                 usSpinnerService.spin('spinner');
 

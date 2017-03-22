@@ -1,0 +1,49 @@
+<script type="text/javascript" src="/admin/plugins/redirect.js"></script>
+<header-home></header-home>
+<div class="content-wrapper">
+    <breadcrumbs data-type="{{ 'VIEW' | translate }}" data-model-name="{{ 'DATASET_REQUESTS' | translate }}" data-model="{{type}}"></breadcrumbs>
+    <section class="content">
+      <div class="box-header with-border">
+          <h3 class="box-title">{{ 'DETAILS_FOR' | translate }} <b>{{model.about}}</b></h3>
+      </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table usertable">
+                            <tr ng-if="!!model.about">
+                                <td class="detail-bold">{{ 'ABOUT' | translate }}</td>
+                                <td>{{model.about}}</td>
+                            </tr>
+                            <tr ng-if="!!model.description">
+                                <td class="detail-bold">{{ 'DESCRIPTION' | translate }}</td>
+                                <td ng-bind-html="getHtml(model.description)"></td>
+                            </tr>
+                            <tr ng-if="!!model.categories">
+                                <td class="detail-bold">{{ 'CATEGORIES' | translate }}</td>
+                                <td ng-bind-html="getHtml(model.categories)"></td>
+                            </tr>
+                            <tr ng-if="!!model.createdAt">
+                                <td class="detail-bold">{{ 'CREATED_AT' | translate }}</td>
+                                <td>{{model.createdAt| date:'MMM d, y h:mm:ss a'}}</td>
+                            </tr>
+                            <tr ng-if="!!model.email">
+                                <td class="detail-bold">{{ 'EMAIL' | translate }}</td>
+                                <td>{{model.email }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <button back-button class="btn btn-default pull-left">
+                            {{ 'BACK' | translate }}
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</div>
+<footer-home></footer-home>

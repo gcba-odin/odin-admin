@@ -434,6 +434,21 @@
                     templateUrl: "views/dataset/list.html",
                     controller: DatasetListController
                 })
+                
+                //Dataset requests
+                .when("/datasetrequests/:id/view", {
+            templateUrl: "views/datasetrequest/view.html",
+            controller: DatasetRequestViewController,
+            data: {
+                permissions: {
+                    except: ROLES.GUEST
+                }
+            }
+        })
+                .when("/datasetrequests", {
+                    templateUrl: "views/datasetrequest/list.html",
+                    controller: DatasetRequestListController
+                })
                 // Maps
                 .when("/maps", {
                     templateUrl: "views/map/list.html",

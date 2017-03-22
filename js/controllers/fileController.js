@@ -824,16 +824,33 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
 
     $scope.status_default = false;
     var prev_status = null;
-
+    
     //factory configs
     configs.statuses($scope);
-
+    
     $scope.model = new model();
     $scope.steps = [];
     $scope.steps[0] = "active";
     $scope.steps[1] = "undone";
     $scope.steps[2] = "undone";
     $scope.stepactive = 0;
+    var default_items = [];
+    var default_items_key = [];
+    
+    $scope.config_key = 'defaultOptionals';
+    //default optionals
+    configs.findKey($scope, function(resp) {
+            if (!!resp.data[0] && !!resp.data[0].value) {
+                var opts = resp.data[0].value.split(',');
+                angular.forEach(opts, function(element) {
+                    default_items.push({
+                        field1: element,
+                        field2: '',
+                    });
+                    default_items_key.push(element);
+                });
+            }
+        });
 
     $scope.mostrar = false;
     var hard_file = null;
@@ -1105,33 +1122,19 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
             if (!$scope.model.layout) {
                 $scope.model.layout = false;
             }
+            $scope.model.items = angular.copy(default_items);
             
-            var opts_prev = [];
-            $scope.model.items = [];
             angular.forEach($scope.model.optionals, function (val, key) {
-                opts_prev.push(key);
-                $scope.model.items.push({
-                    field1: key,
-                    field2: val,
-                });
-            });
-            
-            //get optionals by default on config
-            $scope.config_key = 'defaultOptionals';
-            configs.findKey($scope, function(resp) {
-                if (!!resp.data[0] && !!resp.data[0].value) {
-                    var opts = resp.data[0].value.split(',');
-                    angular.forEach(opts, function(element) {
-                        if($.inArray(element, opts_prev) != 0) {
-                            $scope.model.items.push({
-                                field1: element,
-                                field2: ''
-                            });
-                        }
+                if(!!$scope.model.items[default_items_key.indexOf(key)]) {
+                    $scope.model.items[default_items_key.indexOf(key)].field2 = val;
+                } else {
+                    $scope.model.items.push({
+                        field1: key,
+                        field2: val,
                     });
                 }
             });
-
+            
             $scope.fileModel.name = $scope.model.name;
             var type = $scope.fileModel.name.split('.').pop();
             if (type == "doc" || type == "docx") {

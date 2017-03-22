@@ -1,4 +1,4 @@
-var app = angular.module('odin.controllers', ["odin.homeControllers", "odin.userControllers", "odin.updateFrequencyControllers", "odin.organizationControllers", "odin.statusControllers", "odin.filetypeControllers", "odin.fileControllers", "odin.tagControllers", "odin.categoryControllers", "odin.mapsControllers", "odin.chartsControllers", "odin.configsControllers", "odin.basemapsControllers", "odin.importerControllers"]);
+var app = angular.module('odin.controllers', ["odin.homeControllers", "odin.userControllers", "odin.updateFrequencyControllers", "odin.organizationControllers", "odin.statusControllers", "odin.filetypeControllers", "odin.fileControllers", "odin.tagControllers", "odin.categoryControllers", "odin.mapsControllers", "odin.chartsControllers", "odin.configsControllers", "odin.basemapsControllers", "odin.importerControllers", "odin.DatasetRequestControllers"]);
 
 app.controller("mainController", function($scope, AuthenticationService, $location, $rootScope, $translate) {
 
