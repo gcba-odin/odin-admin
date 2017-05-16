@@ -31,7 +31,7 @@ function OrganizationListController($scope, $rootScope, modelService, configs, u
     $scope.parameters = {
         skip: 0,
         limit: 20,
-        conditions: '',
+        conditions: '&fields=id,name,deletedAt,createdBy,files,users',
         orderBy: 'createdAt',
         sort: 'DESC'
     };
@@ -106,20 +106,20 @@ function OrganizationListController($scope, $rootScope, modelService, configs, u
             }
         });
     };
-    
+
     $scope.findSort = function(type, cond) {
         usSpinnerService.spin('spinner');
-        $scope.sortType = type; 
-        
+        $scope.sortType = type;
+
         var sort = 'DESC';
         if(cond) {
             sort = 'ASC';
         }
         $scope.sortReverse = cond;
-        
+
         $scope.parameters.orderBy = type;
         $scope.parameters.sort = sort;
-        
+
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if(!resp) {
@@ -132,9 +132,9 @@ function OrganizationListController($scope, $rootScope, modelService, configs, u
 function OrganizationViewController($scope, Flash, rest, $routeParams, $location, modelService, $sce, usSpinnerService, Alertify, $window) {
     usSpinnerService.spin('spinner');
     modelService.initService("Organization", "organizations", $scope);
-    
+
     $scope.filtersInclude = ['files', 'users'];
-    
+
     $scope.current = {
         'id': $scope.adminglob.currentUser.user,
     };
@@ -151,7 +151,7 @@ function OrganizationViewController($scope, Flash, rest, $routeParams, $location
             modelService.reloadPage();
         });
     }
-    
+
     $scope.inactiveModel = function(item, prev, type) {
         modelService.deactivateView(item, $scope, prev, type);
     }
@@ -167,9 +167,9 @@ function OrganizationViewController($scope, Flash, rest, $routeParams, $location
     $scope.getHtml = function (html) {
         return $sce.trustAsHtml(html);
     };
-   
+
     loadModel();
-     
+
     $scope.publish = function (id, type) {
         usSpinnerService.spin('spinner');
 
@@ -227,7 +227,7 @@ function OrganizationViewController($scope, Flash, rest, $routeParams, $location
             }
         });
         Alertify.confirm('¿Está seguro que quiere borrar este ' + text_type + '?').then(
-            function onOk() { 
+            function onOk() {
                 usSpinnerService.spin('spinner');
                 rest().delete({
                     type: type,
@@ -245,7 +245,7 @@ function OrganizationViewController($scope, Flash, rest, $routeParams, $location
             }
         );
     };
-    
+
     $scope.confirmDelete = function (item) {
         Alertify.set({
             labels: {
@@ -273,7 +273,7 @@ function OrganizationViewController($scope, Flash, rest, $routeParams, $location
             }
         );
     };
-    
+
     $scope.reject = function (id, type) {
         Alertify.set({
             labels: {
@@ -301,7 +301,7 @@ function OrganizationViewController($scope, Flash, rest, $routeParams, $location
             }
         );
     };
-    
+
     $scope.sendReview = function (id, type) {
         Alertify.set({
             labels: {
@@ -329,7 +329,7 @@ function OrganizationViewController($scope, Flash, rest, $routeParams, $location
             }
         );
     };
-    
+
     $scope.cancel = function (id, type) {
         Alertify.set({
             labels: {
@@ -412,7 +412,7 @@ function OrganizationEditController($scope, Flash, rest, $routeParams, model, $l
                 description: $scope.model.description,
                 name: $scope.model.name
             };
-            
+
             //console.log($scope.model);
             rest().update({
                 type: $scope.type,

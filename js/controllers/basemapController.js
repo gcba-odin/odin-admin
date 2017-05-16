@@ -8,7 +8,7 @@ function BasemapListController($scope, modelService, configs, usSpinnerService, 
     $scope.parameters = {
         skip: 0,
         limit: 20,
-        conditions: '',
+        conditions: '&fields=id,name,deletedAt,maps,createdBy',
         orderBy: 'createdAt',
         sort: 'DESC'
     };
@@ -61,7 +61,7 @@ function BasemapListController($scope, modelService, configs, usSpinnerService, 
         }
 
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-        
+
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if (!resp) {
@@ -84,20 +84,20 @@ function BasemapListController($scope, modelService, configs, usSpinnerService, 
             }
         });
     };
-    
+
     $scope.findSort = function(type, cond) {
         usSpinnerService.spin('spinner');
-        $scope.sortType = type; 
-        
+        $scope.sortType = type;
+
         var sort = 'DESC';
         if(cond) {
             sort = 'ASC';
         }
         $scope.sortReverse = cond;
-        
+
         $scope.parameters.orderBy = type;
         $scope.parameters.sort = sort;
-        
+
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if(!resp) {
@@ -110,7 +110,7 @@ function BasemapListController($scope, modelService, configs, usSpinnerService, 
 function BasemapViewController($scope, modelService, $routeParams, rest, $location, $sce, usSpinnerService, Alertify, $window) {
     usSpinnerService.spin('spinner');
     modelService.initService("Basemap", "basemaps", $scope);
-    
+
     $scope.filtersInclude = ['maps'];
 
     var loadModel = function() {
@@ -142,9 +142,9 @@ function BasemapViewController($scope, modelService, $routeParams, rest, $locati
     $scope.getHtml = function(html) {
         return $sce.trustAsHtml(html);
     };
-    
+
     loadModel();
-    
+
     $scope.publish = function (id, type) {
         usSpinnerService.spin('spinner');
 
@@ -219,7 +219,7 @@ function BasemapViewController($scope, modelService, $routeParams, rest, $locati
             }
         );
     };
-    
+
     $scope.confirmDelete = function (item) {
         Alertify.set({
             labels: {
@@ -247,7 +247,7 @@ function BasemapViewController($scope, modelService, $routeParams, rest, $locati
             }
         );
     };
-    
+
     $scope.reject = function (id, type) {
         Alertify.set({
             labels: {
@@ -275,7 +275,7 @@ function BasemapViewController($scope, modelService, $routeParams, rest, $locati
             }
         );
     };
-    
+
     $scope.sendReview = function (id, type) {
         Alertify.set({
             labels: {
@@ -303,7 +303,7 @@ function BasemapViewController($scope, modelService, $routeParams, rest, $locati
             }
         );
     };
-    
+
     $scope.cancel = function (id, type) {
         Alertify.set({
             labels: {
@@ -342,16 +342,16 @@ function BasemapCreateController($scope, modelService, rest, $location, model, $
     $scope.baseMin = 0;
     $scope.baseMax = 18;
     $scope.model.tms = false;
-    
+
     $scope.config_key = 'minZoom';
     ////factory configs
     configs.findKey($scope, function(resp) {
         if (!!resp.data[0] && !!resp.data[0].value) {
             $scope.baseMin = parseInt(resp.data[0].value);
         }
-        
+
         $scope.model.minZoom = $scope.baseMin;
-        
+
         $scope.config_key = 'maxZoom';
         ////factory configs
         configs.findKey($scope, function(resp) {
@@ -445,17 +445,17 @@ function BasemapEditController($scope, modelService, $routeParams, $sce, rest, $
     modelService.initService("Basemap", "basemaps", $scope);
 
     $scope.model = new model();
-    
+
     $scope.baseMin = 0;
     $scope.baseMax = 18;
-    
+
     $scope.config_key = 'minZoom';
     ////factory configs
     configs.findKey($scope, function(resp) {
         if (!!resp.data[0] && !!resp.data[0].value) {
             $scope.baseMin = parseInt(resp.data[0].value);
         }
-        
+
         $scope.config_key = 'maxZoom';
         ////factory configs
         configs.findKey($scope, function(resp) {

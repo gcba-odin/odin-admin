@@ -7,15 +7,15 @@ app.factory('model', function($resource) {
 function updateFrequencyListController($scope, $rootScope, modelService, configs, usSpinnerService, ROLES) {
     usSpinnerService.spin('spinner');
     modelService.initService("updateFrequency", "updatefrequencies", $scope);
-    
+
     $scope.parameters = {
         skip: 0,
         limit: 20,
-        conditions: '',
+        conditions: '&fields=id,name,createdBy',
         orderBy: 'createdAt',
         sort: 'DESC'
     };
-    
+
     $scope.filtersView = [{
         name: 'Autor',
         model: 'users',
@@ -44,14 +44,14 @@ function updateFrequencyListController($scope, $rootScope, modelService, configs
     $scope.view = function(model) {
         modelService.view($scope, model);
     }
-    
+
     $scope.config_key = 'adminPagination';
     ////factory configs
     configs.findKey($scope, function (resp) {
         if (!!resp.data[0] && !!resp.data[0].value) {
             $scope.parameters.limit = resp.data[0].value;
         }
-        
+
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
 
         modelService.loadAll($scope, function(resp) {
@@ -79,17 +79,17 @@ function updateFrequencyListController($scope, $rootScope, modelService, configs
 
     $scope.findSort = function(type, cond) {
         usSpinnerService.spin('spinner');
-        $scope.sortType = type; 
-        
+        $scope.sortType = type;
+
         var sort = 'DESC';
         if(cond) {
             sort = 'ASC';
         }
         $scope.sortReverse = cond;
-        
+
         $scope.parameters.orderBy = type;
         $scope.parameters.sort = sort;
-        
+
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if(!resp) {
@@ -108,7 +108,7 @@ function updateFrequencyViewController($scope, Flash, rest, $routeParams, $locat
     $scope.edit = function(model) {
         modelService.edit($scope, model);
     };
-    
+
     $scope.confirmDelete = function (item) {
         Alertify.set({
             labels: {

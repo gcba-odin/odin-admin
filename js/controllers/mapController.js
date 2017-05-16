@@ -9,7 +9,7 @@ function MapListController($scope, modelService, configs, usSpinnerService, unde
     $scope.parameters = {
         skip: 0,
         limit: 20,
-        conditions: '',
+        conditions: '&fields=id,name,status,createdBy',
         orderBy: 'createdAt',
         sort: 'DESC'
     };
@@ -43,12 +43,12 @@ function MapListController($scope, modelService, configs, usSpinnerService, unde
             multiple: true,
             permission: true,
         }];
-    
+
         $scope.parameters.conditions = '';
         if(!!$rootScope.adminglob.currentUser && $rootScope.adminglob.currentUser.role === ROLES.GUEST) {
             var current_us = $rootScope.adminglob.currentUser.user;
             $scope.parameters.conditions = '&createdBy=' + current_us + '&owner=' + current_us;
-            
+
             $scope.filtersView[1].permission = false;
         }
     }
@@ -82,7 +82,7 @@ function MapListController($scope, modelService, configs, usSpinnerService, unde
         }
 
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-        
+
         modelService.loadAll($scope, function (resp) {
             usSpinnerService.stop('spinner');
             if (!resp) {
@@ -108,17 +108,17 @@ function MapListController($scope, modelService, configs, usSpinnerService, unde
 
     $scope.findSort = function(type, cond) {
         usSpinnerService.spin('spinner');
-        $scope.sortType = type; 
-        
+        $scope.sortType = type;
+
         var sort = 'DESC';
         if(cond) {
             sort = 'ASC';
         }
         $scope.sortReverse = cond;
-        
+
         $scope.parameters.orderBy = type;
         $scope.parameters.sort = sort;
-        
+
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if(!resp) {
@@ -181,7 +181,7 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
         return $sce.trustAsHtml(html);
     };
 
-    //factory configs 
+    //factory configs
     configs.statuses($scope);
 
     $scope.publish = function () {
@@ -252,7 +252,7 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
             }
         );
     };
-    
+
         $scope.sendReview = function () {
             Alertify.set({
             labels: {
@@ -280,7 +280,7 @@ function MapViewController($scope, modelService, $routeParams, rest, $location, 
             }
         );
     };
-    
+
     $scope.cancel = function () {
         Alertify.set({
             labels: {
@@ -331,7 +331,8 @@ function MapPreviewController($scope, modelService, $routeParams, rest, $locatio
 
     $scope.model = rest().findOne({
         id: $routeParams.id,
-        type: $scope.type
+        type: $scope.type,
+        params: 'fields=id,name,link,basemap,geojson'
     }, function () {
         $scope.model.link = $sce.trustAsResourceUrl($scope.model.link);
         if (!$scope.model.link) {
@@ -364,8 +365,8 @@ function MapPreviewController($scope, modelService, $routeParams, rest, $locatio
                                 }
                             }
                         }
-                    }            
-                } 
+                    }
+                }
 
             }
             if (latlngs.length > 0)
@@ -378,13 +379,13 @@ function MapPreviewController($scope, modelService, $routeParams, rest, $locatio
         var maxZoom = 18;
         var tms = false;
         var attribution = '';
-        
+
         if(!!$scope.model.basemap.minZoom) {
             minZoom = $scope.model.basemap.minZoom;
-        } 
+        }
         if(!!$scope.model.basemap.maxZoom) {
             maxZoom = $scope.model.basemap.maxZoom;
-        } 
+        }
         if(!!$scope.model.basemap.tms) {
             tms = $scope.model.basemap.tms;
         }
@@ -437,7 +438,7 @@ function MapPreviewController($scope, modelService, $routeParams, rest, $locatio
 function MapCreateController($scope, modelService, rest, $location, model, $sce, $routeParams, Alertify, usSpinnerService, configs) {
     usSpinnerService.spin('spinner');
     modelService.initService("Map", "maps", $scope);
-    
+
     //factory configs
     configs.statuses($scope);
 
@@ -490,7 +491,7 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
     $scope.file_disabled = 'enabled';
     if (!angular.isUndefined($routeParams.file)) {
         $scope.model.file = $routeParams.file;
-        
+
         var file_map = rest().findOne({
             type: 'files',
             id: $routeParams.file,
@@ -534,7 +535,7 @@ function MapCreateController($scope, modelService, rest, $location, model, $sce,
                     }
                     );
             } else {
-                if($.inArray('application/vnd.google-earth.kml+xml', resp.type.mimetype) == 0) { 
+                if($.inArray('application/vnd.google-earth.kml+xml', resp.type.mimetype) == 0) {
                     $scope.model.kml = true;
                 } else {
                     $scope.fileModel = rest().contents({
@@ -737,7 +738,7 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
     $scope.basemap_view = true;
     $scope.status_default = false;
     var prev_status = null;
-    
+
     //factory configs
     configs.statuses($scope);
 
@@ -860,7 +861,7 @@ function MapEditController($scope, modelService, $routeParams, $sce, rest, $loca
             cont++;
         }
         $scope.model.properties = $scope.model.properties.toString();
-        
+
         if (prev_status != $scope.model.status && $scope.model.status == $scope.statuses.published) {
             $scope.model.publishedAt = new Date();
         } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.unpublished) {

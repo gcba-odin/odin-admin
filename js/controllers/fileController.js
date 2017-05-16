@@ -13,13 +13,13 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
     $scope.parameters = {
         skip: 0,
         limit: 20,
-        conditions: '',
+        conditions: '&fields=id,name,status,restService,soapService,createdBy,type',
         orderBy: 'createdAt',
         sort: 'DESC'
     };
 
     $scope.underReview = underReview;
-    
+
     $scope.filtersView = [{
         name: 'Autor',
         model: 'users',
@@ -50,7 +50,7 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
             var current_us = $rootScope.adminglob.currentUser.user;
             $scope.parameters.conditions = '&createdBy=' + current_us + '&owner=' + current_us;
         }
-        
+
         $scope.filtersView.push({
             name: 'Estado',
             model: 'statuses',
@@ -92,7 +92,7 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
         }
 
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-        
+
         modelService.loadAll($scope, function (resp) {
             usSpinnerService.stop('spinner');
             if (!resp) {
@@ -118,17 +118,17 @@ function FileListController($scope, $location, rest, $rootScope, Flash, Alertify
 
     $scope.findSort = function(type, cond) {
         usSpinnerService.spin('spinner');
-        $scope.sortType = type; 
-        
+        $scope.sortType = type;
+
         var sort = 'DESC';
         if(cond) {
             sort = 'ASC';
         }
         $scope.sortReverse = cond;
-        
+
         $scope.parameters.orderBy = type;
         $scope.parameters.sort = sort;
-        
+
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if(!resp) {
@@ -151,6 +151,7 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type,
+            params: 'fields=id,name,status,url,cancelledAt,type,kml,description,dataset,reviewedAt,gatheringDate,updateFrequency,organization,createdBy,owner,updatedAt,update,createdAt,publishedAt,unPublishedAt,rejectedAt,notes,layout'
             //params: "include=tags"
         }, function () {
             $scope.model.resources = rest().resources({
@@ -170,15 +171,15 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
                     }
                 }
             });
-            
+
             $scope.model.kml = false;
             if($.inArray('application/vnd.google-earth.kml+xml', $scope.model.type.mimetype) == 0)
                 $scope.model.kml = true;
-            
+
             if($rootScope.adminglob.currentUser.role === ROLES.GUEST && $scope.model.status.id == $scope.statuses.rejected) {
                 $scope.permission_block = true;
             }
-            
+
             usSpinnerService.stop('spinner');
         }, function (error) {
             usSpinnerService.stop('spinner');
@@ -276,7 +277,7 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
             }
         );
     };
-    
+
     $scope.sendReview = function (id, type) {
         var text_type = (type == 'charts') ? 'gráfico' : (type == 'maps') ? 'mapa' : 'recurso';
         Alertify.set({
@@ -305,7 +306,7 @@ function FileViewController($scope, Flash, rest, $routeParams, $location, modelS
             }
         );
     };
-    
+
     $scope.cancel = function (id, type) {
         var text_type = (type == 'charts') ? 'gráfico' : (type == 'maps') ? 'mapa' : 'recurso';
         Alertify.set({
@@ -404,7 +405,8 @@ function FilePreviewController($scope, Flash, rest, $routeParams, $location, mod
 
     $scope.model = rest().findOne({
         id: $routeParams.id,
-        type: $scope.type
+        type: $scope.type,
+        params: 'fields=id,name,type,url'
     }, function (resp) {
         if (resp.type.api) {
             $scope.model.contents = rest().contents({
@@ -440,7 +442,7 @@ function FilePreviewController($scope, Flash, rest, $routeParams, $location, mod
             modelService.reloadPage();
         });
     };
-    
+
     $scope.scroll = 0;
     $scope.loading = 'Cargando..';
 
@@ -515,7 +517,7 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
         var dataset_file = rest().findOne({
             id: id,
             type: 'datasets',
-            params: 'include=files'
+            params: 'include=files&fields=files'
         }, function () {
             var datab = {
                 ret: false,
@@ -554,7 +556,7 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
         'id': $scope.adminglob.currentUser.user,
         'username': $scope.adminglob.currentUser.username
     };
-    
+
     //get optionals by default on config
     $scope.config_key = 'defaultOptionals';
     configs.findKey($scope, function(resp) {
@@ -575,7 +577,8 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
         if (!!resp.data[0] && !!resp.data[0].value) {
             rest().findOne({
                 type: 'organizations',
-                id: resp.data[0].value
+                id: resp.data[0].value,
+                params: 'fields=name'
             }, function (organization) {
                 $scope.model.organization = {
                     'id': resp.data[0].value,
@@ -591,7 +594,8 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
     if (!angular.isUndefined($routeParams.dataset)) {
         $scope.model.dataset = rest().findOne({
             id: $routeParams.dataset,
-            type: 'datasets'
+            type: 'datasets',
+            params: 'fields=id,name'
         });
         $scope.dataset_disabled = 'disabled';
     }
@@ -738,10 +742,10 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
         if ($scope.model.gatheringDate) {
             data.gatheringDate = $scope.model.gatheringDate.toISOString().slice(0, 10); //.toISOString().slice(0, 10), //new Date().toISOString().slice(0, 19).replace('T', ' ');
         }
-        
+
         if ($scope.model.uploadFile != null) {
             data.uploadFile = $scope.model.uploadFile;
-        } 
+        }
 
         Upload.upload({
             url: $rootScope.url + "/files",
@@ -824,10 +828,10 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
 
     $scope.status_default = false;
     var prev_status = null;
-    
+
     //factory configs
     configs.statuses($scope);
-    
+
     $scope.model = new model();
     $scope.steps = [];
     $scope.steps[0] = "active";
@@ -836,7 +840,7 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
     $scope.stepactive = 0;
     var default_items = [];
     var default_items_key = [];
-    
+
     $scope.config_key = 'defaultOptionals';
     //default optionals
     configs.findKey($scope, function(resp) {
@@ -868,7 +872,7 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
         var dataset_file = rest().findOne({
             id: id,
             type: 'datasets',
-            params: 'include=files'
+            params: 'include=files&fields=files'
         }, function () {
             var datab = {
                 ret: false,
@@ -1012,10 +1016,10 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
 
         $scope.model.optionals = {};
         angular.forEach($scope.model.items, function (element) {
-            if(element.field1 != '' && element.field2 != '') 
+            if(element.field1 != '' && element.field2 != '')
                 $scope.model.optionals[element.field1] = element.field2;
         });
-        
+
         $scope.uploadImageProgress = 10;
         var data = {
             'name': $scope.model.name,
@@ -1038,7 +1042,7 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
         if (!!$scope.model.gatheringDate) {
             data.gatheringDate = $scope.model.gatheringDate.toISOString().slice(0, 10); //.toISOString().slice(0, 10), //new Date().toISOString().slice(0, 19).replace('T', ' ');
         }
-        
+
         if(!!$scope.model.fileName) {
             data.fileName = $scope.model.fileName;
         }
@@ -1058,7 +1062,7 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
         } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.underReview) {
             data.reviewedAt = new Date();
         }
-        
+
         if ($scope.model.uploadFile != null) {
             data.uploadFile = $scope.model.uploadFile;
         } else if (hard_file != null) {
@@ -1123,7 +1127,7 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
                 $scope.model.layout = false;
             }
             $scope.model.items = angular.copy(default_items);
-            
+
             angular.forEach($scope.model.optionals, function (val, key) {
                 if(!!$scope.model.items[default_items_key.indexOf(key)]) {
                     $scope.model.items[default_items_key.indexOf(key)].field2 = val;
@@ -1134,7 +1138,7 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
                     });
                 }
             });
-            
+
             $scope.fileModel.name = $scope.model.name;
             var type = $scope.fileModel.name.split('.').pop();
             if (type == "doc" || type == "docx") {

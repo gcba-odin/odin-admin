@@ -10,7 +10,7 @@ function ChartListController($scope, modelService, configs, usSpinnerService, un
     $scope.parameters = {
         skip: 0,
         limit: 20,
-        conditions: '',
+        conditions: '&fields=id,name,status,createdBy',
         orderBy: 'createdAt',
         sort: 'DESC'
     };
@@ -44,12 +44,12 @@ function ChartListController($scope, modelService, configs, usSpinnerService, un
             multiple: true,
             permission: true,
         }];
-    
+
         $scope.parameters.conditions = '';
         if(!!$rootScope.adminglob.currentUser && $rootScope.adminglob.currentUser.role === ROLES.GUEST) {
             var current_us = $rootScope.adminglob.currentUser.user;
             $scope.parameters.conditions = '&createdBy=' + current_us + '&owner=' + current_us;
-            
+
             $scope.filtersView[1].permission = false;
         }
     }
@@ -83,7 +83,7 @@ function ChartListController($scope, modelService, configs, usSpinnerService, un
         }
 
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-        
+
         modelService.loadAll($scope, function (resp) {
             usSpinnerService.stop('spinner');
             if (!resp) {
@@ -106,20 +106,20 @@ function ChartListController($scope, modelService, configs, usSpinnerService, un
             }
         });
     };
-    
+
     $scope.findSort = function(type, cond) {
         usSpinnerService.spin('spinner');
-        $scope.sortType = type; 
-        
+        $scope.sortType = type;
+
         var sort = 'DESC';
         if(cond) {
             sort = 'ASC';
         }
         $scope.sortReverse = cond;
-        
+
         $scope.parameters.orderBy = type;
         $scope.parameters.sort = sort;
-        
+
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if(!resp) {
@@ -136,7 +136,8 @@ function ChartViewController($scope, modelService, $routeParams, rest, $location
     var loadModel = function () {
         $scope.model = rest().findOne({
             id: $routeParams.id,
-            type: $scope.type
+            type: $scope.type,
+            params: 'fields=id,name,status,file,createdAt,description,createdBy,publishedAt,unPublishedAt,rejectedAt,cancelledAt,reviewedAt,updatedAt,notes,link,type,dataType,data'
         }, function () {
             usSpinnerService.stop('spinner');
         }, function (error) {
@@ -182,7 +183,7 @@ function ChartViewController($scope, modelService, $routeParams, rest, $location
         return $sce.trustAsHtml(html);
     };
 
-    //factory configs 
+    //factory configs
     configs.statuses($scope);
 
     $scope.publish = function () {
@@ -253,7 +254,7 @@ function ChartViewController($scope, modelService, $routeParams, rest, $location
             }
         );
     };
-    
+
     $scope.sendReview = function () {
         Alertify.set({
             labels: {
@@ -281,7 +282,7 @@ function ChartViewController($scope, modelService, $routeParams, rest, $location
             }
         );
     };
-    
+
     $scope.cancel = function () {
         Alertify.set({
             labels: {
@@ -319,7 +320,8 @@ function ChartPreviewController($scope, modelService, $routeParams, rest, $locat
 
     $scope.model = rest().findOne({
         id: $routeParams.id,
-        type: $scope.type
+        type: $scope.type,
+        params: 'fields=id,name,type,dataType,link,dataSeries,data'
     }, function () {
         $scope.model.link = $sce.trustAsResourceUrl($scope.model.link);
         $scope.model.charttype = 'chart-' + $scope.model.type;
@@ -342,7 +344,7 @@ function ChartPreviewController($scope, modelService, $routeParams, rest, $locat
                             '#f39c12', '#18b596', '#fdd306', '#f56292', '#3e4f5e',
                             '#037dbf', '#88bf48', '#9b59b6', '#fcda59', '#e74c3c',
                             '#ffffff', '#19c3e3', '#9b59b6'];
-            
+
             return palette[Math.round(point % palette.length)];
         }
 
@@ -375,7 +377,7 @@ function ChartPreviewController($scope, modelService, $routeParams, rest, $locat
 function ChartCreateController($scope, modelService, rest, $location, model, $sce, $routeParams, Alertify, usSpinnerService, configs) {
     usSpinnerService.spin('spinner');
     modelService.initService("Chart", "charts", $scope);
-    
+
     //factory configs
     configs.statuses($scope);
 
@@ -554,9 +556,9 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
     $scope.steps[2] = "undone";
     $scope.stepactive = 0;
     $scope.status_default = false;
-    
+
     var prev_status = null;
-    
+
     //factory configs
     configs.statuses($scope);
 
@@ -648,7 +650,7 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
             }
         }
         $scope.model.dataSeries = $scope.model.dataSeries.toString();
-        
+
         if (prev_status != $scope.model.status && $scope.model.status == $scope.statuses.published) {
             $scope.model.publishedAt = new Date();
         } else if(prev_status != $scope.model.status && $scope.model.status == $scope.statuses.unpublished) {
@@ -694,6 +696,7 @@ function ChartEditController($scope, modelService, $routeParams, $sce, rest, $lo
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type,
+            params: 'fields=id,name,notes,link,type,dataType,description,status,file,data,dataSeries'
         }, function () {
             $scope.file_disabled = 'enabled';
             if (!!$scope.model.status) {

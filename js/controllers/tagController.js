@@ -7,15 +7,15 @@ app.factory('model', function($resource) {
 function TagListController($scope, $rootScope, modelService, configs, usSpinnerService, ROLES) {
     usSpinnerService.spin('spinner');
     modelService.initService("Tag", "tags", $scope);
-    
+
     $scope.parameters = {
         skip: 0,
         limit: 20,
-        conditions: '',
+        conditions: '&fields=id,name,createdBy,datasets',
         orderBy: 'createdAt',
         sort: 'DESC'
     };
-    
+
     $scope.filtersView = [{
         name: 'Autor',
         model: 'users',
@@ -28,7 +28,7 @@ function TagListController($scope, $rootScope, modelService, configs, usSpinnerS
     if(!!$rootScope.adminglob.currentUser && $rootScope.adminglob.currentUser.role === ROLES.GUEST) {
         $scope.filtersView[0].permission = false;
     }
-    
+
     $scope.filtersInclude = ['datasets'];
 
     $scope.confirmDelete = function(item) {
@@ -49,14 +49,14 @@ function TagListController($scope, $rootScope, modelService, configs, usSpinnerS
     $scope.view = function(model) {
         modelService.view($scope, model);
     }
-    
+
     $scope.config_key = 'adminPagination';
     ////factory configs
     configs.findKey($scope, function (resp) {
         if (!!resp.data[0] && !!resp.data[0].value) {
             $scope.parameters.limit = resp.data[0].value;
         }
-        
+
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
 
         modelService.loadAll($scope, function(resp) {
@@ -81,20 +81,20 @@ function TagListController($scope, $rootScope, modelService, configs, usSpinnerS
             }
         });
     };
-    
+
     $scope.findSort = function(type, cond) {
         usSpinnerService.spin('spinner');
-        $scope.sortType = type; 
-        
+        $scope.sortType = type;
+
         var sort = 'DESC';
         if(cond) {
             sort = 'ASC';
         }
         $scope.sortReverse = cond;
-        
+
         $scope.parameters.orderBy = type;
         $scope.parameters.sort = sort;
-        
+
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if(!resp) {
@@ -120,7 +120,7 @@ function TagViewController($scope, Flash, rest, $routeParams, $location, modelSe
             modelService.reloadPage();
         });
     };
-    
+
     $scope.edit = function(model) {
         var url = '/' + $scope.type + '/' + model.id + "/edit";
         $location.path(url);
@@ -129,9 +129,9 @@ function TagViewController($scope, Flash, rest, $routeParams, $location, modelSe
     $scope.getHtml = function(html) {
         return $sce.trustAsHtml(html);
     };
-   
+
     loadModel();
-     
+
     $scope.publish = function (id, type) {
         usSpinnerService.spin('spinner');
 
@@ -148,7 +148,7 @@ function TagViewController($scope, Flash, rest, $routeParams, $location, modelSe
             modelService.reloadPage();
         });
     };
- 
+
     $scope.unPublish = function (id, type) {
         var text_type = (type == 'datasets') ? 'dataset' : '';
         Alertify.set({
@@ -179,7 +179,7 @@ function TagViewController($scope, Flash, rest, $routeParams, $location, modelSe
             }
         );
     };
-     
+
     $scope.deleteResource = function (id, type) {
         Alertify.set({
             labels: {

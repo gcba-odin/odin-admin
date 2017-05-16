@@ -11,17 +11,17 @@ function UserListController($scope, $location, rest, $rootScope, Flash, Alertify
     $scope.parameters = {
         skip: 0,
         limit: 20,
-        conditions: '',
+        conditions: '&fields=id,username,email,deletedAt,role',
         orderBy: 'createdAt',
         sort: 'DESC'
     };
-    
+
     $scope.current = {
         'id': $scope.adminglob.currentUser.user,
     };
-    
+
     //var filtersGet = [];//['files', 'datasets', 'charts', 'maps'];
-    
+
     $scope.inactiveModel = function(item) {
         modelService.deactivateList(item, $scope);
     }
@@ -72,17 +72,17 @@ function UserListController($scope, $location, rest, $rootScope, Flash, Alertify
 
     $scope.findSort = function(type, cond) {
         usSpinnerService.spin('spinner');
-        $scope.sortType = type; 
-        
+        $scope.sortType = type;
+
         var sort = 'DESC';
         if(cond) {
             sort = 'ASC';
         }
         $scope.sortReverse = cond;
-        
+
         $scope.parameters.orderBy = type;
         $scope.parameters.sort = sort;
-        
+
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if(!resp) {
@@ -95,11 +95,11 @@ function UserListController($scope, $location, rest, $rootScope, Flash, Alertify
 function UserViewController($scope, Flash, rest, $routeParams, $location, modelService, isUserProfile) {
     $scope.isUserProfile = isUserProfile;
     modelService.initService('User', 'users', $scope);
-    
+
     $scope.current = {
         'id': $scope.adminglob.currentUser.user,
     };
-    
+
     if ($scope.isUserProfile) {
         rest().findOne({
             type: 'users',

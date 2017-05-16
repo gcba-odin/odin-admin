@@ -12,7 +12,7 @@ function CategoryListController($scope, $rootScope, modelService, configs, usSpi
     $scope.parameters = {
         skip: 0,
         limit: 20,
-        conditions: '',
+        conditions: '&fields=id,name,datasets,deletedAt,subcategories,datasetsSubcategories,createdBy,parent',
         orderBy: 'name',
         sort: 'ASC'
     };
@@ -41,7 +41,7 @@ function CategoryListController($scope, $rootScope, modelService, configs, usSpi
     };
 
     $scope.confirmDelete = function(item) {
-        modelService.confirmDelete(item, {}); 
+        modelService.confirmDelete(item, {});
     };
 
     $scope.edit = function(model) {
@@ -65,7 +65,7 @@ function CategoryListController($scope, $rootScope, modelService, configs, usSpi
         }
 
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
-        
+
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if (!resp) {
@@ -88,20 +88,20 @@ function CategoryListController($scope, $rootScope, modelService, configs, usSpi
             }
         });
     };
-    
+
     $scope.findSort = function(type, cond) {
         usSpinnerService.spin('spinner');
-        $scope.sortType = type; 
-        
+        $scope.sortType = type;
+
         var sort = 'DESC';
         if(cond) {
             sort = 'ASC';
         }
         $scope.sortReverse = cond;
-        
+
         $scope.parameters.orderBy = type;
         $scope.parameters.sort = sort;
-        
+
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if (!resp) {
@@ -115,7 +115,7 @@ function CategoryListController($scope, $rootScope, modelService, configs, usSpi
 function CategoryViewController($scope, Flash, rest, $routeParams, $location, $sce, modelService, $rootScope, usSpinnerService, Alertify, $window) {
     usSpinnerService.spin('spinner');
     modelService.initService("Category", "categories", $scope);
-    
+
     $scope.filtersInclude = ['datasets', 'subcategories', 'datasetsSubcategories'];
 
     $scope.inactiveModel = function(item, prev) {
@@ -154,7 +154,7 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
             }
         );
     };
-    
+
     $scope.confirmDeleteCategory = function (item) {
         var text = (!!$scope.model.parent) ? 'subcategoría' : 'categoría';
         Alertify.set({
@@ -203,7 +203,7 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type,
-            params: 'include=subcategories,datasets,datasetsSubcategories'
+            params: 'include=subcategories,datasets,datasetsSubcategories&fields=id,parent,description,createdAt,subcategories,datasets,color,updatedAt,name,datasetsSubcategories,createdBy'
         }, function() {
             var subcategories = [];
             for (var i = 0; i < $scope.model.subcategories.length; i++) {
@@ -216,9 +216,9 @@ function CategoryViewController($scope, Flash, rest, $routeParams, $location, $s
             modelService.reloadPage();
         });
     };
-   
+
     loadModel();
-     
+
     $scope.publish = function (id, type) {
         usSpinnerService.spin('spinner');
 
@@ -399,7 +399,8 @@ function CategoryCreateController($scope, rest, $routeParams, model, Flash, $loc
         $scope.model.parent = $routeParams.category;
         $scope.model.category = rest().findOne({
             id: $routeParams.category,
-            type: 'categories'
+            type: 'categories',
+            params: 'fields=id,name,parent'
         });
         $scope.category_disabled = 'disabled';
     }
@@ -464,7 +465,7 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
             if (image != null) {
                 data.uploadImage = $scope.model.uploadImage;
             } /*else {
-                data.uploadImage = null; 
+                data.uploadImage = null;
             }*/
 
             Upload.upload({
@@ -512,7 +513,8 @@ function CategoryEditController($scope, Flash, rest, $routeParams, model, $locat
     $scope.load = function() {
         $scope.model = rest().findOne({
             id: $routeParams.id,
-            type: $scope.type
+            type: $scope.type,
+            params: 'fields=id,name,color,fileName,description,category'
         }, function() {
             $scope.fileModel = {
                 type: 'svg',

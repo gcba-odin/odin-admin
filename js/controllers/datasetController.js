@@ -9,22 +9,22 @@ app.factory('model', function($resource) {
 function DatasetListController($scope, $rootScope, Alertify, modelService, $routeParams, configs, usSpinnerService, ROLES) {
     usSpinnerService.spin('spinner');
     modelService.initService('Dataset', "datasets", $scope);
-    
+
     $scope.parameters = {
         skip: 0,
         limit: 20,
-        conditions: '',
+        conditions: '&fields=id,name,status,createdBy,categories',
         orderBy: 'createdAt',
         sort: 'DESC'
     };
-    
+
     $scope.starred = false;
     if($routeParams.filter == 'starred') {
         $scope.parameters.conditions = '&starred=true';
         $scope.starred = true;
         $rootScope.actualUrl = '/datasets/starred';
-    } 
-    
+    }
+
     $scope.filtersInclude = ['categories'];
 
     $scope.filtersView = [{
@@ -53,7 +53,7 @@ function DatasetListController($scope, $rootScope, Alertify, modelService, $rout
     if(!!$rootScope.adminglob.currentUser && $rootScope.adminglob.currentUser.role === ROLES.GUEST) {
         $scope.filtersView[1].permission = false;
     }
-    
+
     $scope.confirmDelete = function(item) {
         Alertify.set({
             labels: {
@@ -107,7 +107,7 @@ function DatasetListController($scope, $rootScope, Alertify, modelService, $rout
         if(!!$scope.parameters.conditions_page) {
             $scope.q += $scope.parameters.conditions_page;
         }
-        
+
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if (!resp) {
@@ -118,17 +118,17 @@ function DatasetListController($scope, $rootScope, Alertify, modelService, $rout
 
     $scope.findSort = function(type, cond) {
         usSpinnerService.spin('spinner');
-        $scope.sortType = type; 
-        
+        $scope.sortType = type;
+
         var sort = 'DESC';
         if(cond) {
             sort = 'ASC';
         }
         $scope.sortReverse = cond;
-        
+
         $scope.parameters.orderBy = type;
         $scope.parameters.sort = sort;
-        
+
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if(!resp) {
@@ -151,7 +151,7 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
         $scope.model = rest().findOne({
             id: $routeParams.id,
             type: $scope.type,
-            params: "include=tags,files,categories,subcategories" + params
+            params: "include=tags,files,categories,subcategories&fields=id,description,owner,updatedAt,status,categories,createdAt,notes,files,subcategories,publishedAt,starred,name,createdBy,unPublishedAt,tags,optionals" + params
         }, function() {
             var tags = [];
             for (var i = 0; i < $scope.model.tags.length; i++) {
@@ -279,7 +279,7 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
             }
         );
     };
-    
+
     $scope.reject = function (id, type) {
         Alertify.set({
             labels: {
@@ -307,7 +307,7 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
             }
         );
     };
-    
+
     $scope.sendReview = function (id, type) {
         Alertify.set({
             labels: {
@@ -335,7 +335,7 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
             }
         );
     };
-    
+
     $scope.cancel = function (id, type) {
         Alertify.set({
             labels: {
@@ -363,7 +363,7 @@ function DatasetViewController($scope, Flash, rest, $routeParams, $location, $sc
             }
         );
     };
-    
+
     $scope.confirmDelete = function (item) {
         Alertify.set({
             labels: {
@@ -401,12 +401,12 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
 
     $scope.tagsmodel = rest().get({
         type: "tags",
-        params: "orderBy=name&sort=DESC"
+        params: "orderBy=name&sort=DESC&fields=id,name,slug"
     });
 
     $scope.categoriesmodel = rest().get({
         type: "categories",
-        params: "orderBy=name&sort=DESC"
+        params: "orderBy=name&sort=DESC&fields=id,name,slug,parent,subcategories"
     });
 
     $scope.status_default = true;
@@ -417,7 +417,7 @@ function DatasetCreateController($scope, rest, model, Flash, $location, modelSer
     $scope.model = new model();
     $scope.model.items = [];
     $scope.model.starred = false;
-    
+
     $scope.model.owner = { 'id': $scope.adminglob.currentUser.user, 'username': $scope.adminglob.currentUser.username };
 
     $scope.add = function(isValid) {
@@ -510,7 +510,7 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
     $scope.tempData = [];
     $scope.publishAt = "";
     $rootScope.hasSubs = false;
-    
+
     var prev_status = null;
 
     //factory configs
@@ -536,7 +536,7 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
         var optionsTemp = [];
 
         $scope.tempData = angular.copy($scope.model);
-        
+
         for (var o = 0; o < 10; o++) {
             var verified = verifyOptional($scope.model.items, o);
 
@@ -609,7 +609,7 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
     $scope.load = function() {
         $scope.tagsmodel = rest().get({
             type: "tags",
-            params: "orderBy=name&sort=DESC"
+            params: "orderBy=name&sort=DESC&fields=id,name,slug"
         }, function() {
             $scope.model = rest().findOne({
                 id: $routeParams.id,
@@ -628,7 +628,7 @@ function DatasetEditController($scope, Flash, rest, $routeParams, model, $locati
 ////                        $scope.data_subcategories.push(element.id);
 ////                    });
 //                    $scope.data_subcategories = $scope.model.subcategories;
-//                } 
+//                }
                 $scope.model.items = [];
                 $scope.publishAt = $scope.model.publishAt;
                 angular.forEach($scope.model.optionals, function(val, key) {

@@ -7,11 +7,11 @@ app.factory('model', function($resource) {
 function StatusListController($scope, modelService, configs, usSpinnerService) {
     usSpinnerService.spin('spinner');
     modelService.initService("Status", "statuses", $scope);
-    
+
     $scope.parameters = {
         skip: 0,
         limit: 20,
-        conditions: '',
+        conditions: '&fields=id,name',
         orderBy: 'createdAt',
         sort: 'DESC'
     };
@@ -31,14 +31,14 @@ function StatusListController($scope, modelService, configs, usSpinnerService) {
     $scope.view = function(model) {
         modelService.view($scope, model);
     }
-    
+
     $scope.config_key = 'adminPagination';
     ////factory configs
     configs.findKey($scope, function (resp) {
         if (!!resp.data[0] && !!resp.data[0].value) {
             $scope.parameters.limit = resp.data[0].value;
         }
-        
+
         $scope.q = "&skip=" + $scope.parameters.skip + "&limit=" + $scope.parameters.limit;
 
         modelService.loadAll($scope, function(resp) {
@@ -63,20 +63,20 @@ function StatusListController($scope, modelService, configs, usSpinnerService) {
             }
         });
     };
-    
+
     $scope.findSort = function(type, cond) {
         usSpinnerService.spin('spinner');
-        $scope.sortType = type; 
-        
+        $scope.sortType = type;
+
         var sort = 'DESC';
         if(cond) {
             sort = 'ASC';
         }
         $scope.sortReverse = cond;
-        
+
         $scope.parameters.orderBy = type;
         $scope.parameters.sort = sort;
-        
+
         modelService.loadAll($scope, function(resp) {
             usSpinnerService.stop('spinner');
             if(!resp) {

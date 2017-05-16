@@ -1,11 +1,11 @@
 <script type="text/javascript" src="/admin/plugins/redirect.js"></script>
-<aside class="main-sidebar">
+<aside class="main-sidebar" ng-controller="SidebarController">
     <section class="sidebar">
         <ul class="sidebar-menu">
 
             <!--Users-->
             <li ng-class="{active: isActive('/users/new') || isActive('/users') || isActiveEdit('users')}" class="treeview" permission permission-except="roles.GUEST">
-                <a ng-href="javascript:void(0)">
+                <a ng-href="javascript:void(0)" ng-click="removeToogle()">
                     <svg version="1.1" id="users-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                         <path fill="#FFB600" d="M12.337,10.705v0.969H4.214v-0.969l2.707-1.739V8.291c-0.166,0-0.321-0.168-0.463-0.504
@@ -49,7 +49,7 @@
 
             <!--Organizations-->
             <li ng-class="{active: isActive('/organizations/new') || isActive('/organizations') || isActiveEdit('organizations')}" class="treeview">
-                <a ng-href="javascript:void(0)">
+                <a ng-href="javascript:void(0)" ng-click="removeToogle()">
                     <svg version="1.1" id="organizations-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                         <g>
@@ -114,7 +114,7 @@
             <!--Datasets-->
             <li ng-class="{active: isActive('/datasets/new') || isActive('/datasets') || isActive('/datasets/starred') || isActive('/datasets/:filter?') || isActiveEdit('datasets')}"
                 class="treeview">
-                <a ng-href="javascript:void(0)">
+                <a ng-href="javascript:void(0)" ng-click="removeToogle()">
                     <svg version="1.1" id="datasets-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                         <path fill="#FFB600" d="M7.683,3.225V4.74c0,0.107-0.036,0.196-0.108,0.27C7.499,5.083,7.41,5.12,7.305,5.12H5.788
@@ -195,7 +195,7 @@
             <!--Resources-->
             <li ng-class="{active: isActive('/files/new/:dataset?') || isActive('/files') || isActiveEdit('files') || isActive('/webservices/new/:dataset?') || isActive('/files/underreview')}"
                 class="treeview">
-                <a ng-href="javascript:void(0)">
+                <a ng-href="javascript:void(0)" ng-click="toogleCount('files')">
                     <svg version="1.1" id="files-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                         <path fill="#FFB600" d="M13.343,3.055v9.314H4.806V3.055H13.343z M12.566,4.608H5.581v6.986h6.985V4.608z M7.133,5.384H6.357V6.16
@@ -260,7 +260,7 @@
                                       c0.384-0.429,0.56-0.933,0.528-1.511C9.055,6.149,8.825,5.671,8.396,5.285c-0.43-0.386-0.934-0.56-1.511-0.528
                                       C6.309,4.789,5.826,5.021,5.441,5.451z" />
                             </svg>
-                            {{ 'UNDER_REVIEW' | translate }} <span count-underreview="files"></span>
+                            {{ 'UNDER_REVIEW' | translate }} <span ng-if="show.files" count-underreview="files"></span>
                         </a>
                     </li>
                 </ul>
@@ -268,7 +268,7 @@
 
             <!--Charts-->
             <li ng-class="{active: isActive('/charts/new/:file') || isActive('/charts') || isActiveEdit('charts') || isActive('/charts/underreview')}" class="treeview">
-                <a ng-href="javascript:void(0)">
+                <a ng-href="javascript:void(0)" ng-click="toogleCount('charts')">
                     <svg version="1.1" id="chart-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                         <g>
@@ -324,7 +324,7 @@
                                       c0.384-0.429,0.56-0.933,0.528-1.511C9.055,6.149,8.825,5.671,8.396,5.285c-0.43-0.386-0.934-0.56-1.511-0.528
                                       C6.309,4.789,5.826,5.021,5.441,5.451z" />
                             </svg>
-                            {{ 'UNDER_REVIEW' | translate }} <span count-underreview="charts"></span>
+                            {{ 'UNDER_REVIEW' | translate }} <span ng-if="show.charts" count-underreview="charts"></span>
                         </a>
                     </li>
                 </ul>
@@ -332,7 +332,7 @@
 
             <!--Maps-->
             <li ng-class="{active: isActive('/maps/new/:file') || isActive('/maps') || isActiveEdit('maps') || isActive('/maps/underreview')}" class="treeview">
-                <a ng-href="javascript:void(0)">
+                <a ng-href="javascript:void(0)" ng-click="toogleCount('maps')">
                     <svg version="1.1" id="map-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                         <g>
@@ -397,7 +397,7 @@
                                       c0.384-0.429,0.56-0.933,0.528-1.511C9.055,6.149,8.825,5.671,8.396,5.285c-0.43-0.386-0.934-0.56-1.511-0.528
                                       C6.309,4.789,5.826,5.021,5.441,5.451z" />
                             </svg>
-                            {{ 'UNDER_REVIEW' | translate }} <span count-underreview="maps"></span>
+                            {{ 'UNDER_REVIEW' | translate }} <span ng-if="show.maps" count-underreview="maps"></span>
                         </a>
                     </li>
                 </ul>
@@ -405,7 +405,7 @@
 
             <!--Categories-->
             <li ng-class="{active: isActive('/categories/new') || isActive('/categories') || isActiveEdit('categories') || isActive('/subcategories/new')}" class="treeview">
-                <a ng-href="javascript:void(0)">
+                <a ng-href="javascript:void(0)" ng-click="removeToogle()">
                     <svg version="1.1" id="organizations-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                         <path fill="#FFB600" d="M3.357,4.24V3.411c0-0.114,0.038-0.213,0.119-0.294c0.08-0.08,0.177-0.119,0.294-0.119h0.826
@@ -479,7 +479,7 @@
 
             <!--Statuses-->
             <li ng-class="{active: isActive('/statuses/new') || isActive('/statuses') || isActiveEdit('statuses')}" class="treeview">
-                <a ng-href="javascript:void(0)">
+                <a ng-href="javascript:void(0)" ng-click="removeToogle()">
                     <svg version="1.1" id="statuses-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                         <path fill="#FFB600" d="M9.076,3.923c-2.045,0-3.702,1.654-3.702,3.698c0,2.043,1.657,3.7,3.702,3.7c2.044,0,3.7-1.657,3.7-3.7
@@ -525,7 +525,7 @@
             <!--Update Frequencies-->
             <li ng-class="{active: isActive('/updatefrequencies/new') || isActive('/updatefrequencies') || isActiveEdit('updatefrequencies')}"
                 class="treeview">
-                <a ng-href="javascript:void(0)">
+                <a ng-href="javascript:void(0)" ng-click="removeToogle()">
                     <svg version="1.1" id="updatefrequencies-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                         <path fill="#FFB600" d="M5.803,13.142h-1.53v-2.295h1.53V13.142z M8.098,9.315H6.566v3.826h1.531V9.315z M10.392,7.021H8.862v6.121
@@ -567,7 +567,7 @@
 
             <!--File Types-->
             <li ng-class="{active: isActive('/filetypes/new') || isActive('/filetypes') || isActiveEdit('filetypes')}" class="treeview">
-                <a ng-href="javascript:void(0)">
+                <a ng-href="javascript:void(0)" ng-click="removeToogle()">
                     <svg version="1.1" id="filetypes-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                         <path fill="#FFB600" d="M9.13,7.558h2.445v4.254c0,0.045-0.015,0.082-0.042,0.111c-0.031,0.031-0.066,0.045-0.112,0.045H6.225
@@ -610,7 +610,7 @@
 
             <!--Tags-->
             <li ng-class="{active: isActive('/tags/new') || isActive('/tags') || isActiveEdit('tags')}" class="treeview">
-                <a ng-href="javascript:void(0)">
+                <a ng-href="javascript:void(0)" ng-click="removeToogle()">
                     <svg version="1.1" id="tags-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                         <path fill="#FFB600" d="M13.338,7.729l-3.487,3.488L4.974,6.333V3.021c0-0.047,0.018-0.088,0.053-0.122
@@ -655,7 +655,7 @@
 
             <!--Basemaps-->
             <li ng-class="{active: isActive('/basemaps/new') || isActive('/basemaps') || isActiveEdit('basemaps')}" class="treeview">
-                <a ng-href="javascript:void(0)">
+                <a ng-href="javascript:void(0)" ng-click="removeToogle()">
                     <svg version="1.1" id="basemaps-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                         <g>
@@ -816,10 +816,10 @@
                     </li>
                 </ul>
             </li>
-            
+
             <!--Dataset requests-->
             <li ng-class="{active: isActive('/datasetrequests')}" class="treeview" permission permission-except="roles.GUEST">
-                <a ng-href="javascript:void(0)">
+                <a ng-href="javascript:void(0)" ng-click="removeToogle()">
                     <svg version="1.1" id="tags-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                             viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                         <path fill="#FFB600" d="M8.081,2.268c-2.749,0-4.977,2.229-4.977,4.978c0,1.361,0.546,2.592,1.432,3.491l-0.003-0.002v2.57l4.589-0.866
@@ -838,7 +838,7 @@
 
             <!--Importer-->
             <li ng-class="{active: isActive('/importer')}" class="treeview" permission permission-only="roles.SUPERADMIN">
-                <a ng-href="javascript:void(0)">
+                <a ng-href="javascript:void(0)" ng-click="removeToogle()">
                     <svg version="1.1" id="tags-svg" class="sidebar-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         x="0px" y="0px" viewBox="0 0 16.799 16.293" enable-background="new 0 0 16.799 16.293" xml:space="preserve">
                         <g>
