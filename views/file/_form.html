@@ -162,6 +162,26 @@
 </div>
 <!-- end Input Layout -->
 
+<div class="form-group">
+    <label class="col-sm-2 control-label">{{ 'URGENT' | translate }}</label>
+    <div class="col-sm-10" ng-class="{ 'has-error': form.urgent.$touched && form.urgent.$invalid }">
+        <div uib-tooltip="El archivo físico será subido, las visualizaciones no estarán disponibles hasta que el cron sea ejecutado" tooltip-placement="left">
+            <label class="btn btn-default" ng-class="activeClass(model.urgent, 1)">
+                <input   type="radio" ng-value="true" name="urgent"    ng-model="model.urgent" id="option1" autocomplete="off" > {{ 'YES' | translate }}
+            </label>
+            <label class="btn btn-warning" ng-class="activeClass(model.updated, 2)">
+                <input type="radio" ng-value="false" name="urgent"  ng-model="model.urgent" id="option2" autocomplete="off"> {{ 'NO' | translate }}
+            </label>
+        </div>
+
+        <div class="help-block" ng-messages="form.urgent.$error" ng-if="form.urgent.$touched">
+            <div ng-messages-include="views/messages.html"></div>
+        </div>
+    </div>
+</div>
+<!-- end Input Layout -->
+
+
 <div class="extraoptionals" ng-repeat="item in model.items">
     <!-- Input optional -->
     <div class="form-group" id="option1">

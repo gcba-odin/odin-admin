@@ -176,6 +176,7 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'RESULTS': 'Results',
         'IMPORT_MODULES': 'Import modules',
         'LAYOUT': 'Layout',
+        'URGENT': 'Urgent',
         'ADD_PARAMETER': 'Add parameter',
         'PARAMETER': 'Parameter',
         'TITLE_PATH': 'Titles path',
@@ -461,7 +462,7 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'DATA_URL': 'Ruta a los datos',
         'AUTH_TYPE': 'Forma de autenticación',
         'LAYOUT': 'Guía de datos',
-
+        'URGENT': 'Urgente',
         'ADD_PARAMETER': 'Agregar parámetro',
         'PARAMETER': 'Parámetro',
         'TITLE_PATH': 'Ruta a los titulos de tabla',
@@ -479,7 +480,7 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'RELATIONSHIPS': 'Entidades relacionadas',
         'VIEW_LINK_RELATIONSHIPS': 'Ver entidades relacionadas',
         'superadmin': 'SuperAdmin',
-        'admin': 'Admin', 
+        'admin': 'Admin',
         'guest': 'Invitado',
         'VALUE': 'Valor',
         'AUTHOR': 'Autor',
@@ -495,7 +496,7 @@ app.config(['$translateProvider', function($translateProvider, $rootScope) {
         'ACTIVE_INACTIVE': 'Activo/Inactivo',
         'SITE_CONFIGS': 'Configuraciones del sitio',
         'INTEGRATIONS': 'Integraciones',
-        
+
         'Social networks': 'Redes sociales',
         'Google Analytics Account': 'Cuenta de Google Analytics',
         'Account where the statistics will be shown': 'Es la cuenta desde la cual se visualizan las estadísticas.',

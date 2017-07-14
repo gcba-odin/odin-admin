@@ -544,6 +544,7 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
     $scope.model.uploadFile = '';
     $scope.model.updated = false;
     $scope.model.layout = false;
+    $scope.model.urgent = false;
     $scope.model.status = $scope.statuses.default;
 
     $scope.steps = [];
@@ -726,6 +727,7 @@ function FileCreateController($scope, $sce, rest, model, flashService, Flash, $l
             'updateFrequency': $scope.model.updateFrequency,
             //'tags': $scope.model.tags ? $scope.model.tags.join(",") : "",
             'layout': $scope.model.layout,
+            'urgent': $scope.model.urgent,
             'updated': $scope.model.updated,
         };
 
@@ -1035,6 +1037,7 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
             'updateFrequency': $scope.model.updateFrequency,
             //'tags': $scope.model.tags ? $scope.model.tags.join(",") : "",
             'updated': $scope.model.updated,
+            'urgent': $scope.model.urgent,
             'layout': $scope.model.layout,
             'gatheringDate': null
         }
@@ -1121,6 +1124,10 @@ function FileEditController($rootScope, $scope, flashService, Flash, rest, $rout
 
             if (!$scope.model.updated) {
                 $scope.model.updated = false;
+            }
+
+            if (!$scope.model.urgent) {
+                $scope.model.urgent = false;
             }
 
             if (!$scope.model.layout) {
