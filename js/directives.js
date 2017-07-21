@@ -1,13 +1,13 @@
 (function() {
     var app = angular.module('store-directives', ["store-directives-home"]);
 
-    app.directive("searchBar", function($parse, $window) {
+    app.directive("searchBar", function($parse, $window, $filter) {
         return {
             restrict: "E",
             templateUrl: "directives/search-bar.html",
             scope: "=",
             controller: function ($scope, modelService, $timeout) {
-                
+
                 $scope.search = function() {
                     $scope.parameters.skip = 0;
                     $scope.parameters.conditions_page = '';
@@ -23,7 +23,7 @@
                     });
 
                     if ($scope.searchModel.q) {
-                        $scope.q += "name=" + $scope.searchModel.q + "&";
+                        $scope.q += "slug=" + $filter('slugify')($scope.searchModel.q) + "&";
                     }
                     for (var f in filters) {
                         if (filters[f] != undefined) {
@@ -49,7 +49,7 @@
                             selectize.clear();
                             selectize.clearOptions();
                         }, 0);
-                        
+
                     });
                     $scope.searchModel = {};
                     $scope.search();
@@ -188,8 +188,8 @@
                         if (attrs.modelname == 'tags') {
                             this.$control_input.on('keypress', function(e) {
                                 if(/[^ a-zA-ZáäàéëèíïìóöòúüùÁÄÀÉËÈÍÏÌÓÖÒÚÜÙñÑ-]/g.test(e.key)){
-                                    e.preventDefault();  
-                                } 
+                                    e.preventDefault();
+                                }
                             });
                         }
                     },
@@ -230,7 +230,7 @@
                                     }
                                 });
                             }
-                        
+
                         }
                     },
                     render: {
@@ -307,7 +307,7 @@
                                     scope.$apply(function() {
                                         scope.values = "";
                                         scope.subcats = false;
-                                    
+
                                         $rootScope.hasSubs = false;
                                     });
                                 }
@@ -338,7 +338,7 @@
                                                         select_subs.removeOption(select_subs.items[obj]);
                                                         select_subs.refreshOptions();
                                                     }
-                                                }                                                
+                                                }
                                             }
                                         }
                                     }
@@ -481,10 +481,10 @@
      return {
      restrict: 'A',
      link: function(scope, element, attrs) {
-     
+
      scope.options = [];
-     
-     
+
+
      $.ajax({
      url: scope.$root.url + '/' + attrs.modelname,
      type: 'GET',
@@ -507,7 +507,7 @@
      });
      }
      };
-     
+
      */
 
 
@@ -528,14 +528,14 @@
             }
         };
     });
-    
+
     app.directive('restrictCharts', function() {
         return {
             require: 'ngModel',
             link: function (scope, element, attr, ngModelCtrl) {
                 function fromUser(text) {
                     var transformedInput = text.replace(/[^ a-zA-ZáäàéëèíïìóöòúüùÁÄÀÉËÈÍÏÌÓÖÒÚÜÙñÑ-]/g, '');
-                    
+
                     if(transformedInput !== text) {
                         ngModelCtrl.$setViewValue(transformedInput);
                         ngModelCtrl.$render();
@@ -544,7 +544,7 @@
                 }
                 ngModelCtrl.$parsers.push(fromUser);
             }
-        }; 
+        };
     });
 
     app.controller('ctrlUpload', ['$scope', 'fileUpload', function($scope, fileUpload, $rootScope) {
@@ -775,7 +775,7 @@
     });
 
     app.filter('filterIfGuestUser', function ($rootScope, ROLES) {
-        return function (models) { 
+        return function (models) {
             var userObj = $rootScope.adminglob.currentUser;
 
             if (!userObj || userObj.role !== ROLES.GUEST) {
@@ -800,10 +800,10 @@
                     // oWRhpRV --> Under review
                     // qWRhpRV --> published
                     // rWRhpRV --> unpublished
-                    
+
                     var currentModel = JSON.parse(attrs.showPolicyIfGuestUser) || {};
                     if(user.role === ROLES.GUEST) {
-                        
+
                         if(!!currentModel) {
                             var status = currentModel.status.id || currentModel.status;
                             var statuses = ['oWRhpRV', 'qWRhpRV', 'rWRhpRV'];
@@ -831,13 +831,13 @@
                         e.stopPropagation();
                     }
                 });
-                
+
             }
         };
     });
-    
+
     app.filter('pluralEntities', function () {
-        return function (input) { 
+        return function (input) {
             if(!!input) {
                 if(input.slice(-1) == 'y') {
                     var rest = input.slice(0, input.length - 1);
@@ -850,4 +850,26 @@
             }
         };
     });
+
+    app.filter('slugify', function(){
+      return function string_to_slug(str, sep) {
+        sep = sep || '-';
+        str = str.replace(/^\s+|\s+$/g, ''); // trim
+        str = str.toLowerCase();
+
+        // remove accents, swap ñ for n, etc
+        var from = "àáäâèéëêìíïîòóöôùúüûñç·/_,:;";
+        var to   = "aaaaeeeeiiiioooouuuunc------";
+        for (var i=0, l=from.length ; i<l ; i++) {
+          str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+        }
+
+        str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+          .replace(/\s+/g, sep) // collapse whitespace and replace by -
+          .replace(/-+/g, '-'); // collapse dashes
+
+        return str;
+      }
+    })
+
 })();

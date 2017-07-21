@@ -10,7 +10,8 @@ function controllerHome($scope,rest){
     $scope.modelName = "Log";
     $scope.type = "logs";
    $scope.logs = rest().get({
-        type: $scope.type ,params:"orderBy=createdAt&sort=DESC"
+        type: $scope.type,
+        params:"orderBy=createdAt&sort=DESC"
     });
 
     $scope.usersCount = rest().count({
